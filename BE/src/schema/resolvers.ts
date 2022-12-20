@@ -9,7 +9,15 @@ const resolvers = {
             const usersList = prisma.users.findMany({})
             return usersList;
         },
+        user() {
+            const usersList = prisma.users.findMany({})
+            return usersList;
+        },
         products() {
+            const productsList = prisma.products.findMany({})
+            return productsList;
+        },
+        product() {
             const productsList = prisma.products.findMany({})
             return productsList;
         },
@@ -17,17 +25,20 @@ const resolvers = {
             const categoryList = prisma.category.findMany({})
             return categoryList;
         },
-        user() {
-            const usersList = prisma.users.findMany({})
-            return usersList;
-        },
-        product() {
-            const productsList = prisma.products.findMany({})
-            return productsList;
-        },
         category() {
             const categoryList = prisma.category.findMany({})
             return categoryList;
+        },
+    },
+    Product: {
+        category(parent: any) {
+            let categoryId = parent.categoryid
+            const categoryName = prisma.category.findUnique({
+                where: {
+                    id: categoryId
+                }
+            })
+            return categoryName
         },
     }
 };
