@@ -1,0 +1,13 @@
+<h1>Utenti</h1>
+
+<button (click)="call('id')">id</button>
+<button (click)="call('name')">name</button>
+<button (click)="call('email')">email</button>
+
+<ul>
+    <li *ngFor="let user of users">
+        {{user.id}} - {{user.name}} - {{user.email}}
+    </li>
+</ul>
+
+<h3 *ngIf="error">Errore: {{errorMessage}}</h3>
