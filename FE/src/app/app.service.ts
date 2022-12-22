@@ -14,11 +14,11 @@ export class AppService {
 
   constructor(private http: HttpClient) { }
 
-  private readonly urlRoot = `${environment.apiUrl}/${environment.apiVersion}`;
+  private readonly urlRoot = `${environment.apiUrl}`;
   private readonly headers = { headers: { 'Content-Type': 'application/json' } }
 
-  callUser(data: any): Observable<any> {
-    let body = { query: `{ users { ${data} } }` }
+  callUser(): Observable<any> {
+    let body = { query: `{ products { id name category { id name } } }` }
     return this.http.post<any>(this.urlRoot, body, this.headers)
       .pipe(retry(1), catchError(this.handleError));
   }
@@ -37,6 +37,5 @@ export class AppService {
       return errorMessage;
     });
   }
-
 
 }

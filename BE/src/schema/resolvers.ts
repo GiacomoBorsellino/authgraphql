@@ -32,6 +32,8 @@ const resolvers = {
     },
     Product: {
         category(parent: any) {
+            console.log(parent);
+
             let categoryId = parent.categoryid
             const categoryName = prisma.category.findUnique({
                 where: {

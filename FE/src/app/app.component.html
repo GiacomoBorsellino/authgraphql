@@ -1,12 +1,12 @@
 <h1>Utenti</h1>
 
-<button (click)="call('id')">id</button>
-<button (click)="call('name')">name</button>
-<button (click)="call('email')">email</button>
+<!-- <button (click)="call('id')">id</button> -->
+<button (mouseup)="call('name')" (mousedown)="uncall('name')">name</button>
+<!-- <button (click)="call('email')">email</button> -->
 
 <ul>
-    <li *ngFor="let user of users">
-        {{user.id}} - {{user.name}} - {{user.email}}
+    <li *ngFor="let product of products">
+        Name: {{product.name}} - Category: <h3 *ngIf="product.category !== null"> {{product.category.name}} </h3>
     </li>
 </ul>
 

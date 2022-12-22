@@ -11,36 +11,46 @@ export class AppComponent implements OnInit {
 
   constructor(private AppService: AppService) { }
 
-  users: any
+  products: any
   error: boolean = false;
   errorMessage: string = '';
-  body2: any = []
-
-  body = {
-    users: {
-      users: [],
-
-    }
-  }
 
   call(oj: any) {
-    console.log(oj);
-    this.body2.push(oj)
-    console.log(this.body);
-    this.loadUsers(this.body)
+    this.loadUsers()
   }
 
-  ngOnInit() {
-  }
-
-  loadUsers(data: any) {
-    this.AppService.callUser(data).subscribe((res) => {
+  uncall(oj: any) {
+    this.products = []
+    this.AppService.callUser().subscribe((res) => {
       if (res.errors) {
         console.log(res.errors[0].extensions.code)
         this.errorMessage = res.errors[0].extensions.code;
         this.error = true;
       } else {
-        this.users = res.data.users;
+        console.log(res.data.products);
+
+        this.products = res.data.products;
+      }
+    }
+      // , (err) => {
+      //   console.log('Catch', err);
+      // }
+    ).unsubscribe()
+  }
+
+  ngOnInit() {
+  }
+
+  loadUsers() {
+    this.AppService.callUser().subscribe((res) => {
+      if (res.errors) {
+        console.log(res.errors[0].extensions.code)
+        this.errorMessage = res.errors[0].extensions.code;
+        this.error = true;
+      } else {
+        console.log(res.data.products);
+
+        this.products = res.data.products;
       }
     }
       // , (err) => {
