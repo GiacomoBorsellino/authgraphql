@@ -15,9 +15,15 @@ export class AppService {
   constructor(private http: HttpClient) { }
 
   private readonly urlRoot = `${environment.apiUrl}`;
-  private readonly headers = { headers: { 'Content-Type': 'application/json' } }
+  private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_124" } }
 
-  callUser(): Observable<any> {
+  callUser(objData: any): Observable<any> {
+    let body = { query: `{ users { ${objData} } }` }
+    return this.http.post<any>(this.urlRoot, body, this.headers)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  callProducts(): Observable<any> {
     let body = { query: `{ products { id name category { id name } } }` }
     return this.http.post<any>(this.urlRoot, body, this.headers)
       .pipe(retry(1), catchError(this.handleError));

@@ -1,12 +1,33 @@
 <h1>Utenti</h1>
 
-<!-- <button (click)="call('id')">id</button> -->
+<!-- 
+<button (mouseup)="call('id')" (mousedown)="uncall('id')">id</button>
 <button (mouseup)="call('name')" (mousedown)="uncall('name')">name</button>
-<!-- <button (click)="call('email')">email</button> -->
+<button (mouseup)="call('email')" (mousedown)="uncall('email')">email</button> 
+-->
 
+<!-- 
 <ul>
     <li *ngFor="let product of products">
         Name: {{product.name}} - Category: <h3 *ngIf="product.category !== null"> {{product.category.name}} </h3>
+    </li>
+</ul> 
+-->
+
+<input type="checkbox" id="first_name" name="first_name" value="first_name" (mouseup)="call('first_name')"
+    (mousedown)="uncall('first_name')">
+<label for="first_name"> first_name</label><br>
+
+<input type="checkbox" id="last_name" name="last_name" value="last_name" (mouseup)="call('last_name')"
+    (mousedown)="uncall('last_name')">
+<label for="last_name">last_name</label><br>
+
+<input type="checkbox" id="email" name="email" value="email" (mouseup)="call('email')" (mousedown)="uncall('email')">
+<label for="email">email</label><br>
+
+<ul>
+    <li *ngFor="let user of users">
+        Name: {{user.first_name}} - Surname: {{user.last_name}} - Email: {{user.email}}
     </li>
 </ul>
 

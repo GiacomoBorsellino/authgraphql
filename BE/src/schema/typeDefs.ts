@@ -32,6 +32,9 @@ const typeDefs = gql`
         product(id: ID!): Product
         categories: [Category!]!
         category(id: ID!): Category
+
+        hello(name: String): String
+        bye(name: String): String
     }
 
 `
