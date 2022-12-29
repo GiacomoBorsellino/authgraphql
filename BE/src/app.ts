@@ -39,9 +39,8 @@ const checkToken = async (resolve, root, args, context, info) => {
         console.log(`il token è corretto`)
         return result
     } else {
-        const result = await resolve(root, args, context, info)
         console.log(`il token NON è corretto`)
-        return result
+        throw new Error('Il token NON è corretto');
     }
 }
 

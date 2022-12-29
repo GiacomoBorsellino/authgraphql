@@ -15,7 +15,7 @@ export class AppService {
   constructor(private http: HttpClient) { }
 
   private readonly urlRoot = `${environment.apiUrl}`;
-  private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_124" } }
+  private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_123" } }
 
   callUser(objData: any): Observable<any> {
     let body = { query: `{ users { ${objData} } }` }

@@ -7,13 +7,9 @@ const resolvers = {
     Query: {
 
         users(args, parent, context, info) {
-            if (context.authorization == "sono_il_token_124") {
-                throw new Error('token rotto');
-            } else {
-                const usersList = prisma.users.findMany({})
-                console.log("In Resolver: ", context.authorization);
-                return usersList;
-            }
+            const usersList = prisma.users.findMany({})
+            console.log("In Resolver: ", context.authorization);
+            return usersList;
         },
 
         user() {

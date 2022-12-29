@@ -49,8 +49,8 @@ export class AppComponent implements OnInit {
   loadUsers(oj: any) {
     this.AppService.callUser(oj).subscribe((res) => {
       if (res.errors) {
-        console.log('err', res.errors[0])
-        this.errorMessage = res.errors[0].extensions.code;
+        console.log('err', res.errors[0].message)
+        this.errorMessage = res.errors[0].message;
         this.error = true;
       } else {
         console.log(res.data.products);
