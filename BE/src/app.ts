@@ -21,32 +21,35 @@
 // Import di Apollo server
 
 import { ApolloServer } from 'apollo-server';
+
 // Import dei typeDefs e dei resolvers
 import { typeDefs } from './schema/typeDefs';
 import { resolvers } from './schema/resolvers';
+
 // Import Middleware
+import { middleware } from './middleware/middleware';
 
 // Import GraphQL-Middleware
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { applyMiddleware } from 'graphql-middleware'
 
 // Middleware
-const checkToken = async (resolve, root, args, context, info) => {
-    if (context.authorization == "sono_il_token_123") {
-        const result = await resolve(root, args, context, info)
-        console.log(result);
+// const checkToken = async (resolve, root, args, context, info) => {
+//     if (context.authorization == "sono_il_token_123") {
+//         const result = await resolve(root, args, context, info)
+//         console.log(result);
 
-        console.log(`il token è corretto`)
-        return result
-    } else {
-        console.log(`il token NON è corretto`)
-        throw new Error('Il token NON è corretto');
-    }
-}
+//         console.log(`il token è corretto`)
+//         return result
+//     } else {
+//         console.log(`il token NON è corretto`)
+//         throw new Error('Il token NON è corretto');
+//     }
+// }
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
-const schemaWithMiddleware = applyMiddleware(schema, checkToken)
+const schemaWithMiddleware = applyMiddleware(schema, middleware.checkToken)
 
 const server = new ApolloServer({
     schema: schemaWithMiddleware,
