@@ -7,6 +7,8 @@ const resolvers = {
     Query: {
 
         users(args, parent, context, info) {
+            console.log("===============================================");
+
             const usersList = prisma.users.findMany({})
             console.log("In Resolver: ", context.authorization);
             return usersList;
@@ -56,6 +58,13 @@ const resolvers = {
                 }
             })
             return categoryName
+        },
+    },
+    Mutation: {
+        login(args, parent, context, info) {
+            const usersList = prisma.users.findMany({})
+            console.log("In Resolver: ", context.authorization);
+            return usersList;
         },
     }
 };

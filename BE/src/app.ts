@@ -22,9 +22,10 @@ const schemaWithMiddleware = applyMiddleware(schema, middleware.checkToken)
 const server = new ApolloServer({
     schema: schemaWithMiddleware,
     context: (req) => {
+        let body: any = req.req.body
         let headers: any = req.req.headers
         console.log('In Context: ', headers.authorization)
-        return headers
+        return [headers, body]
     }
 })
 

@@ -25,6 +25,11 @@ const typeDefs = gql`
         name: String
     }
 
+    input LoginInput {
+        email: String
+        ip_address: String
+    }
+
     type Query {
         users: [User]
         user(id: ID!): User
@@ -35,6 +40,10 @@ const typeDefs = gql`
 
         hello(name: String): String
         bye(name: String): String
+    }
+
+    type Mutation {
+        login(input: LoginInput): String
     }
 
 `
