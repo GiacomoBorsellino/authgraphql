@@ -1,7 +1,22 @@
 <main>
+    <h2>Aggiungi utente</h2>
     <div>
         <input type="email" [(ngModel)]="email" placeholder="email">
         <input type="password" [(ngModel)]="password" placeholder="password">
         <button (click)="addUser()">Aggiungi Utente</button>
+    </div>
+
+    <h2>Modifica utente</h2>
+    <div>
+        <input type="number" [(ngModel)]="id" placeholder="id">
+        <input type="email" [(ngModel)]="email" placeholder="email">
+        <input type="password" [(ngModel)]="password" placeholder="password">
+        <button (click)="updateUser()">Modifica Utente</button>
+    </div>
+
+    <h2>Cancella utente</h2>
+    <div>
+        <input type="number" [(ngModel)]="id" placeholder="id">
+        <button (click)="deleteUser()">Cancella Utente</button>
     </div>
 </main>

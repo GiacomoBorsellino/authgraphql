@@ -69,46 +69,46 @@ const resolvers = {
         //     })
         //     return user
         // },
-        addUser(args, parent) {
+        async addUser(args, parent) {
             console.log('================= ADDUSER');
 
             console.log(args, parent);
 
-            const user = prisma.users.create({
+            const addUser = await prisma.users.create({
                 data: {
                     email: parent.input.email,
                     ip_address: parent.input.ip_address,
                 },
             })
 
-            return user
+            return addUser
 
         },
-        updateUser(args, parent) {
+        async updateUser(args, parent) {
+            console.log('================= UPDATEUSER');
             console.log(args, parent);
 
-            const user = prisma.users.update({
+            const updateUser = await prisma.users.update({
                 where: {
-                    id: 1
+                    id: +parent.input.id
                 },
                 data: {
-                    email: 'elsa@prisma.io',
-                    ip_address: 'Elsa Prisma',
+                    email: parent.input.email,
+                    ip_address: parent.input.ip_address,
                 },
             })
-            return user
+            return updateUser
         },
-        deleteUser(args, parent) {
-            console.log(args, parent);
+        async deleteUser(args, parent) {
+            console.log('================= DELETEUSER');
+            console.log('AAA ', args, parent);
 
-            const user = prisma.users.delete({
+            const deleteUser = await prisma.users.delete({
                 where: {
-                    id: 1
+                    id: +parent.input.id
                 },
             })
-
-            return null
-
+            return deleteUser
         }
     }
 };

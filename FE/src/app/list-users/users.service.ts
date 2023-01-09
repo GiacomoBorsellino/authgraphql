@@ -51,6 +51,56 @@ export class UsersService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  UPDATE_USER = gql`
+    mutation updateUser($input: UserInput) {
+      updateUser(input: $input) {
+        email
+        ip_address
+      }
+    }
+`
+  updateUser(objData: any): Observable<any> {
+    return this.apollo
+      .mutate({
+        mutation: this.UPDATE_USER,
+        variables: {
+          input: {
+            id: objData.id,
+            email: objData.email,
+            ip_address: objData.password
+          }
+        },
+        context: {
+          headers: new HttpHeaders().set("Authorization", this.token),
+        }
+      })
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  DELETE_USER = gql`
+  mutation deleteUser($input: UserInput) {
+    deleteUser(input: $input) {
+      email
+      ip_address
+    }
+  }
+`
+  deleteUser(objData: any): Observable<any> {
+    return this.apollo
+      .mutate({
+        mutation: this.DELETE_USER,
+        variables: {
+          input: {
+            id: objData.id
+          }
+        },
+        context: {
+          headers: new HttpHeaders().set("Authorization", this.token),
+        }
+      })
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
   // callProducts(): Observable<any> {
   //   let body = { query: `{ products { id name category { id name } } }` }
   //   return this.http.post<any>(this.urlRoot, body, this.headers)

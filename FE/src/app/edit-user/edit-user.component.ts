@@ -11,6 +11,7 @@ export class EditUserComponent {
   constructor(private UsersService: UsersService) { }
 
   // Variabili
+  id: number;
   email: string;
   password: string;
 
@@ -48,5 +49,29 @@ export class EditUserComponent {
     //     console.log(this.user);
     //   }
     // })
+  }
+
+  updateUser() {
+    console.log(this.email, this.password);
+    let objData = {
+      id: this.id,
+      email: this.email,
+      password: this.password
+    }
+    this.UsersService.updateUser(objData).subscribe(({ data }) => {
+      console.log('updated data', data)
+    }
+    )
+  }
+
+  deleteUser() {
+    console.log(this.email, this.password);
+    let objData = {
+      id: this.id
+    }
+    this.UsersService.deleteUser(objData).subscribe(({ data }) => {
+      console.log('deleted data', data)
+    }
+    )
   }
 }

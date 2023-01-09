@@ -16,7 +16,20 @@ const permessi = [
         type: "mutation",
         description: "route per aggiungere un utento alla lista",
         checkToken: true
+    },
+    {
+        operationName: "updateUser",
+        type: "mutation",
+        description: "route per aggiungere un utento alla lista",
+        checkToken: true
+    },
+    {
+        operationName: "deleteUser",
+        type: "mutation",
+        description: "route per aggiungere un utento alla lista",
+        checkToken: true
     }
+
 ];
 
 export { permessi };      

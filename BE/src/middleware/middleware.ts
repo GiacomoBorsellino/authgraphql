@@ -32,8 +32,6 @@ const checkToken = async (resolve, root, args, context, info) => {
         // Controllo Authorization-Token
         if (context[0].authorization == "sono_il_token_123") {
             const result = await resolve(root, args, context, info)
-            //console.log(result);
-
             console.log(`il token è corretto`)
             return result
         } else {
