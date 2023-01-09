@@ -1,12 +1,20 @@
 const permessi = [
     {
-        route: "login",
+        operationName: "login",
+        type: "mutation",
         description: "route per effettuare il login",
         checkToken: false
     },
     {
-        route: "users",
+        operationName: "users",
+        type: "query",
         description: "route per visualizzare lista utenti",
+        checkToken: true
+    },
+    {
+        operationName: "addUser",
+        type: "mutation",
+        description: "route per aggiungere un utento alla lista",
         checkToken: true
     }
 ];

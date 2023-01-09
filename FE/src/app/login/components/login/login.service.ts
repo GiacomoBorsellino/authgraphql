@@ -14,14 +14,15 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   private readonly urlRoot = `${environment.apiUrl}`;
-  // private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_123" } }
+  private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_123" } }
 
   login(objData: any): Observable<any> {
-    let body = { query: `{ login { ${objData} } }` }
-    return this.http.post<any>(this.urlRoot, body)
+    let body = { tag: "login", query: `{ login { ${objData} } }` }
+    return this.http.post<any>(this.urlRoot, body, this.headers)
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  // Manipolazione errore
   handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

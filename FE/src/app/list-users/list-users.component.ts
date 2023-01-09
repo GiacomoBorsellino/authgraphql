@@ -25,7 +25,7 @@ export class ListUsersComponent {
 
   uncall(objData: any) {
     this.products = []
-    this.UsersService.callUser(objData).subscribe((res) => {
+    this.UsersService.callUsers(objData).subscribe((res) => {
       if (res.errors) {
         console.log(res.errors[0].extensions.code)
         this.errorMessage = res.errors[0].extensions.code;
@@ -46,7 +46,7 @@ export class ListUsersComponent {
   }
 
   loadUsers(oj: any) {
-    this.UsersService.callUser(oj).subscribe((res) => {
+    this.UsersService.callUsers(oj).subscribe((res) => {
       if (res.errors) {
         console.log('err', res.errors[0].message)
         this.errorMessage = res.errors[0].message;

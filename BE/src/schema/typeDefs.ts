@@ -27,6 +27,12 @@ const typeDefs = gql`
 
     input LoginInput {
         email: String
+        password: String
+    }
+
+    input UserInput {
+        id: ID
+        email: String
         ip_address: String
     }
 
@@ -43,7 +49,10 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        login(input: LoginInput): String
+        login(input: LoginInput): User
+        addUser(input: UserInput): User
+        updateUser(input: UserInput): User
+        deleteUser(input: UserInput): User
     }
 
 `

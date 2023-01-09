@@ -9,19 +9,23 @@ import { LoginModule } from './login/login.module';
 import { ListUsersComponent } from './list-users/list-users.component';
 
 import { FormsModule } from '@angular/forms';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { GraphQLModule } from './graphql.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListUsersComponent
+    ListUsersComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     LoginModule,
-    FormsModule
+    FormsModule,
+    GraphQLModule
   ],
   providers: [],
   bootstrap: [AppComponent]

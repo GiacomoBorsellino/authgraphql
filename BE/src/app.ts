@@ -16,7 +16,7 @@ import { applyMiddleware } from 'graphql-middleware'
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 // Schema + Middleware
-const schemaWithMiddleware = applyMiddleware(schema, middleware.checkToken)
+const schemaWithMiddleware = applyMiddleware(schema, middleware.checkToken) // middleware.checkToken
 
 // Instanziamento Server + context
 const server = new ApolloServer({
@@ -24,7 +24,8 @@ const server = new ApolloServer({
     context: (req) => {
         let body: any = req.req.body
         let headers: any = req.req.headers
-        console.log('In Context: ', headers.authorization)
+        console.log('In Context - Token: ', headers)
+        console.log('In Context - Body: ', body)
         return [headers, body]
     }
 })
