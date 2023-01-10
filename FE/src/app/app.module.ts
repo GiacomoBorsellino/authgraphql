@@ -10,6 +10,7 @@ import { ListUsersComponent } from './list-users/list-users.component';
 
 import { FormsModule } from '@angular/forms';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { HeaderComponent } from './header/header.component';
 import { GraphQLModule } from './graphql.module';
 
 
@@ -17,7 +18,8 @@ import { GraphQLModule } from './graphql.module';
   declarations: [
     AppComponent,
     ListUsersComponent,
-    EditUserComponent
+    EditUserComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

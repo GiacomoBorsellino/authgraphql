@@ -25,7 +25,7 @@ export class LoginComponent {
       email: this.email,
       ip_address: this.ip_address
     }
-    console.log(data);
+
     this.LoginService.login(data).subscribe((res) => {
       if (res.errors) {
         console.log('err', res.errors[0].message)
@@ -34,9 +34,13 @@ export class LoginComponent {
       } else {
         if (res.data.login === null) {
           console.log('Utente non verificato');
+          this.errorMessage = 'Utente non verificato';
+          this.error = true;
         } else {
           localStorage.setItem('token', res.data.login.token)
-          localStorage.setItem('user', res.data.login)
+          console.log(res.data.login);
+
+          localStorage.setItem('user', JSON.stringify(res.data.login))
           console.log('Utente verificato: ', res);
         }
       }

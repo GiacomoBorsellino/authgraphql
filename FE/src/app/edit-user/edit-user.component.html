@@ -20,3 +20,5 @@
         <button (click)="deleteUser()">Cancella Utente</button>
     </div>
 </main>
+
+<h3 *ngIf="error">Errore: {{errorMessage}}</h3>

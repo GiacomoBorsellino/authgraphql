@@ -45,16 +45,8 @@ export class ListUsersComponent {
 
   loadUsers(oj: any) {
     this.UsersService.getUsers(oj).subscribe((res) => {
-      if (res.errors) {
-        console.log('err', res.errors[0].message)
-        this.errorMessage = res.errors[0].message;
-        this.error = true;
-      } else {
-        console.log(res.data.getUsers);
-
-        // this.products = res.data.products;
-        this.users = res.data.getUsers;
-      }
+      console.log(res.data.getUsers);
+      this.users = res.data.getUsers;
     }
       // , (err) => {
       //   console.log('Catch', err);

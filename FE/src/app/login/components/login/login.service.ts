@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { HttpHeaders } from '@angular/common/http'
 import { Apollo, gql } from 'apollo-angular'
 
 @Injectable({

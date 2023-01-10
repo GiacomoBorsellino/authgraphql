@@ -14,6 +14,8 @@ export class EditUserComponent {
   id: number;
   email: string;
   password: string;
+  error: boolean = false;
+  errorMessage: string = '';
 
   addUser() {
     console.log(this.email, this.password);
@@ -24,7 +26,7 @@ export class EditUserComponent {
     }
 
     this.UsersService.addUser(data).subscribe(({ res }) => {
-      console.log('got data', res)
+      console.log('added data')
     })
 
     // Chiamata "Classica"
@@ -62,7 +64,7 @@ export class EditUserComponent {
     }
 
     this.UsersService.updateUser(data).subscribe(({ res }) => {
-      console.log('updated data', res)
+      console.log('updated data')
     })
   }
 
@@ -74,7 +76,7 @@ export class EditUserComponent {
     }
 
     this.UsersService.deleteUser(data).subscribe(({ res }) => {
-      console.log('deleted data', res)
+      console.log('deleted data')
     })
   }
 }

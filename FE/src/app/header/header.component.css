@@ -1,0 +1,22 @@
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    gap: 1rem;
+}
+
+li {
+    background-color: aquamarine;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+}

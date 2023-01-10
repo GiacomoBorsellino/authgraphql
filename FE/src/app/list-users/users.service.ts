@@ -19,13 +19,14 @@ export class UsersService {
 
   // Richiama tutti gli utenti
   getUsers(objData: any): Observable<any> {
+    console.log(objData);
 
     let GET_USER = gql` 
       query getUsers {
         getUsers {
           ${objData}
+        }
       }
-    }
     `
 
     return this.apollo

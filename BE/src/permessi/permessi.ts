@@ -7,7 +7,7 @@ const permessi = [
         checkToken: false
     },
     {
-        operationName: "getUrsers",
+        operationName: "getUsers",
         type: "query",
         description: "route per visualizzare lista utenti",
         checkToken: true
