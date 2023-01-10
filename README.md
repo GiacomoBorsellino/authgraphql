@@ -70,6 +70,7 @@ dotenv
 [Prisma ORM](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/connect-your-database-typescript-postgres).
 
 6. Instanziamo il DB con Prisma
+
    ```sh
   npx prisma init
   configuriamo file env
@@ -79,6 +80,7 @@ dotenv
    ```
 
 7. Avviamo FE e BE usando gli script con
+
    ```sh
   npm run start
    ```
