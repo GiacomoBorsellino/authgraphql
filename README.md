@@ -72,17 +72,17 @@ dotenv
 6. Instanziamo il DB con Prisma
 
    ```sh
-  npx prisma init
-  configuriamo file env
-  npx prisma db pull
-  npm install @prisma/client
-  npx prisma generate --schema prisma/schema.prisma
+   npx prisma init
+   configuriamo file env
+   npx prisma db pull
+   npm install @prisma/client
+   npx prisma generate --schema prisma/schema.prisma 
    ```
 
 7. Avviamo FE e BE usando gli script con
 
    ```sh
-  npm run start
+   npm run start
    ```
 
 ## Funzionamento&Struttura
