@@ -7,7 +7,7 @@
     Sistema di autenticazione/autorizzazione che usa GraphQL, Prisma, Apollo e Angular
   </p>
     <p align="center">
-    <img src="https://the-guild.dev/blog-assets/graphql-deep-dive-2/cover.png" alt="screenshot" width="50%">
+    <img src="/FE/src/assets/authgraphql.jpg" alt="screenshot" width="50%">
   </p>
 </p>
 
