@@ -65,7 +65,7 @@ const resolvers = {
             const user = await prisma.users.findUnique({
                 where: {
                     id: +parent.input.id
-                },
+                }
             })
 
             if (user.email === parent.input.email) {
@@ -78,17 +78,6 @@ const resolvers = {
                 return null
             }
         },
-        // login(args, parent, context, info) {
-        //     console.log("=============================================== LOGIN");
-        //     console.log(args, parent);
-
-        //     const user = prisma.users.findUnique({
-        //         where: {
-        //             id: 1
-        //         }
-        //     })
-        //     return user
-        // },
         async addUser(args, parent) {
             console.log('================= ADDUSER');
 
@@ -101,14 +90,20 @@ const resolvers = {
                 },
             })
 
-            return addUser
+            const user = await prisma.users.findUnique({
+                where: {
+                    id: +addUser.id
+                }
+            })
+
+            return user
 
         },
         async updateUser(args, parent) {
             console.log('================= UPDATEUSER');
             console.log(args, parent);
 
-            const updateUser = await prisma.users.update({
+            await prisma.users.update({
                 where: {
                     id: +parent.input.id
                 },
@@ -117,11 +112,19 @@ const resolvers = {
                     ip_address: parent.input.ip_address,
                 },
             })
-            return updateUser
+
+            const user = await prisma.users.findUnique({
+                where: {
+                    id: +parent.input.id
+                }
+            })
+            console.log(user);
+
+            return user
         },
         async deleteUser(args, parent) {
             console.log('================= DELETEUSER');
-            console.log('AAA ', args, parent);
+            console.log(args, parent);
 
             const deleteUser = await prisma.users.delete({
                 where: {

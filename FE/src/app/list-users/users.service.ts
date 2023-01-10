@@ -53,11 +53,15 @@ export class UsersService {
     let ADD_USER = gql`
     mutation addUser($input: UserInput) {
       addUser(input: $input) {
-        email
-        ip_address
+        id
+          first_name
+          last_name
+          email
+          gender
+          ip_address
       }
     }
-  `
+    `
 
     return this.apollo
       .mutate({
@@ -80,7 +84,11 @@ export class UsersService {
     let UPDATE_USER = gql`
       mutation updateUser($input: UserInput) {
         updateUser(input: $input) {
+          id
+          first_name
+          last_name
           email
+          gender
           ip_address
         }
       }
@@ -107,7 +115,11 @@ export class UsersService {
     let DELETE_USER = gql`
       mutation deleteUser($input: UserInput) {
         deleteUser(input: $input) {
+          id
+          first_name
+          last_name
           email
+          gender
           ip_address
         }
       }

@@ -26,7 +26,7 @@ export class EditUserComponent {
     }
 
     this.UsersService.addUser(data).subscribe(({ res }) => {
-      console.log('added data')
+      console.log('added data: ', res)
     })
 
     // Chiamata "Classica"
@@ -64,7 +64,7 @@ export class EditUserComponent {
     }
 
     this.UsersService.updateUser(data).subscribe(({ res }) => {
-      console.log('updated data')
+      console.log('updated data: ', res)
     })
   }
 
@@ -76,7 +76,7 @@ export class EditUserComponent {
     }
 
     this.UsersService.deleteUser(data).subscribe(({ res }) => {
-      console.log('deleted data')
+      console.log('deleted data: ', res)
     })
   }
 }

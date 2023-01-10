@@ -48,4 +48,7 @@ Distribuito con licenza MIT
 
 ## Contatti
 Profilo Linkedin, per collaborazioni o proposte di lavoro: [Linkedin](https://www.linkedin.com/in/giacomo-borsellino-4039071b7/)
-
+  </p>
+    <p align="center">
+    <img src="https://media.tenor.com/_RYK0Ae4XakAAAAi/vibing-cool-dogs.gif" alt="screenshot" width="50%">
+  </p>
