@@ -17,14 +17,15 @@ export class EditUserComponent {
 
   addUser() {
     console.log(this.email, this.password);
-    let objData = {
+
+    let data = {
       email: this.email,
       password: this.password
     }
-    this.UsersService.addUser(objData).subscribe(({ data }) => {
-      console.log('got data', data)
-    }
-    )
+
+    this.UsersService.addUser(data).subscribe(({ res }) => {
+      console.log('got data', res)
+    })
 
     // Chiamata "Classica"
     // let objData = `
@@ -53,25 +54,27 @@ export class EditUserComponent {
 
   updateUser() {
     console.log(this.email, this.password);
-    let objData = {
+
+    let data = {
       id: this.id,
       email: this.email,
       password: this.password
     }
-    this.UsersService.updateUser(objData).subscribe(({ data }) => {
-      console.log('updated data', data)
-    }
-    )
+
+    this.UsersService.updateUser(data).subscribe(({ res }) => {
+      console.log('updated data', res)
+    })
   }
 
   deleteUser() {
     console.log(this.email, this.password);
-    let objData = {
+
+    let data = {
       id: this.id
     }
-    this.UsersService.deleteUser(objData).subscribe(({ data }) => {
-      console.log('deleted data', data)
-    }
-    )
+
+    this.UsersService.deleteUser(data).subscribe(({ res }) => {
+      console.log('deleted data', res)
+    })
   }
 }

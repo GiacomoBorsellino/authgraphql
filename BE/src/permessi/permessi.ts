@@ -1,3 +1,4 @@
+// Permesso per ogni resolver
 const permessi = [
     {
         operationName: "login",
@@ -6,7 +7,7 @@ const permessi = [
         checkToken: false
     },
     {
-        operationName: "users",
+        operationName: "getUsers",
         type: "query",
         description: "route per visualizzare lista utenti",
         checkToken: true
@@ -20,16 +21,15 @@ const permessi = [
     {
         operationName: "updateUser",
         type: "mutation",
-        description: "route per aggiungere un utento alla lista",
+        description: "route per modificare un utento alla lista",
         checkToken: true
     },
     {
         operationName: "deleteUser",
         type: "mutation",
-        description: "route per aggiungere un utento alla lista",
+        description: "route per rimuovere un utento alla lista",
         checkToken: true
     }
-
 ];
 
 export { permessi };      

@@ -14,11 +14,9 @@ const checkToken = async (resolve, root, args, context, info) => {
     // console.log('MID 0: ', context[1].tag); 
 
     let tagResolver = context[1].operationName
-    // console.log(tagResolver);
 
     let checkField: boolean
     permessi.forEach((field) => {
-        // console.log(field);
         if (field.operationName === tagResolver) {
             checkField = field.checkToken;
         }

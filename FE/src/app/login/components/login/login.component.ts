@@ -12,22 +12,33 @@ export class LoginComponent {
   constructor(private LoginService: LoginService) { }
 
   // Variabili
+  id: number;
   email: string;
-  password: string;
+  ip_address: string;
+  // Errore
   error: boolean = false;
   errorMessage: string = '';
 
   login() {
-    console.log(this.email, this.password);
-
-    let objData = [this.email, this.password]
-    this.LoginService.login(objData).subscribe((res) => {
+    let data = {
+      id: this.id,
+      email: this.email,
+      ip_address: this.ip_address
+    }
+    console.log(data);
+    this.LoginService.login(data).subscribe((res) => {
       if (res.errors) {
         console.log('err', res.errors[0].message)
         this.errorMessage = res.errors[0].message;
         this.error = true;
       } else {
-        console.log(res.data);
+        if (res.data.login === null) {
+          console.log('Utente non verificato');
+        } else {
+          localStorage.setItem('token', res.data.login.token)
+          localStorage.setItem('user', res.data.login)
+          console.log('Utente verificato: ', res);
+        }
       }
     }
       // , (err) => {

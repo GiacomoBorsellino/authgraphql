@@ -18,14 +18,12 @@ export class ListUsersComponent {
   call(objData: any) {
     let data = [];
     data.push(objData)
-    console.log('objData: ', objData);
-
     this.loadUsers(data)
   }
 
   uncall(objData: any) {
     this.products = []
-    this.UsersService.callUsers(objData).subscribe((res) => {
+    this.UsersService.getUsers(objData).subscribe((res) => {
       if (res.errors) {
         console.log(res.errors[0].extensions.code)
         this.errorMessage = res.errors[0].extensions.code;
@@ -46,17 +44,16 @@ export class ListUsersComponent {
   }
 
   loadUsers(oj: any) {
-    this.UsersService.callUsers(oj).subscribe((res) => {
+    this.UsersService.getUsers(oj).subscribe((res) => {
       if (res.errors) {
         console.log('err', res.errors[0].message)
         this.errorMessage = res.errors[0].message;
         this.error = true;
       } else {
-        console.log(res.data.products);
+        console.log(res.data.getUsers);
 
         // this.products = res.data.products;
-        this.users = res.data.users;
-        console.log(this.users);
+        this.users = res.data.getUsers;
       }
     }
       // , (err) => {

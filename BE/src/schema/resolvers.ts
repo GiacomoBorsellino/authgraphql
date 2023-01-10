@@ -6,7 +6,7 @@ const prisma = new PrismaClient()
 const resolvers = {
 
     Query: {
-        users(args, parent, context, info) {
+        getUsers(args, parent, context, info) {
             console.log("=============================================== USERS");
             const usersList = prisma.users.findMany({})
             return usersList;
@@ -58,6 +58,26 @@ const resolvers = {
         },
     },
     Mutation: {
+        async login(args, parent) {
+            console.log('================= LOGIN');
+            console.log(args, parent);
+
+            const user = await prisma.users.findUnique({
+                where: {
+                    id: +parent.input.id
+                },
+            })
+
+            if (user.email === parent.input.email) {
+                let userAccepted = {}
+                userAccepted = user;
+                userAccepted["token"] = "sono_il_token_123"
+                console.log('userAccepted: ', userAccepted);
+                return userAccepted
+            } else {
+                return null
+            }
+        },
         // login(args, parent, context, info) {
         //     console.log("=============================================== LOGIN");
         //     console.log(args, parent);

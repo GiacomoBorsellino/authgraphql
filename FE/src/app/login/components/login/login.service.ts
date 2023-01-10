@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http'
+import { Apollo, gql } from 'apollo-angular'
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +11,42 @@ import { retry, catchError } from 'rxjs/operators';
 
 export class LoginService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private apollo: Apollo) { }
 
-  private readonly urlRoot = `${environment.apiUrl}`;
-  private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_123" } }
+  // Login utente
+  login(objData: any): Observable<any> {
 
+    let LOGIN = gql`
+      mutation login($input: UserInput) {
+        login(input: $input) {
+          id
+          first_name
+          last_name
+          email
+          gender
+          ip_address
+          token
+        }
+      }
+    `
+
+    return this.apollo
+      .mutate({
+        mutation: LOGIN,
+        variables: {
+          input: objData
+        }
+      })
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  /*
   login(objData: any): Observable<any> {
     let body = { tag: "login", query: `{ login { ${objData} } }` }
     return this.http.post<any>(this.urlRoot, body, this.headers)
       .pipe(retry(1), catchError(this.handleError));
   }
-
+  */
   // Manipolazione errore
   handleError(error: any) {
     let errorMessage = '';
