@@ -23,13 +23,13 @@
 
 ## Tecnologie/Argomenti
 
-# BE:
+BE:
 * Typescript
 * GraphQL
 * Apollo Server
 * Prisma
 
-# FE:
+FE:
 * Angular
 * Typescript
 * Apollo Client
