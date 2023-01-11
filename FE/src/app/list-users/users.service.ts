@@ -15,16 +15,18 @@ export class UsersService {
 
   // private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_123" } }
   // private readonly urlRoot = `${environment.apiUrl}`;
-  private readonly token: any = localStorage.getItem('token')
+  private readonly token: any = localStorage.getItem('token');
 
   // Richiama tutti gli utenti
-  getUsers(objData: any): Observable<any> {
-    console.log(objData);
+  getUsers(data: any): Observable<any> {
+    // console.log(objData);
 
     let GET_USER = gql` 
       query getUsers {
         getUsers {
-          ${objData}
+          id
+          email
+          ip_address
         }
       }
     `

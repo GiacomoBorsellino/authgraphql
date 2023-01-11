@@ -25,7 +25,7 @@ export class EditUserComponent {
       password: this.password
     }
 
-    this.UsersService.addUser(data).subscribe(({ res }) => {
+    this.UsersService.addUser(data).subscribe((res) => {
       console.log('added data: ', res)
     })
 
@@ -63,7 +63,7 @@ export class EditUserComponent {
       password: this.password
     }
 
-    this.UsersService.updateUser(data).subscribe(({ res }) => {
+    this.UsersService.updateUser(data).subscribe((res) => {
       console.log('updated data: ', res)
     })
   }
@@ -75,7 +75,7 @@ export class EditUserComponent {
       id: this.id
     }
 
-    this.UsersService.deleteUser(data).subscribe(({ res }) => {
+    this.UsersService.deleteUser(data).subscribe((res) => {
       console.log('deleted data: ', res)
     })
   }

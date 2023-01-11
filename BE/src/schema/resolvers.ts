@@ -1,14 +1,17 @@
 
 import { PrismaClient } from '@prisma/client'
+import { secret } from '../config/jwt.conf';
+const jwt = require("jsonwebtoken"); // Ricorda di importare così, sennò non funzionerà !
 
 const prisma = new PrismaClient()
 
 const resolvers = {
 
     Query: {
-        getUsers(args, parent, context, info) {
-            console.log("=============================================== USERS");
-            const usersList = prisma.users.findMany({})
+        async getUsers(args, parent, context, info) {
+            console.log('================= IN USERS');
+            const usersList = await prisma.users.findMany({})
+            console.log('LISTA');
             return usersList;
         },
         user() {
@@ -33,16 +36,16 @@ const resolvers = {
         },
 
 
-        // hello: (root, args, context, info) => {
-        //     console.log(`3. resolver: hello`)
-        //     console.log('contesto', context);
+        hello: (root, args, context, info) => {
+            console.log(`3. resolver: hello`)
+            console.log('contesto', context);
 
-        //     return `Hello ${args.name ? args.name : 'world'}!`
-        // },
-        // bye: (root, args, context, info) => {
-        //     console.log(`3. resolver: bye`)
-        //     return `Bye ${args.name ? args.name : 'world'}!`
-        // },
+            return `Hello ${args.name ? args.name : 'world'}!`
+        },
+        bye: (root, args, context, info) => {
+            console.log(`3. resolver: bye`)
+            return `Bye ${args.name ? args.name : 'world'}!`
+        },
     },
     Product: {
         category(parent: any) {
@@ -71,7 +74,22 @@ const resolvers = {
             if (user.email === parent.input.email) {
                 let userAccepted = {}
                 userAccepted = user;
-                userAccepted["token"] = "sono_il_token_123"
+
+                let token = jwt.sign(
+                    {
+                        id: user.id,
+                        first_name: user.first_name,
+                        last_name: user.last_name,
+                        email: user.email,
+                        ip_address: user.ip_address
+                    },
+                    secret.secret,
+                    {
+                        expiresIn: '24h' // expires in 24 hours
+                    }
+                );
+
+                userAccepted["token"] = token
                 console.log('userAccepted: ', userAccepted);
                 return userAccepted
             } else {
@@ -79,7 +97,7 @@ const resolvers = {
             }
         },
         async addUser(args, parent) {
-            console.log('================= ADDUSER');
+            console.log('================= IN ADDUSER');
 
             console.log(args, parent);
 
@@ -95,6 +113,7 @@ const resolvers = {
                     id: +addUser.id
                 }
             })
+            console.log('LISTA-UTENTE: ', user);
 
             return user
 

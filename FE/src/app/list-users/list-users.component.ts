@@ -44,14 +44,12 @@ export class ListUsersComponent {
   }
 
   loadUsers(oj: any) {
-    this.UsersService.getUsers(oj).subscribe((res) => {
-      console.log(res.data.getUsers);
-      this.users = res.data.getUsers;
-    }
-      // , (err) => {
-      //   console.log('Catch', err);
-      // }
-    )
+    let data = oj
+
+    this.UsersService.getUsers(data).subscribe((res) => {
+      console.log('lista data: ', res)
+      this.users = res.data.getUsers
+    })
   }
 
 }
