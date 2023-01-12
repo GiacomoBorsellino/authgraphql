@@ -130,6 +130,7 @@ const resolvers = {
                 data: {
                     email: parent.input.email,
                     ip_address: parent.input.ip_address,
+                    roles: parent.input.roles
                 },
             })
 

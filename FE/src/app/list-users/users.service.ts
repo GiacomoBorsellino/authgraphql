@@ -82,7 +82,7 @@ export class UsersService {
   }
 
   // Aggiorna utente
-  updateUser(objData: any): Observable<any> {
+  updateUser(data: any): Observable<any> {
     let UPDATE_USER = gql`
       mutation updateUser($input: UserInput) {
         updateUser(input: $input) {
@@ -92,6 +92,7 @@ export class UsersService {
           email
           gender
           ip_address
+          roles
         }
       }
     `
@@ -100,9 +101,10 @@ export class UsersService {
         mutation: UPDATE_USER,
         variables: {
           input: {
-            id: objData.id,
-            email: objData.email,
-            ip_address: objData.password
+            id: data.id,
+            email: data.email,
+            ip_address: data.password,
+            roles: JSON.stringify(data.roles)
           }
         },
         context: {

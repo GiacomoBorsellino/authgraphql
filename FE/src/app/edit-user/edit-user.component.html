@@ -12,6 +12,19 @@
         <input type="email" [(ngModel)]="email" placeholder="email">
         <input type="password" [(ngModel)]="password" placeholder="password">
         <button (click)="updateUser()">Modifica Utente</button>
+        <br>
+
+        <input type="checkbox" id="componenteA" name="componenteA" value="componenteA"
+            (mouseup)="editRole('componenteA')">
+        <label for="componenteA"> componenteA</label>
+
+        <input type="checkbox" id="componenteB" name="componenteB" value="componenteB"
+            (mouseup)="editRole('componenteB')">
+        <label for="componenteB"> componenteB</label>
+
+        <input type="checkbox" id="componenteC" name="componenteC" value="componenteC"
+            (mouseup)="editRole('componenteC')">
+        <label for="componenteC"> componenteC</label>
     </div>
 
     <h2>Cancella utente</h2>
@@ -20,5 +33,10 @@
         <button (click)="deleteUser()">Cancella Utente</button>
     </div>
 </main>
+
+<h3>Componenti da visualizzare in base ai permessi</h3>
+<app-componente-a *ngIf="test('componenteA')"></app-componente-a>
+<app-componente-b *ngIf="test('componenteB')"></app-componente-b>
+<app-componente-c *ngIf="test('componenteC')"></app-componente-c>
 
 <h3 *ngIf="error">Errore: {{errorMessage}}</h3>

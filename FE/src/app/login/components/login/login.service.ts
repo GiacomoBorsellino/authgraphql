@@ -13,7 +13,7 @@ export class LoginService {
   constructor(private apollo: Apollo) { }
 
   // Login utente
-  login(objData: any): Observable<any> {
+  login(data: any): Observable<any> {
 
     let LOGIN = gql`
       mutation login($input: UserInput) {
@@ -24,6 +24,7 @@ export class LoginService {
           email
           gender
           ip_address
+          roles
           token
         }
       }
@@ -33,7 +34,7 @@ export class LoginService {
       .mutate({
         mutation: LOGIN,
         variables: {
-          input: objData
+          input: data
         }
       })
       .pipe(retry(1), catchError(this.handleError));
@@ -46,6 +47,7 @@ export class LoginService {
       .pipe(retry(1), catchError(this.handleError));
   }
   */
+
   // Manipolazione errore
   handleError(error: any) {
     let errorMessage = '';

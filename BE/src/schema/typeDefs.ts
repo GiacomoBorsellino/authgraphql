@@ -9,6 +9,7 @@ const typeDefs = gql`
         email: String
         gender: String
         ip_address: String
+        roles: String
     }
 
     type Product {
@@ -29,6 +30,7 @@ const typeDefs = gql`
         id: ID
         email: String
         ip_address: String
+        roles: String
     }
 
     type UserLogin {
@@ -39,6 +41,7 @@ const typeDefs = gql`
         gender: String
         ip_address: String
         token: String
+        roles: String
     }
 
     type Query {

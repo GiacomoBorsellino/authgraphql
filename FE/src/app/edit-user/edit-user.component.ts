@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../list-users/users.service';
 
 @Component({
@@ -7,15 +7,60 @@ import { UsersService } from '../list-users/users.service';
   styleUrls: ['./edit-user.component.css']
 })
 
-export class EditUserComponent {
+export class EditUserComponent implements OnInit {
+
   constructor(private UsersService: UsersService) { }
+
+  /* 
+  Ogni volta che aggiungi un componente: 
+  1)
+  */
+
+  ngOnInit() {
+    // Controllo Permessi di Visualizzazione
+    let user: any = JSON.parse(localStorage.getItem('user') || '{}');
+    let roles = JSON.parse(user.roles)
+    this.roles = roles;
+    console.log(this.roles);
+
+    this.test
+  }
+
+  test(nomeDalComponente: any) {
+    this.roles.forEach((role: any) => {
+      if (nomeDalComponente === role.nameComponent) {
+        console.log(role.view);
+        return role.view;
+      } else {
+        return false;
+      }
+    })
+  }
 
   // Variabili
   id: number;
   email: string;
   password: string;
+  roles: any;
   error: boolean = false;
   errorMessage: string = '';
+
+  // Gestione Ruoli
+  editRole(role: string) {
+    // Controllo Permessi di Aggiunta
+    // Aggiungere nuovi componente qui
+    let roles = [
+      { nameComponent: 'componenteA', view: false },
+      { nameComponent: 'componenteB', view: false },
+      { nameComponent: 'componenteC', view: false }
+    ];
+    roles.map((componente: any) => {
+      if (componente.nameComponent === role) {
+        componente.view = !componente.view
+      }
+    })
+    console.log(this.roles);
+  }
 
   addUser() {
     console.log(this.email, this.password);
@@ -60,7 +105,8 @@ export class EditUserComponent {
     let data = {
       id: this.id,
       email: this.email,
-      password: this.password
+      password: this.password,
+      roles: this.roles
     }
 
     this.UsersService.updateUser(data).subscribe((res) => {
