@@ -11,50 +11,40 @@ export class EditUserComponent implements OnInit {
 
   constructor(private UsersService: UsersService) { }
 
-  /* 
-  Ogni volta che aggiungi un componente: 
-  1)
-  */
+  // Variabili
+  id: number;
+  email: string;
+  password: string;
+  roles: any;
+  // Aggiungere nuovi componenti qui
+  rolesEdited: any = [
+    { nameComponent: 'componenteA', view: false },
+    { nameComponent: 'componenteB', view: false },
+    { nameComponent: 'componenteC', view: false }
+  ];
+
+  error: boolean = false;
+  errorMessage: string = '';
 
   ngOnInit() {
     // Controllo Permessi di Visualizzazione
     let user: any = JSON.parse(localStorage.getItem('user') || '{}');
     let roles = JSON.parse(user.roles)
     this.roles = roles;
-    console.log(this.roles);
-
-    this.test
   }
 
-  test(nomeDalComponente: any) {
-    this.roles.forEach((role: any) => {
-      if (nomeDalComponente === role.nameComponent) {
-        console.log(role.view);
-        return role.view;
-      } else {
-        return false;
+  test(nomeDalComponente: string) {
+    for (let i = 0; i < this.roles.length; i++) {
+      if (this.roles[i].nameComponent === nomeDalComponente) {
+        return this.roles[i].view
       }
-    })
+    }
   }
-
-  // Variabili
-  id: number;
-  email: string;
-  password: string;
-  roles: any;
-  error: boolean = false;
-  errorMessage: string = '';
 
   // Gestione Ruoli
   editRole(role: string) {
     // Controllo Permessi di Aggiunta
-    // Aggiungere nuovi componente qui
-    let roles = [
-      { nameComponent: 'componenteA', view: false },
-      { nameComponent: 'componenteB', view: false },
-      { nameComponent: 'componenteC', view: false }
-    ];
-    roles.map((componente: any) => {
+    this.rolesEdited.map((componente: any) => {
       if (componente.nameComponent === role) {
         componente.view = !componente.view
       }
@@ -106,7 +96,7 @@ export class EditUserComponent implements OnInit {
       id: this.id,
       email: this.email,
       password: this.password,
-      roles: this.roles
+      roles: this.rolesEdited
     }
 
     this.UsersService.updateUser(data).subscribe((res) => {
