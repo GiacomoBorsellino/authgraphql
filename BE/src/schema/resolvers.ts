@@ -93,7 +93,8 @@ const resolvers = {
                 console.log('userAccepted: ', userAccepted);
                 return userAccepted
             } else {
-                return null
+                // return null
+                throw new Error('Login non corretto');
             }
         },
         async addUser(args, parent) {

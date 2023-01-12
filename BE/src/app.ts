@@ -32,5 +32,14 @@ const server = new ApolloServer({
 
 // ...in ascolto
 server.listen().then(({ url }) => {
-    console.log(`Welcome in my dungeon, fellow undead...: ${url}`);
+    console.log(`
+    Welcome in my dungeon, fellow undead...  
+                 _____
+                /     \\
+               | () () |
+                \\  ^  /
+                 |||||
+                 |||||
+                 
+       : ${url}`);
 })   
