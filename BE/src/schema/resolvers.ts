@@ -81,7 +81,7 @@ const resolvers = {
                         first_name: user.first_name,
                         last_name: user.last_name,
                         email: user.email,
-                        ip_address: user.ip_address
+                        password: user.password
                     },
                     secret.secret,
                     {
@@ -105,7 +105,7 @@ const resolvers = {
             const addUser = await prisma.users.create({
                 data: {
                     email: parent.input.email,
-                    ip_address: parent.input.ip_address,
+                    password: parent.input.password,
                 },
             })
 
@@ -129,7 +129,7 @@ const resolvers = {
                 },
                 data: {
                     email: parent.input.email,
-                    ip_address: parent.input.ip_address,
+                    password: parent.input.password,
                     roles: parent.input.roles
                 },
             })

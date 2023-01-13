@@ -26,7 +26,7 @@ export class UsersService {
         getUsers {
           id
           email
-          ip_address
+          password
         }
       }
     `
@@ -60,7 +60,7 @@ export class UsersService {
           last_name
           email
           gender
-          ip_address
+          password
       }
     }
     `
@@ -71,7 +71,7 @@ export class UsersService {
         variables: {
           input: {
             email: objData.email,
-            ip_address: objData.password
+            password: objData.password
           }
         },
         context: {
@@ -86,12 +86,12 @@ export class UsersService {
     let UPDATE_USER = gql`
       mutation updateUser($input: UserInput) {
         updateUser(input: $input) {
-          id
+          id                                         
           first_name
           last_name
           email
           gender
-          ip_address
+          password
           roles
         }
       }
@@ -103,7 +103,7 @@ export class UsersService {
           input: {
             id: data.id,
             email: data.email,
-            ip_address: data.password,
+            password: data.password,
             roles: JSON.stringify(data.roles)
           }
         },
@@ -124,7 +124,7 @@ export class UsersService {
           last_name
           email
           gender
-          ip_address
+          password
         }
       }
     `

@@ -23,7 +23,7 @@ export class LoginService {
           last_name
           email
           gender
-          ip_address
+          password
           roles
           token
         }

@@ -14,7 +14,7 @@ export class LoginComponent {
   // Variabili
   id: number;
   email: string;
-  ip_address: string;
+  password: string;
   // Errore
   error: boolean = false;
   errorMessage: string = '';
@@ -23,7 +23,7 @@ export class LoginComponent {
     let data = {
       id: this.id,
       email: this.email,
-      ip_address: this.ip_address
+      password: this.password
     }
 
     this.LoginService.login(data).subscribe((res) => {

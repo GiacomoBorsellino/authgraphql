@@ -8,7 +8,7 @@ const typeDefs = gql`
         last_name: String
         email: String
         gender: String
-        ip_address: String
+        password: String
         roles: String
     }
 
@@ -29,7 +29,7 @@ const typeDefs = gql`
     input UserInput {
         id: ID
         email: String
-        ip_address: String
+        password: String
         roles: String
     }
 
@@ -39,7 +39,7 @@ const typeDefs = gql`
         last_name: String
         email: String
         gender: String
-        ip_address: String
+        password: String
         token: String
         roles: String
     }

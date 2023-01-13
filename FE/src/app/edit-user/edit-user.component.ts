@@ -15,8 +15,8 @@ export class EditUserComponent implements OnInit {
   id: number;
   email: string;
   password: string;
-  roles: any;
-  // Aggiungere nuovi componenti qui
+  roles: any = [];
+  // Aggiungere TUTTI i componenti qui
   rolesEdited: any = [
     { nameComponent: 'componenteA', view: false },
     { nameComponent: 'componenteB', view: false },
@@ -29,7 +29,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit() {
     // Controllo Permessi di Visualizzazione
     let user: any = JSON.parse(localStorage.getItem('user') || '{}');
-    let roles = JSON.parse(user.roles)
+    let roles = JSON.parse(user.roles ? user.roles : '[]');
     this.roles = roles;
   }
 
@@ -49,7 +49,7 @@ export class EditUserComponent implements OnInit {
         componente.view = !componente.view
       }
     })
-    console.log(this.roles);
+    console.log(this.rolesEdited);
   }
 
   addUser() {
@@ -69,7 +69,7 @@ export class EditUserComponent implements OnInit {
     //   {
     //     "input": {
     //       "email": ${this.email}, 
-    //       "ip_address": ${this.password}
+    //       "password": ${this.password}
     //     }
     //   }
     // `

@@ -24,8 +24,8 @@ model users {
   id         Int     @id @default(autoincrement())
   first_name String? @db.VarChar(50)
   last_name  String? @db.VarChar(50)
-  email      String? @db.VarChar(50)
+  email      String  @db.VarChar(50)
   gender     String? @db.VarChar(50)
-  ip_address String? @db.VarChar(20)
+  password   String? @db.VarChar(20)
   roles      String? @db.VarChar(500)
 }

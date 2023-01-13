@@ -30,12 +30,16 @@ const checkToken = async (resolve, root, args, context, info) => {
         return result
     } else {
         let token = context[0].authorization;
+        let user = context[1].body
+        console.log(user);
+
         console.log('================= IN MIDDLEWARE 1');
+
         // let check = false;
         var decoded = jwt.verify(token, secret.secret);
         // console.log('DECOded: ', decoded);
 
-        if (decoded.id === 6) {
+        if (decoded.id === 5) {
             const result = await resolve(root, args, context, info)
             console.log('================= IN MIDDLEWARE 2 - RISULTATO');
             return result
