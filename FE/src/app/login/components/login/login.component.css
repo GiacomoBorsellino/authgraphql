@@ -1,0 +1,32 @@
+div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 30%;
+    padding: 1rem;
+}
+
+input {
+    height: 2rem;
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(207, 207, 207);
+    text-align: center;
+    font-weight: 600;
+}
+
+button {
+    border: none;
+    background-color: rgb(71, 151, 216);
+    width: 20%;
+    height: 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+}
+
+button:hover {
+    background-color: rgb(78, 174, 253);
+    border-radius: 10px;
+}

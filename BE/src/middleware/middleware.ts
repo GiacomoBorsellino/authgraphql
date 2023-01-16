@@ -1,6 +1,9 @@
 // Import permessi
 import { permessi } from '../permessi/permessi';
 import { secret } from '../config/jwt.conf';
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
 const jwt = require("jsonwebtoken"); // Ricorda di importare così, sennò non funzionerà !
 
 const checkToken = async (resolve, root, args, context, info) => {
@@ -30,16 +33,28 @@ const checkToken = async (resolve, root, args, context, info) => {
         return result
     } else {
         let token = context[0].authorization;
-        let user = context[1].body
-        console.log(user);
+        let userData = JSON.parse(context[0].userdata);
+        console.log('USERDATA: ', userData);
 
         console.log('================= IN MIDDLEWARE 1');
 
         // let check = false;
-        var decoded = jwt.verify(token, secret.secret);
+        let decoded = await jwt.verify(token, secret.secret);
         // console.log('DECOded: ', decoded);
 
-        if (decoded.id === 5) {
+        const user = await prisma.users.findUnique({
+            where: {
+                id: +decoded.id
+            }
+        })
+
+        // console.log('USER ID: ', user.id);
+        // console.log('USER ROLES: ', user.roles);
+
+        // console.log('USER ID2: ', userData.id);
+        // console.log('USER ROLES2: ', userData.roles);
+
+        if (decoded.id === user.id || user.roles === userData.roles) {
             const result = await resolve(root, args, context, info)
             console.log('================= IN MIDDLEWARE 2 - RISULTATO');
             return result

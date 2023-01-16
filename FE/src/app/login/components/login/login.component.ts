@@ -21,7 +21,6 @@ export class LoginComponent {
 
   login() {
     let data = {
-      id: this.id,
       email: this.email,
       password: this.password
     }

@@ -2,6 +2,12 @@
     <div>
         <button (click)="logout()">Logout</button>
     </div>
+
+    <div class="utente">
+        Buongiorno <p *ngIf="userCheck === true">{{user.email}}</p>
+        <p *ngIf="userCheck === false">undefined</p>
+    </div>
+
     <ul>
         <li (click)="routing('login')">login</li>
         <li (click)="routing('users')">lista utenti</li>

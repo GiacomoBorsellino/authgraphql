@@ -16,6 +16,7 @@ export class UsersService {
   // private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_123" } }
   // private readonly urlRoot = `${environment.apiUrl}`;
   private readonly token: any = localStorage.getItem('token');
+  private readonly userData: any = localStorage.getItem('user');
 
   // Richiama tutti gli utenti
   getUsers(data: any): Observable<any> {
@@ -86,8 +87,8 @@ export class UsersService {
     let UPDATE_USER = gql`
       mutation updateUser($input: UserInput) {
         updateUser(input: $input) {
-          id                                         
-          first_name
+          id                                          
+          first_name                                 
           last_name
           email
           gender
@@ -108,7 +109,10 @@ export class UsersService {
           }
         },
         context: {
-          headers: new HttpHeaders().set("Authorization", this.token),
+          headers: new HttpHeaders()
+            .set("Authorization", this.token)
+            .set("UserData", this.userData)
+
         }
       })
       .pipe(retry(1), catchError(this.handleError));
@@ -119,7 +123,7 @@ export class UsersService {
     let DELETE_USER = gql`
       mutation deleteUser($input: UserInput) {
         deleteUser(input: $input) {
-          id
+          id                    
           first_name
           last_name
           email

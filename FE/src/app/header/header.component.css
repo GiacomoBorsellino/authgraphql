@@ -3,6 +3,8 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    background-color: rgb(0, 43, 43);
+    padding: 1rem;
 }
 
 ul {
@@ -15,8 +17,31 @@ ul {
 }
 
 li {
-    background-color: aquamarine;
+    color: white;
+    font-weight: 600;
     padding: 0.5rem;
     border-radius: 5px;
     cursor: pointer;
+}
+
+button {
+    border: none;
+    background-color: rgb(216, 71, 71);
+    height: 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+button:hover {
+    background-color: rgb(253, 78, 78);
+    border-radius: 10px;
+}
+
+.utente {
+    color: white;
+    font-weight: 600;
 }

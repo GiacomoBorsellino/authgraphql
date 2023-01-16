@@ -67,11 +67,11 @@ const resolvers = {
 
             const user = await prisma.users.findUnique({
                 where: {
-                    id: +parent.input.id
+                    email: parent.input.email
                 }
             })
 
-            if (user.email === parent.input.email) {
+            if (user.email === parent.input.email && user.password === parent.input.password) {
                 let userAccepted = {}
                 userAccepted = user;
 

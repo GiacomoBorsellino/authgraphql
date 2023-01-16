@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,9 +7,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
   constructor(private router: Router) { }
+
+  user: any;
+  userCheck: boolean = false;
+
+  ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.userCheck = Object.keys(this.user).length === 0
+  }
+
 
   routing(route: string) {
     this.router.navigate(['/', route])

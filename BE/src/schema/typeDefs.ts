@@ -5,7 +5,7 @@ const typeDefs = gql`
     type User {
         id: Int     
         first_name: String
-        last_name: String
+        last_name: String                 
         email: String
         gender: String
         password: String
@@ -60,7 +60,7 @@ const typeDefs = gql`
         login(input: UserInput): UserLogin
 
         addUser(input: UserInput): User
-        updateUser(input: UserInput): User
+        updateUser(input: UserInput): User    
         deleteUser(input: UserInput): User
     }
 

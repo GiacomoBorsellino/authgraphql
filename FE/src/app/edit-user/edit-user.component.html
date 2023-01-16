@@ -1,43 +1,59 @@
 <main>
+
     <h2>Aggiungi utente</h2>
-    <div>
+    <div class="add">
         <input type="email" [(ngModel)]="email" placeholder="email">
         <input type="password" [(ngModel)]="password" placeholder="password">
+        <br>
         <button (click)="addUser()">Aggiungi Utente</button>
     </div>
 
     <h2>Modifica utente</h2>
-    <div>
+    <div class="update">
         <input type="number" [(ngModel)]="id" placeholder="id">
         <input type="email" [(ngModel)]="email" placeholder="email">
         <input type="password" [(ngModel)]="password" placeholder="password">
+        <br>
         <button (click)="updateUser()">Modifica Utente</button>
         <br>
 
-        <input type="checkbox" id="componenteA" name="componenteA" value="componenteA"
-            (mouseup)="editRole('componenteA')">
-        <label for="componenteA"> componenteA</label>
+        <div>
+            <span>
+                <input type="checkbox" id="componenteA" name="componenteA" value="componenteA"
+                    (mouseup)="editRole('componenteA')">
+                <label for="componenteA"> Componente A</label>
+            </span>
 
-        <input type="checkbox" id="componenteB" name="componenteB" value="componenteB"
-            (mouseup)="editRole('componenteB')">
-        <label for="componenteB"> componenteB</label>
+            <span>
+                <input type="checkbox" id="componenteB" name="componenteB" value="componenteB"
+                    (mouseup)="editRole('componenteB')">
+                <label for="componenteB"> Componente B</label>
+            </span>
 
-        <input type="checkbox" id="componenteC" name="componenteC" value="componenteC"
-            (mouseup)="editRole('componenteC')">
-        <label for="componenteC"> componenteC</label>
+            <span>
+                <input type="checkbox" id="componenteC" name="componenteC" value="componenteC"
+                    (mouseup)="editRole('componenteC')">
+                <label for="componenteC"> Componente C</label>
+            </span>
+        </div>
     </div>
 
     <h2>Cancella utente</h2>
-    <div>
+    <div class="delete">
         <input type="number" [(ngModel)]="id" placeholder="id">
+        <br>
         <button (click)="deleteUser()">Cancella Utente</button>
     </div>
 </main>
 
-<h3>Componenti da visualizzare in base ai permessi</h3>
-<!-- Inserire nome specifico del componente -->
-<app-componente-a *ngIf="test('componenteA')"></app-componente-a>
-<app-componente-b *ngIf="test('componenteB')"></app-componente-b>
-<app-componente-c *ngIf="test('componenteC')"></app-componente-c>
+<main>
+    <h3>Componenti da visualizzare in base ai permessi</h3>
+    <!-- Inserire nome specifico del componente -->
+    <div class="components">
+        <app-componente-a *ngIf="test('componenteA')"></app-componente-a>
+        <app-componente-b *ngIf="test('componenteB')"></app-componente-b>
+        <app-componente-c *ngIf="test('componenteC')"></app-componente-c>
+    </div>
+</main>
 
 <h3 *ngIf="error">Errore: {{errorMessage}}</h3>
