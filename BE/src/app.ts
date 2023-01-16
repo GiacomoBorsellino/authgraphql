@@ -12,6 +12,27 @@ import { middleware } from './middleware/middleware';
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { applyMiddleware } from 'graphql-middleware'
 
+// API Config - Import Express
+import express from 'express';
+import cors from 'cors';
+import { Request, Response } from 'express';
+import routes_apiTest from './apiTest/routes_apiTest';
+const bodyParser = require('body-parser');
+const app: express.Application = express();
+app.use(cors())
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+app.get('/', (req: Request, res: Response) => {
+    res.status(200).json({ message: 'API-BE Attivo' });
+});
+
+routes_apiTest.routes(app);
+
+app.listen(3000, () => {
+    console.log('Server started')
+});
+
 // Schema
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 

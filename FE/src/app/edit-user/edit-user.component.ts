@@ -27,6 +27,10 @@ export class EditUserComponent implements OnInit {
   errorMessage: string = '';
 
   ngOnInit() {
+    // Chiamata API REST normale
+    this.UsersService.letApiRestData().subscribe((res) => {
+      console.log('Response: ', res)
+    })
     // Controllo Permessi di Visualizzazione
     let user: any = JSON.parse(localStorage.getItem('user') || '{}');
     let roles = JSON.parse(user.roles ? user.roles : '[]');

@@ -19,7 +19,6 @@ export class HeaderComponent implements OnInit {
     this.userCheck = Object.keys(this.user).length === 0
   }
 
-
   routing(route: string) {
     this.router.navigate(['/', route])
   }

@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
+
 import { Apollo, gql } from 'apollo-angular'
 
 @Injectable({
@@ -11,12 +13,21 @@ import { Apollo, gql } from 'apollo-angular'
 
 export class UsersService {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo, private http: HttpClient) { }
 
   // private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_123" } }
   // private readonly urlRoot = `${environment.apiUrl}`;
   private readonly token: any = localStorage.getItem('token');
   private readonly userData: any = localStorage.getItem('user');
+  private readonly letApiRestUrl: any = 'http://localhost:3000/1/apiTest';
+
+
+  // Richiama tutti gli utenti
+  public letApiRestData(): Observable<any> {
+    return this.http.get<any>(
+      `${this.letApiRestUrl}`
+    );
+  }
 
   // Richiama tutti gli utenti
   getUsers(data: any): Observable<any> {
