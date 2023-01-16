@@ -17,6 +17,7 @@ export class UsersService {
 
   // private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_123" } }
   // private readonly urlRoot = `${environment.apiUrl}`;
+
   private readonly token: any = localStorage.getItem('token');
   private readonly userData: any = localStorage.getItem('user');
   private readonly letApiRestUrl: any = 'http://localhost:3000/1/apiTest';
@@ -30,7 +31,7 @@ export class UsersService {
   }
 
   // Richiama tutti gli utenti
-  getUsers(data: any): Observable<any> {
+  public getUsers(data: any): Observable<any> {
     // console.log(objData);
 
     let GET_USER = gql` 
@@ -62,7 +63,7 @@ export class UsersService {
   */
 
   // Aggiungi utente
-  addUser(objData: any): Observable<any> {
+  public addUser(objData: any): Observable<any> {
 
     let ADD_USER = gql`
     mutation addUser($input: UserInput) {
@@ -94,7 +95,7 @@ export class UsersService {
   }
 
   // Aggiorna utente
-  updateUser(data: any): Observable<any> {
+  public updateUser(data: any): Observable<any> {
     let UPDATE_USER = gql`
       mutation updateUser($input: UserInput) {
         updateUser(input: $input) {
@@ -130,7 +131,7 @@ export class UsersService {
   }
 
   // Cancella utente
-  deleteUser(objData: any): Observable<any> {
+  public deleteUser(objData: any): Observable<any> {
     let DELETE_USER = gql`
       mutation deleteUser($input: UserInput) {
         deleteUser(input: $input) {

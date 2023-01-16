@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 const jwt = require("jsonwebtoken"); // Ricorda di importare così, sennò non funzionerà !
 
 const checkToken = async (resolve, root, args, context, info) => {
-    // console.log('================= IN MIDDLEWARE');
+    console.log('================= IN MIDDLEWARE');
 
     // Controllo permessi
     // console.log('MID 1: ', resolve);
@@ -31,6 +31,28 @@ const checkToken = async (resolve, root, args, context, info) => {
         const result = await resolve(root, args, context, info)
         console.log(`Permesso di saltare il controllo del token`)
         return result
+    } else if (checkField && tagResolver === 'addUser') {
+        let token = context[0].authorization;
+        console.log('================= IN MIDDLEWARE 1');
+
+        // let check = false;
+        let decoded = await jwt.verify(token, secret.secret);
+        // console.log('DECOded: ', decoded);
+
+        const user = await prisma.users.findUnique({
+            where: {
+                id: +decoded.id
+            }
+        })
+
+        if (decoded.id === user.id) {
+            const result = await resolve(root, args, context, info)
+            console.log('================= IN MIDDLEWARE 2 - RISULTATO');
+            return result
+        } else {
+            console.log(`il token NON è corretto`)
+            throw new Error('Il token NON è corretto');
+        }
     } else {
         let token = context[0].authorization;
         let userData = JSON.parse(context[0].userdata);

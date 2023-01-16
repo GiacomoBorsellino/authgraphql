@@ -37,7 +37,7 @@ export class EditUserComponent implements OnInit {
     this.roles = roles;
   }
 
-  test(nomeDalComponente: string) {
+  checkView(nomeDalComponente: string) {
     for (let i = 0; i < this.roles.length; i++) {
       if (this.roles[i].nameComponent === nomeDalComponente) {
         return this.roles[i].view
