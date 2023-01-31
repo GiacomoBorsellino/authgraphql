@@ -22,7 +22,6 @@ export class UsersService {
   private readonly userData: any = localStorage.getItem('user');
   private readonly letApiRestUrl: any = 'http://localhost:3000/1/apiTest';
 
-
   // Richiama tutti gli utenti
   public letApiRestData(): Observable<any> {
     return this.http.get<any>(

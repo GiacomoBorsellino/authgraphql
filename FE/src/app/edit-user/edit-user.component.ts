@@ -31,6 +31,7 @@ export class EditUserComponent implements OnInit {
     this.UsersService.letApiRestData().subscribe((res) => {
       console.log('Response: ', res)
     })
+
     // Controllo Permessi di Visualizzazione
     let user: any = JSON.parse(localStorage.getItem('user') || '{}');
     let roles = JSON.parse(user.roles ? user.roles : '[]');
@@ -61,7 +62,8 @@ export class EditUserComponent implements OnInit {
 
     let data = {
       email: this.email,
-      password: this.password
+      password: this.password,
+      roles: this.rolesEdited
     }
 
     this.UsersService.addUser(data).subscribe((res) => {
