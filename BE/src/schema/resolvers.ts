@@ -9,32 +9,15 @@ const resolvers = {
 
     Query: {
         async getUsers(args, parent, context, info) {
-            console.log('================= IN USERS');
-            const usersList = await prisma.users.findMany({})
+            console.log('================= IN UTENTI');
+            const utentiList = await prisma.utenti.findMany({})
             console.log('LISTA');
-            return usersList;
+            return utentiList;
         },
         user() {
-            const usersList = prisma.users.findMany({})
-            return usersList;
+            const utentiList = prisma.utenti.findMany({})
+            return utentiList;
         },
-        products() {
-            const productsList = prisma.products.findMany({})
-            return productsList;
-        },
-        product() {
-            const productsList = prisma.products.findMany({})
-            return productsList;
-        },
-        categories() {
-            const categoryList = prisma.category.findMany({})
-            return categoryList;
-        },
-        category() {
-            const categoryList = prisma.category.findMany({})
-            return categoryList;
-        },
-
 
         hello: (root, args, context, info) => {
             console.log(`3. resolver: hello`)
@@ -65,7 +48,7 @@ const resolvers = {
             console.log('================= LOGIN');
             console.log(args, parent);
 
-            const user = await prisma.users.findUnique({
+            const user = await prisma.utenti.findUnique({
                 where: {
                     email: parent.input.email
                 }
@@ -102,14 +85,14 @@ const resolvers = {
 
             console.log(args, parent);
 
-            const addUser = await prisma.users.create({
+            const addUser = await prisma.utenti.create({
                 data: {
                     email: parent.input.email,
                     password: parent.input.password,
                 },
             })
 
-            const user = await prisma.users.findUnique({
+            const user = await prisma.utenti.findUnique({
                 where: {
                     id: +addUser.id
                 }
@@ -123,7 +106,7 @@ const resolvers = {
             console.log('================= UPDATEUSER');
             console.log(args, parent);
 
-            await prisma.users.update({
+            await prisma.utenti.update({
                 where: {
                     id: +parent.input.id
                 },
@@ -134,7 +117,7 @@ const resolvers = {
                 },
             })
 
-            const user = await prisma.users.findUnique({
+            const user = await prisma.utenti.findUnique({
                 where: {
                     id: +parent.input.id
                 }
@@ -147,7 +130,7 @@ const resolvers = {
             console.log('================= DELETEUSER');
             console.log(args, parent);
 
-            const deleteUser = await prisma.users.delete({
+            const deleteUser = await prisma.utenti.delete({
                 where: {
                     id: +parent.input.id
                 },
