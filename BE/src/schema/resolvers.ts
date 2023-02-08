@@ -30,19 +30,19 @@ const resolvers = {
             return `Bye ${args.name ? args.name : 'world'}!`
         },
     },
-    Product: {
-        category(parent: any) {
-            // console.log(parent);
+    // Product: {
+    //     category(parent: any) {
+    //         // console.log(parent);
 
-            let categoryId = parent.categoryid
-            const categoryName = prisma.category.findUnique({
-                where: {
-                    id: categoryId
-                }
-            })
-            return categoryName
-        },
-    },
+    //         let categoryId = parent.categoryid
+    //         const categoryName = prisma.category.findUnique({
+    //             where: {
+    //                 id: categoryId
+    //             }
+    //         })
+    //         return categoryName
+    //     },
+    // },
     Mutation: {
         async login(args, parent) {
             console.log('================= LOGIN');
@@ -50,7 +50,7 @@ const resolvers = {
 
             const user = await prisma.utenti.findUnique({
                 where: {
-                    email: parent.input.email
+                    id: parent.input.id
                 }
             })
 
@@ -61,8 +61,8 @@ const resolvers = {
                 let token = jwt.sign(
                     {
                         id: user.id,
-                        first_name: user.first_name,
-                        last_name: user.last_name,
+                        first_name: user.nome,
+                        last_name: user.cognome,
                         email: user.email,
                         password: user.password
                     },

@@ -39,7 +39,7 @@ const checkToken = async (resolve, root, args, context, info) => {
         let decoded = await jwt.verify(token, secret.secret);
         // console.log('DECOded: ', decoded);
 
-        const user = await prisma.users.findUnique({
+        const user = await prisma.utenti.findUnique({
             where: {
                 id: +decoded.id
             }
@@ -64,7 +64,7 @@ const checkToken = async (resolve, root, args, context, info) => {
         let decoded = await jwt.verify(token, secret.secret);
         // console.log('DECOded: ', decoded);
 
-        const user = await prisma.users.findUnique({
+        const user = await prisma.utenti.findUnique({
             where: {
                 id: +decoded.id
             }

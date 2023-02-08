@@ -2,16 +2,6 @@ import { gql } from 'apollo-server'
 
 const typeDefs = gql`
 
-    # type Utente {
-    #     id: Int     
-    #     first_name: String
-    #     last_name: String                 
-    #     email: String
-    #     gender: String
-    #     password: String
-    #     roles: String
-    # }
-
     type Utente {
         id: ID                        
         idAppalto: Int?
@@ -29,22 +19,22 @@ const typeDefs = gql`
         del: String?                    
         scadenzaPassword: String?                    
         roles: String?                    
-        catastoanomalia: [catastoanomalia]
-        catastolinker: [catastolinker]
-        lavoro_lavoro_idUtenteStatoToutenti: [lavoro]                  
-        lavoro_lavoro_idUtenteToutenti: [lavoro]                   
-        lavorostorico_lavorostorico_idUtenteStatoToutenti: [lavorostorico]            
-        lavorostorico_lavorostorico_idUtenteToutenti: [lavorostorico]          
-        livelliservizio: [livelliservizio]
-        oggettocivetta: [oggettocivetta]
-        pratica: [pratica]
-        praticastorico: [praticastorico]
-        registrorichiedente: [registrorichiedente]
-        segnalazione_segnalazione_idUtenteStatoToutenti: [segnalazione]             
-        segnalazione_segnalazione_idUtenteToutenti: [segnalazione]             
-        segnalazionestatostorico: [segnalazionestatostorico]
-        segnalazionestorico_segnalazionestorico_idUtenteStatoToutenti: [segnalazionestorico]      
-        segnalazionestorico_segnalazionestorico_idUtenteToutenti: [segnalazionestorico]      
+        catastoanomalia: [catastoanomalia]?
+        catastolinker: [catastolinker]?
+        lavoro_lavoro_idUtenteStatoToutenti: [lavoro]?                  
+        lavoro_lavoro_idUtenteToutenti: [lavoro]?                   
+        lavorostorico_lavorostorico_idUtenteStatoToutenti: [lavorostorico]?            
+        lavorostorico_lavorostorico_idUtenteToutenti: [lavorostorico]?          
+        livelliservizio: [livelliservizio]?
+        oggettocivetta: [oggettocivetta]?
+        pratica: [pratica]?
+        praticastorico: [praticastorico]?
+        registrorichiedente: [registrorichiedente]?
+        segnalazione_segnalazione_idUtenteStatoToutenti: [segnalazione]?             
+        segnalazione_segnalazione_idUtenteToutenti: [segnalazione]?             
+        segnalazionestatostorico: [segnalazionestatostorico]?
+        segnalazionestorico_segnalazionestorico_idUtenteStatoToutenti: [segnalazionestorico]?      
+        segnalazionestorico_segnalazionestorico_idUtenteToutenti: [segnalazionestorico]?      
         gruppo: gruppo?                    
     }
 
