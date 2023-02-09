@@ -68,7 +68,7 @@ export class UsersService {
     mutation addUser($input: UserInput) {
       addUser(input: $input) {
         id
-          first_name
+          first_name            
           last_name
           email
           gender
@@ -99,7 +99,7 @@ export class UsersService {
       mutation updateUser($input: UserInput) {
         updateUser(input: $input) {
           id                                          
-          first_name                                 
+          first_name                                                                     
           last_name
           email
           gender

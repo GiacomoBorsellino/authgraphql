@@ -48,11 +48,12 @@ const resolvers = {
             console.log('================= LOGIN');
             console.log(args, parent);
 
-            const user = await prisma.utenti.findUnique({
+            const user = await prisma.utenti.findFirst({
                 where: {
-                    id: parent.input.id
+                    email: parent.input.email
                 }
             })
+            console.log('USER: ', user);
 
             if (user.email === parent.input.email && user.password === parent.input.password) {
                 let userAccepted = {}

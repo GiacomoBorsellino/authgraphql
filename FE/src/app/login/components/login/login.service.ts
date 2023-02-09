@@ -19,11 +19,11 @@ export class LoginService {
       mutation login($input: UserInput) {
         login(input: $input) {
           id
-          first_name
-          last_name
+          nome
+          cognome
+          username
           email
-          gender
-          password
+          idGruppo
           roles
           token
         }

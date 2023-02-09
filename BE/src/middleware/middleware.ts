@@ -16,7 +16,7 @@ const checkToken = async (resolve, root, args, context, info) => {
     // console.log('MID 4: ', context);
     // console.log('MID 5: ', info);
     // console.log('MID 6: ', info.fieldName);
-    // console.log('MID 0: ', context[1].tag); 
+    // console.log('MID 0: ', context[1].tag);            
 
     let tagResolver = context[1].operationName
 
@@ -70,7 +70,7 @@ const checkToken = async (resolve, root, args, context, info) => {
             }
         })
 
-        // console.log('USER ID: ', user.id);
+        // console.log('USER ID: ', user.id);          
         // console.log('USER ROLES: ', user.roles);
 
         // console.log('USER ID2: ', userData.id);

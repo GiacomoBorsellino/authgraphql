@@ -46,7 +46,7 @@ const server = new ApolloServer({
     context: (req) => {
         let body: any = req.req.body;
         let headers: any = req.req.headers;
-        // console.log('In Context - Token: ', headers.authorization)
+        // console.log('In Context - Token: ', headers.authorization)         
         // console.log('In Context - Body: ', body)
         return [headers, body]
     }
