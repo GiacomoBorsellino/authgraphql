@@ -6,7 +6,6 @@ const Roles = {
     contactCenter: "Contact Center",
     tecniciImpresaManutenzione: "Tecnici Impresa Manutenzione",
     tecniciCommittenza: "Tecnici Committenza"
-}
-    ;
+};
 
 export { Roles };      
