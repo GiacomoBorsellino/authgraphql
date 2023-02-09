@@ -15,11 +15,11 @@ export class UsersService {
 
   constructor(private apollo: Apollo, private http: HttpClient) { }
 
-  // private readonly headers = { headers: { 'Content-Type': 'application/json', authorization: "sono_il_token_123" } }
   // private readonly urlRoot = `${environment.apiUrl}`;
 
   private readonly token: any = localStorage.getItem('token');
   private readonly userData: any = localStorage.getItem('user');
+  private readonly headers = new HttpHeaders().set("Authorization", this.token).set("userData", this.userData)
   private readonly letApiRestUrl: any = 'http://localhost:3000/1/apiTest';
 
   // Richiama tutti gli utenti
@@ -31,14 +31,12 @@ export class UsersService {
 
   // Richiama tutti gli utenti
   public getUsers(data: any): Observable<any> {
-    // console.log(objData);
+    let headers
 
     let GET_USER = gql` 
       query getUsers {
         getUsers {
-          id
-          email
-          password
+          ${data}
         }
       }
     `
@@ -47,7 +45,7 @@ export class UsersService {
       .query({
         query: GET_USER,
         context: {
-          headers: new HttpHeaders().set("Authorization", this.token),
+          headers: this.headers
         }
       })
       .pipe(retry(1), catchError(this.handleError));
@@ -87,7 +85,7 @@ export class UsersService {
           }
         },
         context: {
-          headers: new HttpHeaders().set("Authorization", this.token),
+          headers: this.headers
         }
       })
       .pipe(retry(1), catchError(this.handleError));
@@ -120,9 +118,7 @@ export class UsersService {
           }
         },
         context: {
-          headers: new HttpHeaders()
-            .set("Authorization", this.token)
-            .set("UserData", this.userData)
+          headers: this.headers
 
         }
       })
@@ -153,7 +149,7 @@ export class UsersService {
           }
         },
         context: {
-          headers: new HttpHeaders().set("Authorization", this.token),
+          headers: this.headers
         }
       })
       .pipe(retry(1), catchError(this.handleError));

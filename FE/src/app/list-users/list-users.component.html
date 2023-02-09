@@ -1,19 +1,21 @@
 <h1>Utenti</h1>
+<span>
+    <input type="checkbox" id="first_name" name="first_name" value="first_name" (mouseup)="call('nome')"
+        (mousedown)="uncall('nome')">
+    <label for="first_name">nome</label><br>
 
-<input type="checkbox" id="first_name" name="first_name" value="first_name" (mouseup)="call('first_name')"
-    (mousedown)="uncall('first_name')">
-<label for="first_name"> first_name</label><br>
+    <input type="checkbox" id="last_name" name="last_name" value="last_name" (mouseup)="call('cognome')"
+        (mousedown)="uncall('cognome')">
+    <label for="last_name">cognome</label><br>
 
-<input type="checkbox" id="last_name" name="last_name" value="last_name" (mouseup)="call('last_name')"
-    (mousedown)="uncall('last_name')">
-<label for="last_name">last_name</label><br>
-
-<input type="checkbox" id="email" name="email" value="email" (mouseup)="call('email')" (mousedown)="uncall('email')">
-<label for="email">email</label><br>
+    <input type="checkbox" id="email" name="email" value="email" (mouseup)="call('email')"
+        (mousedown)="uncall('email')">
+    <label for="email">email</label><br>
+</span>
 
 <ul>
     <li *ngFor="let user of users">
-        Name: {{user.first_name}} - Surname: {{user.last_name}} - Email: {{user.email}}
+        Name: {{user.nome}} - Surname: {{user.cognome}} - Email: {{user.email}}
     </li>
 </ul>
 

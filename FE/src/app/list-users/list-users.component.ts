@@ -14,11 +14,11 @@ export class ListUsersComponent {
   users: any
   error: boolean = false;
   errorMessage: string = '';
+  data: any = [];
 
   call(objData: any) {
-    let data = [];
-    data.push(objData)
-    this.loadUsers(data)
+    this.data.push(objData)
+    this.loadUsers(this.data)
   }
 
   uncall(objData: any) {
@@ -45,6 +45,7 @@ export class ListUsersComponent {
 
   loadUsers(oj: any) {
     let data = oj
+    console.log(oj);
 
     this.UsersService.getUsers(data).subscribe((res) => {
       console.log('lista data: ', res)
