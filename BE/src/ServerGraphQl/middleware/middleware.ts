@@ -34,12 +34,14 @@ const checkToken = async (resolve, root, args, context, info) => {
             rolesRoute = field.roles;
         }
     })
+    console.log(rolesRoute, tagResolver, checkField);
 
-    if (!checkField) {
+
+    if (checkField === false) {
         const result = await resolve(root, args, context, info)
         console.log('================= IN MIDDLEWARE 1 - Permesso di saltare il controllo del token');
         return result
-    } else {
+    } else if (checkField === true) {
         console.log('================= IN MIDDLEWARE 1 - Controllo del token');
         // Token da FE
         let token = context[0].authorization;
@@ -61,10 +63,11 @@ const checkToken = async (resolve, root, args, context, info) => {
             }
         })
 
-        // Controllo se l'utente appartiene ai gruppi che posso fare la chiamata
-        let isInGroup = rolesRoute.includes(gruppo.descrizione)
+        // Controllo se l'utente appartiene ai gruppi che possono fare la chiamata
+        let isInGroup = rolesRoute.includes(gruppo.descrizione);
+        let compareIds = +decoded.id === +userData.id ? true : false;
 
-        if (decoded.id === userData.id || isInGroup) {
+        if (compareIds && isInGroup) {
             const result = await resolve(root, args, context, info)
             console.log('================= IN MIDDLEWARE 2 - Utente può fare la chiamata');
             return result

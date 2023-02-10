@@ -31,7 +31,6 @@ export class UsersService {
 
   // Richiama tutti gli utenti
   public getUsers(data: any): Observable<any> {
-    let headers
 
     let GET_USER = gql` 
       query getUsers {

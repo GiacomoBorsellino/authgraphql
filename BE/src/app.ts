@@ -53,6 +53,7 @@ import { Request, Response } from 'express';
 import cors from 'cors';
 const bodyParser = require('body-parser');
 
+// Import Routes
 import { router as apiTest } from "./ServerRest/modules/apiTest/apiTest.routes"
 
 const app: express.Application = express();
