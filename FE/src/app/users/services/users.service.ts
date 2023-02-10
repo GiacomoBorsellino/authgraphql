@@ -4,7 +4,7 @@ import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http'
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { Apollo, gql } from 'apollo-angular'
 
@@ -65,11 +65,9 @@ export class UsersService {
     mutation addUser($input: UserInput) {
       addUser(input: $input) {
         id
-          first_name            
-          last_name
-          email
-          gender
-          password
+        nome            
+        cognome
+        email
       }
     }
     `
@@ -95,13 +93,10 @@ export class UsersService {
     let UPDATE_USER = gql`
       mutation updateUser($input: UserInput) {
         updateUser(input: $input) {
-          id                                          
-          first_name                                                                     
-          last_name
+          id
+          nome            
+          cognome
           email
-          gender
-          password
-          roles
         }
       }
     `
@@ -129,12 +124,10 @@ export class UsersService {
     let DELETE_USER = gql`
       mutation deleteUser($input: UserInput) {
         deleteUser(input: $input) {
-          id                    
-          first_name
-          last_name
+          id
+          nome            
+          cognome
           email
-          gender
-          password
         }
       }
     `

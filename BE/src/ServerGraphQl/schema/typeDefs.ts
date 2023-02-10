@@ -35,7 +35,6 @@ const typeDefs = gql`
         username: String
         email: String
         idGruppo: Int
-        roles: String
         token: String             
     }
 

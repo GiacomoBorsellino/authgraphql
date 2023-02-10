@@ -14,7 +14,7 @@ const permessi = [
         type: "query",
         description: "route per visualizzare lista utenti",
         checkToken: true,
-        roles: [Roles.dirigentiMobilita]
+        roles: [Roles.amministratori]
     },
     {
         operationName: "addUser",

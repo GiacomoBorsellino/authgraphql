@@ -47,6 +47,7 @@ const checkToken = async (resolve, root, args, context, info) => {
         let token = context[0].authorization;
         // Dati Utente da FE
         let userData = JSON.parse(context[0].userdata);
+        console.log(token, userData);
 
         // Decrypt Token
         let decoded = await jwt.verify(token, secret.secret);
