@@ -1,6 +1,6 @@
 
 import { PrismaClient } from '@prisma/client'
-import { secret } from '../config/jwt.conf';
+import { secret } from '../../config/jwt.conf';
 const jwt = require("jsonwebtoken"); // Ricorda di importare così, sennò non funzionerà !
 
 const prisma = new PrismaClient()

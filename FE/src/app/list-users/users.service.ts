@@ -4,6 +4,7 @@ import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http'
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 import { Apollo, gql } from 'apollo-angular'
 
@@ -15,12 +16,11 @@ export class UsersService {
 
   constructor(private apollo: Apollo, private http: HttpClient) { }
 
-  // private readonly urlRoot = `${environment.apiUrl}`;
-
+  private readonly urlRoot = `${environment.apiUrl}/${environment.apiVersion}`;
   private readonly token: any = localStorage.getItem('token');
   private readonly userData: any = localStorage.getItem('user');
   private readonly headers = new HttpHeaders().set("Authorization", this.token).set("userData", this.userData)
-  private readonly letApiRestUrl: any = 'http://localhost:3000/1/apiTest';
+  private readonly letApiRestUrl: string = `${this.urlRoot}/apiTest`;
 
   // Richiama tutti gli utenti
   public letApiRestData(): Observable<any> {
