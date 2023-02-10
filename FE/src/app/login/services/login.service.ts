@@ -24,7 +24,6 @@ export class LoginService {
           username
           email
           idGruppo
-          roles
           token
         }
       }

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 
 import { LoginModule } from './login/login.module';
 import { UsersModule } from './users/users.module';
+import { ApiRestModule } from './api-rest/api-rest.module';
 
 import { FormsModule } from '@angular/forms';
 
@@ -24,9 +25,10 @@ import { GraphQLModule } from './graphql.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     LoginModule,
     UsersModule,
-    FormsModule,
+    ApiRestModule,
     GraphQLModule
   ],
   providers: [],

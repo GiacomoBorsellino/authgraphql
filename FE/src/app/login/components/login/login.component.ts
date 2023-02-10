@@ -41,6 +41,7 @@ export class LoginComponent {
 
           localStorage.setItem('user', JSON.stringify(res.data.login))
           console.log('Utente verificato: ', res);
+          setTimeout(() => { location.reload(); }, 1000)
         }
       }
     }
