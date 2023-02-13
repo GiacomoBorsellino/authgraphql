@@ -62,10 +62,10 @@ const resolvers = {
                 let token = jwt.sign(
                     {
                         id: user.id,
-                        first_name: user.nome,
-                        last_name: user.cognome,
+                        nome: user.nome,
+                        cognome: user.cognome,
                         email: user.email,
-                        password: user.password
+                        idGruppo: user.idGruppo
                     },
                     secret.secret,
                     {
