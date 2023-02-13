@@ -1,16 +1,19 @@
-<header>
-    <div>
-        <button (click)="logout()">Logout</button>
-    </div>
+<header class="flex row-auto justify-around items-center bg-blue-400 p-4">
 
-    <div class="utente">
-        Buongiorno <p>{{user.email}}</p>
-    </div>
-
-    <ul>
+    <ul class="flex row-auto justify-around items-center list-none gap-1">
         <li (click)="routing('login')">Login</li>
         <li (click)="routing('users')">Gestione Utenti</li>
         <li (click)="routing('apiRest')">Api Rest</li>
     </ul>
+
+    <div class="font-bold text-white">
+        Buongiorno <p>{{user.email}}</p>
+    </div>
+
+    <div>
+        <button
+            class="bg-blue-900 border-none rounded-xl font-medium px-6 py-2 cursor-pointer text-white hover:bg-blue-500"
+            (click)="logout()">Logout</button>
+    </div>
 
 </header>
