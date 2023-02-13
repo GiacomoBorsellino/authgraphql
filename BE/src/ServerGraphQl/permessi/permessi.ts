@@ -1,5 +1,5 @@
 // Permesso per ogni resolver
-import { Roles } from "./roles";
+import { Roles } from "../../config/roles";
 
 const permessi = [
     {

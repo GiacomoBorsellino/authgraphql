@@ -16,13 +16,15 @@ export class ApiRestService {
   private readonly urlRoot = `${environment.apiUrl}/${environment.apiVersion}`;
   private readonly token: any = localStorage.getItem('token');
   private readonly userData: any = localStorage.getItem('user');
-  private readonly headers = new HttpHeaders().set("Authorization", this.token).set("userData", this.userData)
+  private readonly headers: any = new HttpHeaders().set("Authorization", this.token).set("userData", this.userData)
   private readonly letApiRestUrl: string = `${this.urlRoot}/apiTest`;
 
   // Richiama tutti gli utenti
   public letApiRestData(): Observable<any> {
     return this.http.get<any>(
-      `${this.letApiRestUrl}`
+      `${this.letApiRestUrl}`, {
+      headers: this.headers
+    }
     ).pipe(retry(1), catchError(this.handleError));;
   }
 
