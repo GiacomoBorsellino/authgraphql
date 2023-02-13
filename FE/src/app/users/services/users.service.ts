@@ -25,8 +25,10 @@ export class UsersService {
   // Richiama tutti gli utenti
   public letApiRestData(): Observable<any> {
     return this.http.get<any>(
-      `${this.letApiRestUrl}`
-    );
+      `${this.letApiRestUrl}`, {
+      headers: this.headers
+    }
+    ).pipe(retry(1), catchError(this.handleError));;
   }
 
   // Richiama tutti gli utenti
