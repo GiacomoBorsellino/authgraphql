@@ -1,10 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_1")
+  schemas  = ["main", "manpronet"]
 }
 
 model allegato {
@@ -18,12 +20,16 @@ model allegato {
   id_operatore_salvataggio Int?
   dt_salvataggio           DateTime? @db.Timestamptz(6)
   del                      Int?
+
+  @@schema("main")
 }
 
 model appalto {
   id           Int     @id @default(autoincrement())
   tipologia    Int?
   dataModifica String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model attrezzatura {
@@ -31,6 +37,8 @@ model attrezzatura {
   tipologiaAttrezzatura Int?
   descrizione           String? @db.VarChar(255)
   dataModifica          String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model catasto_monitoraggio {
@@ -38,6 +46,8 @@ model catasto_monitoraggio {
   tabellaCatasto      String? @db.VarChar(255)
   tabellaMonitoraggio String? @db.VarChar(255)
   idElemento          String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model catastoanomalia {
@@ -51,6 +61,7 @@ model catastoanomalia {
   utenti            utenti?                  @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
 
   @@index([id], map: "catastoanomalia_idx")
+  @@schema("main")
 }
 
 model catastolinker {
@@ -71,6 +82,7 @@ model catastolinker {
   utenti            utenti?  @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
 
   @@index([id], map: "catastolinker_idx")
+  @@schema("main")
 }
 
 model categoriaanomalia {
@@ -87,6 +99,7 @@ model categoriaanomalia {
   sottocategoriaanomalia_sottocategorialavoro sottocategoriaanomalia_sottocategorialavoro[]
 
   @@index([id], map: "categoriaanomalia_idx")
+  @@schema("main")
 }
 
 model categoriaanomalia_sottocategoriaanomalia {
@@ -95,6 +108,8 @@ model categoriaanomalia_sottocategoriaanomalia {
   id_sottocategoria_anomalia Int?
   categoriaanomalia          categoriaanomalia?      @relation(fields: [id_categoria_anomalia], references: [id], onDelete: NoAction, map: "id_categoria_anomalia_foreign_idx")
   sottocategoriaanomalia     sottocategoriaanomalia? @relation(fields: [id_sottocategoria_anomalia], references: [id], onDelete: NoAction, map: "id_sottocategoria_anomalia_foreign_idx")
+
+  @@schema("main")
 }
 
 model categoriaanomalia_sottocategorialavoro {
@@ -103,6 +118,8 @@ model categoriaanomalia_sottocategorialavoro {
   id_sottocategoria_lavoro Int?
   categoriaanomalia        categoriaanomalia?    @relation(fields: [id_categoria_lavoro], references: [id], onDelete: NoAction, map: "id_categoria_lavoro_foreign_idx")
   sottocategorialavoro     sottocategorialavoro? @relation(fields: [id_sottocategoria_lavoro], references: [id], onDelete: NoAction, map: "id_sottocategoria_lavoro_foreign_idx")
+
+  @@schema("main")
 }
 
 model contabilita {
@@ -110,6 +127,8 @@ model contabilita {
   prezzario              Int?
   descrizioneContabilita Int?
   proprieta              String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model evento {
@@ -125,11 +144,15 @@ model evento {
   documentiCorrelati Int?
   propietaEvento     String? @db.VarChar(255)
   severitaEvento     Int?
+
+  @@schema("main")
 }
 
 model filelinker {
   id       Int     @id @default(autoincrement())
   metadata String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model filtro {
@@ -138,6 +161,8 @@ model filtro {
   json     String?
   tipo     String? @db.VarChar(255)
   nome     String?
+
+  @@schema("main")
 }
 
 model filtro_colonne {
@@ -145,6 +170,8 @@ model filtro_colonne {
   idUtente Int?
   json     String?
   tabella  String?
+
+  @@schema("main")
 }
 
 model fonti {
@@ -153,6 +180,8 @@ model fonti {
   registrorichiedente registrorichiedente[]
   segnalazione        segnalazione[]
   segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
 }
 
 model gruppo {
@@ -161,6 +190,8 @@ model gruppo {
   descrizione  String?  @db.VarChar(255)
   dataModifica String?  @db.VarChar(255)
   utenti       utenti[]
+
+  @@schema("main")
 }
 
 model impresa {
@@ -168,6 +199,8 @@ model impresa {
   value         String?         @db.VarChar(255)
   lavoro        lavoro[]
   lavorostorico lavorostorico[]
+
+  @@schema("main")
 }
 
 model lavoro {
@@ -221,6 +254,8 @@ model lavoro {
   utenti_lavoro_idUtenteStatoToutenti utenti?               @relation("lavoro_idUtenteStatoToutenti", fields: [idUtenteStato], references: [id], map: "idUtenteStato_foreign_idx")
   utenti_lavoro_idUtenteToutenti      utenti?               @relation("lavoro_idUtenteToutenti", fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
   impresa                             impresa?              @relation(fields: [impresaEsecutrice], references: [id], onDelete: NoAction, map: "impresaEsecutrice_foreign_idx")
+
+  @@schema("main")
 }
 
 model lavorostorico {
@@ -275,6 +310,8 @@ model lavorostorico {
   utenti_lavorostorico_idUtenteStatoToutenti utenti?               @relation("lavorostorico_idUtenteStatoToutenti", fields: [idUtenteStato], references: [id], map: "idUtenteStato_foreign_idx")
   utenti_lavorostorico_idUtenteToutenti      utenti?               @relation("lavorostorico_idUtenteToutenti", fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
   impresa                                    impresa?              @relation(fields: [impresaEsecutrice], references: [id], onDelete: NoAction, map: "impresaEsecutrice_foreign_idx")
+
+  @@schema("main")
 }
 
 model livelliservizio {
@@ -303,6 +340,8 @@ model livelliservizio {
   dataCreazioneSegnalazione  String?                     @db.VarChar(255)
   livelliserviziodescrizione livelliserviziodescrizione? @relation(fields: [idLds], references: [id], onDelete: NoAction, map: "idLds_foreign_idx")
   utenti                     utenti?                     @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@schema("main")
 }
 
 model livelliserviziocanone {
@@ -312,6 +351,8 @@ model livelliserviziocanone {
   semestre         Int?
   trimestre        Int?
   canoneCalcoloLdS Float?
+
+  @@schema("main")
 }
 
 model livelliserviziodescrizione {
@@ -329,6 +370,8 @@ model livelliserviziodescrizione {
   funzione             String?           @db.VarChar(255)
   tipoEstrazione       String?           @db.VarChar(255)
   livelliservizio      livelliservizio[]
+
+  @@schema("main")
 }
 
 model livelliservizioschedulatore {
@@ -340,6 +383,8 @@ model livelliservizioschedulatore {
   stato         String? @db.VarChar(255)
   idUtente      Int?
   dataCreazione String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model mezzo {
@@ -347,11 +392,15 @@ model mezzo {
   tipologiaMezzo Int?
   descrizione    String? @db.VarChar(255)
   dataModifica   String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model oggetto {
   id        Int  @id @default(autoincrement())
   catastoId Int?
+
+  @@schema("main")
 }
 
 model oggettocivetta {
@@ -364,6 +413,8 @@ model oggettocivetta {
   dataModifica     String?                  @db.VarChar(255)
   idRifCivetta     Int?
   utenti           utenti?                  @relation(fields: [idUtente], references: [id], onDelete: NoAction)
+
+  @@schema("main")
 }
 
 model personale {
@@ -372,6 +423,8 @@ model personale {
   tipologiaPersonale Int?
   descrizione        String? @db.VarChar(255)
   dataModifica       String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model poi {
@@ -381,6 +434,8 @@ model poi {
   dataFine    String? @db.VarChar(255)
   idAppalto   Int?
   notePOI     String?
+
+  @@schema("main")
 }
 
 model pratica {
@@ -400,6 +455,8 @@ model pratica {
   delLavori                         String?         @db.VarChar(255)
   catastolinker                     catastolinker[]
   utenti                            utenti?         @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@schema("main")
 }
 
 model praticastorico {
@@ -419,6 +476,8 @@ model praticastorico {
   statoCorrentePratica              String? @db.VarChar(255)
   delLavori                         String? @db.VarChar(255)
   utenti                            utenti? @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@schema("main")
 }
 
 model prezzario {
@@ -426,6 +485,8 @@ model prezzario {
   descrizione   String? @db.VarChar(255)
   unitaDiMisura String? @db.VarChar(255)
   prezzo        String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model registrorichiedente {
@@ -447,6 +508,8 @@ model registrorichiedente {
   segnalatore          segnalatore?         @relation(fields: [idSegnalatore], references: [id], map: "idSegnalatore_foreign_idx")
   segnalazione_getico  segnalazione_getico? @relation(fields: [idSegnalazioneGetico], references: [id], onDelete: NoAction, map: "idSegnalazioneGetico_foreign_idx")
   utenti               utenti?              @relation(fields: [idUtente], references: [id], map: "idUtente_foreign_idx")
+
+  @@schema("main")
 }
 
 model segnalatore {
@@ -462,6 +525,8 @@ model segnalatore {
   registrorichiedente  registrorichiedente[]
   segnalazione         segnalazione[]
   segnalazionestorico  segnalazionestorico[]
+
+  @@schema("main")
 }
 
 model segnalazione {
@@ -515,6 +580,8 @@ model segnalazione {
   tiposeverita                              tiposeverita?              @relation(fields: [severitaEvento], references: [id], onDelete: NoAction, map: "severitaEvento_foreign_idx")
   tipoevento                                tipoevento?                @relation(fields: [tipoEvento], references: [id], onDelete: NoAction, map: "tipoEvento_foreign_idx")
   segnalazionestatostorico                  segnalazionestatostorico[]
+
+  @@schema("main")
 }
 
 model segnalazione_getico {
@@ -548,6 +615,8 @@ model segnalazione_getico {
   registrorichiedente      registrorichiedente[]
   segnalazione             segnalazione[]
   segnalazionestorico      segnalazionestorico[]
+
+  @@schema("main")
 }
 
 model segnalazionestatostorico {
@@ -560,6 +629,8 @@ model segnalazionestatostorico {
   notaStato      String?
   segnalazione   segnalazione? @relation(fields: [idSegnalazione], references: [id], onDelete: NoAction, map: "idSegnalazione_foreign_idx")
   utenti         utenti?       @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@schema("main")
 }
 
 model segnalazionestorico {
@@ -614,6 +685,8 @@ model segnalazionestorico {
   utenti_segnalazionestorico_idUtenteToutenti      utenti?                 @relation("segnalazionestorico_idUtenteToutenti", fields: [idUtente], references: [id], map: "idUtente_foreign_idx")
   tiposeverita                                     tiposeverita?           @relation(fields: [severitaEvento], references: [id], onDelete: NoAction, map: "severitaEvento_foreign_idx")
   tipoevento                                       tipoevento?             @relation(fields: [tipoEvento], references: [id], onDelete: NoAction, map: "tipoEvento_foreign_idx")
+
+  @@schema("main")
 }
 
 model sottocategoriaanomalia {
@@ -623,6 +696,8 @@ model sottocategoriaanomalia {
   segnalazione                                segnalazione[]
   segnalazionestorico                         segnalazionestorico[]
   sottocategoriaanomalia_sottocategorialavoro sottocategoriaanomalia_sottocategorialavoro[]
+
+  @@schema("main")
 }
 
 model sottocategoriaanomalia_sottocategorialavoro {
@@ -633,6 +708,8 @@ model sottocategoriaanomalia_sottocategorialavoro {
   categoriaanomalia          categoriaanomalia?      @relation(fields: [id_categoria_anomalia], references: [id], onDelete: NoAction, map: "id_categoria_anomalia_foreign_idx")
   sottocategoriaanomalia     sottocategoriaanomalia? @relation(fields: [id_sottocategoria_anomalia], references: [id], onDelete: NoAction, map: "id_sottocategoria_anomalia_foreign_idx")
   sottocategorialavoro       sottocategorialavoro?   @relation(fields: [id_sottocategoria_lavoro], references: [id], onDelete: NoAction, map: "id_sottocategoria_lavoro_foreign_idx")
+
+  @@schema("main")
 }
 
 model sottocategorialavoro {
@@ -642,6 +719,8 @@ model sottocategorialavoro {
   lavoro                                      lavoro[]
   lavorostorico                               lavorostorico[]
   sottocategoriaanomalia_sottocategorialavoro sottocategoriaanomalia_sottocategorialavoro[]
+
+  @@schema("main")
 }
 
 model stato {
@@ -651,6 +730,8 @@ model stato {
   statoCorrente  Int?
   idUtente       Int?
   storiaStato    Int?
+
+  @@schema("main")
 }
 
 model storiastato {
@@ -658,6 +739,8 @@ model storiastato {
   statoStorico Int?
   stato        Int?
   dataStato    String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model tecnici {
@@ -665,6 +748,8 @@ model tecnici {
   value               String?               @db.VarChar(255)
   segnalazione        segnalazione[]
   segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
 }
 
 model tipoevento {
@@ -672,17 +757,23 @@ model tipoevento {
   value               String?               @db.VarChar(255)
   segnalazione        segnalazione[]
   segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
 }
 
 model tipologia {
   id        Int     @id @default(autoincrement())
   proprieta String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model tipooggetto {
   id          Int     @id @default(autoincrement())
   value       String? @db.VarChar(255)
   tabellaNome String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model tipoprovvedimento {
@@ -690,11 +781,15 @@ model tipoprovvedimento {
   value               String?               @db.VarChar(255)
   segnalazione        segnalazione[]
   segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
 }
 
 model tiposegnalatore {
   id    Int     @id @default(autoincrement())
   value String? @db.VarChar(255)
+
+  @@schema("main")
 }
 
 model tiposeverita {
@@ -702,6 +797,8 @@ model tiposeverita {
   value               String?               @db.VarChar(255)
   segnalazione        segnalazione[]
   segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
 }
 
 model utenti {
@@ -711,7 +808,7 @@ model utenti {
   cognome                                                       String?                    @db.VarChar(255)
   username                                                      String?                    @db.VarChar(255)
   password                                                      String?                    @db.VarChar(255)
-  email                                                         String?                    @db.VarChar(255)
+  email                                                         String                     @db.VarChar(255)
   status                                                        String?                    @db.VarChar(255)
   permessi                                                      String?                    @db.VarChar(255)
   dataCreazione                                                 String?                    @db.VarChar(255)
@@ -738,4 +835,54 @@ model utenti {
   segnalazionestorico_segnalazionestorico_idUtenteStatoToutenti segnalazionestorico[]      @relation("segnalazionestorico_idUtenteStatoToutenti")
   segnalazionestorico_segnalazionestorico_idUtenteToutenti      segnalazionestorico[]      @relation("segnalazionestorico_idUtenteToutenti")
   gruppo                                                        gruppo?                    @relation(fields: [idGruppo], references: [id], onDelete: NoAction, map: "idGruppo_foreign_idx")
+
+  @@schema("main")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model lavori_pregressi {
+  id                                Int                      @default(autoincrement())
+  geom                              Unsupported("geometry")?
+  id_lavoro                         String?                  @db.VarChar
+  id_segnalazione                   String?                  @db.VarChar
+  cod_via                           Int?
+  localizzazioneDichiarata          String?                  @db.VarChar
+  localizzazioneDichiarataQuartiere String?                  @db.VarChar
+  coord_x                           Float?
+  coord_y                           Float?
+  categoriaLavoro                   String?                  @db.VarChar
+  noteLavoro                        String?                  @db.VarChar
+  stato                             String?                  @db.VarChar
+  dataRichiesta                     String?                  @db.VarChar
+  dataInizioEffettiva               String?                  @db.VarChar
+  dataFineEffettiva                 String?                  @db.VarChar
+  Classificazione                   String?                  @db.VarChar
+  Intervento                        String?                  @db.VarChar
+
+  @@ignore
+  @@schema("manpronet")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model segnalazioni_pregresse {
+  id                                Int                      @default(autoincrement())
+  geom                              Unsupported("geometry")?
+  id_segnalazione                   String?                  @db.VarChar
+  id_lavoro                         String?                  @db.VarChar
+  cod_via                           Int?
+  localizzazioneDichiarata          String?                  @db.VarChar
+  localizzazioneDichiarataQuartiere String?                  @db.VarChar
+  coord_x                           Float?
+  coord_y                           Float?
+  segnalatore                       String?                  @db.VarChar
+  noteSegnalatore                   String?                  @db.VarChar
+  categoriaAnomalia                 String?                  @db.VarChar
+  descrizioneAnomalia               String?                  @db.VarChar
+  dataRichiesta                     String?                  @db.VarChar
+  stato                             String?                  @db.VarChar
+  severitaEvento                    String?                  @db.VarChar
+  sinistri                          String?                  @db.VarChar
+
+  @@ignore
+  @@schema("manpronet")
 }
