@@ -1,0 +1,889 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "./generated/client1"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_1")
+  schemas  = ["main", "manpronet"]
+}
+
+model allegato {
+  id                       Int       @id @default(autoincrement())
+  tabella_appartenenza     String?   @db.VarChar(255)
+  id_tabella_appartenenza  Int?
+  descrizione              String?
+  path                     String?
+  filename_disk            String?   @db.VarChar(255)
+  filename_originale       String?   @db.VarChar(255)
+  id_operatore_salvataggio Int?
+  dt_salvataggio           DateTime? @db.Timestamptz(6)
+  del                      Int?
+
+  @@schema("main")
+}
+
+model appalto {
+  id           Int     @id @default(autoincrement())
+  tipologia    Int?
+  dataModifica String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model attrezzatura {
+  id                    Int     @id @default(autoincrement())
+  tipologiaAttrezzatura Int?
+  descrizione           String? @db.VarChar(255)
+  dataModifica          String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model catasto_monitoraggio {
+  id                  Int     @id @default(autoincrement())
+  tabellaCatasto      String? @db.VarChar(255)
+  tabellaMonitoraggio String? @db.VarChar(255)
+  idElemento          String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model catastoanomalia {
+  id                Int                      @id @default(autoincrement())
+  geom              Unsupported("geometry")?
+  idUtente          Int?
+  idAppalto         Int?
+  dataModifica      String?                  @db.VarChar(255)
+  adjacentLayer     String?                  @db.VarChar
+  adjacentLayerGeom String?
+  utenti            utenti?                  @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@index([id], map: "catastoanomalia_idx")
+  @@schema("main")
+}
+
+model catastolinker {
+  id                Int      @id(map: "catastolinker_pkey1") @default(autoincrement())
+  idCatasto         Int?
+  idAppalto         Int?
+  idUtente          Int?
+  dataModifica      String?  @db.VarChar(255)
+  idSegnalazione    Int?
+  idLavoro          Int?
+  statoSegnalazione String?  @db.VarChar(255)
+  statoLavoro       String?  @db.VarChar(255)
+  flg_catasto       Int?
+  idPratica         Int?
+  geojson           String?
+  lavoro            lavoro?  @relation(fields: [idLavoro], references: [id], onDelete: NoAction, map: "idLavoro_foreign_idx")
+  pratica           pratica? @relation(fields: [idPratica], references: [id], onDelete: NoAction, map: "idPratica_foreign_idx")
+  utenti            utenti?  @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@index([id], map: "catastolinker_idx")
+  @@schema("main")
+}
+
+model categoriaanomalia {
+  id                                          Int                                           @id @default(autoincrement())
+  value                                       String?                                       @db.VarChar(255)
+  tabellaNome                                 String?                                       @db.VarChar(255)
+  modalitaInserimento                         String?                                       @db.VarChar(255)
+  categoriaanomalia_sottocategoriaanomalia    categoriaanomalia_sottocategoriaanomalia[]
+  categoriaanomalia_sottocategorialavoro      categoriaanomalia_sottocategorialavoro[]
+  lavoro                                      lavoro[]
+  lavorostorico                               lavorostorico[]
+  segnalazione                                segnalazione[]
+  segnalazionestorico                         segnalazionestorico[]
+  sottocategoriaanomalia_sottocategorialavoro sottocategoriaanomalia_sottocategorialavoro[]
+
+  @@index([id], map: "categoriaanomalia_idx")
+  @@schema("main")
+}
+
+model categoriaanomalia_sottocategoriaanomalia {
+  id                         Int                     @id @default(autoincrement())
+  id_categoria_anomalia      Int?
+  id_sottocategoria_anomalia Int?
+  categoriaanomalia          categoriaanomalia?      @relation(fields: [id_categoria_anomalia], references: [id], onDelete: NoAction, map: "id_categoria_anomalia_foreign_idx")
+  sottocategoriaanomalia     sottocategoriaanomalia? @relation(fields: [id_sottocategoria_anomalia], references: [id], onDelete: NoAction, map: "id_sottocategoria_anomalia_foreign_idx")
+
+  @@schema("main")
+}
+
+model categoriaanomalia_sottocategorialavoro {
+  id                       Int                   @id @default(autoincrement())
+  id_categoria_lavoro      Int?
+  id_sottocategoria_lavoro Int?
+  categoriaanomalia        categoriaanomalia?    @relation(fields: [id_categoria_lavoro], references: [id], onDelete: NoAction, map: "id_categoria_lavoro_foreign_idx")
+  sottocategorialavoro     sottocategorialavoro? @relation(fields: [id_sottocategoria_lavoro], references: [id], onDelete: NoAction, map: "id_sottocategoria_lavoro_foreign_idx")
+
+  @@schema("main")
+}
+
+model contabilita {
+  id                     Int     @id @default(autoincrement())
+  prezzario              Int?
+  descrizioneContabilita Int?
+  proprieta              String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model evento {
+  id                 Int     @id @default(autoincrement())
+  idUtente           Int?
+  idAppalto          Int?
+  tipoEvento         Int?
+  generatoDa         String? @db.VarChar(255)
+  idPratica          Int?
+  noteEvento         String? @db.VarChar(255)
+  lavoriEvento       Int?
+  statoEvento        Int?
+  documentiCorrelati Int?
+  propietaEvento     String? @db.VarChar(255)
+  severitaEvento     Int?
+
+  @@schema("main")
+}
+
+model filelinker {
+  id       Int     @id @default(autoincrement())
+  metadata String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model filtro {
+  id       Int     @id @default(autoincrement())
+  idUtente Int?
+  json     String?
+  tipo     String? @db.VarChar(255)
+  nome     String?
+
+  @@schema("main")
+}
+
+model filtro_colonne {
+  id       Int     @id(map: "filtro_colonne_pk") @default(autoincrement())
+  idUtente Int?
+  json     String?
+  tabella  String?
+
+  @@schema("main")
+}
+
+model fonti {
+  id                  Int                   @id @default(autoincrement())
+  value               String?               @db.VarChar(255)
+  registrorichiedente registrorichiedente[]
+  segnalazione        segnalazione[]
+  segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
+}
+
+model gruppo {
+  id           Int      @id @default(autoincrement())
+  idAppalto    Int?
+  descrizione  String?  @db.VarChar(255)
+  dataModifica String?  @db.VarChar(255)
+  utenti       utenti[]
+
+  @@schema("main")
+}
+
+model impresa {
+  id            Int             @id(map: "impresa_pkey1") @default(autoincrement())
+  value         String?         @db.VarChar(255)
+  lavoro        lavoro[]
+  lavorostorico lavorostorico[]
+
+  @@schema("main")
+}
+
+model lavoro {
+  id                                  Int                   @id @default(autoincrement())
+  idAppalto                           Int?
+  idEvento                            Int?
+  idPratica                           Int?
+  idPOI                               Int?
+  idUtente                            Int?
+  dataCreazione                       String?               @db.VarChar(255)
+  dataModifica                        String?               @db.VarChar(255)
+  dataChiusura                        String?               @db.VarChar(255)
+  localizzazioneDichiarata            String?               @db.VarChar(255)
+  categoriaLavoro                     Int?
+  dettaglioLavoro                     Int?
+  noteLavoro                          String?               @db.VarChar(255)
+  contabilitaLavoro                   Int?
+  attrezzaturaLavoro                  Int?
+  mezzoLavoro                         Int?
+  personaleLavoro                     Int?
+  dataModificaStato                   String?               @db.VarChar(255)
+  stato                               String?               @db.VarChar(255)
+  notaStato                           String?               @db.VarChar(255)
+  idUtenteStato                       Int?
+  localizzazioneDichiarataQuartiere   String?               @db.VarChar(255)
+  statoCorrenteLavoro                 String?               @default("A") @db.VarChar(255)
+  del                                 String?               @default("0") @db.VarChar(255)
+  dataInizioProgrammata               String?               @db.VarChar(255)
+  dataInizioEffettiva                 String?               @db.VarChar(255)
+  dataInizioMassima                   String?               @db.VarChar(255)
+  dataFineProgrammata                 String?               @db.VarChar(255)
+  dataFineEffettiva                   String?               @db.VarChar(255)
+  dataFineMassima                     String?               @db.VarChar(255)
+  delOggettiCatasto                   String?               @db.VarChar(255)
+  quantita                            String?               @db.VarChar(255)
+  operatore                           String?               @db.VarChar(255)
+  sospeso                             Int?
+  dataora_ini_sospensione             String?               @db.VarChar(255)
+  dataora_fine_sospensione            String?               @db.VarChar(255)
+  tempo_sospensione                   Int?
+  note_sospensione                    String?               @db.VarChar(255)
+  impresaEsecutrice                   Int?
+  segnaleticatemporanea               String?               @db.VarChar(255)
+  tipolavoro                          String?               @db.VarChar(255)
+  statoMessaInSicurezza               String?               @db.VarChar(255)
+  dataMessaInSicurezza                String?               @db.VarChar(255)
+  notePubbliche                       String?               @db.VarChar
+  catastolinker                       catastolinker[]
+  categoriaanomalia                   categoriaanomalia?    @relation(fields: [categoriaLavoro], references: [id], onDelete: NoAction, map: "categoriaLavoro_foreign_idx")
+  sottocategorialavoro                sottocategorialavoro? @relation(fields: [dettaglioLavoro], references: [id], onDelete: NoAction, map: "dettaglioLavoro_foreign_idx")
+  utenti_lavoro_idUtenteStatoToutenti utenti?               @relation("lavoro_idUtenteStatoToutenti", fields: [idUtenteStato], references: [id], map: "idUtenteStato_foreign_idx")
+  utenti_lavoro_idUtenteToutenti      utenti?               @relation("lavoro_idUtenteToutenti", fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+  impresa                             impresa?              @relation(fields: [impresaEsecutrice], references: [id], onDelete: NoAction, map: "impresaEsecutrice_foreign_idx")
+
+  @@schema("main")
+}
+
+model lavorostorico {
+  id                                         Int                   @id @default(autoincrement())
+  idLavoro                                   Int?
+  idAppalto                                  Int?
+  idEvento                                   Int?
+  idPratica                                  Int?
+  idPOI                                      Int?
+  idUtente                                   Int?
+  dataCreazione                              String?               @db.VarChar(255)
+  dataModifica                               String?               @db.VarChar(255)
+  dataChiusura                               String?               @db.VarChar(255)
+  localizzazioneDichiarata                   String?               @db.VarChar(255)
+  categoriaLavoro                            Int?
+  dettaglioLavoro                            Int?
+  noteLavoro                                 String?               @db.VarChar(255)
+  contabilitaLavoro                          Int?
+  attrezzaturaLavoro                         Int?
+  mezzoLavoro                                Int?
+  personaleLavoro                            Int?
+  dataModificaStato                          String?               @db.VarChar(255)
+  stato                                      String?               @db.VarChar(255)
+  notaStato                                  String?               @db.VarChar(255)
+  idUtenteStato                              Int?
+  sospeso                                    Int?
+  dataora_ini_sospensione                    String?               @db.VarChar(255)
+  dataora_fine_sospensione                   String?               @db.VarChar(255)
+  tempo_sospensione                          Int?
+  note_sospensione                           String?               @db.VarChar(255)
+  dataInizioProgrammata                      String?               @db.VarChar(255)
+  dataInizioEffettiva                        String?               @db.VarChar(255)
+  dataInizioMassima                          String?               @db.VarChar(255)
+  dataFineProgrammata                        String?               @db.VarChar(255)
+  dataFineEffettiva                          String?               @db.VarChar(255)
+  dataFineMassima                            String?               @db.VarChar(255)
+  localizzazioneDichiarataQuartiere          String?               @db.VarChar(255)
+  statoCorrenteLavoro                        String?               @default("A") @db.VarChar(255)
+  delOggettiCatasto                          String?               @db.VarChar(255)
+  del                                        String?               @default("0") @db.VarChar(255)
+  quantita                                   String?               @db.VarChar(255)
+  operatore                                  String?               @db.VarChar(255)
+  impresaEsecutrice                          Int?
+  segnaleticatemporanea                      String?               @db.VarChar(255)
+  tipolavoro                                 String?               @db.VarChar(255)
+  statoMessaInSicurezza                      String?               @db.VarChar(255)
+  dataMessaInSicurezza                       String?               @db.VarChar(255)
+  flgCambioStato                             String?               @db.VarChar(255)
+  notePubbliche                              String?               @db.VarChar
+  categoriaanomalia                          categoriaanomalia?    @relation(fields: [categoriaLavoro], references: [id], onDelete: NoAction, map: "categoriaLavoro_foreign_idx")
+  sottocategorialavoro                       sottocategorialavoro? @relation(fields: [dettaglioLavoro], references: [id], onDelete: NoAction, map: "dettaglioLavoro_foreign_idx")
+  utenti_lavorostorico_idUtenteStatoToutenti utenti?               @relation("lavorostorico_idUtenteStatoToutenti", fields: [idUtenteStato], references: [id], map: "idUtenteStato_foreign_idx")
+  utenti_lavorostorico_idUtenteToutenti      utenti?               @relation("lavorostorico_idUtenteToutenti", fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+  impresa                                    impresa?              @relation(fields: [impresaEsecutrice], references: [id], onDelete: NoAction, map: "impresaEsecutrice_foreign_idx")
+
+  @@schema("main")
+}
+
+model livelliservizio {
+  id                         Int                         @id @default(autoincrement())
+  idAppalto                  Int?
+  idUtente                   Int?
+  dataModifica               String?                     @db.VarChar(255)
+  idLds                      Int?
+  risultato                  String?                     @db.VarChar(255)
+  detrazioneEffettivo        String?                     @db.VarChar(255)
+  premioEffettivo            String?                     @db.VarChar(255)
+  chiave                     String?                     @db.VarChar(255)
+  unita                      String?                     @db.VarChar(255)
+  idSegnalazione             Int?
+  idLavoro                   Int?
+  dataIntervalloDa           String?                     @db.VarChar
+  dataIntervalloA            String?                     @db.VarChar
+  dataRichiesta              String?                     @db.VarChar(255)
+  dataInizioEffettivaLavoro  String?                     @default("") @db.VarChar(255)
+  dataChiusuraSegnalazione   String?                     @default("") @db.VarChar(255)
+  dataFineMassima            String?                     @default("") @db.VarChar(255)
+  elaborato                  Int?                        @default(0)
+  idSchedulatore             Int?
+  tipolavoro                 String?                     @db.VarChar(255)
+  note                       String?
+  dataCreazioneSegnalazione  String?                     @db.VarChar(255)
+  livelliserviziodescrizione livelliserviziodescrizione? @relation(fields: [idLds], references: [id], onDelete: NoAction, map: "idLds_foreign_idx")
+  utenti                     utenti?                     @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@schema("main")
+}
+
+model livelliserviziocanone {
+  id               Int     @id @default(autoincrement())
+  idLds            Int?
+  anno             String? @db.VarChar(255)
+  semestre         Int?
+  trimestre        Int?
+  canoneCalcoloLdS Float?
+
+  @@schema("main")
+}
+
+model livelliserviziodescrizione {
+  id                   Int               @id @default(autoincrement())
+  ambito               String?           @db.VarChar(255)
+  lds                  String?           @db.VarChar(255)
+  parametroValutazione String?
+  ldsOT                String?
+  ldsCPT               String?
+  indiceScostamento    String?
+  penaleUnitaria       Int?
+  controllo            String?           @db.VarChar(255)
+  note                 String?           @db.VarChar(255)
+  tipo                 String?           @db.VarChar(255)
+  funzione             String?           @db.VarChar(255)
+  tipoEstrazione       String?           @db.VarChar(255)
+  livelliservizio      livelliservizio[]
+
+  @@schema("main")
+}
+
+model livelliservizioschedulatore {
+  id            Int     @id(map: "livelliservizioschedulatore_pkey2") @default(autoincrement())
+  idAppalto     Int?
+  tipologia     String? @db.VarChar(255)
+  anno          Int?
+  semestre      Int?
+  stato         String? @db.VarChar(255)
+  idUtente      Int?
+  dataCreazione String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model mezzo {
+  id             Int     @id @default(autoincrement())
+  tipologiaMezzo Int?
+  descrizione    String? @db.VarChar(255)
+  dataModifica   String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model oggetto {
+  id        Int  @id @default(autoincrement())
+  catastoId Int?
+
+  @@schema("main")
+}
+
+model oggettocivetta {
+  id               Int                      @id @default(autoincrement())
+  geom             Unsupported("geometry")?
+  idSegnalazione   Int?
+  idOggettoCatasto Int?
+  idAppalto        Int?
+  idUtente         Int?
+  dataModifica     String?                  @db.VarChar(255)
+  idRifCivetta     Int?
+  utenti           utenti?                  @relation(fields: [idUtente], references: [id], onDelete: NoAction)
+
+  @@schema("main")
+}
+
+model personale {
+  id                 Int     @id @default(autoincrement())
+  idUtente           Int?
+  tipologiaPersonale Int?
+  descrizione        String? @db.VarChar(255)
+  dataModifica       String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model poi {
+  id          Int     @id @default(autoincrement())
+  descrizione String? @db.VarChar(255)
+  dataInizio  String? @db.VarChar(255)
+  dataFine    String? @db.VarChar(255)
+  idAppalto   Int?
+  notePOI     String?
+
+  @@schema("main")
+}
+
+model pratica {
+  id                                Int             @id @default(autoincrement())
+  idUtente                          Int?
+  idAppalto                         Int?
+  dataModifica                      String?         @db.VarChar(255)
+  dataChiusura                      String?         @db.VarChar(255)
+  nomePratica                       String?         @db.VarChar(255)
+  localizzazioneDichiarataQuartiere String?         @db.VarChar(255)
+  localizzazioneDichiarata          String?
+  notePratica                       String?         @db.VarChar(255)
+  importoPratica                    String?         @db.VarChar(255)
+  del                               String?         @default("0") @db.VarChar(255)
+  dataCreazione                     String?         @db.VarChar(255)
+  statoCorrentePratica              String?         @db.VarChar(255)
+  delLavori                         String?         @db.VarChar(255)
+  catastolinker                     catastolinker[]
+  utenti                            utenti?         @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@schema("main")
+}
+
+model praticastorico {
+  id                                Int     @id @default(autoincrement())
+  idPratica                         Int?
+  idAppalto                         Int?
+  idUtente                          Int?
+  nomePratica                       String? @db.VarChar(255)
+  localizzazioneDichiarataQuartiere String? @db.VarChar(255)
+  localizzazioneDichiarata          String?
+  dataModifica                      String? @db.VarChar(255)
+  dataChiusura                      String? @db.VarChar(255)
+  notePratica                       String? @db.VarChar(255)
+  importoPratica                    String? @db.VarChar(255)
+  del                               String? @db.VarChar(255)
+  dataCreazione                     String? @db.VarChar(255)
+  statoCorrentePratica              String? @db.VarChar(255)
+  delLavori                         String? @db.VarChar(255)
+  utenti                            utenti? @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@schema("main")
+}
+
+model prezzario {
+  id            Int     @id @default(autoincrement())
+  descrizione   String? @db.VarChar(255)
+  unitaDiMisura String? @db.VarChar(255)
+  prezzo        String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model registrorichiedente {
+  id                   Int                  @id @default(autoincrement())
+  idAppalto            Int?
+  noteSegnalatore      String?
+  dataCreazione        String?              @db.VarChar(255)
+  dataModifica         String?              @db.VarChar(255)
+  dataRichiesta        String?              @db.VarChar(255)
+  localizzazioneNote   String?
+  descrizioneAnomalia  String?
+  idUtente             Int?
+  idSegnalazione       Int?
+  idSegnalatore        Int?
+  fonteSegnalazione    Int?
+  idSegnalazioneGetico Int?
+  del                  String?              @db.VarChar(255)
+  fonti                fonti?               @relation(fields: [fonteSegnalazione], references: [id], map: "fonteSegnalazione_foreign_idx")
+  segnalatore          segnalatore?         @relation(fields: [idSegnalatore], references: [id], map: "idSegnalatore_foreign_idx")
+  segnalazione_getico  segnalazione_getico? @relation(fields: [idSegnalazioneGetico], references: [id], onDelete: NoAction, map: "idSegnalazioneGetico_foreign_idx")
+  utenti               utenti?              @relation(fields: [idUtente], references: [id], map: "idUtente_foreign_idx")
+
+  @@schema("main")
+}
+
+model segnalatore {
+  id                   Int                   @id @default(autoincrement())
+  idAppalto            Int?
+  tipoSegnalatore      Int?
+  nomeSegnalatore      String?               @db.VarChar(255)
+  cognomeSegnalatore   String?               @db.VarChar(255)
+  telefonoSegnalatore  String?               @db.VarChar(255)
+  emailSegnalatore     String?               @db.VarChar(255)
+  cellulareSegnalatore String?               @db.VarChar(255)
+  pecSegnalatore       String?               @db.VarChar(255)
+  registrorichiedente  registrorichiedente[]
+  segnalazione         segnalazione[]
+  segnalazionestorico  segnalazionestorico[]
+
+  @@schema("main")
+}
+
+model segnalazione {
+  id                                        Int                        @id @default(autoincrement())
+  idAppalto                                 Int?
+  noteSegnalatore                           String?
+  segnalatori                               Int[]                      @default([])
+  dataCreazione                             String?                    @db.VarChar(255)
+  dataModifica                              String?                    @db.VarChar(255)
+  dataRichiesta                             String?                    @db.VarChar(255)
+  localizzazioneDichiarata                  String?                    @db.VarChar(255)
+  localizzazioneDichiarataCivico            String?                    @db.VarChar(255)
+  localizzazioneNote                        String?
+  descrizioneAnomalia                       String?
+  commentoAnomalia                          String?
+  idEvento                                  Int?
+  idPratica                                 Int?
+  dataModificaStato                         String?                    @db.VarChar(255)
+  stato                                     String?                    @db.VarChar(255)
+  notaStato                                 String?                    @db.VarChar(255)
+  idUtente                                  Int?
+  idUtenteStato                             Int?
+  idSegnalatore                             Int?
+  fonteSegnalazione                         Int?
+  categoriaAnomalia                         Int?
+  dettaglioAnomalia                         Int?
+  severitaEvento                            Int?
+  tipoEvento                                Int?
+  idTecnico                                 Int?
+  localizzazioneDichiarataQuartiere         String?                    @db.VarChar(255)
+  idLavoroAssociato                         String?                    @db.VarChar(255)
+  dataChiusura                              String?                    @db.VarChar(255)
+  statoCorrenteSegnalazione                 String?                    @default("A") @db.VarChar(255)
+  del                                       String?                    @default("0") @db.VarChar(255)
+  idSegnalazioneGetico                      Int?
+  delOggettiCatasto                         String?                    @db.VarChar(255)
+  sottoservizi                              String?                    @default("0") @db.VarChar(255)
+  sinistri                                  String?                    @default("No") @db.VarChar(255)
+  richiestaSopralluogo                      String?                    @default("No") @db.VarChar(255)
+  numeroProvvedimento                       String?                    @db.VarChar(255)
+  idTipoProvvedimento                       Int?
+  categoriaanomalia                         categoriaanomalia?         @relation(fields: [categoriaAnomalia], references: [id], onDelete: NoAction, map: "categoriaAnomalia_foreign_idx")
+  sottocategoriaanomalia                    sottocategoriaanomalia?    @relation(fields: [dettaglioAnomalia], references: [id], onDelete: NoAction, map: "dettaglioAnomalia_foreign_idx")
+  fonti                                     fonti?                     @relation(fields: [fonteSegnalazione], references: [id], onDelete: NoAction, map: "fonteSegnalazione_foreign_idx")
+  segnalatore                               segnalatore?               @relation(fields: [idSegnalatore], references: [id], map: "idSegnalatore_foreign_idx")
+  segnalazione_getico                       segnalazione_getico?       @relation(fields: [idSegnalazioneGetico], references: [id], onDelete: NoAction, map: "idSegnalazioneGetico_foreign_idx")
+  tecnici                                   tecnici?                   @relation(fields: [idTecnico], references: [id], onDelete: NoAction, map: "idTecnico_foreign_idx")
+  tipoprovvedimento                         tipoprovvedimento?         @relation(fields: [idTipoProvvedimento], references: [id], onDelete: NoAction, map: "idTipoProvvedimento_foreign_idx")
+  utenti_segnalazione_idUtenteStatoToutenti utenti?                    @relation("segnalazione_idUtenteStatoToutenti", fields: [idUtenteStato], references: [id], onDelete: NoAction, map: "idUtenteStato_foreign_idx")
+  utenti_segnalazione_idUtenteToutenti      utenti?                    @relation("segnalazione_idUtenteToutenti", fields: [idUtente], references: [id], map: "idUtente_foreign_idx")
+  tiposeverita                              tiposeverita?              @relation(fields: [severitaEvento], references: [id], onDelete: NoAction, map: "severitaEvento_foreign_idx")
+  tipoevento                                tipoevento?                @relation(fields: [tipoEvento], references: [id], onDelete: NoAction, map: "tipoEvento_foreign_idx")
+  segnalazionestatostorico                  segnalazionestatostorico[]
+
+  @@schema("main")
+}
+
+model segnalazione_getico {
+  id                       Int                      @id @default(autoincrement())
+  id_ticket                String?                  @db.VarChar(255)
+  segnalante_nome          String?                  @db.VarChar(255)
+  segnalante_cognome       String?                  @db.VarChar(255)
+  segnalante_email         String?                  @db.VarChar(255)
+  segnalante_telefono      String?                  @db.VarChar(255)
+  luogo_indirizzo          String?                  @db.VarChar(255)
+  luogo_civico             String?                  @db.VarChar(255)
+  luogo_ubicazione         String?                  @db.VarChar(255)
+  descrizione              String?
+  tipologia                String?                  @db.VarChar(255)
+  flg_stato                String?                  @default("DV") @db.VarChar(255)
+  luogo_quartiere          String?                  @db.VarChar(255)
+  dataRichiesta            String?                  @db.VarChar(255)
+  dataInoltro              String?                  @db.VarChar(255)
+  ufficioProvenienza       String?                  @db.VarChar(255)
+  luogo_civico2            String?                  @db.VarChar(255)
+  luogo_indirizzo2         String?                  @db.VarChar(255)
+  ufficio_inoltro          String?                  @db.VarChar(255)
+  json_uffici              String?
+  note_esito               String?
+  sopralluogo              String?                  @db.VarChar
+  sopralluogo_civetta      Unsupported("geometry")?
+  sopralluogo_note         String?
+  sopralluogo_effettuato   String?                  @db.VarChar
+  sopralluogo_importato    String?                  @db.VarChar
+  sopralluogo_catasto_json String?
+  registrorichiedente      registrorichiedente[]
+  segnalazione             segnalazione[]
+  segnalazionestorico      segnalazionestorico[]
+
+  @@schema("main")
+}
+
+model segnalazionestatostorico {
+  id             Int           @id(map: "segnalazionestatostorico_pkey2") @default(autoincrement())
+  idAppalto      Int?
+  idSegnalazione Int?
+  idUtente       Int?
+  dataModifica   String?       @db.VarChar(255)
+  stato          String?       @db.VarChar(255)
+  notaStato      String?
+  segnalazione   segnalazione? @relation(fields: [idSegnalazione], references: [id], onDelete: NoAction, map: "idSegnalazione_foreign_idx")
+  utenti         utenti?       @relation(fields: [idUtente], references: [id], onDelete: NoAction, map: "idUtente_foreign_idx")
+
+  @@schema("main")
+}
+
+model segnalazionestorico {
+  id                                               Int                     @id @default(autoincrement())
+  idAppalto                                        Int?
+  idSegnalazione                                   Int?
+  noteSegnalatore                                  String?
+  segnalatori                                      Int[]                   @default([])
+  dataCreazione                                    String?                 @db.VarChar(255)
+  dataModifica                                     String?                 @db.VarChar(255)
+  dataRichiesta                                    String?                 @db.VarChar(255)
+  localizzazioneDichiarata                         String?                 @db.VarChar(255)
+  localizzazioneNote                               String?
+  descrizioneAnomalia                              String?
+  commentoAnomalia                                 String?
+  idEvento                                         Int?
+  idPratica                                        Int?
+  dataModificaStato                                String?                 @db.VarChar(255)
+  stato                                            String?                 @db.VarChar(255)
+  notaStato                                        String?                 @db.VarChar(255)
+  flgCambioStato                                   String?                 @db.VarChar(255)
+  idUtente                                         Int?
+  idUtenteStato                                    Int?
+  idSegnalatore                                    Int?
+  fonteSegnalazione                                Int?
+  categoriaAnomalia                                Int?
+  dettaglioAnomalia                                Int?
+  severitaEvento                                   Int?
+  tipoEvento                                       Int?
+  idLavoroAssociato                                String?                 @db.VarChar(255)
+  statoCorrenteSegnalazione                        String?                 @default("A") @db.VarChar(255)
+  idSegnalazioneGetico                             Int?
+  sottoservizi                                     String?                 @default("0") @db.VarChar(255)
+  sinistri                                         String?                 @default("No") @db.VarChar(255)
+  richiestaSopralluogo                             String?                 @default("No") @db.VarChar(255)
+  delOggettiCatasto                                String?                 @db.VarChar(255)
+  idTecnico                                        Int?
+  numeroProvvedimento                              String?                 @db.VarChar(255)
+  dataChiusura                                     String?                 @db.VarChar(255)
+  localizzazioneDichiarataQuartiere                String?                 @db.VarChar(255)
+  localizzazioneDichiarataCivico                   String?                 @db.VarChar(255)
+  del                                              String?                 @default("0") @db.VarChar(255)
+  idTipoProvvedimento                              Int?
+  categoriaanomalia                                categoriaanomalia?      @relation(fields: [categoriaAnomalia], references: [id], onDelete: NoAction, map: "categoriaAnomalia_foreign_idx")
+  sottocategoriaanomalia                           sottocategoriaanomalia? @relation(fields: [dettaglioAnomalia], references: [id], onDelete: NoAction, map: "dettaglioAnomalia_foreign_idx")
+  fonti                                            fonti?                  @relation(fields: [fonteSegnalazione], references: [id], onDelete: NoAction, map: "fonteSegnalazione_foreign_idx")
+  segnalatore                                      segnalatore?            @relation(fields: [idSegnalatore], references: [id], map: "idSegnalatore_foreign_idx")
+  segnalazione_getico                              segnalazione_getico?    @relation(fields: [idSegnalazioneGetico], references: [id], onDelete: NoAction, map: "idSegnalazioneGetico_foreign_idx")
+  tecnici                                          tecnici?                @relation(fields: [idTecnico], references: [id], onDelete: NoAction, map: "idTecnico_foreign_idx")
+  tipoprovvedimento                                tipoprovvedimento?      @relation(fields: [idTipoProvvedimento], references: [id], onDelete: NoAction, map: "idTipoProvvedimento_foreign_idx")
+  utenti_segnalazionestorico_idUtenteStatoToutenti utenti?                 @relation("segnalazionestorico_idUtenteStatoToutenti", fields: [idUtenteStato], references: [id], onDelete: NoAction, map: "idUtenteStato_foreign_idx")
+  utenti_segnalazionestorico_idUtenteToutenti      utenti?                 @relation("segnalazionestorico_idUtenteToutenti", fields: [idUtente], references: [id], map: "idUtente_foreign_idx")
+  tiposeverita                                     tiposeverita?           @relation(fields: [severitaEvento], references: [id], onDelete: NoAction, map: "severitaEvento_foreign_idx")
+  tipoevento                                       tipoevento?             @relation(fields: [tipoEvento], references: [id], onDelete: NoAction, map: "tipoEvento_foreign_idx")
+
+  @@schema("main")
+}
+
+model sottocategoriaanomalia {
+  id                                          Int                                           @id @default(autoincrement())
+  value                                       String?                                       @db.VarChar(255)
+  categoriaanomalia_sottocategoriaanomalia    categoriaanomalia_sottocategoriaanomalia[]
+  segnalazione                                segnalazione[]
+  segnalazionestorico                         segnalazionestorico[]
+  sottocategoriaanomalia_sottocategorialavoro sottocategoriaanomalia_sottocategorialavoro[]
+
+  @@schema("main")
+}
+
+model sottocategoriaanomalia_sottocategorialavoro {
+  id                         Int                     @id @default(autoincrement())
+  id_categoria_anomalia      Int?
+  id_sottocategoria_anomalia Int?
+  id_sottocategoria_lavoro   Int?
+  categoriaanomalia          categoriaanomalia?      @relation(fields: [id_categoria_anomalia], references: [id], onDelete: NoAction, map: "id_categoria_anomalia_foreign_idx")
+  sottocategoriaanomalia     sottocategoriaanomalia? @relation(fields: [id_sottocategoria_anomalia], references: [id], onDelete: NoAction, map: "id_sottocategoria_anomalia_foreign_idx")
+  sottocategorialavoro       sottocategorialavoro?   @relation(fields: [id_sottocategoria_lavoro], references: [id], onDelete: NoAction, map: "id_sottocategoria_lavoro_foreign_idx")
+
+  @@schema("main")
+}
+
+model sottocategorialavoro {
+  id                                          Int                                           @id @default(autoincrement())
+  value                                       String?                                       @db.VarChar(255)
+  categoriaanomalia_sottocategorialavoro      categoriaanomalia_sottocategorialavoro[]
+  lavoro                                      lavoro[]
+  lavorostorico                               lavorostorico[]
+  sottocategoriaanomalia_sottocategorialavoro sottocategoriaanomalia_sottocategorialavoro[]
+
+  @@schema("main")
+}
+
+model stato {
+  id             Int  @id @default(autoincrement())
+  idEvento       Int?
+  classeCorrente Int?
+  statoCorrente  Int?
+  idUtente       Int?
+  storiaStato    Int?
+
+  @@schema("main")
+}
+
+model storiastato {
+  id           Int     @id @default(autoincrement())
+  statoStorico Int?
+  stato        Int?
+  dataStato    String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model tecnici {
+  id                  Int                   @id @default(autoincrement())
+  value               String?               @db.VarChar(255)
+  segnalazione        segnalazione[]
+  segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
+}
+
+model tipoevento {
+  id                  Int                   @id @default(autoincrement())
+  value               String?               @db.VarChar(255)
+  segnalazione        segnalazione[]
+  segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
+}
+
+model tipologia {
+  id        Int     @id @default(autoincrement())
+  proprieta String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model tipooggetto {
+  id          Int     @id @default(autoincrement())
+  value       String? @db.VarChar(255)
+  tabellaNome String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model tipoprovvedimento {
+  id                  Int                   @id(map: "tipoprovvedimento_pkey1") @default(autoincrement())
+  value               String?               @db.VarChar(255)
+  segnalazione        segnalazione[]
+  segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
+}
+
+model tiposegnalatore {
+  id    Int     @id @default(autoincrement())
+  value String? @db.VarChar(255)
+
+  @@schema("main")
+}
+
+model tiposeverita {
+  id                  Int                   @id @default(autoincrement())
+  value               String?               @db.VarChar(255)
+  segnalazione        segnalazione[]
+  segnalazionestorico segnalazionestorico[]
+
+  @@schema("main")
+}
+
+model utenti {
+  id                                                            Int                        @id @default(autoincrement())
+  idAppalto                                                     Int?
+  nome                                                          String?                    @db.VarChar(255)
+  cognome                                                       String?                    @db.VarChar(255)
+  username                                                      String?                    @db.VarChar(255)
+  password                                                      String?                    @db.VarChar(255)
+  email                                                         String                     @db.VarChar(255)
+  status                                                        String?                    @db.VarChar(255)
+  permessi                                                      String?                    @db.VarChar(255)
+  dataCreazione                                                 String?                    @db.VarChar(255)
+  dataModifica                                                  String?                    @db.VarChar(255)
+  dataSospensione                                               String?                    @db.VarChar(255)
+  idGruppo                                                      Int?
+  del                                                           String?                    @default("0") @db.VarChar(255)
+  scadenzaPassword                                              String?                    @db.VarChar
+  roles                                                         String?                    @db.VarChar
+  catastoanomalia                                               catastoanomalia[]
+  catastolinker                                                 catastolinker[]
+  lavoro_lavoro_idUtenteStatoToutenti                           lavoro[]                   @relation("lavoro_idUtenteStatoToutenti")
+  lavoro_lavoro_idUtenteToutenti                                lavoro[]                   @relation("lavoro_idUtenteToutenti")
+  lavorostorico_lavorostorico_idUtenteStatoToutenti             lavorostorico[]            @relation("lavorostorico_idUtenteStatoToutenti")
+  lavorostorico_lavorostorico_idUtenteToutenti                  lavorostorico[]            @relation("lavorostorico_idUtenteToutenti")
+  livelliservizio                                               livelliservizio[]
+  oggettocivetta                                                oggettocivetta[]
+  pratica                                                       pratica[]
+  praticastorico                                                praticastorico[]
+  registrorichiedente                                           registrorichiedente[]
+  segnalazione_segnalazione_idUtenteStatoToutenti               segnalazione[]             @relation("segnalazione_idUtenteStatoToutenti")
+  segnalazione_segnalazione_idUtenteToutenti                    segnalazione[]             @relation("segnalazione_idUtenteToutenti")
+  segnalazionestatostorico                                      segnalazionestatostorico[]
+  segnalazionestorico_segnalazionestorico_idUtenteStatoToutenti segnalazionestorico[]      @relation("segnalazionestorico_idUtenteStatoToutenti")
+  segnalazionestorico_segnalazionestorico_idUtenteToutenti      segnalazionestorico[]      @relation("segnalazionestorico_idUtenteToutenti")
+  gruppo                                                        gruppo?                    @relation(fields: [idGruppo], references: [id], onDelete: NoAction, map: "idGruppo_foreign_idx")
+
+  @@schema("main")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model lavori_pregressi {
+  id                                Int                      @default(autoincrement())
+  geom                              Unsupported("geometry")?
+  id_lavoro                         String?                  @db.VarChar
+  id_segnalazione                   String?                  @db.VarChar
+  cod_via                           Int?
+  localizzazioneDichiarata          String?                  @db.VarChar
+  localizzazioneDichiarataQuartiere String?                  @db.VarChar
+  coord_x                           Float?
+  coord_y                           Float?
+  categoriaLavoro                   String?                  @db.VarChar
+  noteLavoro                        String?                  @db.VarChar
+  stato                             String?                  @db.VarChar
+  dataRichiesta                     String?                  @db.VarChar
+  dataInizioEffettiva               String?                  @db.VarChar
+  dataFineEffettiva                 String?                  @db.VarChar
+  Classificazione                   String?                  @db.VarChar
+  Intervento                        String?                  @db.VarChar
+
+  @@ignore
+  @@schema("manpronet")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model segnalazioni_pregresse {
+  id                                Int                      @default(autoincrement())
+  geom                              Unsupported("geometry")?
+  id_segnalazione                   String?                  @db.VarChar
+  id_lavoro                         String?                  @db.VarChar
+  cod_via                           Int?
+  localizzazioneDichiarata          String?                  @db.VarChar
+  localizzazioneDichiarataQuartiere String?                  @db.VarChar
+  coord_x                           Float?
+  coord_y                           Float?
+  segnalatore                       String?                  @db.VarChar
+  noteSegnalatore                   String?                  @db.VarChar
+  categoriaAnomalia                 String?                  @db.VarChar
+  descrizioneAnomalia               String?                  @db.VarChar
+  dataRichiesta                     String?                  @db.VarChar
+  stato                             String?                  @db.VarChar
+  severitaEvento                    String?                  @db.VarChar
+  sinistri                          String?                  @db.VarChar
+
+  @@ignore
+  @@schema("manpronet")
+}

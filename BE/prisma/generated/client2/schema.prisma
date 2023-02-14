@@ -1,0 +1,3041 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "./generated/client2"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_2")
+  schemas  = ["catasto", "monitoraggio"]
+}
+
+model tab00B1_grafo_rilievi_2019_punti_altimetria {
+  gid              Int                      @id(map: "tab00b1_grafo_rilievi_2019_punti_altimetria_pkey") @default(autoincrement())
+  id_assepuntuale  Decimal?                 @db.Decimal
+  id_elemento      BigInt?
+  pr_grafo         Decimal?                 @db.Decimal
+  sequenzaasse     BigInt?
+  x                Decimal?                 @db.Decimal
+  y                Decimal?                 @db.Decimal
+  quota_slm        Decimal?                 @db.Decimal
+  toponimo_rilievo String?                  @db.VarChar(254)
+  elemento_rilievo String?                  @db.VarChar(254)
+  geom             Unsupported("geometry")?
+
+  @@index([gid], map: "tab00b1_grafo_rilievi_2019_punti_altimetria_idx")
+  @@index([geom], map: "tab00b1_grafo_rilievi_2019_punti_altimetria_idxGeom", type: Gist)
+  @@schema("catasto")
+}
+
+model tab01A_area_circolazione_veicolare {
+  id_master          Int?                     @unique(map: "idmaster01a")
+  tipo_oggetto       tipo_oggetto_t?          @default(area_di_circolazione_veicolare)
+  id_acvei           BigInt                   @id(map: "tab_01a_pkey")
+  id_originale       String?                  @db.VarChar
+  quartiere          quartieri_t?
+  rione              String?                  @db.VarChar
+  unesco             String?                  @db.VarChar
+  toponimo           String?                  @db.VarChar
+  livello            livello_t?
+  zona               zona_acvei_t?
+  sede               sede_acvei_t?
+  uso                uso_t?
+  area               Decimal?                 @db.Decimal(9, 2)
+  coesione_pavim     coesione_pavim_t?
+  struttura_pavim    struttura_pavim_t?
+  trattam_superf     trattsup_pavim_t?
+  strato1            strato_pavim_t?
+  tessitura_lastrico tessitura_lastrico_t?
+  lav_sup_lastrico   lavsup_lastrico_t?
+  pci_min            Int?
+  cod_via            String?                  @db.VarChar
+  rete               Int?
+  id_elem_var        Int?
+  strada_var         String?                  @db.VarChar
+  origine            tipo_origine_t?
+  data_attivazione   DateTime?                @db.Timestamp(6)
+  data_dismissione   DateTime?                @db.Timestamp(6)
+  note               String?                  @db.VarChar
+  img                String?                  @db.VarChar
+  img_url            String?                  @db.VarChar
+  sc                 Decimal?                 @db.Decimal(3, 1)
+  sf                 Decimal?                 @db.Decimal(3, 1)
+  geom               Unsupported("geometry")?
+  gestore            gestore_t?
+
+  @@index([geom], map: "tab_01a_geometry", type: Gist)
+  @@index([id_master], map: "tab_01a_id_master")
+  @@schema("catasto")
+}
+
+model tab01B_area_sosta {
+  id_master        Int?                       @unique(map: "id_master01b_unique")
+  tipo_oggetto     tipo_oggetto_t?            @default(area_di_sosta)
+  id_sosta         Int                        @id
+  id_originale     String?                    @db.VarChar
+  quartiere        quartieri_t?
+  rione            String?                    @db.VarChar
+  unesco           Int?
+  toponimo         String?                    @db.VarChar
+  civico_ini       String?                    @db.VarChar
+  categoria        sosta_t?
+  subtipo          String?                    @db.VarChar
+  disposizione     disposiz_sosta_t?
+  materiale        materiale_segnale_orizz_t?
+  colore           colore_segnale_orizz_t?
+  cod_via          Int?
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                    @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                  @db.Date
+  data_dismissione DateTime?                  @db.Date
+  note             String?                    @db.VarChar
+  img              String?                    @db.VarChar
+  img_url          String?                    @db.VarChar
+  simbolo          String?                    @db.VarChar
+  simbolo_url      String?                    @db.VarChar
+  sc               Decimal?                   @db.Decimal(3, 1)
+  sf               Decimal?                   @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+  gestore          gestore_t?
+  tab01B_M01_sosta tab01B_M01_sosta[]
+
+  @@index([geom], map: "tab_01b_geom", type: Gist)
+  @@index([id_master], map: "tab_01b_id")
+  @@schema("catasto")
+}
+
+model tab02A_area_circolazione_pedonale {
+  id_master                      Int?                             @unique(map: "id_master02a_unique")
+  tipo_oggetto                   tipo_oggetto_t?                  @default(area_di_circolazione_pedonale)
+  id_acped                       BigInt                           @id(map: "tab_02a_pkey") @default(autoincrement())
+  id_originale                   String?                          @db.VarChar
+  quartiere                      quartieri_t?
+  rione                          String?                          @db.VarChar
+  unesco                         String?                          @db.VarChar
+  toponimo                       String?                          @db.VarChar
+  livello                        livello_t?
+  zona                           zona_acped_t?
+  sede                           sede_acped_t?
+  uso                            uso_t?
+  posizione                      posiz_cicloped_t?
+  area                           Decimal?                         @db.Decimal(9, 2)
+  coesione_pavim                 coesione_pavim_t?
+  struttura_pavim                struttura_pavim_t?
+  trattam_superf                 trattsup_pavim_t?
+  strato1                        strato_pavim_t?
+  tessitura_lastrico             tessitura_lastrico_t?
+  lav_sup_lastrico               lavsup_lastrico_t?
+  cordonato                      cordonato_t?
+  cod_via                        String?                          @db.VarChar
+  rete                           Int?
+  id_elem_var                    Int?
+  strada_var                     String?                          @db.VarChar
+  origine                        tipo_origine_t?
+  data_attivazione               DateTime?                        @db.Timestamp(6)
+  data_dismissione               DateTime?                        @db.Timestamp(6)
+  note                           String?                          @db.VarChar
+  img                            String?                          @db.VarChar
+  img_url                        String?                          @db.VarChar
+  sc                             Decimal?                         @db.Decimal(3, 1)
+  sf                             Decimal?                         @db.Decimal(3, 1)
+  geom                           Unsupported("geometry")?
+  gestore                        gestore_t?
+  tab02A_M01_monit_area_circ_ped tab02A_M01_monit_area_circ_ped[]
+
+  @@index([geom], map: "tab_02a_geometry", type: Gist)
+  @@index([id_master], map: "tab_02a_id_master")
+  @@schema("catasto")
+}
+
+model tab02B_ABA {
+  id_master               Int?                     @unique(map: "idmaster02b")
+  tipo_oggetto            tipo_oggetto_t?          @default(abbattimenti_barriere_architettoniche)
+  id_aba                  Int                      @id
+  quartiere               quartieri_t?
+  rione                   String?                  @db.VarChar
+  unesco                  Int?
+  toponimo                String?                  @db.VarChar
+  civico_ini              String?                  @db.VarChar
+  gestore                 gestore_t?
+  percorso_tattile        Boolean?
+  nonconformita_normativa Boolean?
+  id_master_acped         Int?
+  id_master_sop1          Int?
+  id_master_sop2          Int?
+  cod_via                 Int?
+  rete                    Int?
+  id_elem_var             Int?
+  strada_var              String?                  @db.VarChar
+  origine                 tipo_origine_t?
+  data_attivazione        DateTime?                @db.Date
+  data_dismissione        DateTime?                @db.Date
+  note                    String?                  @db.VarChar
+  img                     String?                  @db.VarChar
+  img_url                 String?                  @db.VarChar
+  sc                      Decimal?                 @db.Decimal(3, 1)
+  sf                      Decimal?                 @db.Decimal(3, 1)
+  geom                    Unsupported("geometry")?
+
+  @@index([id_master], map: "tab_02a_id")
+  @@index([geom], map: "tab_02b_geom", type: Gist)
+  @@schema("catasto")
+}
+
+model tab03A_area_circolazione_ciclabile {
+  id_master                      Int?                             @unique(map: "id_master03a_unique")
+  tipo_oggetto                   tipo_oggetto_t?                  @default(area_di_circolazione_ciclabile)
+  id_accic                       BigInt                           @id(map: "tab_03a_pkey") @default(autoincrement())
+  id_originale                   String?                          @db.VarChar
+  quartiere                      quartieri_t?
+  rione                          String?                          @db.VarChar
+  unesco                         String?                          @db.VarChar
+  toponimo                       String?                          @db.VarChar
+  livello                        livello_t?
+  sede                           sede_accic_t?
+  uso                            uso_t?
+  posizione                      posiz_cicloped_t?
+  area                           Decimal?                         @db.Decimal(9, 2)
+  coesione_pavim                 coesione_pavim_t?
+  struttura_pavim                struttura_pavim_t?
+  trattam_superf                 trattsup_pavim_t?
+  strato1                        strato_pavim_t?
+  tessitura_lastrico             tessitura_lastrico_t?
+  lav_sup_lastrico               lavsup_lastrico_t?
+  cordonato                      cordonato_t?
+  cod_via                        String?                          @db.VarChar
+  rete                           Int?
+  id_elem_var                    Int?
+  strada_var                     String?                          @db.VarChar
+  origine                        tipo_origine_t?
+  data_attivazione               DateTime?                        @db.Timestamp(6)
+  data_dismissione               DateTime?                        @db.Timestamp(6)
+  note                           String?                          @db.VarChar
+  img                            String?                          @db.VarChar
+  img_url                        String?                          @db.VarChar
+  sc                             Decimal?                         @db.Decimal(3, 1)
+  sf                             Decimal?                         @db.Decimal(3, 1)
+  geom                           Unsupported("geometry")?
+  gestore                        gestore_t?
+  tab03A_M01_monit_area_circ_cic tab03A_M01_monit_area_circ_cic[]
+
+  @@index([geom], map: "tab_03a_geometry", type: Gist)
+  @@index([id_master], map: "tab_03a_id_master")
+  @@schema("catasto")
+}
+
+model tab05A_muri_sostegno {
+  id_master        Int?                     @unique(map: "id_master05a_unique")
+  tipo_oggetto     tipo_oggetto_t?          @default(muri_di_sostegno_del_corpo_stradale)
+  id_musos         Int                      @id(map: "tab_05a_pkey") @default(autoincrement())
+  id_originale     BigInt?
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           String?                  @db.VarChar
+  toponimo         String?                  @db.VarChar
+  gestore          gestore_t?
+  tipo             muro_t?
+  materiale        materiale_muro_t?
+  altezza_max      Int?
+  lunghezza        Int?
+  dist_margine     Int?
+  cod_via          String?                  @db.VarChar
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Timestamp(6)
+  data_dismissione DateTime?                @db.Timestamp(6)
+  note             String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+
+  @@index([geom], map: "tab_05a_geometry", type: Gist)
+  @@index([id_master], map: "tab_05a_id_master")
+  @@schema("catasto")
+}
+
+model tab06A_ponti_impalcati {
+  id_master        Int?                     @unique(map: "idmaster06a")
+  tipo_oggetto     tipo_oggetto_t?          @default(ponti_viadotti_sovrappassi)
+  id_ponte         BigInt                   @id @default(autoincrement())
+  id_originale     String?                  @db.VarChar
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           Int?
+  toponimo         String?                  @db.VarChar
+  materiale        mat_ponti_t?
+  destinazione_uso uso_ponti_t?
+  den_uff          String?                  @db.VarChar
+  den_conv         String?                  @db.VarChar
+  cod_conv         String?                  @db.VarChar
+  categoria        categoria_ponti_t?
+  statica          statica_ponti_t?
+  impalcato        impalcato_ponti_t?
+  h_intradosso     Int?
+  parapetto_dx     Boolean?
+  parapetto_sx     Boolean?
+  marciapiede_dx   Boolean?
+  marciapiede_sx   Boolean?
+  rete_dx          Boolean?
+  rete_sx          Boolean?
+  interferita      interferita_ponti_t?
+  cod_via          Int?
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Timestamp(6)
+  data_dismissione DateTime?                @db.Timestamp(6)
+  note             String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+  gestore          gestore_t?
+
+  @@index([geom], map: "tab_06a_geom", type: Gist)
+  @@index([id_master], map: "tab_06a_id")
+  @@schema("catasto")
+}
+
+model tab06B_ponti_giunti {
+  id_master        Int?                     @unique(map: "idmaster06b")
+  tipo_oggetto     tipo_oggetto_t?          @default(giunti_dei_ponti)
+  id_giunto        BigInt                   @id(map: "tab07A_ponti_giunti_pkey")
+  id_ponte         Int?
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           Int?
+  toponimo         String?                  @db.VarChar
+  tipologia        giunto_t?
+  larghezza        Int?
+  cod_via          Int?
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Date
+  data_dismissione DateTime?                @db.Date
+  note             String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+  gestore          gestore_t?
+
+  @@index([geom], map: "tab_07a_geom", type: Gist)
+  @@index([id_master], map: "tab_07a_id")
+  @@schema("catasto")
+}
+
+model tab08A_gallerie_sottopassi {
+  id_master           Int?                      @unique(map: "idmaster08a")
+  tipo_oggetto        tipo_oggetto_t?           @default(gallerie_e_sottopassi)
+  id_galleria         BigInt                    @id @default(autoincrement())
+  quartiere           quartieri_t?
+  rione               String?                   @db.VarChar
+  unesco              Int?
+  toponimo            String?                   @db.VarChar
+  den_uff             String?                   @db.VarChar
+  den_conv            String?                   @db.VarChar
+  cod_conv            String?                   @db.VarChar
+  h_centro            Int?
+  h_ciglio_dx         Int?
+  h_ciglio_sx         Int?
+  ventilazione        Boolean?
+  illuminazione       Boolean?
+  tipologia           galleria_t?
+  struttura           strutt_galleria_t?
+  marciapiede_dx      Boolean?
+  marciapiede_sx      Boolean?
+  interferita         interferita_sottopasso_t?
+  gestore_interferita String?                   @db.VarChar
+  cod_via             Int?
+  rete                Int?
+  id_elem_var         Int?
+  strada_var          String?                   @db.VarChar
+  origine             tipo_origine_t?
+  data_attivazione    DateTime?                 @db.Timestamp(6)
+  data_dismissione    DateTime?                 @db.Timestamp(6)
+  note                String?                   @db.VarChar
+  img                 String?                   @db.VarChar
+  img_url             String?                   @db.VarChar
+  sc                  Decimal?                  @db.Decimal(3, 1)
+  sf                  Decimal?                  @db.Decimal(3, 1)
+  geom                Unsupported("geometry")?
+  gestore             gestore_t?
+
+  @@index([geom], map: "tab_08a_geom", type: Gist)
+  @@index([id_master], map: "tab_08a_id")
+  @@schema("catasto")
+}
+
+model tab13A_protezione_ambiente {
+  id_master        Int?                     @unique(map: "idmaster13a")
+  tipo_oggetto     tipo_oggetto_t?          @default(protezione_ambiente_circostante)
+  id_protez_amb    BigInt                   @id @default(autoincrement())
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           Int?
+  toponimo         String?                  @db.VarChar
+  tipologia        protez_ambientale_t?
+  dist_margine     Int?
+  altezza          Int?
+  cod_via          Int?
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Timestamp(6)
+  data_dismissione DateTime?                @db.Timestamp(6)
+  note             String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+  gestore          gestore_t?
+  lunghezza        Float?
+
+  @@index([geom], map: "tab_13a_geom", type: Gist)
+  @@index([id_master], map: "tab_13a_id")
+  @@schema("catasto")
+}
+
+model tab14A_illuminazione {
+  id_master        Int?                     @unique(map: "idmaster14a")
+  tipo_oggetto     tipo_oggetto_t?          @default(impianti_di_illuminazione)
+  id_illuminazione Int                      @id
+  id_originale     String?                  @db.VarChar
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           Int?
+  toponimo         String?                  @db.VarChar
+  civico_ini       String?                  @db.VarChar
+  tipologia        illuminazione_t?
+  dist_margine     Int?
+  cod_via          Int?
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Date
+  data_dismissione DateTime?                @db.Date
+  note             String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  simbolo          String?                  @db.VarChar
+  simbolo_url      String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+  gestore          gestore_t?
+
+  @@index([geom], map: "tab_14a_geom", type: Gist)
+  @@index([id_master], map: "tab_14a_id")
+  @@schema("catasto")
+}
+
+model tab17A_dispositivi_ritenuta {
+  id_master        Int?                       @unique(map: "idmaster17a")
+  tipo_oggetto     tipo_oggetto_t?            @default(dispositivi_di_ritenuta)
+  id_disprit       BigInt                     @id(map: "tab_17a_pkeynew") @default(autoincrement())
+  id_originale     String?                    @db.VarChar
+  quartiere        quartieri_t?
+  rione            String?                    @db.VarChar
+  unesco           String?                    @db.VarChar
+  toponimo         String?                    @db.VarChar
+  gestore          gestore_t?
+  dist_margine     Int?
+  lunghezza        Int?
+  tipo_barriera    barriera_t?
+  gruppo_barriera  gruppo_barriera_t?
+  tipo_dispositivo String?                    @db.VarChar
+  materiale        materiale_disp_ritenuta_t?
+  supporto         supancor_disp_ritenuta_t?
+  fonoassorbente   Boolean?
+  rete_protezione  Boolean?
+  dsm              Boolean?
+  cod_via          String?                    @db.VarChar
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                    @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                  @db.Timestamp(6)
+  data_dismissione DateTime?                  @db.Timestamp(6)
+  note             String?                    @db.VarChar
+  img              String?                    @db.VarChar
+  img_url          String?                    @db.VarChar
+  sc               Decimal?                   @db.Decimal(3, 1)
+  sf               Decimal?                   @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+
+  @@index([geom], map: "tab_17a_geometry_new", type: Gist)
+  @@index([id_master], map: "tab_17a_id_master_new")
+  @@schema("catasto")
+}
+
+model tab19A_griglie_caditoie {
+  id_master                         Int?                                @unique(map: "id_master19_unique")
+  tipo_oggetto                      tipo_oggetto_t?                     @default(tombini__griglie__caditoie)
+  id_caditoia                       BigInt                              @id
+  id_originale                      Int?
+  quartiere                         quartieri_t?
+  rione                             String?                             @db.VarChar
+  unesco                            Int?
+  toponimo                          String?                             @db.VarChar
+  civico_ini                        String?                             @db.VarChar
+  tipologia                         caditoie_t?
+  materiale                         mat_caditoie_t?
+  cod_via                           Int?
+  rete                              Int?
+  id_elem_var                       Int?
+  strada_var                        String?                             @db.VarChar
+  origine                           tipo_origine_t?
+  data_attivazione                  DateTime?                           @db.Date
+  data_dismissione                  DateTime?                           @db.Date
+  note                              String?                             @db.VarChar
+  img                               String?                             @db.VarChar
+  img_url                           String?                             @db.VarChar
+  simbolo                           String?                             @db.VarChar
+  simbolo_url                       String?                             @db.VarChar
+  sc                                Decimal?                            @db.Decimal(3, 1)
+  sf                                Decimal?                            @db.Decimal(3, 1)
+  geom                              Unsupported("geometry")?
+  gestore                           gestore_t?
+  tab19A_M01_monit_griglie_caditoie tab19A_M01_monit_griglie_caditoie[]
+
+  @@index([geom], map: "tab_19a_geom", type: Gist)
+  @@index([id_master], map: "tab_19a_id")
+  @@schema("catasto")
+}
+
+model tab20A_pozzetti_sottoservizi {
+  id_master        Int?                     @unique(map: "idmaster20a")
+  tipo_oggetto     tipo_oggetto_t?          @default(pozzetti_sottoservizi)
+  id_pozzetto      Int                      @id
+  id_originale     Int?
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           Int?
+  toponimo         String?                  @db.VarChar
+  civico_ini       String?                  @db.VarChar
+  gestore          gestore_sottoservizi_t?
+  tipologia        pozzetto_t?
+  dist_margine     Int?
+  cod_via          Int?
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Date
+  data_dismissione DateTime?                @db.Date
+  note             String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  simbolo          String?                  @db.VarChar
+  simbolo_url      String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+
+  @@index([geom], map: "tab_20a_geom", type: Gist)
+  @@index([id_master], map: "tab_20a_id")
+  @@schema("catasto")
+}
+
+model tab24A_dossi {
+  id_master              Int?                     @unique(map: "id_master24a_unique")
+  tipo_oggetto           tipo_oggetto_t?          @default(dossi_rallentatori)
+  id_dosso               BigInt                   @id
+  quartiere              quartieri_t?
+  rione                  String?                  @db.VarChar
+  unesco                 Int?
+  toponimo               String?                  @db.VarChar
+  civico_ini             String?                  @db.VarChar
+  tipologia              dosso_t?
+  materiale              mat_dosso_t?
+  segnalamento           segnalamento_t?
+  cod_via                Int?
+  rete                   Int?
+  id_elem_var            Int?
+  strada_var             String?                  @db.VarChar
+  origine                tipo_origine_t?
+  data_attivazione       DateTime?                @db.Date
+  data_dismissione       DateTime?                @db.Date
+  note                   String?                  @db.VarChar
+  img                    String?                  @db.VarChar
+  img_url                String?                  @db.VarChar
+  simbolo                String?                  @db.VarChar
+  simbolo_url            String?                  @db.VarChar
+  sc                     Decimal?                 @db.Decimal(3, 1)
+  sf                     Decimal?                 @db.Decimal(3, 1)
+  geom                   Unsupported("geometry")?
+  gestore                gestore_t?
+  tab24A_M01_monit_dossi tab24A_M01_monit_dossi[]
+
+  @@index([geom], map: "tab_24a_geom", type: Gist)
+  @@index([id_master], map: "tab_24a_id")
+  @@schema("catasto")
+}
+
+model tab27A_segn_vert_supporti {
+  id_master                           Int?                                  @unique(map: "id_master27a_unique")
+  tipo_oggetto                        tipo_oggetto_t?                       @default(supporti_per_segnaletica)
+  id_supporto                         Int                                   @id(map: "tab_27A_pkey")
+  quartiere                           quartieri_t?
+  rione                               String?                               @db.VarChar
+  unesco                              String?                               @db.VarChar
+  toponimo                            String?                               @db.VarChar
+  civico_ini                          String?                               @db.VarChar
+  supporto                            tipo_supporto_t?
+  strada_secondaria                   Boolean?
+  presenza_segn_vert                  Boolean?
+  presenza_imp_pub                    Boolean?
+  cod_via                             String?                               @db.VarChar
+  rete                                Int?
+  id_elem_var                         Int?
+  strada_var                          String?                               @db.VarChar
+  origine                             tipo_origine_t?
+  data_attivazione                    DateTime?                             @db.Timestamp(6)
+  data_dismissione                    DateTime?                             @db.Timestamp(6)
+  note                                String?                               @db.VarChar
+  img                                 String?                               @db.VarChar
+  img_url                             String?                               @db.VarChar
+  simbolo                             String?                               @db.VarChar
+  simbolo_url                         String?                               @db.VarChar
+  sc                                  Decimal?                              @db.Decimal(3, 1)
+  sf                                  Decimal?                              @db.Decimal(3, 1)
+  geom                                Unsupported("geometry")?
+  gestore                             gestore_t?
+  tab27A_M01_monit_segn_vert_supporti tab27A_M01_monit_segn_vert_supporti[]
+
+  @@index([geom], map: "tab_27a_geometry", type: Gist)
+  @@index([id_master], map: "tab_27a_id_master")
+  @@schema("catasto")
+}
+
+model tab27B_segn_vert_cartelli {
+  id_master                           Int?                                  @unique(map: "id_master27b_unique")
+  tipo_oggetto                        tipo_oggetto_t?                       @default(cartelli_per_segnaletica_verticale)
+  id_supporto                         Int?
+  id_pannello                         BigInt                                @id
+  id_segnale                          String?                               @db.VarChar
+  quartiere                           quartieri_t?
+  rione                               String?                               @db.VarChar
+  unesco                              String?                               @db.VarChar
+  toponimo                            String?                               @db.VarChar
+  civico_ini                          String?                               @db.VarChar
+  famiglia                            String?                               @db.VarChar
+  codice                              String?                               @db.VarChar
+  descrizione                         String?                               @db.VarChar
+  testo_segnale                       String?                               @db.VarChar
+  testo_integrativo                   String?                               @db.VarChar
+  illuminazione                       Boolean?
+  composito                           Boolean?
+  cod_via                             String?                               @db.VarChar
+  rete                                Int?
+  id_elem_var                         Int?
+  strada_var                          String?                               @db.VarChar
+  origine                             tipo_origine_t?
+  data_attivazione                    DateTime?                             @db.Timestamp(6)
+  data_dismissione                    DateTime?                             @db.Timestamp(6)
+  note                                String?                               @db.VarChar
+  img                                 String?                               @db.VarChar
+  img_url                             String?                               @db.VarChar
+  simbolo                             String?                               @db.VarChar
+  simbolo_url                         String?                               @db.VarChar
+  sc                                  Decimal?                              @db.Decimal(3, 1)
+  sf                                  Decimal?                              @db.Decimal(3, 1)
+  geom                                Unsupported("geometry")?
+  gestore                             gestore_t?
+  tab27B_M01_monit_segn_vert_cartelli tab27B_M01_monit_segn_vert_cartelli[]
+
+  @@index([geom], map: "tab_27b_geom", type: Gist)
+  @@index([id_master], map: "tab_27b_id")
+  @@schema("catasto")
+}
+
+model tab27C_segn_vert_temp {
+  id_master           Int?                     @unique(map: "idmaster27c")
+  tipo_oggetto        tipo_oggetto_t?
+  id_lavoro           Int?
+  id_segnale_temp     BigInt                   @id(map: "tab27c_segn_vert_temp_pkey") @default(autoincrement())
+  quartiere           String?                  @db.VarChar
+  toponimo            String?                  @db.VarChar
+  civico_ini          String?                  @db.VarChar
+  famiglia_temp       famiglia_t?
+  num_segn_temp       Int?
+  cod_via             String?                  @db.VarChar
+  rete                Int?
+  id_elem_var         Int?
+  strada_var          String?                  @db.VarChar
+  origine             tipo_origine_t?
+  dataora_ini_lavoro  DateTime?                @db.Timestamp(6)
+  data_attivazione    DateTime?                @db.Timestamp(6)
+  dataora_fine_lavoro DateTime?                @db.Timestamp(6)
+  data_dismissione    DateTime?                @db.Timestamp(6)
+  note                String?                  @db.VarChar
+  img                 String?                  @db.VarChar
+  img_url             String?                  @db.VarChar
+  simbolo             String?                  @db.VarChar
+  simbolo_url         String?                  @db.VarChar
+  sc                  Decimal?                 @db.Decimal(3, 1)
+  sf                  Decimal?                 @db.Decimal(3, 1)
+  geom                Unsupported("geometry")?
+  rione               String?                  @db.VarChar
+  unesco              String?                  @db.VarChar
+  gestore             gestore_t?
+
+  @@index([geom], map: "tab_27c_geom", type: Gist)
+  @@index([id_master], map: "tab_27c_id")
+  @@schema("catasto")
+}
+
+model tab29_imp_pubblicitari {
+  id_master        Int?                      @unique(map: "idmaster29a")
+  tipo_oggetto     tipo_oggetto_t?           @default(cartelli_per_impianti_pubblicitari)
+  id_supporto      Int?
+  id_segnale       Int                       @id(map: "tab_29_pkey")
+  quartiere        quartieri_t?
+  rione            String?                   @db.VarChar
+  unesco           String?                   @db.VarChar
+  toponimo         String?                   @db.VarChar
+  civico_ini       String?                   @db.VarChar
+  tipologia        impianto_pubblicitario_t?
+  cod_via          String?                   @db.VarChar
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                   @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                 @db.Timestamp(6)
+  data_dismissione DateTime?                 @db.Timestamp(6)
+  note             String?                   @db.VarChar
+  img              String?                   @db.VarChar
+  img_url          String?                   @db.VarChar
+  simbolo          String?                   @db.VarChar
+  simbolo_url      String?                   @db.VarChar
+  sc               Decimal?                  @db.Decimal(3, 1)
+  sf               Decimal?                  @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+  gestore          gestore_t?
+
+  @@index([geom], map: "tab_29_geometry", type: Gist)
+  @@index([id_master], map: "tab_29_id_master")
+  @@schema("catasto")
+}
+
+model tab30A_segn_oriz_P {
+  id_master                    BigInt?                        @unique(map: "id_master30a_unique")
+  tipo_oggetto                 tipo_oggetto_t?                @default(segnaletica_orizzontale_puntuale)
+  id_sop                       BigInt                         @id
+  quartiere                    quartieri_t?
+  rione                        String?                        @db.VarChar
+  unesco                       String?                        @db.VarChar
+  toponimo                     String?                        @db.VarChar
+  civico_ini                   String?                        @db.VarChar
+  tipologia                    segnale_orizz_pun_t?
+  materiale                    materiale_segnale_orizz_t?
+  colore                       colore_segnale_orizz_t?
+  strada_secondaria            Boolean?
+  area                         Int?
+  cod_via                      String?                        @db.VarChar
+  rete                         Int?
+  id_elem_var                  Int?
+  strada_var                   String?                        @db.VarChar
+  origine                      tipo_origine_t?
+  data_attivazione             DateTime?                      @db.Timestamp(6)
+  data_dismissione             DateTime?                      @db.Timestamp(6)
+  note                         String?                        @db.VarChar
+  img                          String?                        @db.VarChar
+  img_url                      String?                        @db.VarChar
+  simbolo                      String?                        @db.VarChar
+  simbolo_url                  String?                        @db.VarChar
+  sc                           Decimal?                       @db.Decimal(3, 1)
+  sf                           Decimal?                       @db.Decimal(3, 1)
+  geom                         Unsupported("geometry")?
+  gestore                      gestore_t?
+  tab30A_M01_monit_segn_oriz_P tab30A_M01_monit_segn_oriz_P[]
+
+  @@index([geom], map: "tab_30a_geom", type: Gist)
+  @@index([id_master], map: "tab_30a_id")
+  @@schema("catasto")
+}
+
+model tab30B_segn_oriz_L {
+  id_master                    Int?                           @unique(map: "id_master30b_unique")
+  tipo_oggetto                 tipo_oggetto_t?                @default(segnaletica_orizzontale_lineare)
+  id_sol                       BigInt                         @id @default(autoincrement())
+  quartiere                    quartieri_t?
+  rione                        String?                        @db.VarChar
+  unesco                       String?                        @db.VarChar
+  toponimo                     String?                        @db.VarChar
+  posizione                    posizione_segnale_orizz_t?
+  tipologia                    catasto_segnale_orizz_lin_t?
+  materiale                    materiale_segnale_orizz_t?
+  colore                       colore_segnale_orizz_t?
+  cod_via                      String?                        @db.VarChar
+  rete                         Int?
+  id_elem_var                  Int?
+  strada_var                   String?                        @db.VarChar
+  origine                      tipo_origine_t?
+  data_attivazione             DateTime?                      @db.Timestamp(6)
+  data_dismissione             DateTime?                      @db.Timestamp(6)
+  note                         String?                        @db.VarChar
+  img                          String?                        @db.VarChar
+  img_url                      String?                        @db.VarChar
+  sc                           Decimal?                       @db.Decimal(3, 1)
+  sf                           Decimal?                       @db.Decimal(3, 1)
+  geom                         Unsupported("geometry")?
+  gestore                      gestore_t?
+  lunghezza                    Float?
+  tab30B_M01_monit_segn_oriz_L tab30B_M01_monit_segn_oriz_L[]
+
+  @@index([geom], map: "tab_30b_geom", type: Gist)
+  @@index([id_master], map: "tab_30b_id")
+  @@schema("catasto")
+}
+
+model tab32A_impianti_semaforici {
+  id_master        Int?                     @unique(map: "idmaster32a")
+  tipo_oggetto     tipo_oggetto_t?          @default(impianti_semaforici)
+  id_semaforo      Int                      @id
+  id_originale     String?                  @db.VarChar
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           Int?
+  toponimo         String?                  @db.VarChar
+  civico_ini       String?                  @db.VarChar
+  supporto         tipo_supporto_t?
+  lanterne         String?                  @db.VarChar
+  gestore          gestore_t?
+  cod_via          Int?
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Date
+  data_dismissione DateTime?                @db.Date
+  note             String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  simbolo          String?                  @db.VarChar
+  simbolo_url      String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+
+  @@index([geom], map: "tab_32a_geom", type: Gist)
+  @@index([id_master], map: "tab_32a_id")
+  @@schema("catasto")
+}
+
+model tab34A_impianti_tecnologici {
+  id_master        Int?                     @unique(map: "idmaster34a")
+  tipo_oggetto     tipo_oggetto_t?          @default(impianti_tecnologici)
+  id_impianto_tec  Int                      @id
+  id_originale     String?                  @db.VarChar
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           Int?
+  toponimo         String?                  @db.VarChar
+  civico_ini       String?                  @db.VarChar
+  tipologia        impianto_tecnologico_t?
+  gestore          gestore_t?
+  cod_via          Int?
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Date
+  data_dismissione DateTime?                @db.Date
+  note             String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  simbolo          String?                  @db.VarChar
+  simbolo_url      String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+
+  @@index([geom], map: "tab_34a_geom", type: Gist)
+  @@index([id_master], map: "tab_34a_id")
+  @@schema("catasto")
+}
+
+model tab43A_paraped_dissuasorisosta {
+  id_master                        Int?                               @unique(map: "id_master43a_unique")
+  tipo_oggetto                     tipo_oggetto_t?                    @default(dissuasori_di_sosta_e_parapedonali)
+  id_parapedonale                  BigInt                             @id(map: "tab43A_paraped_dissuasorisosta_pkey_n")
+  id_originale                     String?                            @db.VarChar
+  quartiere                        quartieri_t?
+  rione                            String?                            @db.VarChar
+  unesco                           Int?
+  toponimo                         String?                            @db.VarChar
+  civico_ini                       String?                            @db.VarChar
+  tipologia                        parapedonale_t?
+  modello                          paraped_modello_t?
+  materiale                        mat_parapedonale_t?
+  cod_via                          Int?
+  rete                             Int?
+  id_elem_var                      Int?
+  strada_var                       String?                            @db.VarChar
+  origine                          tipo_origine_t?
+  data_attivazione                 DateTime?                          @db.Date
+  data_dismissione                 DateTime?                          @db.Date
+  note                             String?                            @db.VarChar
+  img                              String?                            @db.VarChar
+  img_url                          String?                            @db.VarChar
+  simbolo                          String?                            @db.VarChar
+  simbolo_url                      String?                            @db.VarChar
+  sc                               Decimal?                           @db.Decimal(3, 1)
+  sf                               Decimal?                           @db.Decimal(3, 1)
+  geom                             Unsupported("geometry")?
+  gestore                          gestore_t?
+  tab43A_M01_monit_paraped_dissuas tab43A_M01_monit_paraped_dissuas[]
+
+  @@index([geom], map: "tab_43a_geom_n", type: Gist)
+  @@index([id_master], map: "tab_43a_id_n")
+  @@schema("catasto")
+}
+
+model tab43B_rastrelliere {
+  id_master                     Int?                            @unique(map: "id_master43b_unique")
+  tipo_oggetto                  tipo_oggetto_t?                 @default(rastrelliere)
+  id_rastrelliera               BigInt                          @id
+  id_originale                  String?                         @db.VarChar
+  quartiere                     quartieri_t?
+  rione                         String?                         @db.VarChar
+  unesco                        Int?
+  toponimo                      String?                         @db.VarChar
+  civico_ini                    String?                         @db.VarChar
+  modello                       rastrelliera_t?
+  materiale                     mat_rastrelliera_t?
+  num_posti                     Int?
+  cod_via                       Int?
+  rete                          Int?
+  id_elem_var                   Int?
+  strada_var                    String?                         @db.VarChar
+  origine                       tipo_origine_t?
+  data_attivazione              DateTime?                       @db.Date
+  data_dismissione              DateTime?                       @db.Date
+  note                          String?                         @db.VarChar
+  img                           String?                         @db.VarChar
+  img_url                       String?                         @db.VarChar
+  simbolo                       String?                         @db.VarChar
+  simbolo_url                   String?                         @db.VarChar
+  sc                            Decimal?                        @db.Decimal(3, 1)
+  sf                            Decimal?                        @db.Decimal(3, 1)
+  geom                          Unsupported("geometry")?
+  gestore                       gestore_t?
+  tab43B_M01_monit_rastrelliere tab43B_M01_monit_rastrelliere[]
+
+  @@index([geom], map: "tab_43b_geom", type: Gist)
+  @@index([id_master], map: "tab_43b_id")
+  @@schema("catasto")
+}
+
+model tab43C_arredo_urbano {
+  id_master        Int?                     @unique(map: "idmster43c")
+  tipo_oggetto     tipo_oggetto_t?          @default(arredo_urbano)
+  id_arredo        Int                      @id
+  id_originale     String?                  @db.VarChar
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           Int?
+  toponimo         String?                  @db.VarChar
+  civico_ini       String?                  @db.VarChar
+  tipologia        arredo_urbano_t?
+  materiale        mat_arredo_urbano_t?
+  cod_via          Int?
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Date
+  data_dismissione DateTime?                @db.Date
+  note             String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  simbolo          String?                  @db.VarChar
+  simbolo_url      String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+  gestore          gestore_t?
+
+  @@index([geom], map: "tab_43c_geom", type: Gist)
+  @@index([id_master], map: "tab_43c_id")
+  @@schema("catasto")
+}
+
+model tab45A1_indici_pavim_bitume_2020 {
+  geom             Unsupported("geometry")?
+  id_master        BigInt?
+  id_sampleunit    BigInt                   @id(map: "tab45A1_pk") @default(autoincrement())
+  id_master_acvei  BigInt?
+  cod_via          String?                  @db.VarChar(10)
+  class_pgtu       String?                  @db.VarChar(40)
+  rete             Decimal?                 @db.Decimal
+  quartiere        String?                  @db.VarChar(40)
+  indir_cpt        String?                  @db.VarChar(100)
+  travel_tim       Float?
+  lengthsu         Float?
+  row              BigInt?
+  x_midpoint       Float?                   @map("x midpoint")
+  y_midpoint       Float?                   @map("y midpoint")
+  sort_num         Int?                     @map("sort num")
+  branchid         String?                  @db.VarChar(10)
+  sectionid        String?                  @db.VarChar(10)
+  rank             String?                  @db.VarChar(1)
+  const_date       DateTime?                @db.Date
+  length           Float?
+  width            Float?
+  pid_rsp          String?                  @db.VarChar(20)
+  area             Float?
+  vertex_ind       BigInt?
+  vertex_par       BigInt?
+  vertex_p_1       BigInt?
+  distance         Decimal?                 @db.Decimal
+  angle            Decimal?                 @db.Decimal
+  pid              String?                  @db.VarChar(20)
+  pci              Int?
+  npt              Int?
+  rut_s1           Decimal?                 @map("% rut s1") @db.Decimal(6, 2)
+  rut_s2           Decimal?                 @map("% rut s2") @db.Decimal(6, 2)
+  rut_s3           Decimal?                 @map("% rut s3") @db.Decimal(6, 2)
+  long             Decimal?                 @map("% long") @db.Decimal(6, 2)
+  alligator        Decimal?                 @map("%alligator") @db.Decimal(6, 2)
+  blocks           Decimal?                 @map("% blocks") @db.Decimal(6, 2)
+  date             String?                  @db.VarChar(254)
+  toponimo         String?                  @db.VarChar(254)
+  data_attivazione DateTime?                @db.Date
+  data_dismissione DateTime?                @db.Date
+  gestore          gestore_t?
+
+  @@schema("catasto")
+}
+
+model tab45A2_indici_pavim_bitume_2021 {
+  id_master       BigInt?
+  geom            Unsupported("geometry")?
+  tipo_ogget      String?                  @db.VarChar(254)
+  quartiere       String?                  @db.VarChar(254)
+  toponimo        String?                  @db.VarChar(254)
+  livello         String?                  @db.VarChar(254)
+  zona            String?                  @db.VarChar(254)
+  sede            String?                  @db.VarChar(254)
+  uso             String?                  @db.VarChar(254)
+  area            Decimal?                 @db.Decimal
+  strato1         String?                  @db.VarChar(254)
+  tessitura_      String?                  @db.VarChar(254)
+  lav_sup_la      String?                  @db.VarChar(254)
+  cod_via         String?                  @db.VarChar(254)
+  note            String?                  @db.VarChar(254)
+  gestore         String?                  @db.VarChar(254)
+  pci2020         Int?
+  class           String?                  @db.VarChar(254)
+  pci2021         Int?
+  iri2021         Decimal?                 @db.Decimal(6, 2)
+  rd2021          Int?
+  etd2021         Decimal?                 @db.Decimal(6, 2)
+  id_master_acvei BigInt                   @id(map: "tab45A2_2021_pk")
+
+  @@index([id_master], map: "tab45A2_2021_idx")
+  @@index([geom], map: "tab45A2_idx_2021_geom", type: Gist)
+  @@schema("catasto")
+}
+
+model tab45A3_indici_pavim_bitume_2022 {
+  id_sampleunit      Int                      @id(map: "02_Comune_Firenze_2022_poligoni_PCI_20221115_rev01_pkey") @default(autoincrement())
+  geom               Unsupported("geometry")?
+  id_master          Decimal?                 @db.Decimal
+  id_master_acvei    Decimal?                 @db.Decimal
+  tipo_oggetto       String?                  @db.VarChar(254)
+  quartiere          String?                  @db.VarChar(254)
+  toponimo           String?                  @db.VarChar(254)
+  livello            String?                  @db.VarChar(254)
+  zona               String?                  @db.VarChar(254)
+  sede               String?                  @db.VarChar(254)
+  uso                String?                  @db.VarChar(254)
+  area               Decimal?                 @db.Decimal
+  strato1            String?                  @db.VarChar(254)
+  tessitura_lastrico String?                  @db.VarChar(254)
+  lav_sup_lastrico   String?                  @db.VarChar(254)
+  cod_via            String?                  @db.VarChar(254)
+  note               String?                  @db.VarChar(254)
+  gestore            String?                  @db.VarChar(254)
+  pci_2020           Int?
+  class              String?                  @db.VarChar(254)
+  pci_2021           Int?
+  all_2021           Decimal?                 @map("%all_2021") @db.Decimal(6, 2)
+  rd_2021            Decimal?                 @map("%rd_2021") @db.Decimal(6, 2)
+  cr_2021            Decimal?                 @map("%cr_2021") @db.Decimal(6, 2)
+  iri_2021           Decimal?                 @db.Decimal(6, 2)
+  rd_2021b           Int?
+  etd_2021           Decimal?                 @db.Decimal(6, 2)
+  etd_2022           Decimal?                 @db.Decimal(6, 2)
+  iri_2022           Decimal?                 @db.Decimal(6, 2)
+  rd_2022            Int?
+  pci_2022           Int?
+  all_2022           Decimal?                 @map("%all_2022") @db.Decimal(6, 2)
+  cr_2022            Decimal?                 @map("%cr_2022") @db.Decimal(6, 2)
+  rd_2022b           Decimal?                 @map("%rd_2022") @db.Decimal(6, 2)
+
+  @@schema("catasto")
+}
+
+model tab45B1_indici_pavim_lastrico_2020 {
+  geom             Unsupported("geometry")?
+  id_master        BigInt?
+  id_sampleunit    BigInt                   @id(map: "tab45A2_pk") @default(autoincrement())
+  id_master_acvei  String?                  @db.VarChar(254)
+  quartiere        String?                  @db.VarChar(254)
+  rione            String?                  @db.VarChar(254)
+  unesco           String?                  @db.VarChar(254)
+  toponimo         String?                  @db.VarChar(254)
+  toponimo2        String?                  @db.VarChar(254)
+  area             String?                  @db.VarChar(254)
+  strato1          String?                  @db.VarChar(254)
+  cod_via          String?                  @db.VarChar(254)
+  cod_via2         String?                  @db.VarChar(254)
+  rete             String?                  @db.VarChar(254)
+  origine          String?                  @db.VarChar(254)
+  note             String?                  @db.VarChar(254)
+  img              String?                  @db.VarChar(254)
+  img_url          String?                  @db.VarChar(254)
+  sup_sec_dy       Float?
+  lci              Int?
+  avvallam         Int?
+  sfogliam_h       Int?
+  sfogliam_l       Int?
+  toppe            Int?
+  scalin_h         Int?
+  scalin_l         Int?
+  integr_h         Int?
+  integr_l         Int?
+  stuccature       Int?
+  data_attivazione DateTime?                @db.Date
+  data_dismissione DateTime?                @db.Date
+  gestore          gestore_t?
+
+  @@index([id_sampleunit], map: "tab45A2_idx")
+  @@index([geom], map: "tab45A2_idx_geom", type: Gist)
+  @@schema("catasto")
+}
+
+model tab45B2_indici_pavim_lastrico_2021 {
+  geom             Unsupported("geometry")?
+  id_master        BigInt?
+  id_sampleunit    Decimal                  @id(map: "tab45B2_las_pk") @db.Decimal
+  quartiere        String?                  @db.VarChar(254)
+  rione            String?                  @db.VarChar(254)
+  unesco           String?                  @db.VarChar(254)
+  toponimo         String?                  @db.VarChar(254)
+  area             String?                  @db.VarChar(254)
+  strato1          String?                  @db.VarChar(254)
+  cod_via          String?                  @db.VarChar(254)
+  rete             String?                  @db.VarChar(254)
+  origine          String?                  @db.VarChar(254)
+  note             String?                  @db.VarChar(254)
+  img              String?                  @db.VarChar(254)
+  img_url          String?                  @db.VarChar(254)
+  sup_sec_dy       Decimal?                 @db.Decimal
+  lci              Int?
+  avvallam         Int?
+  sfogliam_h       Int?
+  sfogliam_l       Int?
+  toppe            Int?
+  scalin_h         Int?
+  scalin_l         Int?
+  integr_h         Int?
+  integr_l         Int?
+  stuccature       Int?
+  data_attivazione DateTime?                @db.Date
+  data_dismissione DateTime?                @db.Date
+  gestore          String?                  @db.VarChar(254)
+  id_master_acvei  BigInt?
+
+  @@index([id_sampleunit], map: "tab45B2_idx")
+  @@index([geom], map: "tab45B2_idx_geom", type: Gist)
+  @@schema("catasto")
+}
+
+model tab_famiglia_segn_temp {
+  id            Int    @id
+  famiglia_temp String @db.VarChar
+
+  @@schema("catasto")
+}
+
+model tab01B_M01_sosta {
+  id_master                 Int?
+  id_monit_sosta            BigInt             @id(map: "tab01A_M01_sosta_pk")
+  utente                    String?            @db.VarChar
+  sc                        Decimal?           @db.Decimal(3, 1)
+  sf                        Decimal?           @db.Decimal(3, 1)
+  sottocategoria_anomalia   tab01b_t?
+  fonte_monit               fonte_monit_t?
+  dataora_monit             DateTime?          @db.Timestamp(6)
+  note_monit                String?            @db.VarChar
+  img_monit_inquadr_1       String?            @db.VarChar
+  img_monit_inquadr_1_url   String?            @db.VarChar
+  img_monit_dettaglio_1     String?            @db.VarChar
+  img_monit_dettaglio_1_url String?            @db.VarChar
+  tab01B_area_sosta         tab01B_area_sosta? @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab01b_m01_fk")
+
+  @@index([id_monit_sosta], map: "tab_01bm_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+model tab02A_M01_monit_area_circ_ped {
+  id_master                         Int?
+  id_monit_acped                    BigInt                             @id(map: "tab02A_M01_monit_area_circ_ped_pkey_new")
+  utente                            String?                            @db.VarChar
+  sc                                Decimal?                           @db.Decimal(3, 1)
+  sf                                Decimal?                           @db.Decimal(3, 1)
+  sottocategoria_anomalia           tab02a_t?
+  sottoservizi                      Boolean?
+  estensione                        Int?
+  gravita                           Boolean?
+  fonte_monit                       fonte_monit_t?
+  dataora_monit                     DateTime?                          @db.Timestamp(6)
+  note_monit                        String?                            @db.VarChar
+  img_monit_inquadr_1               String?                            @db.VarChar
+  img_monit_inquadr_1_url           String?                            @db.VarChar
+  img_monit_inquadr_2               String?                            @db.VarChar
+  img_monit_inquadr_2_url           String?                            @db.VarChar
+  img_monit_dettaglio_1             String?                            @db.VarChar
+  img_monit_dettaglio_1_url         String?                            @db.VarChar
+  img_monit_dettaglio_2             String?                            @db.VarChar
+  img_monit_dettaglio_2_url         String?                            @db.VarChar
+  img_monit_dettaglio_3             String?                            @db.VarChar
+  img_monit_dettaglio_3_url         String?                            @db.VarChar
+  img_monit_dettaglio_4             String?                            @db.VarChar
+  img_monit_dettaglio_4_url         String?                            @db.VarChar
+  tab02A_area_circolazione_pedonale tab02A_area_circolazione_pedonale? @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab02a_m01_fk")
+
+  @@index([id_monit_acped], map: "tab_02am_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+model tab03A_M01_monit_area_circ_cic {
+  id_master                          Int?
+  id_monit_accic                     BigInt                              @id(map: "tab03A_M01_monit_area_circ_cic_pkey_n")
+  utente                             String?                             @db.VarChar
+  sc                                 Decimal?                            @db.Decimal(3, 1)
+  sf                                 Decimal?                            @db.Decimal(3, 1)
+  sottocategoria_anomalia            tab03a_t?
+  sottoservizi                       Boolean?
+  estensione                         Int?
+  gravita                            Boolean?
+  fonte_monit                        fonte_monit_t?
+  dataora_monit                      DateTime?                           @db.Timestamp(6)
+  note_monit                         String?                             @db.VarChar
+  img_monit_inquadr_1                String?                             @db.VarChar
+  img_monit_inquadr_1_url            String?                             @db.VarChar
+  img_monit_inquadr_2                String?                             @db.VarChar
+  img_monit_inquadr_2_url            String?                             @db.VarChar
+  img_monit_dettaglio_1              String?                             @db.VarChar
+  img_monit_dettaglio_1_url          String?                             @db.VarChar
+  img_monit_dettaglio_2              String?                             @db.VarChar
+  img_monit_dettaglio_2_url          String?                             @db.VarChar
+  img_monit_dettaglio_3              String?                             @db.VarChar
+  img_monit_dettaglio_3_url          String?                             @db.VarChar
+  img_monit_dettaglio_4              String?                             @db.VarChar
+  img_monit_dettaglio_4_url          String?                             @db.VarChar
+  tab03A_area_circolazione_ciclabile tab03A_area_circolazione_ciclabile? @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab03a_m01_fk")
+
+  @@index([id_monit_accic], map: "tab_03am_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+model tab05A_M01_monit_muri_sostegno_cls {
+  id_master                           Int?
+  id_monit_musos_cls                  BigInt                   @id
+  utente                              String?                  @db.VarChar
+  dataora_monit                       DateTime?                @db.Timestamp(6)
+  dataora_modifica                    DateTime?                @db.Timestamp(6)
+  campagna                            String?                  @db.VarChar
+  DR                                  Float?
+  NG                                  Int?
+  note_gen                            String?                  @db.VarChar
+  img_inquadramento                   String?                  @db.VarChar
+  img_dettaglio_1                     String?                  @db.VarChar
+  img_dettaglio_2                     String?                  @db.VarChar
+  img_dettaglio_3                     String?                  @db.VarChar
+  img_dettaglio_4                     String?                  @db.VarChar
+  img_inquadramento_url               String?                  @db.VarChar
+  img_dettaglio_1_url                 String?                  @db.VarChar
+  img_dettaglio_2_url                 String?                  @db.VarChar
+  img_dettaglio_3_url                 String?                  @db.VarChar
+  img_dettaglio_4_url                 String?                  @db.VarChar
+  macchie_umidita_vst                 Boolean?
+  macchie_umidita_est                 estensione_t?
+  macchie_umidita_int                 intensita_small_t?
+  macchie_umidita_note                String?                  @db.VarChar
+  cls_dilavato_vst                    Boolean?
+  cls_dilavato_est                    estensione_t?
+  cls_dilavato_int                    intensita_small_t?
+  cls_dilavato_note                   String?                  @db.VarChar
+  vespai_vst                          Boolean?
+  vespai_est                          estensione_t?
+  vespai_int                          intensita_t?
+  vespai_note                         String?                  @db.VarChar
+  copriferro_vst                      Boolean?
+  copriferro_est                      estensione_t?
+  copriferro_int                      intensita_small_t?
+  copriferro_note                     String?                  @db.VarChar
+  armatura_vst                        Boolean?
+  armatura_est                        estensione_t?
+  armatura_int                        intensita_t?
+  armatura_note                       String?                  @db.VarChar
+  lesioni_ragnatela_vst               Boolean?
+  lesioni_ragnatela_est               estensione_t?
+  lesioni_ragnatela_int               intensita_small_t?
+  lesioni_ragnatela_note              String?                  @db.VarChar
+  fessure_vert_vst                    Boolean?
+  fessure_vert_est                    estensione_t?
+  fessure_vert_int                    intensita_t?
+  fessure_vert_note                   String?                  @db.VarChar
+  fessure_oriz_vst                    Boolean?
+  fessure_oriz_est                    estensione_t?
+  fessure_oriz_int                    intensita_t?
+  fessure_oriz_note                   String?                  @db.VarChar
+  fessure_diagonali_vst               Boolean?
+  fessure_diagonali_est               estensione_t?
+  fessure_diagonali_int               intensita_t?
+  fessure_diagonali_note              String?                  @db.VarChar
+  riprese_successive_deteriorate_vst  Boolean?
+  riprese_successive_deteriorate_est  estensione_small_t?
+  riprese_successive_deteriorate_int  intensita_small_t?
+  riprese_successive_deteriorate_note String?                  @db.VarChar
+  danni_da_urto_vst                   Boolean?
+  danni_da_urto_est                   estensione_small_t?
+  danni_da_urto_int                   intensita_t?
+  danni_da_urto_note                  String?                  @db.VarChar
+  fuori_piombo_vst                    Boolean?
+  fuori_piombo_est                    estensione_small_t?
+  fuori_piombo_int                    intensita_t?
+  fuori_piombo_note                   String?                  @db.VarChar
+  spanciamento_vst                    Boolean?
+  spanciamento_est                    estensione_t?
+  spanciamento_int                    intensita_t?
+  spanciamento_note                   String?                  @db.VarChar
+  scalzamento_vst                     Boolean?
+  scalzamento_est                     estensione_small_t?
+  scalzamento_int                     intensita_small_t?
+  scalzamento_note                    String?                  @db.VarChar
+  convogliamento_acque_assente_vst    Boolean?
+  convogliamento_acque_assente_est    estensione_small_t?
+  convogliamento_acque_assente_int    intensita_small_t?
+  convogliamento_acque_assente_note   String?                  @db.VarChar
+  pozzetti_intasati_vst               Boolean?
+  pozzetti_intasati_est               estensione_small_t?
+  pozzetti_intasati_int               intensita_small_t?
+  pozzetti_intasati_note              String?                  @db.VarChar
+  scarichi_corti_vst                  Boolean?
+  scarichi_corti_est                  estensione_small_t?
+  scarichi_corti_int                  intensita_small_t?
+  scarichi_corti_note                 String?                  @db.VarChar
+  scarichi_ostruiti_vst               Boolean?
+  scarichi_ostruiti_est               estensione_small_t?
+  scarichi_ostruiti_int               intensita_small_t?
+  scarichi_ostruiti_note              String?                  @db.VarChar
+  scarichi_danneggiati_vst            Boolean?
+  scarichi_danneggiati_est            estensione_small_t?
+  scarichi_danneggiati_int            intensita_small_t?
+  scarichi_danneggiati_note           String?                  @db.VarChar
+  dilavamento_del_rilevato_vst        Boolean?
+  dilavamento_del_rilevato_est        estensione_t?
+  dilavamento_del_rilevato_int        intensita_t?
+  dilavamento_del_rilevato_note       String?                  @db.VarChar
+  dissesto_del_rilevato_vst           Boolean?
+  dissesto_del_rilevato_est           estensione_t?
+  dissesto_del_rilevato_int           intensita_t?
+  dissesto_del_rilevato_note          String?                  @db.VarChar
+  geom                                Unsupported("geometry")?
+  non_conformita                      String?                  @db.VarChar
+  azioni_preventive                   String?                  @db.VarChar
+
+  @@index([geom], map: "sidx_tab05A_M01_monit_muri_sostegno_cls_geom", type: Gist)
+  @@schema("monitoraggio")
+}
+
+model tab05A_M02_monit_muri_sostegno_murature {
+  id_master                           Int?
+  id_monit_musos_murature             BigInt                   @id(map: "tab05A2_Pkey")
+  utente                              String?                  @db.VarChar
+  dataora_monit                       DateTime?                @db.Timestamp(6)
+  dataora_modifica                    DateTime?                @db.Timestamp(6)
+  campagna                            String?                  @db.VarChar
+  DR                                  Float?
+  NG                                  Int?
+  note_gen                            String?                  @db.VarChar
+  img_inquadramento                   String?                  @db.VarChar
+  img_dettaglio_1                     String?                  @db.VarChar
+  img_dettaglio_2                     String?                  @db.VarChar
+  img_dettaglio_3                     String?                  @db.VarChar
+  img_dettaglio_4                     String?                  @db.VarChar
+  img_inquadramento_url               String?                  @db.VarChar
+  img_dettaglio_1_url                 String?                  @db.VarChar
+  img_dettaglio_2_url                 String?                  @db.VarChar
+  img_dettaglio_3_url                 String?                  @db.VarChar
+  img_dettaglio_4_url                 String?                  @db.VarChar
+  fessure_orizzontali_vst             Boolean?
+  fessure_orizzontali_est             estensione_t?
+  fessure_orizzontali_int             intensita_t?
+  fessure_orizzontali_note            String?                  @db.VarChar
+  fessure_verticali_vst               Boolean?
+  fessure_verticali_est               estensione_t?
+  fessure_verticali_int               intensita_t?
+  fessure_verticali_note              String?                  @db.VarChar
+  fessure_diagonali_vst               Boolean?
+  fessure_diagonali_est               estensione_small_t?
+  fessure_diagonali_int               intensita_t?
+  fessure_diagonali_note              String?                  @db.VarChar
+  macchie_di_umidit__vst              Boolean?                 @map("macchie_di_umidità_vst")
+  macchie_di_umidit__di_risalita_est  estensione_t?            @map("macchie_di_umidità_di_risalita_est")
+  macchie_di_umidit__di_risalita_int  intensita_small_t?       @map("macchie_di_umidità_di_risalita_int")
+  macchie_di_umidit__di_risalita_note String?                  @map("macchie_di_umidità_di_risalita_note") @db.VarChar
+  dilavamento_vst                     Boolean?
+  dilavamento_est                     estensione_t?
+  dilavamento_int                     intensita_small_t?
+  dilavamento_note                    String?                  @db.VarChar
+  porzione_di_muratura_mancante_vst   Boolean?
+  porzione_di_muratura_mancante_est   estensione_t?
+  porzione_di_muratura_mancante_int   intensita_small_t?
+  porzione_di_muratura_mancante_note  String?                  @db.VarChar
+  riprese_successive_deteriorate_vst  Boolean?
+  riprese_successive_deteriorate_est  estensione_small_t?
+  riprese_successive_deteriorate_int  intensita_small_t?
+  riprese_successive_deteriorate_note String?                  @db.VarChar
+  macchie_di_colore_scuro_vst         Boolean?
+  macchie_di_colore_scuro_est         estensione_t?
+  macchie_di_colore_scuro_int         intensita_t?
+  macchie_di_colore_scuro_note        String?                  @db.VarChar
+  efflorescenze_vst                   Boolean?
+  efflorescenze_est                   estensione_t?
+  efflorescenze_int                   intensita_small_t?
+  efflorescenze_note                  String?                  @db.VarChar
+  patina_biologica_vegetazione_vst    Boolean?
+  patina_biologica_vegetazione_est    estensione_t?
+  patina_biologica_vegetazione_int    intensita_small_t?
+  patina_biologica_vegetazione_note   String?                  @db.VarChar
+  polverizzazione_vst                 Boolean?
+  polverizzazione_est                 estensione_t?
+  polverizzazione_int                 intensita_t?
+  polverizzazione_note                String?                  @db.VarChar
+  esfoliazione_vst                    Boolean?
+  esfoliazione_est                    estensione_t?
+  esfoliazione_int                    intensita_small_t?
+  esfoliazione_note                   String?                  @db.VarChar
+  fuori_piombo_vst                    Boolean?
+  fuori_piombo_est                    estensione_small_t?
+  fuori_piombo_int                    intensita_t?
+  fuori_piombo_note                   String?                  @db.VarChar
+  spanciamento_vst                    Boolean?
+  spanciamento_est                    estensione_t?
+  spanciamento_int                    intensita_t?
+  spanciamento_note                   String?                  @db.VarChar
+  scalzamento_vst                     Boolean?
+  scalzamento_est                     estensione_small_t?
+  scalzamento_int                     intensita_small_t?
+  scalzamento_note                    String?                  @db.VarChar
+  convogliamento_acque_assente_vst    Boolean?
+  convogliamento_acque_assente_est    estensione_small_t?
+  convogliamento_acque_assente_int    intensita_small_t?
+  convogliamento_acque_assente_note   String?                  @db.VarChar
+  pozzetti_intasati_vst               Boolean?
+  pozzetti_intasati_est               estensione_small_t?
+  pozzetti_intasati_int               intensita_small_t?
+  pozzetti_intasati_note              String?                  @db.VarChar
+  scarichi_corti_vst                  Boolean?
+  scarichi_corti_est                  estensione_small_t?
+  scarichi_corti_int                  intensita_small_t?
+  scarichi_corti_note                 String?                  @db.VarChar
+  scarichi_ostruiti_vst               Boolean?
+  scarichi_ostruiti_est               estensione_small_t?
+  scarichi_ostruiti_int               intensita_small_t?
+  scarichi_ostruiti_note              String?                  @db.VarChar
+  scarichi_danneggiati_vst            Boolean?
+  scarichi_danneggiati_est            estensione_small_t?
+  scarichi_danneggiati_int            intensita_small_t?
+  scarichi_danneggiati_note           String?                  @db.VarChar
+  dilavamento_del_rilevato_vst        Boolean?
+  dilavamento_del_rilevato_est        estensione_t?
+  dilavamento_del_rilevato_int        intensita_t?
+  dilavamento_del_rilevato_note       String?                  @db.VarChar
+  dissesto_del_rilevato_vst           Boolean?
+  dissesto_del_rilevato_est           estensione_t?
+  dissesto_del_rilevato_int           intensita_t?
+  dissesto_del_rilevato_note          String?                  @db.VarChar
+  geom                                Unsupported("geometry")?
+  non_conformita                      String?                  @db.VarChar
+  azioni_preventive                   String?                  @db.VarChar
+
+  @@index([geom], map: "sidx_tab05A_M02_monit_muri_sostegno_murature_geom", type: Gist)
+  @@schema("monitoraggio")
+}
+
+model tab05A_M03_muri_stato_avanzamento {
+  id_musos   Int?
+  monitorato Boolean?
+  note       String?  @db.VarChar
+  id         Int      @id(map: "muri_pkey") @default(autoincrement())
+
+  @@schema("monitoraggio")
+}
+
+model tab100_note {
+  id_note                   BigInt                   @id(map: "tab100_note_n")
+  utente                    String?                  @db.VarChar
+  indirizzo                 String?                  @db.VarChar
+  tipo_oggetto              String?                  @db.VarChar
+  sc                        Float?
+  sf                        Float?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  note                      String?                  @db.VarChar
+  img_monit_inquadr_1       String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+  img_monit_dettaglio_1     String?                  @db.VarChar
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  geom                      Unsupported("geometry")?
+  stato                     String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+model tab13A_M01_monit_protezione_ambiente {
+  id_master                    Int?
+  id_monit_barr_fono           BigInt                   @id(map: "tab17A_M04_barriere_fonoassorbenti_pkey") @default(0)
+  utente                       String?                  @db.VarChar
+  dataora_monit                DateTime?                @db.Timestamp(6)
+  dataora_modifica             DateTime?                @db.Timestamp(6)
+  note_gen                     String?                  @db.VarChar
+  img_inquadramento            String?                  @db.VarChar
+  img_dettaglio_1              String?                  @db.VarChar
+  img_dettaglio_2              String?                  @db.VarChar
+  img_dettaglio_3              String?                  @db.VarChar
+  img_dettaglio_4              String?                  @db.VarChar
+  img_inquadramento_url        String?                  @db.VarChar
+  img_dettaglio_1_url          String?                  @db.VarChar
+  img_dettaglio_2_url          String?                  @db.VarChar
+  img_dettaglio_3_url          String?                  @db.VarChar
+  img_dettaglio_4_url          String?                  @db.VarChar
+  nastro_qnt                   Float?
+  nastro_note                  String?                  @db.VarChar
+  paletto_qnt                  Float?
+  paletto_note                 String?                  @db.VarChar
+  corrente_sup_qnt             Float?
+  corrente_sup_note            String?                  @db.VarChar
+  corrente_inf_qnt             Float?
+  corrente_inf_note            String?                  @db.VarChar
+  distanziatore_qnt            Float?
+  distanziatore_note           String?                  @db.VarChar
+  DSM_qnt                      Float?
+  DSM_note                     String?                  @db.VarChar
+  catadiottri_qnt              Float?
+  catadiottri_note             String?                  @db.VarChar
+  terminali_qnt                Float?
+  terminali_note               String?                  @db.VarChar
+  attenuatori_qnt              Float?
+  attenuatori_note             String?                  @db.VarChar
+  cordolo_piastra_qnt          Float?
+  cordolo_piastra_note         String?                  @db.VarChar
+  cordolo_tirafondi_qnt        Float?
+  cordolo_tirafondi_note       String?                  @db.VarChar
+  ammaloramento_arginello_qnt  Float?
+  ammaloramento_arginello_note String?                  @db.VarChar
+  danni_da_urto_qnt            Float?
+  danni_da_urto_note           String?                  @db.VarChar
+  elem_new_jersey_qnt          Float?
+  elem_new_jersey_note         String?                  @db.VarChar
+  manicotto_qnt                Float?
+  manicotto_note               String?                  @db.VarChar
+  collegamento_base_qnt        Float?
+  collegamento_base_note       String?                  @db.VarChar
+  transizioni_qnt              Float?
+  transizioni_note             String?                  @db.VarChar
+  pannello_qnt                 Float?
+  pannello_note                String?                  @db.VarChar
+  coes_pannello_qnt            Float?
+  coes_pannello_note           String?                  @db.VarChar
+  geom                         Unsupported("geometry")?
+  class_bar                    class_bar_t?
+  ammaloramento_arg_qnt        Float?
+  ammaloramento_arg_note       String?                  @db.VarChar
+  campagna                     String?                  @db.VarChar
+
+  @@index([geom], map: "tab17a_m04_idx_idx", type: Gist)
+  @@schema("monitoraggio")
+}
+
+model tab17A_M01_guard_rail {
+  id_master                    Int?
+  id_monit_guard_rail          BigInt                   @id @default(0)
+  utente                       String?                  @db.VarChar
+  dataora_monit                DateTime?                @db.Timestamp(6)
+  dataora_modifica             DateTime?                @db.Timestamp(6)
+  note_gen                     String?                  @db.VarChar
+  img_inquadramento            String?                  @db.VarChar
+  img_dettaglio_1              String?                  @db.VarChar
+  img_dettaglio_2              String?                  @db.VarChar
+  img_dettaglio_3              String?                  @db.VarChar
+  img_dettaglio_4              String?                  @db.VarChar
+  img_inquadramento_url        String?                  @db.VarChar
+  img_dettaglio_1_url          String?                  @db.VarChar
+  img_dettaglio_2_url          String?                  @db.VarChar
+  img_dettaglio_3_url          String?                  @db.VarChar
+  img_dettaglio_4_url          String?                  @db.VarChar
+  nastro_qnt                   Float?
+  nastro_note                  String?                  @db.VarChar
+  paletto_qnt                  Float?
+  paletto_note                 String?                  @db.VarChar
+  corrente_sup_qnt             Float?
+  corrente_sup_note            String?                  @db.VarChar
+  corrente_inf_qnt             Float?
+  corrente_inf_note            String?                  @db.VarChar
+  distanziatore_qnt            Float?
+  distanziatore_note           String?                  @db.VarChar
+  DSM_qnt                      Float?
+  DSM_note                     String?                  @db.VarChar
+  catadiottri_qnt              Float?
+  catadiottri_note             String?                  @db.VarChar
+  terminali_qnt                Float?
+  terminali_note               String?                  @db.VarChar
+  transizioni_qnt              Float?
+  transizioni_note             String?                  @db.VarChar
+  attenuatori_qnt              Float?
+  attenuatori_note             String?                  @db.VarChar
+  cordolo_piastra_qnt          Float?
+  cordolo_piastra_note         String?                  @db.VarChar
+  cordolo_tirafondi_qnt        Float?
+  cordolo_tirafondi_note       String?                  @db.VarChar
+  ammaloramento_arginello_qnt  Float?
+  ammaloramento_arginello_note String?                  @db.VarChar
+  danni_da_urto_qnt            Float?
+  danni_da_urto_note           String?                  @db.VarChar
+  geom                         Unsupported("geometry")?
+  class_bar                    class_bar_t?
+  campagna                     String?                  @db.VarChar
+
+  @@index([geom], map: "tab17a_m01_idx_idx", type: Gist)
+  @@schema("monitoraggio")
+}
+
+model tab17A_M02_New_Jersey {
+  id_master              Int?
+  id_monit_new_jersey    BigInt                   @id @default(0)
+  utente                 String?                  @db.VarChar
+  dataora_monit          DateTime?                @db.Timestamp(6)
+  dataora_modifica       DateTime?                @db.Timestamp(6)
+  note_gen               String?                  @db.VarChar
+  img_inquadramento      String?                  @db.VarChar
+  img_dettaglio_1        String?                  @db.VarChar
+  img_dettaglio_2        String?                  @db.VarChar
+  img_dettaglio_3        String?                  @db.VarChar
+  img_dettaglio_4        String?                  @db.VarChar
+  img_inquadramento_url  String?                  @db.VarChar
+  img_dettaglio_1_url    String?                  @db.VarChar
+  img_dettaglio_2_url    String?                  @db.VarChar
+  img_dettaglio_3_url    String?                  @db.VarChar
+  img_dettaglio_4_url    String?                  @db.VarChar
+  elem_new_jersey_qnt    Float?
+  elem_new_jersey_note   String?                  @db.VarChar
+  corrente_sup_qnt       Float?
+  corrente_sup_note      String?                  @db.VarChar
+  manicotto_qnt          Float?
+  manicotto_note         String?                  @db.VarChar
+  catadiottri_qnt        Float?
+  catadiottri_note       String?                  @db.VarChar
+  collegamento_base_qnt  Float?
+  collegamento_base_note String?                  @db.VarChar
+  cordolo_piastra_qnt    Float?
+  cordolo_piastra_note   String?                  @db.VarChar
+  cordolo_tirafondi_qnt  Float?
+  cordolo_tirafondi_note String?                  @db.VarChar
+  ammaloramento_arg_qnt  Float?
+  ammaloramento_arg_note String?                  @db.VarChar
+  danni_da_urto_qnt      Float?
+  danni_da_urto_note     String?                  @db.VarChar
+  transizioni_qnt        Float?
+  transizioni_note       String?                  @db.VarChar
+  geom                   Unsupported("geometry")?
+  class_bar              class_bar_t?
+  campagna               String?                  @db.VarChar
+
+  @@index([geom], map: "tab17a_m02_idx_idx", type: Gist)
+  @@schema("monitoraggio")
+}
+
+model tab17A_M03_muretti_ringhiere {
+  id_master                              Int?
+  id_monit_muretti_ringhiere             BigInt                   @id @default(0)
+  utente                                 String?                  @default(dbgenerated("CURRENT_USER")) @db.VarChar
+  dataora_monit                          DateTime?                @db.Timestamp(6)
+  dataora_modifica                       DateTime?                @db.Timestamp(6)
+  campagna                               String?                  @db.VarChar
+  DR                                     Float?
+  NG                                     Int?
+  note_gen                               String?                  @db.VarChar
+  img_inquadramento                      String?                  @db.VarChar
+  img_dettaglio_1                        String?                  @db.VarChar
+  img_dettaglio_2                        String?                  @db.VarChar
+  img_dettaglio_3                        String?                  @db.VarChar
+  img_dettaglio_4                        String?                  @db.VarChar
+  img_inquadramento_url                  String?                  @db.VarChar
+  img_dettaglio_1_url                    String?                  @db.VarChar
+  img_dettaglio_2_url                    String?                  @db.VarChar
+  img_dettaglio_3_url                    String?                  @db.VarChar
+  img_dettaglio_4_url                    String?                  @db.VarChar
+  fessure_vst                            Boolean?
+  fessure_est                            estensione_t?
+  fessure_int                            intensita_t?
+  fessure_note                           String?                  @db.VarChar
+  macchie_umidita_vst                    Boolean?
+  macchie_umidita_est                    estensione_t?
+  macchie_umidita_int                    intensita_small_t?
+  macchie_umidita_note                   String?                  @db.VarChar
+  porzione_di_muratura_cls_mancante_vst  Boolean?                 @map("porzione_di_muratura/cls_mancante_vst")
+  porzione_di_muratura_cls_mancante_est  estensione_t?            @map("porzione_di_muratura/cls_mancante_est")
+  porzione_di_muratura_cls_mancante_int  intensita_small_t?       @map("porzione_di_muratura/cls_mancante_int")
+  porzione_di_muratura_cls_mancante_note String?                  @map("porzione_di_muratura/cls_mancante_note") @db.VarChar
+  riprese_successive_deteriorate_vst     Boolean?
+  riprese_successive_deteriorate_est     estensione_small_t?
+  riprese_successive_deteriorate_int     intensita_small_t?
+  riprese_successive_deteriorate_note    String?                  @db.VarChar
+  patina_biologica_vegetazione_vst       Boolean?
+  patina_biologica_vegetazione_est       estensione_t?
+  patina_biologica_vegetazione_int       intensita_small_t?
+  patina_biologica_vegetazione_note      String?                  @db.VarChar
+  polverizzazione_vst                    Boolean?
+  polverizzazione_est                    estensione_t?
+  polverizzazione_int                    intensita_t?
+  polverizzazione_note                   String?                  @db.VarChar
+  fuori_piombo_vst                       Boolean?
+  fuori_piombo_est                       estensione_small_t?
+  fuori_piombo_int                       intensita_t?
+  fuori_piombo_note                      String?                  @db.VarChar
+  danni_da_urto_vst                      Boolean?
+  danni_da_urto_est                      estensione_small_t?
+  danni_da_urto_int                      intensita_small_t?
+  danni_da_urto_note                     String?                  @db.VarChar
+  degrado_ancoraggio_vst                 Boolean?
+  degrado_ancoraggio_est                 estensione_small_t?
+  degrado_ancoraggio_int                 intensita_small_t?
+  degrado_ancoraggio_note                String?                  @db.VarChar
+  difetti_connessione_vst                Boolean?
+  difetti_connessione_est                estensione_small_t?
+  difetti_connessione_int                intensita_small_t?
+  difetti_connessione_note               String?                  @db.VarChar
+  geom                                   Unsupported("geometry")?
+
+  @@index([geom], map: "tab17a_m03_idx_idx", type: Gist)
+  @@schema("monitoraggio")
+}
+
+model tab17A_M05_attenuatori_urto {
+  id_master             Int?
+  id_monit_att_urto     BigInt                   @id @default(0)
+  utente                String?                  @default(dbgenerated("CURRENT_USER")) @db.VarChar
+  dataora_monit         DateTime?                @db.Timestamp(6)
+  dataora_modifica      DateTime?                @db.Timestamp(6)
+  note_gen              String?                  @db.VarChar
+  img_inquadramento     String?                  @db.VarChar
+  img_dettaglio_1       String?                  @db.VarChar
+  img_dettaglio_2       String?                  @db.VarChar
+  img_dettaglio_3       String?                  @db.VarChar
+  img_dettaglio_4       String?                  @db.VarChar
+  img_inquadramento_url String?                  @db.VarChar
+  img_dettaglio_1_url   String?                  @db.VarChar
+  img_dettaglio_2_url   String?                  @db.VarChar
+  img_dettaglio_3_url   String?                  @db.VarChar
+  img_dettaglio_4_url   String?                  @db.VarChar
+  elemento_vst          Boolean?
+  elemento_qnt          Float?
+  elemento_note         String?                  @db.VarChar
+  geom                  Unsupported("geometry")?
+  classe                String?                  @db.VarChar
+  tipologia             String?                  @db.VarChar
+  campagna              String?                  @db.VarChar
+
+  @@index([geom], map: "tab17a_m05_idx_idx", type: Gist)
+  @@schema("monitoraggio")
+}
+
+model tab17A_M06_disprit_stato_avanzamento {
+  id_disprit Int?     @unique(map: "tab17A_unique")
+  monitorato Boolean?
+  note       String?  @db.VarChar
+  id         Int      @id(map: "tab17A_m06_pk") @default(autoincrement())
+
+  @@schema("monitoraggio")
+}
+
+model tab19A_M01_monit_griglie_caditoie {
+  id_master                 Int?
+  id_monit_caditoia         BigInt                   @id(map: "tab19A_M01_monit_griglie_caditoie_pkey_n")
+  utente                    String?                  @default(dbgenerated("CURRENT_USER")) @db.VarChar
+  sc                        Decimal?                 @db.Decimal(3, 1)
+  sf                        Decimal?                 @db.Decimal(3, 1)
+  sottocategoria_anomalia   tab19a_t?
+  fonte_monit               fonte_monit_t?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  note_monit                String?                  @db.VarChar
+  img_monit_inquadr_1       String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+  img_monit_dettaglio_1     String?                  @db.VarChar
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  tab19A_griglie_caditoie   tab19A_griglie_caditoie? @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab19a_m01_fk")
+
+  @@index([id_monit_caditoia], map: "tab_19am_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+model tab24A_M01_monit_dossi {
+  id_master                 Int?
+  id_monit_dosso            BigInt         @id(map: "tab24A_M01_monit_dossi_pkey_n")
+  utente                    String?        @db.VarChar
+  sc                        Decimal?       @db.Decimal(3, 1)
+  sf                        Decimal?       @db.Decimal(3, 1)
+  sottocategoria_anomalia   tab24a_t?
+  fonte_monit               fonte_monit_t?
+  dataora_monit             DateTime?      @db.Timestamp(6)
+  note_monit                String?        @db.VarChar
+  img_monit_inquadr_1       String?        @db.VarChar
+  img_monit_inquadr_1_url   String?        @db.VarChar
+  img_monit_dettaglio_1     String?        @db.VarChar
+  img_monit_dettaglio_1_url String?        @db.VarChar
+  tab24A_dossi              tab24A_dossi?  @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab24a_m01_fk")
+
+  @@index([id_monit_dosso], map: "tab_24am_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+model tab27A_M01_monit_segn_vert_supporti {
+  id_master                 Int?
+  id_monit_supporto         BigInt                     @id(map: " tab27A_M01_monit_segn_vert_supporti_pkey_n")
+  utente                    String?                    @default(dbgenerated("CURRENT_USER")) @db.VarChar
+  sc                        Decimal?                   @db.Decimal(3, 1)
+  sf                        Decimal?                   @db.Decimal(3, 1)
+  sottocategoria_anomalia   tab27a_t?
+  fonte_monit               fonte_monit_t?
+  dataora_monit             DateTime?                  @db.Timestamp(6)
+  note_monit                String?                    @db.VarChar
+  img_monit_inquadr_1       String?                    @db.VarChar
+  img_monit_inquadr_1_url   String?                    @db.VarChar
+  img_monit_dettaglio_1     String?                    @db.VarChar
+  img_monit_dettaglio_1_url String?                    @db.VarChar
+  conformita_normativa      conformita_normativa_t?
+  note_conformita           String?                    @db.VarChar
+  tab27A_segn_vert_supporti tab27A_segn_vert_supporti? @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab27a_m01_fk")
+
+  @@index([id_master], map: "tab27am_id_master")
+  @@index([id_monit_supporto], map: "tab_27am_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+model tab27B_M01_monit_segn_vert_cartelli {
+  id_master                 Int?
+  id_monit_pannello         BigInt                     @id(map: "tab27B_M01_monit_segn_vert_cartelli_pkey_n")
+  utente                    String?                    @default(dbgenerated("CURRENT_USER")) @db.VarChar
+  sc                        Decimal?                   @db.Decimal(3, 1)
+  sf                        Decimal?                   @db.Decimal(3, 1)
+  sottocategoria_anomalia   tab27b_t?
+  fonte_monit               fonte_monit_t?
+  dataora_monit             DateTime?                  @db.Timestamp(6)
+  note_monit                String?                    @db.VarChar
+  img_monit_inquadr_1       String?                    @db.VarChar
+  img_monit_inquadr_1_url   String?                    @db.VarChar
+  img_monit_dettaglio_1     String?                    @db.VarChar
+  img_monit_dettaglio_1_url String?                    @db.VarChar
+  conformita_normativa      conformita_normativa_t?
+  note_conformita           String?                    @db.VarChar
+  tab27B_segn_vert_cartelli tab27B_segn_vert_cartelli? @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab27b_m01_fk")
+
+  @@index([id_monit_pannello], map: "tab_27bm_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+model tab30A_M01_monit_segn_oriz_P {
+  id_master                 BigInt?
+  id_monit_sop              BigInt                  @id(map: "tab30A_M01_monit_segn_oriz_P_pkey_n")
+  utente                    String?                 @default(dbgenerated("CURRENT_USER")) @db.VarChar
+  sc                        Decimal?                @db.Decimal(3, 1)
+  sf                        Decimal?                @db.Decimal(3, 1)
+  sottocategoria_anomalia   tab30a_t?
+  fonte_monit               fonte_monit_t?
+  dataora_monit             DateTime?               @db.Timestamp(6)
+  note_monit                String?                 @db.VarChar
+  img_monit_inquadr_1       String?                 @db.VarChar
+  img_monit_inquadr_1_url   String?                 @db.VarChar
+  img_monit_dettaglio_1     String?                 @db.VarChar
+  img_monit_dettaglio_1_url String?                 @db.VarChar
+  conformita_normativa      conformita_normativa_t?
+  note_conformita           String?                 @db.VarChar
+  tab30A_segn_oriz_P        tab30A_segn_oriz_P?     @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab30a_m01_fk")
+
+  @@index([id_monit_sop], map: "tab_30am_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+model tab30B_M01_monit_segn_oriz_L {
+  id_master                 Int?
+  id_monit_sol              BigInt                  @id(map: "tab30B_M01_monit_segn_oriz_L_pkey_n")
+  utente                    String?                 @db.VarChar
+  sc                        Decimal?                @db.Decimal(3, 1)
+  sf                        Decimal?                @db.Decimal(3, 1)
+  sottocategoria_anomalia   tab30b_t?
+  fonte_monit               fonte_monit_t?
+  dataora_monit             DateTime?               @db.Timestamp(6)
+  note_monit                String?                 @db.VarChar
+  img_monit_inquadr_1       String?                 @db.VarChar
+  img_monit_inquadr_1_url   String?                 @db.VarChar
+  img_monit_dettaglio_1     String?                 @db.VarChar
+  img_monit_dettaglio_1_url String?                 @db.VarChar
+  conformita_normativa      conformita_normativa_t?
+  note_conformita           String?                 @db.VarChar
+  tab30B_segn_oriz_L        tab30B_segn_oriz_L?     @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab30b_m01_fk")
+
+  @@index([id_monit_sol], map: "tab_30bm_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+model tab43A_M01_monit_paraped_dissuas {
+  id_master                      Int?
+  id_monit_parap                 BigInt                          @id(map: "tab43A_M01_monit_paraped_dissuas_pkey_n1")
+  utente                         String?                         @db.VarChar
+  sc                             Decimal?                        @db.Decimal(3, 1)
+  sf                             Decimal?                        @db.Decimal(3, 1)
+  sottocategoria_anomalia        tab43a_t?
+  fonte_monit                    fonte_monit_t?
+  dataora_monit                  DateTime?                       @db.Timestamp(6)
+  note_monit                     String?                         @db.VarChar
+  img_monit_inquadr_1            String?                         @db.VarChar
+  img_monit_inquadr_1_url        String?                         @db.VarChar
+  img_monit_dettaglio_1          String?                         @db.VarChar
+  img_monit_dettaglio_1_url      String?                         @db.VarChar
+  tab43A_paraped_dissuasorisosta tab43A_paraped_dissuasorisosta? @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab43a_m01_fk")
+
+  @@index([id_monit_parap], map: "tab_43am_id_monit_n1")
+  @@schema("monitoraggio")
+}
+
+model tab43B_M01_monit_rastrelliere {
+  id_master                 Int?
+  id_monit_rastrelliera     BigInt               @id(map: "tab43b_n")
+  utente                    String?              @db.VarChar
+  sc                        Decimal?             @db.Decimal(3, 1)
+  sf                        Decimal?             @db.Decimal(3, 1)
+  sottocategoria_anomalia   tab43b_t?
+  fonte_monit               fonte_monit_t?
+  dataora_monit             DateTime?            @db.Timestamp(6)
+  note_monit                String?              @db.VarChar
+  img_monit_inquadr_1       String?              @db.VarChar
+  img_monit_inquadr_1_url   String?              @db.VarChar
+  img_monit_dettaglio_1     String?              @db.VarChar
+  img_monit_dettaglio_1_url String?              @db.VarChar
+  tab43B_rastrelliere       tab43B_rastrelliere? @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab43b_m01_fk")
+
+  @@index([id_monit_rastrelliera], map: "tab_43bm_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+enum catasto__segnale_orizz_lin_t {
+  singola_continua                  @map("singola continua")
+  singola_tratteggiata              @map("singola tratteggiata")
+  doppia_continua                   @map("doppia continua")
+  doppia_tratteggiata               @map("doppia tratteggiata")
+  doppia_tratteggiata_a_sx          @map("doppia tratteggiata a sx")
+  doppia_tratteggiata_a_dx          @map("doppia tratteggiata a dx")
+  occhi_di_gatto_e_affini           @map("occhi di gatto e affini")
+  cordoli_separatori_di_corsia      @map("cordoli separatori di corsia")
+  delineatori_flessibili_di_margine @map("delineatori flessibili di margine")
+  zig_zag                           @map("zig-zag")
+  altro
+
+  @@map("_segnale_orizz_lin_t")
+  @@schema("catasto")
+}
+
+enum arredo_urbano_t {
+  cestino
+  pensilina
+  panchina
+  fontanella
+  altro
+  gioco
+  fioriera
+
+  @@schema("catasto")
+}
+
+enum barriera_t {
+  centrale_spartitraffico       @map("centrale spartitraffico")
+  per_bordo_laterale            @map("per bordo laterale")
+  per_opere_d_arte              @map("per opere d arte")
+  per_punti_singolari           @map("per punti singolari")
+  semovente_per_chiusura_varchi @map("semovente per chiusura varchi")
+  altro
+  per_opere_d_arteb             @map("per opere d'arte")
+
+  @@schema("catasto")
+}
+
+enum caditoie_t {
+  BLG
+  BLU
+  GRF
+  GRI
+  GRT
+  LAP
+  SCO
+  altro
+
+  @@schema("catasto")
+}
+
+enum categoria_ponti_t {
+  non_determinata                     @map("non determinata")
+  I_categoria                         @map("I categoria")
+  II_categoria                        @map("II categoria")
+  III_categoria__passerelle_pedonali_ @map("III categoria (passerelle pedonali)")
+
+  @@schema("catasto")
+}
+
+enum coesione_pavim_t {
+  materiale_sciolto @map("materiale sciolto")
+  materiale_legato  @map("materiale legato")
+  ad_elementi       @map("ad elementi")
+
+  @@schema("catasto")
+}
+
+enum colore_segnale_orizz_t {
+  bianco
+  giallo
+  azzurro
+  giallo_e_nero    @map("giallo e nero")
+  bianco_e_rosso   @map("bianco e rosso")
+  bianco_e_azzurro @map("bianco e azzurro")
+  rosa
+  altro
+
+  @@schema("catasto")
+}
+
+enum cordonato_t {
+  pietra_naturale    @map("pietra naturale")
+  pietra_artificiale @map("pietra artificiale")
+  cemento
+  altro
+
+  @@schema("catasto")
+}
+
+enum disposiz_sosta_t {
+  sosta_in_linea   @map("sosta in linea")
+  sosta_ortogonale @map("sosta ortogonale")
+  sosta_a_spina    @map("sosta a spina")
+  altro
+
+  @@schema("catasto")
+}
+
+enum dosso_t {
+  dosso_rallentatore @map("dosso rallentatore")
+  altro
+
+  @@schema("catasto")
+}
+
+enum elemavvio_ritenuta_t {
+  non_presente               @map("non presente")
+  punto_di_continuita        @map("punto di continuita")
+  a_ventaglio                @map("a ventaglio")
+  a_cilindro                 @map("a cilindro")
+  azzeramento_a_terra        @map("azzeramento a terra")
+  a_deformazione_controllata @map("a deformazione controllata")
+
+  @@schema("catasto")
+}
+
+enum famiglia_segn_stradale_t {
+  pericolo
+  prescrizione
+  indicazione
+  pannello_integrativo  @map("pannello integrativo")
+  segnale_complementare @map("segnale complementare")
+
+  @@schema("catasto")
+}
+
+enum famiglia_segn_stradale_temp_t {
+  limite_di_velocita    @map("limite di velocita")
+  divieto_di_sorpasso   @map("divieto di sorpasso")
+  restringimento
+  fine_cantiere         @map("fine cantiere")
+  strada_senza_sfondo   @map("strada senza sfondo")
+  strada_chiusa         @map("strada chiusa")
+  senso_unico_alternato @map("senso unico alternato")
+  lavori_in_corso       @map("lavori in corso")
+  pedoni_lato_opposto   @map("pedoni lato opposto")
+  passaggio_obbligato   @map("passaggio obbligato")
+  pericolo_generico     @map("pericolo generico")
+  strada_dissestata     @map("strada dissestata")
+  divieto_di_sosta      @map("divieto di sosta")
+  lampada
+  transenna
+  altro
+
+  @@schema("catasto")
+}
+
+enum famiglia_t {
+  limite_di_velocita    @map("limite di velocita")
+  divieto_di_sorpasso   @map("divieto di sorpasso")
+  restringimento
+  fine_cantiere         @map("fine cantiere")
+  strada_senza_sfondo   @map("strada senza sfondo")
+  strada_chiusa         @map("strada chiusa")
+  senso_unico_alternato @map("senso unico alternato")
+  lavori_in_corso       @map("lavori in corso")
+  pedoni_lato_opposto   @map("pedoni lato opposto")
+  passaggio_obbligato   @map("passaggio obbligato")
+  pericolo_generico     @map("pericolo generico")
+  strada_dissestata     @map("strada dissestata")
+  divieto_di_sosta      @map("divieto di sosta")
+  lampada
+  transenna
+  altro
+
+  @@schema("catasto")
+}
+
+enum formato_figure_t {
+  ridotto
+  piccolo
+  normale
+  grande
+  altro
+
+  @@schema("catasto")
+}
+
+enum galleria_t {
+  naturale
+  artificiale_aperta            @map("artificiale aperta")
+  artificiale_chiusa            @map("artificiale chiusa")
+  artificiale_finestrata        @map("artificiale finestrata")
+  sottopasso_ad_uso_promiscuo   @map("sottopasso ad uso promiscuo")
+  sottopasso_solo_veicolare     @map("sottopasso solo veicolare")
+  sottopasso_solo_ciclopedonale @map("sottopasso solo ciclopedonale")
+
+  @@schema("catasto")
+}
+
+enum gestore_sottoservizi_t {
+  Publiacqua
+  Toscana_Energia @map("Toscana Energia")
+  Enel
+  Silfi
+  Open_Fibre      @map("Open Fibre")
+  Telecom
+  Fastweb
+  Wind
+  privato
+  altro
+
+  @@schema("catasto")
+}
+
+enum gestore_t {
+  Comune_Firenze_proprietario         @map("Comune Firenze proprietario")
+  Comune_Firenze_privato_uso_pubblico @map("Comune Firenze privato uso pubblico")
+  ANAS
+  Ferrovie_dello_Stato                @map("Ferrovie dello Stato")
+  privato
+  altro
+  SILFI
+
+  @@schema("catasto")
+}
+
+enum giunto_t {
+  gomma_armata        @map("gomma armata")
+  pettine_in_metallo  @map("pettine in metallo")
+  modulare_in_lamelle @map("modulare in lamelle")
+  sottopavimentazione
+  tampone_a_freddo    @map("tampone a freddo")
+  altro
+
+  @@schema("catasto")
+}
+
+enum gruppo_barriera_t {
+  guard_rail            @map("guard rail")
+  new_jersey            @map("new jersey")
+  muretto
+  parapetto_o_ringhiera @map("parapetto o ringhiera")
+  altro
+
+  @@schema("catasto")
+}
+
+enum illuminazione_t {
+  palina_globo      @map("palina globo")
+  torre_faro        @map("torre faro")
+  palificata
+  sospesa_al_centro @map("sospesa al centro")
+  su_palo           @map("su palo")
+  a_muro            @map("a muro")
+  altro
+
+  @@schema("catasto")
+}
+
+enum impalcato_ponti_t {
+  impalcato_a_solettone             @map("impalcato a solettone")
+  impalcato_a_sezione_piena_ad_arco @map("impalcato a sezione piena ad arco")
+  impalcato_a_grigliato_di_travi    @map("impalcato a grigliato di travi")
+  impalcato_a_cassone               @map("impalcato a cassone")
+  impalcato_a_trave_reticolare      @map("impalcato a trave reticolare")
+  struttura_composita_acciaio_cls   @map("struttura composita acciaio-cls")
+  altro
+
+  @@schema("catasto")
+}
+
+enum impianto_pubblicitario_t {
+  preinsegna
+  cartello
+  impianto_a_msg_variab__o_led_lumin_ @map("impianto a msg variab. o led lumin.")
+  insegna
+  bacheca
+
+  @@schema("catasto")
+}
+
+enum impianto_tecnologico_t {
+  PMV
+  pilomat
+  colonnina_ricarica @map("colonnina ricarica")
+  altro
+
+  @@schema("catasto")
+}
+
+enum interferenza_sottopasso_t {
+  nessuna
+  pila
+  spalla
+  altro
+
+  @@schema("catasto")
+}
+
+enum interferita_ponti_t {
+  strada
+  ferrovia
+  fiume
+  canale
+  nessuna
+  altro
+
+  @@schema("catasto")
+}
+
+enum interferita_sottopasso_t {
+  strada_privata     @map("strada privata")
+  strada_comunale    @map("strada comunale")
+  strada_provinciale @map("strada provinciale")
+  strada_regionale   @map("strada regionale")
+  strada_anas        @map("strada anas")
+  autostrada
+  ferrovia
+  tranvia
+  servizi
+  altro
+
+  @@schema("catasto")
+}
+
+enum lavsup_lastrico_t {
+  punzecchiatura
+  rigatura
+  fiammatura
+  altro
+
+  @@schema("catasto")
+}
+
+enum livello_t {
+  in_sottopasso     @map("in sottopasso")
+  non_in_sottopasso @map("non in sottopasso")
+
+  @@schema("catasto")
+}
+
+enum mat_arredo_urbano_t {
+  acciaio
+  CLS
+  legno
+  pietra
+  plastica
+  altro
+
+  @@schema("catasto")
+}
+
+enum mat_caditoie_t {
+  acciaio
+  CLS
+  muratura
+  pietra
+  altro
+
+  @@schema("catasto")
+}
+
+enum mat_dosso_t {
+  plastica
+  CLS
+  conglomerato_bituminoso @map("conglomerato bituminoso")
+  altro
+
+  @@schema("catasto")
+}
+
+enum mat_parapedonale_t {
+  acciaio
+  CLS
+  legno
+  pietra
+  plastica
+  altro
+
+  @@schema("catasto")
+}
+
+enum mat_ponti_t {
+  calcestruzzo
+  ferro
+  legno
+  muratura
+
+  @@schema("catasto")
+}
+
+enum mat_rastrelliera_t {
+  acciaio
+  CLS
+  legno
+  pietra
+  plastica
+  altro
+
+  @@schema("catasto")
+}
+
+enum materiale_disp_ritenuta_t {
+  acciaio
+  CLS
+  legno
+  muratura
+  acciaio_e_legno    @map("acciaio e legno")
+  acciaio_e_cls      @map("acciaio e cls")
+  acciaio_e_muratura @map("acciaio e muratura")
+  muratura_e_legno   @map("muratura e legno")
+  altro
+
+  @@schema("catasto")
+}
+
+enum materiale_muro_t {
+  materiale_lapideo_sciolto  @map("materiale lapideo sciolto")
+  materiale_lapideo_legato   @map("materiale lapideo legato")
+  CLS_non_armato             @map("CLS non armato")
+  CLS_armato                 @map("CLS armato")
+  gabbionata_metallica       @map("gabbionata metallica")
+  terra_armata               @map("terra armata")
+  berlinese_di_pali          @map("berlinese di pali")
+  muro_ad_elementi_cellulari @map("muro ad elementi cellulari")
+  altro
+
+  @@schema("catasto")
+}
+
+enum materiale_segnale_orizz_t {
+  vernice
+  strisce_adesive @map("strisce adesive")
+  altro
+  termoplastico
+
+  @@schema("catasto")
+}
+
+enum muro_t {
+  rivestimento_naturale    @map("rivestimento naturale")
+  rivestimento_pavimentato @map("rivestimento pavimentato")
+  terrapieno
+  gabbionata_di_sostegno   @map("gabbionata di sostegno")
+  muri_di_sostegno         @map("muri di sostegno")
+  terrazzamento_agricolo   @map("terrazzamento agricolo")
+  muri_d_ala               @map("muri d ala")
+
+  @@schema("catasto")
+}
+
+enum paraped_modello_t {
+  chiodo_fiorentino @map("chiodo fiorentino")
+  philippo
+  altro
+
+  @@schema("catasto")
+}
+
+enum parapedonale_t {
+  parapedonale_a_paletto_con_catena @map("parapedonale a paletto con catena")
+  parapedonale_ad_arco              @map("parapedonale ad arco")
+  parapedonale_a_transenna          @map("parapedonale a transenna")
+  dissuasore_di_sosta_a_paletto     @map("dissuasore di sosta a paletto")
+  dissuasore_di_sosta_a_panettone   @map("dissuasore di sosta a panettone")
+  dissuasore_di_sosta_ad_arco       @map("dissuasore di sosta ad arco")
+  paracolpi_per_pali_e_alberi       @map("paracolpi per pali e alberi")
+  altro
+  catena
+
+  @@schema("catasto")
+}
+
+enum posiz_cicloped_t {
+  sede_riservata_isolata                  @map("sede riservata isolata")
+  sede_riservata_contigua_a_sede_stradale @map("sede riservata contigua a sede stradale")
+  altro
+  sede_ad_uso_promiscuo_veicolare         @map("sede ad uso promiscuo veicolare")
+  sede_ad_uso_promiscuo_ciclopedonale     @map("sede ad uso promiscuo ciclopedonale")
+
+  @@schema("catasto")
+}
+
+enum posizione_segnale_orizz_t {
+  margine
+  separazione_sensi_di_marcia                      @map("separazione sensi di marcia")
+  corsia
+  raccordo_per_presenza_ostacoli                   @map("raccordo per presenza ostacoli")
+  raccordo_per_variaz__largh__carreg__o_num_corsie @map("raccordo per variaz. largh. carreg. o num corsie")
+  altro
+
+  @@schema("catasto")
+}
+
+enum pozzetto_t {
+  chiusino_in_ghisa @map("chiusino in ghisa")
+  chiusino_in_cls   @map("chiusino in cls")
+  altro
+
+  @@schema("catasto")
+}
+
+enum protez_ambientale_t {
+  opere_mitigazione_impatti_visivi @map("opere mitigazione impatti visivi")
+  barriere_antirumore              @map("barriere antirumore")
+  reti_su_opere_di_scavalcamento   @map("reti su opere di scavalcamento")
+  altro
+
+  @@schema("catasto")
+}
+
+enum quartieri_t {
+  Q1_Centro_Storico    @map("Q1 Centro Storico")
+  Q2_Campo_di_Marte    @map("Q2 Campo di Marte")
+  Q3_Gavinana_Galluzzo @map("Q3 Gavinana Galluzzo")
+  Q4_Isolotto_Legnaia  @map("Q4 Isolotto Legnaia")
+  Q5_Rifredi           @map("Q5 Rifredi")
+
+  @@schema("catasto")
+}
+
+enum rastrelliera_t {
+  arco_inox            @map("arco inox")
+  bell_italia          @map("bell'italia")
+  molla
+  panchina
+  parapedonale_ad_arco @map("parapedonale ad arco")
+  tipo_FI              @map("tipo FI")
+  altro
+
+  @@schema("catasto")
+}
+
+enum sede_accic_t {
+  a_raso                       @map("a raso")
+  in_rilevato                  @map("in rilevato")
+  in_trincea                   @map("in trincea")
+  a_mezza_costa                @map("a mezza costa")
+  su_ponte_viadotto_cavalcavia @map("su ponte/viadotto/cavalcavia")
+  su_rampa                     @map("su rampa")
+  in_galleria                  @map("in galleria")
+
+  @@schema("catasto")
+}
+
+enum sede_acped_t {
+  a_raso                              @map("a raso")
+  in_galleria_sottopassaggio_pedonale @map("in galleria/sottopassaggio pedonale")
+  su_ponte_passerella_pedonale        @map("su ponte/passerella pedonale")
+  su_rampa                            @map("su rampa")
+  altro
+
+  @@schema("catasto")
+}
+
+enum sede_acvei_t {
+  a_raso                       @map("a raso")
+  in_rilevato                  @map("in rilevato")
+  in_trincea                   @map("in trincea")
+  a_mezza_costa                @map("a mezza costa")
+  su_ponte_viadotto_cavalcavia @map("su ponte/viadotto/cavalcavia")
+  su_rampa                     @map("su rampa")
+  in_galleria                  @map("in galleria")
+
+  @@schema("catasto")
+}
+
+enum segnalamento_t {
+  nessuno
+  segnale_verticale   @map("segnale verticale")
+  segnale_orizzontale @map("segnale orizzontale")
+  altro
+
+  @@schema("catasto")
+}
+
+enum catasto_segnale_orizz_lin_t {
+  singola_continua                  @map("singola continua")
+  singola_tratteggiata              @map("singola tratteggiata")
+  doppia_continua                   @map("doppia continua")
+  doppia_tratteggiata               @map("doppia tratteggiata")
+  doppia_tratteggiata_a_sx          @map("doppia tratteggiata a sx")
+  doppia_tratteggiata_a_dx          @map("doppia tratteggiata a dx")
+  occhi_di_gatto_e_affini           @map("occhi di gatto e affini")
+  cordoli_separatori_di_corsia      @map("cordoli separatori di corsia")
+  delineatori_flessibili_di_margine @map("delineatori flessibili di margine")
+  zig_zag                           @map("zig-zag")
+  altro
+
+  @@map("segnale_orizz_lin_t")
+  @@schema("catasto")
+}
+
+enum segnale_orizz_pun_t {
+  striscia_stop                     @map("striscia stop")
+  striscia_dare_precedenza          @map("striscia dare precedenza")
+  attraversamento_pedonale_rialzato @map("attraversamento pedonale rialzato")
+  attraversamento_ciclopedonale     @map("attraversamento ciclopedonale")
+  attraversamento_ciclabile         @map("attraversamento ciclabile")
+  scritta_stop                      @map("scritta stop")
+  triangolo_dare_precedenza         @map("triangolo dare precedenza")
+  freccia_direzionale               @map("freccia direzionale")
+  freccia_di_rientro                @map("freccia di rientro")
+  rallentatore_ottico               @map("rallentatore ottico")
+  rallentatore_acustico             @map("rallentatore acustico")
+  simbolo_pedone                    @map("simbolo pedone")
+  simbolo_bici                      @map("simbolo bici")
+  testo
+  zebratura
+  altro
+  scritta_bus                       @map("scritta bus")
+  scritta_taxi                      @map("scritta taxi")
+  attraversamento_pedonale          @map("attraversamento pedonale")
+
+  @@schema("catasto")
+}
+
+enum sosta_t {
+  sost_bus
+  sost_cust
+  sost_dis
+  sost_lib
+  sost_mer
+  sost_mot
+  sost_nn_cu
+  sost_pro
+  sost_res
+  sost_ris
+  sost_rot
+  sost_sha
+  altro
+
+  @@schema("catasto")
+}
+
+enum statica_ponti_t {
+  ponte_a_travata_in_semplice_appoggio @map("ponte a travata in semplice appoggio")
+  ponte_a_travata_continua             @map("ponte a travata continua")
+  ponte_ad_arco                        @map("ponte ad arco")
+  ponte_a_telaio                       @map("ponte a telaio")
+  ponte_ad_arco_trave_a_via_inferiore  @map("ponte ad arco-trave a via inferiore")
+  ponte_ad_arco_trave_a_via_superiore  @map("ponte ad arco-trave a via superiore")
+  ponte_ad_arco_trave_a_via_intermedia @map("ponte ad arco-trave a via intermedia")
+  ponte_a_cavalletto                   @map("ponte a cavalletto")
+  ponte_strallato                      @map("ponte strallato")
+  ponte_sospeso                        @map("ponte sospeso")
+  ponte_a_travata_tipo_gerber          @map("ponte a travata tipo gerber")
+  altro_schema_statico                 @map("altro schema statico")
+
+  @@schema("catasto")
+}
+
+enum strato_pavim_t {
+  naturale_terra                         @map("naturale terra")
+  conglomerato_bituminoso_trasparente    @map("conglomerato bituminoso trasparente")
+  conglomerato_bituminoso_colorato       @map("conglomerato bituminoso colorato")
+  conglomerato_bituminoso_stampato       @map("conglomerato bituminoso stampato")
+  conglomerato_cementizio_architettonico @map("conglomerato cementizio architettonico")
+  conglomerato_cementizio_lastre         @map("conglomerato cementizio lastre")
+  lastrico_arenaria                      @map("lastrico arenaria")
+  lastrico_granito                       @map("lastrico granito")
+  lastrico_porfido__sanpietrino_         @map("lastrico porfido (sanpietrino)")
+  lastrico_finta_pietra__cemento_        @map("lastrico finta pietra (cemento)")
+  autobloccanti
+  misto_granulare_non_legato             @map("misto granulare non legato")
+  misto_cementato                        @map("misto cementato")
+  acciaio
+  lastrico_serena_macigno                @map("lastrico serena macigno")
+  lastrico_serena_extradura              @map("lastrico serena extradura")
+  lastrico_serena_macigno_o_extradura    @map("lastrico serena macigno o extradura")
+  lastrico_pietraforte_standard          @map("lastrico pietraforte standard")
+  lastrico_pietraforte_mista_a_granito   @map("lastrico pietraforte mista a granito")
+  lastrico_pietraforte_albarese          @map("lastrico pietraforte albarese")
+  conglomerato_bituminoso_standard       @map("conglomerato bituminoso standard")
+
+  @@schema("catasto")
+}
+
+enum strutt_galleria_t {
+  ad_arco      @map("ad arco")
+  rettangolare
+
+  @@schema("catasto")
+}
+
+enum struttura_pavim_t {
+  flessibile
+  semirigida
+  rigida_non_armata           @map("rigida non armata")
+  rigida_ad_armatura_continua @map("rigida ad armatura continua")
+  modulare
+  composita
+  in_terra                    @map("in terra")
+
+  @@schema("catasto")
+}
+
+enum supancor_disp_ritenuta_t {
+  terra
+  muro_in_mattoni         @map("muro in mattoni")
+  muro_in_pietra          @map("muro in pietra")
+  muro_in_c_a_            @map("muro in c.a.")
+  cordolo_in_c_a_         @map("cordolo in c.a.")
+  dado_di_fondazione      @map("dado di fondazione")
+  pavimentazione_stradale @map("pavimentazione stradale")
+
+  @@schema("catasto")
+}
+
+enum tessitura_lastrico_t {
+  lastre_rettangolari @map("lastre rettangolari")
+  lastre_irregolari   @map("lastre irregolari")
+  cubetti
+  opus_incertum       @map("opus incertum")
+  altro
+  alla_rinfusa        @map("alla rinfusa")
+  a_bozzette          @map("a bozzette")
+
+  @@schema("catasto")
+}
+
+enum tipo_lato_t {
+  lato_SX            @map("lato SX")
+  centro_carreggiata @map("centro carreggiata")
+  lato_DX            @map("lato DX")
+  non_definibile     @map("non definibile")
+
+  @@schema("catasto")
+}
+
+enum tipo_oggetto_t {
+  area_di_circolazione_veicolare                @map("area di circolazione veicolare")
+  area_di_sosta                                 @map("area di sosta")
+  area_di_marcia_veicolare                      @map("area di marcia veicolare")
+  isole_spartitraffico                          @map("isole spartitraffico")
+  area_di_circolazione_pedonale                 @map("area di circolazione pedonale")
+  area_di_circolazione_ciclabile                @map("area di circolazione ciclabile")
+  muri_di_sostegno_del_corpo_stradale           @map("muri di sostegno del corpo stradale")
+  scarpate_e_pendii                             @map("scarpate e pendii")
+  ponti_viadotti_sovrappassi                    @map("ponti viadotti sovrappassi")
+  giunti_dei_ponti                              @map("giunti dei ponti")
+  pile_dei_ponti                                @map("pile dei ponti")
+  gallerie
+  sottopassi
+  gallerie_e_sottopassi                         @map("gallerie e sottopassi")
+  cunette_di_margine                            @map("cunette di margine")
+  arginelli
+  protezione_corpo_stradale                     @map("protezione corpo stradale")
+  protezione_ambiente_circostante               @map("protezione ambiente circostante")
+  impianti_di_illuminazione                     @map("impianti di illuminazione")
+  piazzole_di_sosta                             @map("piazzole di sosta")
+  dispositivi_di_ritenuta                       @map("dispositivi di ritenuta")
+  attenuatori_d_urto                            @map("attenuatori d'urto")
+  pertinenze_di_servizio                        @map("pertinenze di servizio")
+  opere_di_continuit__idraulica                 @map("opere di continuità idraulica")
+  sottoservizi
+  accessi
+  cippi
+  case_cantoniere                               @map("case cantoniere")
+  attenuatori_di_velocit_                       @map("attenuatori di velocità")
+  vegetazione_puntuale                          @map("vegetazione puntuale")
+  vegetazione_lineare                           @map("vegetazione lineare")
+  vegetazione_areale                            @map("vegetazione areale")
+  supporti_per_segnaletica                      @map("supporti per segnaletica")
+  cartelli_per_segnaletica_verticale            @map("cartelli per segnaletica verticale")
+  cartelli_per_segnaletica_verticale_temporanea @map("cartelli per segnaletica verticale temporanea")
+  cartelli_per_impianti_pubblicitari            @map("cartelli per impianti pubblicitari")
+  segnaletica_orizzontale_puntuale              @map("segnaletica orizzontale puntuale")
+  segnaletica_orizzontale_lineare               @map("segnaletica orizzontale lineare")
+  impianti_semaforici                           @map("impianti semaforici")
+  pannelli_a_messaggio_variabile                @map("pannelli a messaggio variabile")
+  varchi_telematici                             @map("varchi telematici")
+  impianti_controllo_violazioni                 @map("impianti controllo violazioni")
+  impianti_misurazione_traffico                 @map("impianti misurazione traffico")
+  sensori_meteo                                 @map("sensori meteo")
+  sbarre_per_controllo_accessi                  @map("sbarre per controllo accessi")
+  delimitazione_centri_abitati                  @map("delimitazione centri abitati")
+  passaggi_a_livello                            @map("passaggi a livello")
+  parapedonali_e_dissuasori_di_sosta            @map("parapedonali e dissuasori di sosta")
+  manufatti_minori_lineari                      @map("manufatti minori lineari")
+  arredo_urbano                                 @map("arredo urbano")
+  indici_prestazionali_della_pavimentazione     @map("indici prestazionali della pavimentazione")
+  dossi_rallentatori                            @map("dossi rallentatori")
+  dissuasori_di_sosta_e_parapedonali            @map("dissuasori di sosta e parapedonali")
+  rastrelliere
+  tombini__griglie__caditoie                    @map("tombini, griglie, caditoie")
+  pozzetti_sottoservizi                         @map("pozzetti sottoservizi")
+  impianti_tecnologici                          @map("impianti tecnologici")
+  abbattimenti_barriere_architettoniche         @map("abbattimenti barriere architettoniche")
+
+  @@schema("catasto")
+}
+
+enum tipo_origine_t {
+  VAR
+  GPS
+  cartografia
+  rilievo_topografico                   @map("rilievo topografico")
+  celerimetrico_originale               @map("celerimetrico originale")
+  celerimetrico_scorrimento_vertici     @map("celerimetrico scorrimento vertici")
+  celerimetrico_diviso                  @map("celerimetrico diviso")
+  celerimetrico_parzialmente_modificato @map("celerimetrico parzialmente modificato")
+  altri_opendata                        @map("altri opendata")
+  altri_opendata___toponomastica        @map("altri opendata - toponomastica")
+  altri_opendata___mobilita             @map("altri opendata - mobilita")
+  altri_opendata___publiacqua           @map("altri opendata - publiacqua")
+  altri_opendata___SAS                  @map("altri opendata - SAS")
+  as_built                              @map("as built")
+  celerimetrico_eliminato               @map("celerimetrico eliminato")
+  altro
+
+  @@schema("catasto")
+}
+
+enum tipo_supporto_t {
+  palo_singolo                 @map("palo singolo")
+  profilato_singolo            @map("profilato singolo")
+  telaio_multipalo             @map("telaio multipalo")
+  portale
+  a_bandiera                   @map("a bandiera")
+  a_farfalla                   @map("a farfalla")
+  portale_bandiera             @map("portale+bandiera")
+  struttura_muraria            @map("struttura muraria")
+  altre_strutture_esistenti    @map("altre strutture esistenti")
+  pavimentazione_stradale      @map("pavimentazione stradale")
+  altro
+  palo_illuminazione           @map("palo illuminazione")
+  palo_semaforico              @map("palo semaforico")
+  doppio_sostegno_monofacciale @map("doppio sostegno monofacciale")
+  // - @map("-")
+  doppio_sostegno_bifacciale   @map("doppio sostegno bifacciale")
+
+  @@schema("catasto")
+}
+
+enum trattsup_pavim_t {
+  trattamento_superficiale_splimastic_seal  @map("trattamento superficiale splimastic seal")
+  trattamento_superficiale_slurry_seal      @map("trattamento superficiale slurry seal")
+  trattamento_superficiale_di_irruvidimento @map("trattamento superficiale di irruvidimento")
+
+  @@schema("catasto")
+}
+
+enum uso_ponti_t {
+  ponte_ad_uso_promiscuo   @map("ponte ad uso promiscuo")
+  ponte_solo_veicolare     @map("ponte solo veicolare")
+  ponte_solo_ciclopedonale @map("ponte solo ciclopedonale")
+
+  @@schema("catasto")
+}
+
+enum uso_t {
+  privato
+  pubblico
+
+  @@schema("catasto")
+}
+
+enum zona_acped_t {
+  area_a_porticato                 @map("area a porticato")
+  galleria_pedonale_sottopassaggio @map("galleria pedonale sottopassaggio")
+  passaggio_pedonale               @map("passaggio pedonale")
+  percorsi_a_gradinate             @map("percorsi a gradinate")
+  su_aree_solo_pedonali            @map("su aree solo pedonali")
+  su_marciapiede                   @map("su marciapiede")
+  vialetto
+  altro
+
+  @@schema("catasto")
+}
+
+enum zona_acvei_t {
+  tronco_carreggiata              @map("tronco carreggiata")
+  tronco_ordinario                @map("tronco ordinario")
+  svincolo
+  slargo
+  piazza
+  incrocio
+  parcheggio
+  area_a_traffico_non_strutturato @map("area a traffico non strutturato")
+
+  @@schema("catasto")
+}
+
+enum class_bar_t {
+  N1
+  N2
+  H1
+  H2
+  H3
+  H4
+  null
+
+  @@schema("monitoraggio")
+}
+
+enum conformita_normativa_t {
+  SI
+  NO
+  VERIFICARE
+
+  @@schema("monitoraggio")
+}
+
+enum estensione_small_t {
+  // 1 @map("1")
+  NULL
+
+  @@schema("monitoraggio")
+}
+
+enum estensione_t {
+  // 0,2 @map("0,2")
+  // 0,5 @map("0,5")
+  // 1 @map("1")
+  NULL
+
+  @@schema("monitoraggio")
+}
+
+enum fonte_monit_t {
+  M
+  S
+  L
+
+  @@schema("monitoraggio")
+}
+
+enum intensita_small_t {
+  // 1 @map("1")
+  NULL
+
+  @@schema("monitoraggio")
+}
+
+enum intensita_t {
+  // 0,2 @map("0,2")
+  // 0,5 @map("0,5")
+  // 1 @map("1")
+  NULL
+
+  @@schema("monitoraggio")
+}
+
+enum tab01b_t {
+  cordolo_danneggiato_o_distaccato                      @map("cordolo danneggiato o distaccato")
+  cordolo_non_visibile                                  @map("cordolo non visibile")
+  elemento_integrativo_danneggiato__distaccato__assente @map("elemento integrativo danneggiato, distaccato, assente")
+  sbiadita
+  sporca
+  termoplastica_distaccata                              @map("termoplastica distaccata")
+  scivolosa
+  assente
+  non_congruo_o_non_conforme_al_NCdS                    @map("non congruo o non conforme al NCdS")
+  altro
+
+  @@schema("monitoraggio")
+}
+
+enum tab02a_t {
+  dissesti
+  radici
+  dissesti_e_radici  @map("dissesti e radici")
+  manto_non_presente @map("manto non presente")
+  non_rilevante      @map("non rilevante")
+  altro
+
+  @@schema("monitoraggio")
+}
+
+enum tab03a_t {
+  dissesti
+  radici
+  dissesti_e_radici  @map("dissesti e radici")
+  manto_non_presente @map("manto non presente")
+  non_rilevante      @map("non rilevante")
+  altro
+
+  @@schema("monitoraggio")
+}
+
+enum tab19a_t {
+  danneggiato
+  sprofondato
+  fuori_livello                 @map("fuori livello")
+  intasato
+  rumoroso
+  tubo_portavia_danneggiato     @map("tubo portavia danneggiato")
+  presenza_vegetazione_invasiva @map("presenza vegetazione invasiva")
+  assente
+  altro
+
+  @@schema("monitoraggio")
+}
+
+enum tab24a_t {
+  staffa_o_tassello_danneggiato                         @map("staffa o tassello danneggiato")
+  instabile_o_pericolante                               @map("instabile o pericolante")
+  divelto
+  piegato_o_danneggiato                                 @map("piegato o danneggiato")
+  non_congruo_o_non_conforme_al_NCdS                    @map("non congruo o non conforme al NCdS")
+  altro
+  elemento_integrativo_danneggiato__distaccato__assente @map("elemento integrativo danneggiato, distaccato, assente")
+
+  @@schema("monitoraggio")
+}
+
+enum tab27a_t {
+  coperto_o_non_visibile                                @map("coperto o non visibile")
+  instabile_o_pericolante                               @map("instabile o pericolante")
+  divelto
+  piegato_o_danneggiato                                 @map("piegato o danneggiato")
+  presenza_di_graffiti__adesivi__imbrattature           @map("presenza di graffiti, adesivi, imbrattature")
+  assente
+  non_congruo_o_non_conforme_al_NCdS                    @map("non congruo o non conforme al NCdS")
+  altro
+  elemento_integrativo_danneggiato__distaccato__assente @map("elemento integrativo danneggiato, distaccato, assente")
+
+  @@schema("monitoraggio")
+}
+
+enum tab27b_t {
+  sbiadito
+  girato
+  coperto_o_non_visibile                                @map("coperto o non visibile")
+  pellicola_scaduta                                     @map("pellicola scaduta")
+  staffa_o_tassello_danneggiato                         @map("staffa o tassello danneggiato")
+  instabile_o_pericolante                               @map("instabile o pericolante")
+  divelto
+  piegato_o_danneggiato                                 @map("piegato o danneggiato")
+  presenza_di_graffiti__adesivi__imbrattature           @map("presenza di graffiti, adesivi, imbrattature")
+  assente
+  non_congruo_o_non_conforme_al_NCdS                    @map("non congruo o non conforme al NCdS")
+  altro
+  elemento_integrativo_danneggiato__distaccato__assente @map("elemento integrativo danneggiato, distaccato, assente")
+
+  @@schema("monitoraggio")
+}
+
+enum tab30a_t {
+  elemento_integrativo_danneggiato__distaccato__assente @map("elemento integrativo danneggiato, distaccato, assente")
+  sbiadita
+  sporca
+  termoplastica_distaccata                              @map("termoplastica distaccata")
+  scivolosa
+  assente
+  non_congruo_o_non_conforme_al_NCdS                    @map("non congruo o non conforme al NCdS")
+  altro
+
+  @@schema("monitoraggio")
+}
+
+enum tab30b_t {
+  cordolo_danneggiato_o_distaccato                      @map("cordolo danneggiato o distaccato")
+  cordolo_non_visibile                                  @map("cordolo non visibile")
+  elemento_integrativo_danneggiato__distaccato__assente @map("elemento integrativo danneggiato, distaccato, assente")
+  sbiadita
+  sporca
+  termoplastica_distaccata                              @map("termoplastica distaccata")
+  scivolosa
+  assente
+  non_congruo_o_non_conforme_al_NCdS                    @map("non congruo o non conforme al NCdS")
+  altro
+
+  @@schema("monitoraggio")
+}
+
+enum tab43a_t {
+  coperto_o_non_visibile                                @map("coperto o non visibile")
+  instabile_o_pericolante                               @map("instabile o pericolante")
+  divelto
+  piegato_o_danneggiato                                 @map("piegato o danneggiato")
+  presenza_di_graffiti__adesivi__imbrattature           @map("presenza di graffiti, adesivi, imbrattature")
+  assente
+  non_congruo_o_non_conforme_al_NCdS                    @map("non congruo o non conforme al NCdS")
+  altro
+  elemento_integrativo_danneggiato__distaccato__assente @map("elemento integrativo danneggiato, distaccato, assente")
+
+  @@schema("monitoraggio")
+}
+
+enum tab43b_t {
+  coperto_o_non_visibile                                @map("coperto o non visibile")
+  instabile_o_pericolante                               @map("instabile o pericolante")
+  divelto
+  piegato_o_danneggiato                                 @map("piegato o danneggiato")
+  presenza_di_graffiti__adesivi__imbrattature           @map("presenza di graffiti, adesivi, imbrattature")
+  assente
+  non_congruo_o_non_conforme_al_NCdS                    @map("non congruo o non conforme al NCdS")
+  altro
+  elemento_integrativo_danneggiato__distaccato__assente @map("elemento integrativo danneggiato, distaccato, assente")
+
+  @@schema("monitoraggio")
+}
