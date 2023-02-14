@@ -33,31 +33,45 @@ const checkToken = async (req: any, res: any, next: () => void) => {
     });
 
     let permesso = false;
+    let roles = [];
     if (+user.id === +userData.id) {
       for (let i = 0; i < permessi.length; i++) {
+        console.log(":::::::::: CICLO:  ", i, permessi.length, route);
         if (permessi[i].route === route) {
-          for (let j = 0; j < permessi[i].roles.length; j++) {
-            if (permessi[i].roles[j] === gruppo.descrizione) {
-              permesso = true;
-              next();
-              break;
-            } else {
-              permesso = false;
-            }
-          }
-          if (!permesso) {
-            return res.json({
-              success: false,
-              message: "L'utente non ha il permesso di accedere",
-            });
-          }
+          permesso = true;
+          roles = permessi[i].roles;
+          break;
         } else {
-          console.log("Bad 2");
+          permesso = false;
+        }
+      }
+
+      let permessoRoles = false;
+      if (permesso === true) {
+        for (let j = 0; j < roles.length; j++) {
+          console.log(":::::::::: CICLO INTERNO:  ", j, roles.length);
+          if (roles[j] === gruppo.descrizione) {
+            permessoRoles = true;
+            break;
+          } else {
+            permessoRoles = false;
+          }
+        }
+
+        if (permessoRoles) {
+          next();
+        } else {
           return res.json({
             success: false,
             message: "L'utente non ha il permesso di accedere",
           });
         }
+      } else {
+        console.log("Non hai l'accesso");
+        return res.json({
+          success: false,
+          message: "L'utente non ha il permesso di accedere",
+        });
       }
     } else {
       console.log("Bad 1");
@@ -79,3 +93,8 @@ const middleware = {
 };
 
 export { middleware };
+
+//   return res.json({
+//     success: false,
+//     message: "L'utente non ha il permesso di accedere",
+//   });

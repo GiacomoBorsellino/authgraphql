@@ -11,8 +11,8 @@ router.use(
   })
 );
 
-router.get("/1/apiTestDb1", controller.apiTestDb1); // [middleware.checkToken],
+router.get("/1/apiTestDb1", [middleware.checkToken], controller.apiTestDb1); // [middleware.checkToken],
 
-router.get("/1/apiTestDb2", controller.apiTestDb2); // [middleware.checkToken],
+router.get("/1/apiTestDb2", [middleware.checkToken], controller.apiTestDb2); // [middleware.checkToken],
 
 export { router };
