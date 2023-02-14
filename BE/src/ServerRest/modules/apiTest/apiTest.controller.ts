@@ -20,10 +20,10 @@ export const apiTestDb1 = async (req: Request, res: Response) => {
 
 export const apiTestDb2 = async (req: Request, res: Response) => {
   console.log("Sono nel Controller apiTest 1 ma da altro db");
-  await client2.tab45A3_indici_pavim_bitume_2022
+  await client2.tab_famiglia_segn_temp
     .findMany({
       where: {
-        id_master: 10877,
+        id: 1,
       },
     })
     .then((data) => {
