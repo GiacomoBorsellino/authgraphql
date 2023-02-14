@@ -10,6 +10,8 @@ datasource db {
   schemas  = ["catasto", "monitoraggio"]
 }
 
+// Database Catasto
+
 model tab00B1_grafo_rilievi_2019_punti_altimetria {
   gid              Int                      @id(map: "tab00b1_grafo_rilievi_2019_punti_altimetria_pkey") @default(autoincrement())
   id_assepuntuale  Decimal?                 @db.Decimal
@@ -1175,6 +1177,8 @@ model tab_famiglia_segn_temp {
 
   @@schema("catasto")
 }
+
+// Database Monitoraggio
 
 model tab01B_M01_sosta {
   id_master                 Int?
