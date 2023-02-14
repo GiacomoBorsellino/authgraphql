@@ -47,6 +47,11 @@ server.listen().then(({ url }) => {
 
 /* =================================== API REST CONFIG =========================================== */
 
+// Cambio del prototype, cambia il BigInt in Int (DA NON FARE!)
+(BigInt.prototype as any).toJSON = function () {
+  return Number(this);
+};
+
 // API Config - Import Express, Cors, BodyParser
 import express from "express";
 import { Request, Response } from "express";

@@ -1042,10 +1042,10 @@ export type tab45A3_indici_pavim_bitume_2022 = {
   class: string | null
   pci_2021: number | null
   all_2021: Prisma.Decimal | null
-  rd_2021: Prisma.Decimal | null
+  rd_2021b: Prisma.Decimal | null
   cr_2021: Prisma.Decimal | null
   iri_2021: Prisma.Decimal | null
-  rd_2021b: number | null
+  rd_2021: number | null
   etd_2021: Prisma.Decimal | null
   etd_2022: Prisma.Decimal | null
   iri_2022: Prisma.Decimal | null
@@ -38405,10 +38405,10 @@ export namespace Prisma {
     pci_2020: number | null
     pci_2021: number | null
     all_2021: Decimal | null
-    rd_2021: Decimal | null
+    rd_2021b: Decimal | null
     cr_2021: Decimal | null
     iri_2021: Decimal | null
-    rd_2021b: number | null
+    rd_2021: number | null
     etd_2021: Decimal | null
     etd_2022: Decimal | null
     iri_2022: Decimal | null
@@ -38427,10 +38427,10 @@ export namespace Prisma {
     pci_2020: number | null
     pci_2021: number | null
     all_2021: Decimal | null
-    rd_2021: Decimal | null
+    rd_2021b: Decimal | null
     cr_2021: Decimal | null
     iri_2021: Decimal | null
-    rd_2021b: number | null
+    rd_2021: number | null
     etd_2021: Decimal | null
     etd_2022: Decimal | null
     iri_2022: Decimal | null
@@ -38463,10 +38463,10 @@ export namespace Prisma {
     class: string | null
     pci_2021: number | null
     all_2021: Decimal | null
-    rd_2021: Decimal | null
+    rd_2021b: Decimal | null
     cr_2021: Decimal | null
     iri_2021: Decimal | null
-    rd_2021b: number | null
+    rd_2021: number | null
     etd_2021: Decimal | null
     etd_2022: Decimal | null
     iri_2022: Decimal | null
@@ -38499,10 +38499,10 @@ export namespace Prisma {
     class: string | null
     pci_2021: number | null
     all_2021: Decimal | null
-    rd_2021: Decimal | null
+    rd_2021b: Decimal | null
     cr_2021: Decimal | null
     iri_2021: Decimal | null
-    rd_2021b: number | null
+    rd_2021: number | null
     etd_2021: Decimal | null
     etd_2022: Decimal | null
     iri_2022: Decimal | null
@@ -38535,10 +38535,10 @@ export namespace Prisma {
     class: number
     pci_2021: number
     all_2021: number
-    rd_2021: number
+    rd_2021b: number
     cr_2021: number
     iri_2021: number
-    rd_2021b: number
+    rd_2021: number
     etd_2021: number
     etd_2022: number
     iri_2022: number
@@ -38559,10 +38559,10 @@ export namespace Prisma {
     pci_2020?: true
     pci_2021?: true
     all_2021?: true
-    rd_2021?: true
+    rd_2021b?: true
     cr_2021?: true
     iri_2021?: true
-    rd_2021b?: true
+    rd_2021?: true
     etd_2021?: true
     etd_2022?: true
     iri_2022?: true
@@ -38581,10 +38581,10 @@ export namespace Prisma {
     pci_2020?: true
     pci_2021?: true
     all_2021?: true
-    rd_2021?: true
+    rd_2021b?: true
     cr_2021?: true
     iri_2021?: true
-    rd_2021b?: true
+    rd_2021?: true
     etd_2021?: true
     etd_2022?: true
     iri_2022?: true
@@ -38617,10 +38617,10 @@ export namespace Prisma {
     class?: true
     pci_2021?: true
     all_2021?: true
-    rd_2021?: true
+    rd_2021b?: true
     cr_2021?: true
     iri_2021?: true
-    rd_2021b?: true
+    rd_2021?: true
     etd_2021?: true
     etd_2022?: true
     iri_2022?: true
@@ -38653,10 +38653,10 @@ export namespace Prisma {
     class?: true
     pci_2021?: true
     all_2021?: true
-    rd_2021?: true
+    rd_2021b?: true
     cr_2021?: true
     iri_2021?: true
-    rd_2021b?: true
+    rd_2021?: true
     etd_2021?: true
     etd_2022?: true
     iri_2022?: true
@@ -38689,10 +38689,10 @@ export namespace Prisma {
     class?: true
     pci_2021?: true
     all_2021?: true
-    rd_2021?: true
+    rd_2021b?: true
     cr_2021?: true
     iri_2021?: true
-    rd_2021b?: true
+    rd_2021?: true
     etd_2021?: true
     etd_2022?: true
     iri_2022?: true
@@ -38813,10 +38813,10 @@ export namespace Prisma {
     class: string | null
     pci_2021: number | null
     all_2021: Decimal | null
-    rd_2021: Decimal | null
+    rd_2021b: Decimal | null
     cr_2021: Decimal | null
     iri_2021: Decimal | null
-    rd_2021b: number | null
+    rd_2021: number | null
     etd_2021: Decimal | null
     etd_2022: Decimal | null
     iri_2022: Decimal | null
@@ -38868,10 +38868,10 @@ export namespace Prisma {
     class?: boolean
     pci_2021?: boolean
     all_2021?: boolean
-    rd_2021?: boolean
+    rd_2021b?: boolean
     cr_2021?: boolean
     iri_2021?: boolean
-    rd_2021b?: boolean
+    rd_2021?: boolean
     etd_2021?: boolean
     etd_2022?: boolean
     iri_2022?: boolean
@@ -68970,10 +68970,10 @@ export namespace Prisma {
     class: 'class',
     pci_2021: 'pci_2021',
     all_2021: 'all_2021',
-    rd_2021: 'rd_2021',
+    rd_2021b: 'rd_2021b',
     cr_2021: 'cr_2021',
     iri_2021: 'iri_2021',
-    rd_2021b: 'rd_2021b',
+    rd_2021: 'rd_2021',
     etd_2021: 'etd_2021',
     etd_2022: 'etd_2022',
     iri_2022: 'iri_2022',
@@ -73150,10 +73150,10 @@ export namespace Prisma {
     class?: StringNullableFilter | string | null
     pci_2021?: IntNullableFilter | number | null
     all_2021?: DecimalNullableFilter | Decimal | DecimalJsLike | number | string | null
-    rd_2021?: DecimalNullableFilter | Decimal | DecimalJsLike | number | string | null
+    rd_2021b?: DecimalNullableFilter | Decimal | DecimalJsLike | number | string | null
     cr_2021?: DecimalNullableFilter | Decimal | DecimalJsLike | number | string | null
     iri_2021?: DecimalNullableFilter | Decimal | DecimalJsLike | number | string | null
-    rd_2021b?: IntNullableFilter | number | null
+    rd_2021?: IntNullableFilter | number | null
     etd_2021?: DecimalNullableFilter | Decimal | DecimalJsLike | number | string | null
     etd_2022?: DecimalNullableFilter | Decimal | DecimalJsLike | number | string | null
     iri_2022?: DecimalNullableFilter | Decimal | DecimalJsLike | number | string | null
@@ -73186,10 +73186,10 @@ export namespace Prisma {
     class?: SortOrder
     pci_2021?: SortOrder
     all_2021?: SortOrder
-    rd_2021?: SortOrder
+    rd_2021b?: SortOrder
     cr_2021?: SortOrder
     iri_2021?: SortOrder
-    rd_2021b?: SortOrder
+    rd_2021?: SortOrder
     etd_2021?: SortOrder
     etd_2022?: SortOrder
     iri_2022?: SortOrder
@@ -73226,10 +73226,10 @@ export namespace Prisma {
     class?: SortOrder
     pci_2021?: SortOrder
     all_2021?: SortOrder
-    rd_2021?: SortOrder
+    rd_2021b?: SortOrder
     cr_2021?: SortOrder
     iri_2021?: SortOrder
-    rd_2021b?: SortOrder
+    rd_2021?: SortOrder
     etd_2021?: SortOrder
     etd_2022?: SortOrder
     iri_2022?: SortOrder
@@ -73270,10 +73270,10 @@ export namespace Prisma {
     class?: StringNullableWithAggregatesFilter | string | null
     pci_2021?: IntNullableWithAggregatesFilter | number | null
     all_2021?: DecimalNullableWithAggregatesFilter | Decimal | DecimalJsLike | number | string | null
-    rd_2021?: DecimalNullableWithAggregatesFilter | Decimal | DecimalJsLike | number | string | null
+    rd_2021b?: DecimalNullableWithAggregatesFilter | Decimal | DecimalJsLike | number | string | null
     cr_2021?: DecimalNullableWithAggregatesFilter | Decimal | DecimalJsLike | number | string | null
     iri_2021?: DecimalNullableWithAggregatesFilter | Decimal | DecimalJsLike | number | string | null
-    rd_2021b?: IntNullableWithAggregatesFilter | number | null
+    rd_2021?: IntNullableWithAggregatesFilter | number | null
     etd_2021?: DecimalNullableWithAggregatesFilter | Decimal | DecimalJsLike | number | string | null
     etd_2022?: DecimalNullableWithAggregatesFilter | Decimal | DecimalJsLike | number | string | null
     iri_2022?: DecimalNullableWithAggregatesFilter | Decimal | DecimalJsLike | number | string | null
@@ -83016,10 +83016,10 @@ export namespace Prisma {
     class?: string | null
     pci_2021?: number | null
     all_2021?: Decimal | DecimalJsLike | number | string | null
-    rd_2021?: Decimal | DecimalJsLike | number | string | null
+    rd_2021b?: Decimal | DecimalJsLike | number | string | null
     cr_2021?: Decimal | DecimalJsLike | number | string | null
     iri_2021?: Decimal | DecimalJsLike | number | string | null
-    rd_2021b?: number | null
+    rd_2021?: number | null
     etd_2021?: Decimal | DecimalJsLike | number | string | null
     etd_2022?: Decimal | DecimalJsLike | number | string | null
     iri_2022?: Decimal | DecimalJsLike | number | string | null
@@ -83052,10 +83052,10 @@ export namespace Prisma {
     class?: string | null
     pci_2021?: number | null
     all_2021?: Decimal | DecimalJsLike | number | string | null
-    rd_2021?: Decimal | DecimalJsLike | number | string | null
+    rd_2021b?: Decimal | DecimalJsLike | number | string | null
     cr_2021?: Decimal | DecimalJsLike | number | string | null
     iri_2021?: Decimal | DecimalJsLike | number | string | null
-    rd_2021b?: number | null
+    rd_2021?: number | null
     etd_2021?: Decimal | DecimalJsLike | number | string | null
     etd_2022?: Decimal | DecimalJsLike | number | string | null
     iri_2022?: Decimal | DecimalJsLike | number | string | null
@@ -83087,10 +83087,10 @@ export namespace Prisma {
     class?: NullableStringFieldUpdateOperationsInput | string | null
     pci_2021?: NullableIntFieldUpdateOperationsInput | number | null
     all_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rd_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    rd_2021b?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cr_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     iri_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rd_2021b?: NullableIntFieldUpdateOperationsInput | number | null
+    rd_2021?: NullableIntFieldUpdateOperationsInput | number | null
     etd_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     etd_2022?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     iri_2022?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -83123,10 +83123,10 @@ export namespace Prisma {
     class?: NullableStringFieldUpdateOperationsInput | string | null
     pci_2021?: NullableIntFieldUpdateOperationsInput | number | null
     all_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rd_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    rd_2021b?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cr_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     iri_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rd_2021b?: NullableIntFieldUpdateOperationsInput | number | null
+    rd_2021?: NullableIntFieldUpdateOperationsInput | number | null
     etd_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     etd_2022?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     iri_2022?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -83159,10 +83159,10 @@ export namespace Prisma {
     class?: string | null
     pci_2021?: number | null
     all_2021?: Decimal | DecimalJsLike | number | string | null
-    rd_2021?: Decimal | DecimalJsLike | number | string | null
+    rd_2021b?: Decimal | DecimalJsLike | number | string | null
     cr_2021?: Decimal | DecimalJsLike | number | string | null
     iri_2021?: Decimal | DecimalJsLike | number | string | null
-    rd_2021b?: number | null
+    rd_2021?: number | null
     etd_2021?: Decimal | DecimalJsLike | number | string | null
     etd_2022?: Decimal | DecimalJsLike | number | string | null
     iri_2022?: Decimal | DecimalJsLike | number | string | null
@@ -83194,10 +83194,10 @@ export namespace Prisma {
     class?: NullableStringFieldUpdateOperationsInput | string | null
     pci_2021?: NullableIntFieldUpdateOperationsInput | number | null
     all_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rd_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    rd_2021b?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cr_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     iri_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rd_2021b?: NullableIntFieldUpdateOperationsInput | number | null
+    rd_2021?: NullableIntFieldUpdateOperationsInput | number | null
     etd_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     etd_2022?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     iri_2022?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -83230,10 +83230,10 @@ export namespace Prisma {
     class?: NullableStringFieldUpdateOperationsInput | string | null
     pci_2021?: NullableIntFieldUpdateOperationsInput | number | null
     all_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rd_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    rd_2021b?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     cr_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     iri_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    rd_2021b?: NullableIntFieldUpdateOperationsInput | number | null
+    rd_2021?: NullableIntFieldUpdateOperationsInput | number | null
     etd_2021?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     etd_2022?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     iri_2022?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
@@ -93367,10 +93367,10 @@ export namespace Prisma {
     class?: SortOrder
     pci_2021?: SortOrder
     all_2021?: SortOrder
-    rd_2021?: SortOrder
+    rd_2021b?: SortOrder
     cr_2021?: SortOrder
     iri_2021?: SortOrder
-    rd_2021b?: SortOrder
+    rd_2021?: SortOrder
     etd_2021?: SortOrder
     etd_2022?: SortOrder
     iri_2022?: SortOrder
@@ -93389,10 +93389,10 @@ export namespace Prisma {
     pci_2020?: SortOrder
     pci_2021?: SortOrder
     all_2021?: SortOrder
-    rd_2021?: SortOrder
+    rd_2021b?: SortOrder
     cr_2021?: SortOrder
     iri_2021?: SortOrder
-    rd_2021b?: SortOrder
+    rd_2021?: SortOrder
     etd_2021?: SortOrder
     etd_2022?: SortOrder
     iri_2022?: SortOrder
@@ -93425,10 +93425,10 @@ export namespace Prisma {
     class?: SortOrder
     pci_2021?: SortOrder
     all_2021?: SortOrder
-    rd_2021?: SortOrder
+    rd_2021b?: SortOrder
     cr_2021?: SortOrder
     iri_2021?: SortOrder
-    rd_2021b?: SortOrder
+    rd_2021?: SortOrder
     etd_2021?: SortOrder
     etd_2022?: SortOrder
     iri_2022?: SortOrder
@@ -93461,10 +93461,10 @@ export namespace Prisma {
     class?: SortOrder
     pci_2021?: SortOrder
     all_2021?: SortOrder
-    rd_2021?: SortOrder
+    rd_2021b?: SortOrder
     cr_2021?: SortOrder
     iri_2021?: SortOrder
-    rd_2021b?: SortOrder
+    rd_2021?: SortOrder
     etd_2021?: SortOrder
     etd_2022?: SortOrder
     iri_2022?: SortOrder
@@ -93483,10 +93483,10 @@ export namespace Prisma {
     pci_2020?: SortOrder
     pci_2021?: SortOrder
     all_2021?: SortOrder
-    rd_2021?: SortOrder
+    rd_2021b?: SortOrder
     cr_2021?: SortOrder
     iri_2021?: SortOrder
-    rd_2021b?: SortOrder
+    rd_2021?: SortOrder
     etd_2021?: SortOrder
     etd_2022?: SortOrder
     iri_2022?: SortOrder

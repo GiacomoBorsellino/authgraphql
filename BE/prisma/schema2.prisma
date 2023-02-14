@@ -1077,10 +1077,10 @@ model tab45A3_indici_pavim_bitume_2022 {
   class              String?                  @db.VarChar(254)
   pci_2021           Int?
   all_2021           Decimal?                 @map("%all_2021") @db.Decimal(6, 2)
-  rd_2021            Decimal?                 @map("%rd_2021") @db.Decimal(6, 2)
+  rd_2021b           Decimal?                 @map("%rd_2021") @db.Decimal(6, 2)
   cr_2021            Decimal?                 @map("%cr_2021") @db.Decimal(6, 2)
   iri_2021           Decimal?                 @db.Decimal(6, 2)
-  rd_2021b           Int?
+  rd_2021            Int?
   etd_2021           Decimal?                 @db.Decimal(6, 2)
   etd_2022           Decimal?                 @db.Decimal(6, 2)
   iri_2022           Decimal?                 @db.Decimal(6, 2)
