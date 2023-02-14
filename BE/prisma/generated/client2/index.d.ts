@@ -1917,6 +1917,45 @@ export type tab43B_M01_monit_rastrelliere = {
   img_monit_dettaglio_1_url: string | null
 }
 
+/**
+ * Model grafo_gsfi
+ * 
+ */
+export type grafo_gsfi = {
+  id_master: bigint
+  cod_ele: string | null
+  nod_ini: string | null
+  nod_fin: string | null
+  tip_ele: string | null
+  tip_pav: string | null
+  cls_tcn: string | null
+  tip_gst: string | null
+  cod_gst: string | null
+  sot_pas: string | null
+  cod_sed: string | null
+  cls_lrg: string | null
+  cod_top: string | null
+  cod_top2: string | null
+  cod_reg: string | null
+  oneway: string | null
+  cod_dug: string | null
+  den_uff: string | null
+  cod_com: string | null
+  cod_via: string | null
+  class_pgtu: string | null
+  rete: Prisma.Decimal | null
+  quartiere: string | null
+  toponimo: string | null
+  data_attivazione: string | null
+  data_dismissione: string | null
+  ztl_diurna: string | null
+  ztl_notturna: string | null
+  unesco: string | null
+  rione: string | null
+  proprieta_capitolato: string | null
+  lungh_carreggiata: bigint | null
+}
+
 
 /**
  * Enums
@@ -3654,6 +3693,16 @@ export class PrismaClient<
     * ```
     */
   get tab43B_M01_monit_rastrelliere(): Prisma.tab43B_M01_monit_rastrelliereDelegate<GlobalReject>;
+
+  /**
+   * `prisma.grafo_gsfi`: Exposes CRUD operations for the **grafo_gsfi** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Grafo_gsfis
+    * const grafo_gsfis = await prisma.grafo_gsfi.findMany()
+    * ```
+    */
+  get grafo_gsfi(): Prisma.grafo_gsfiDelegate<GlobalReject>;
 }
 
 export namespace Prisma {
@@ -4176,7 +4225,8 @@ export namespace Prisma {
     tab30A_M01_monit_segn_oriz_P: 'tab30A_M01_monit_segn_oriz_P',
     tab30B_M01_monit_segn_oriz_L: 'tab30B_M01_monit_segn_oriz_L',
     tab43A_M01_monit_paraped_dissuas: 'tab43A_M01_monit_paraped_dissuas',
-    tab43B_M01_monit_rastrelliere: 'tab43B_M01_monit_rastrelliere'
+    tab43B_M01_monit_rastrelliere: 'tab43B_M01_monit_rastrelliere',
+    grafo_gsfi: 'grafo_gsfi'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -67192,11 +67242,1189 @@ export namespace Prisma {
 
 
   /**
+   * Model grafo_gsfi
+   */
+
+
+  export type AggregateGrafo_gsfi = {
+    _count: Grafo_gsfiCountAggregateOutputType | null
+    _avg: Grafo_gsfiAvgAggregateOutputType | null
+    _sum: Grafo_gsfiSumAggregateOutputType | null
+    _min: Grafo_gsfiMinAggregateOutputType | null
+    _max: Grafo_gsfiMaxAggregateOutputType | null
+  }
+
+  export type Grafo_gsfiAvgAggregateOutputType = {
+    id_master: number | null
+    rete: Decimal | null
+    lungh_carreggiata: number | null
+  }
+
+  export type Grafo_gsfiSumAggregateOutputType = {
+    id_master: bigint | null
+    rete: Decimal | null
+    lungh_carreggiata: bigint | null
+  }
+
+  export type Grafo_gsfiMinAggregateOutputType = {
+    id_master: bigint | null
+    cod_ele: string | null
+    nod_ini: string | null
+    nod_fin: string | null
+    tip_ele: string | null
+    tip_pav: string | null
+    cls_tcn: string | null
+    tip_gst: string | null
+    cod_gst: string | null
+    sot_pas: string | null
+    cod_sed: string | null
+    cls_lrg: string | null
+    cod_top: string | null
+    cod_top2: string | null
+    cod_reg: string | null
+    oneway: string | null
+    cod_dug: string | null
+    den_uff: string | null
+    cod_com: string | null
+    cod_via: string | null
+    class_pgtu: string | null
+    rete: Decimal | null
+    quartiere: string | null
+    toponimo: string | null
+    data_attivazione: string | null
+    data_dismissione: string | null
+    ztl_diurna: string | null
+    ztl_notturna: string | null
+    unesco: string | null
+    rione: string | null
+    proprieta_capitolato: string | null
+    lungh_carreggiata: bigint | null
+  }
+
+  export type Grafo_gsfiMaxAggregateOutputType = {
+    id_master: bigint | null
+    cod_ele: string | null
+    nod_ini: string | null
+    nod_fin: string | null
+    tip_ele: string | null
+    tip_pav: string | null
+    cls_tcn: string | null
+    tip_gst: string | null
+    cod_gst: string | null
+    sot_pas: string | null
+    cod_sed: string | null
+    cls_lrg: string | null
+    cod_top: string | null
+    cod_top2: string | null
+    cod_reg: string | null
+    oneway: string | null
+    cod_dug: string | null
+    den_uff: string | null
+    cod_com: string | null
+    cod_via: string | null
+    class_pgtu: string | null
+    rete: Decimal | null
+    quartiere: string | null
+    toponimo: string | null
+    data_attivazione: string | null
+    data_dismissione: string | null
+    ztl_diurna: string | null
+    ztl_notturna: string | null
+    unesco: string | null
+    rione: string | null
+    proprieta_capitolato: string | null
+    lungh_carreggiata: bigint | null
+  }
+
+  export type Grafo_gsfiCountAggregateOutputType = {
+    id_master: number
+    cod_ele: number
+    nod_ini: number
+    nod_fin: number
+    tip_ele: number
+    tip_pav: number
+    cls_tcn: number
+    tip_gst: number
+    cod_gst: number
+    sot_pas: number
+    cod_sed: number
+    cls_lrg: number
+    cod_top: number
+    cod_top2: number
+    cod_reg: number
+    oneway: number
+    cod_dug: number
+    den_uff: number
+    cod_com: number
+    cod_via: number
+    class_pgtu: number
+    rete: number
+    quartiere: number
+    toponimo: number
+    data_attivazione: number
+    data_dismissione: number
+    ztl_diurna: number
+    ztl_notturna: number
+    unesco: number
+    rione: number
+    proprieta_capitolato: number
+    lungh_carreggiata: number
+    _all: number
+  }
+
+
+  export type Grafo_gsfiAvgAggregateInputType = {
+    id_master?: true
+    rete?: true
+    lungh_carreggiata?: true
+  }
+
+  export type Grafo_gsfiSumAggregateInputType = {
+    id_master?: true
+    rete?: true
+    lungh_carreggiata?: true
+  }
+
+  export type Grafo_gsfiMinAggregateInputType = {
+    id_master?: true
+    cod_ele?: true
+    nod_ini?: true
+    nod_fin?: true
+    tip_ele?: true
+    tip_pav?: true
+    cls_tcn?: true
+    tip_gst?: true
+    cod_gst?: true
+    sot_pas?: true
+    cod_sed?: true
+    cls_lrg?: true
+    cod_top?: true
+    cod_top2?: true
+    cod_reg?: true
+    oneway?: true
+    cod_dug?: true
+    den_uff?: true
+    cod_com?: true
+    cod_via?: true
+    class_pgtu?: true
+    rete?: true
+    quartiere?: true
+    toponimo?: true
+    data_attivazione?: true
+    data_dismissione?: true
+    ztl_diurna?: true
+    ztl_notturna?: true
+    unesco?: true
+    rione?: true
+    proprieta_capitolato?: true
+    lungh_carreggiata?: true
+  }
+
+  export type Grafo_gsfiMaxAggregateInputType = {
+    id_master?: true
+    cod_ele?: true
+    nod_ini?: true
+    nod_fin?: true
+    tip_ele?: true
+    tip_pav?: true
+    cls_tcn?: true
+    tip_gst?: true
+    cod_gst?: true
+    sot_pas?: true
+    cod_sed?: true
+    cls_lrg?: true
+    cod_top?: true
+    cod_top2?: true
+    cod_reg?: true
+    oneway?: true
+    cod_dug?: true
+    den_uff?: true
+    cod_com?: true
+    cod_via?: true
+    class_pgtu?: true
+    rete?: true
+    quartiere?: true
+    toponimo?: true
+    data_attivazione?: true
+    data_dismissione?: true
+    ztl_diurna?: true
+    ztl_notturna?: true
+    unesco?: true
+    rione?: true
+    proprieta_capitolato?: true
+    lungh_carreggiata?: true
+  }
+
+  export type Grafo_gsfiCountAggregateInputType = {
+    id_master?: true
+    cod_ele?: true
+    nod_ini?: true
+    nod_fin?: true
+    tip_ele?: true
+    tip_pav?: true
+    cls_tcn?: true
+    tip_gst?: true
+    cod_gst?: true
+    sot_pas?: true
+    cod_sed?: true
+    cls_lrg?: true
+    cod_top?: true
+    cod_top2?: true
+    cod_reg?: true
+    oneway?: true
+    cod_dug?: true
+    den_uff?: true
+    cod_com?: true
+    cod_via?: true
+    class_pgtu?: true
+    rete?: true
+    quartiere?: true
+    toponimo?: true
+    data_attivazione?: true
+    data_dismissione?: true
+    ztl_diurna?: true
+    ztl_notturna?: true
+    unesco?: true
+    rione?: true
+    proprieta_capitolato?: true
+    lungh_carreggiata?: true
+    _all?: true
+  }
+
+  export type Grafo_gsfiAggregateArgs = {
+    /**
+     * Filter which grafo_gsfi to aggregate.
+     */
+    where?: grafo_gsfiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of grafo_gsfis to fetch.
+     */
+    orderBy?: Enumerable<grafo_gsfiOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: grafo_gsfiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` grafo_gsfis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` grafo_gsfis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned grafo_gsfis
+    **/
+    _count?: true | Grafo_gsfiCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Grafo_gsfiAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Grafo_gsfiSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Grafo_gsfiMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Grafo_gsfiMaxAggregateInputType
+  }
+
+  export type GetGrafo_gsfiAggregateType<T extends Grafo_gsfiAggregateArgs> = {
+        [P in keyof T & keyof AggregateGrafo_gsfi]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGrafo_gsfi[P]>
+      : GetScalarType<T[P], AggregateGrafo_gsfi[P]>
+  }
+
+
+
+
+  export type Grafo_gsfiGroupByArgs = {
+    where?: grafo_gsfiWhereInput
+    orderBy?: Enumerable<grafo_gsfiOrderByWithAggregationInput>
+    by: Grafo_gsfiScalarFieldEnum[]
+    having?: grafo_gsfiScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Grafo_gsfiCountAggregateInputType | true
+    _avg?: Grafo_gsfiAvgAggregateInputType
+    _sum?: Grafo_gsfiSumAggregateInputType
+    _min?: Grafo_gsfiMinAggregateInputType
+    _max?: Grafo_gsfiMaxAggregateInputType
+  }
+
+
+  export type Grafo_gsfiGroupByOutputType = {
+    id_master: bigint
+    cod_ele: string | null
+    nod_ini: string | null
+    nod_fin: string | null
+    tip_ele: string | null
+    tip_pav: string | null
+    cls_tcn: string | null
+    tip_gst: string | null
+    cod_gst: string | null
+    sot_pas: string | null
+    cod_sed: string | null
+    cls_lrg: string | null
+    cod_top: string | null
+    cod_top2: string | null
+    cod_reg: string | null
+    oneway: string | null
+    cod_dug: string | null
+    den_uff: string | null
+    cod_com: string | null
+    cod_via: string | null
+    class_pgtu: string | null
+    rete: Decimal | null
+    quartiere: string | null
+    toponimo: string | null
+    data_attivazione: string | null
+    data_dismissione: string | null
+    ztl_diurna: string | null
+    ztl_notturna: string | null
+    unesco: string | null
+    rione: string | null
+    proprieta_capitolato: string | null
+    lungh_carreggiata: bigint | null
+    _count: Grafo_gsfiCountAggregateOutputType | null
+    _avg: Grafo_gsfiAvgAggregateOutputType | null
+    _sum: Grafo_gsfiSumAggregateOutputType | null
+    _min: Grafo_gsfiMinAggregateOutputType | null
+    _max: Grafo_gsfiMaxAggregateOutputType | null
+  }
+
+  type GetGrafo_gsfiGroupByPayload<T extends Grafo_gsfiGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickArray<Grafo_gsfiGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Grafo_gsfiGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Grafo_gsfiGroupByOutputType[P]>
+            : GetScalarType<T[P], Grafo_gsfiGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type grafo_gsfiSelect = {
+    id_master?: boolean
+    cod_ele?: boolean
+    nod_ini?: boolean
+    nod_fin?: boolean
+    tip_ele?: boolean
+    tip_pav?: boolean
+    cls_tcn?: boolean
+    tip_gst?: boolean
+    cod_gst?: boolean
+    sot_pas?: boolean
+    cod_sed?: boolean
+    cls_lrg?: boolean
+    cod_top?: boolean
+    cod_top2?: boolean
+    cod_reg?: boolean
+    oneway?: boolean
+    cod_dug?: boolean
+    den_uff?: boolean
+    cod_com?: boolean
+    cod_via?: boolean
+    class_pgtu?: boolean
+    rete?: boolean
+    quartiere?: boolean
+    toponimo?: boolean
+    data_attivazione?: boolean
+    data_dismissione?: boolean
+    ztl_diurna?: boolean
+    ztl_notturna?: boolean
+    unesco?: boolean
+    rione?: boolean
+    proprieta_capitolato?: boolean
+    lungh_carreggiata?: boolean
+  }
+
+
+  export type grafo_gsfiGetPayload<S extends boolean | null | undefined | grafo_gsfiArgs> =
+    S extends { select: any, include: any } ? 'Please either choose `select` or `include`' :
+    S extends true ? grafo_gsfi :
+    S extends undefined ? never :
+    S extends { include: any } & (grafo_gsfiArgs | grafo_gsfiFindManyArgs)
+    ? grafo_gsfi 
+    : S extends { select: any } & (grafo_gsfiArgs | grafo_gsfiFindManyArgs)
+      ? {
+    [P in TruthyKeys<S['select']>]:
+    P extends keyof grafo_gsfi ? grafo_gsfi[P] : never
+  } 
+      : grafo_gsfi
+
+
+  type grafo_gsfiCountArgs = 
+    Omit<grafo_gsfiFindManyArgs, 'select' | 'include'> & {
+      select?: Grafo_gsfiCountAggregateInputType | true
+    }
+
+  export interface grafo_gsfiDelegate<GlobalRejectSettings extends Prisma.RejectOnNotFound | Prisma.RejectPerOperation | false | undefined> {
+
+    /**
+     * Find zero or one Grafo_gsfi that matches the filter.
+     * @param {grafo_gsfiFindUniqueArgs} args - Arguments to find a Grafo_gsfi
+     * @example
+     * // Get one Grafo_gsfi
+     * const grafo_gsfi = await prisma.grafo_gsfi.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends grafo_gsfiFindUniqueArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args: SelectSubset<T, grafo_gsfiFindUniqueArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findUnique', 'grafo_gsfi'> extends True ? Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T>> : Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T> | null, null>
+
+    /**
+     * Find one Grafo_gsfi that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {grafo_gsfiFindUniqueOrThrowArgs} args - Arguments to find a Grafo_gsfi
+     * @example
+     * // Get one Grafo_gsfi
+     * const grafo_gsfi = await prisma.grafo_gsfi.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends grafo_gsfiFindUniqueOrThrowArgs>(
+      args?: SelectSubset<T, grafo_gsfiFindUniqueOrThrowArgs>
+    ): Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T>>
+
+    /**
+     * Find the first Grafo_gsfi that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {grafo_gsfiFindFirstArgs} args - Arguments to find a Grafo_gsfi
+     * @example
+     * // Get one Grafo_gsfi
+     * const grafo_gsfi = await prisma.grafo_gsfi.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends grafo_gsfiFindFirstArgs,  LocalRejectSettings = T["rejectOnNotFound"] extends RejectOnNotFound ? T['rejectOnNotFound'] : undefined>(
+      args?: SelectSubset<T, grafo_gsfiFindFirstArgs>
+    ): HasReject<GlobalRejectSettings, LocalRejectSettings, 'findFirst', 'grafo_gsfi'> extends True ? Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T>> : Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T> | null, null>
+
+    /**
+     * Find the first Grafo_gsfi that matches the filter or
+     * throw `NotFoundError` if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {grafo_gsfiFindFirstOrThrowArgs} args - Arguments to find a Grafo_gsfi
+     * @example
+     * // Get one Grafo_gsfi
+     * const grafo_gsfi = await prisma.grafo_gsfi.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends grafo_gsfiFindFirstOrThrowArgs>(
+      args?: SelectSubset<T, grafo_gsfiFindFirstOrThrowArgs>
+    ): Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T>>
+
+    /**
+     * Find zero or more Grafo_gsfis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {grafo_gsfiFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Grafo_gsfis
+     * const grafo_gsfis = await prisma.grafo_gsfi.findMany()
+     * 
+     * // Get first 10 Grafo_gsfis
+     * const grafo_gsfis = await prisma.grafo_gsfi.findMany({ take: 10 })
+     * 
+     * // Only select the `id_master`
+     * const grafo_gsfiWithId_masterOnly = await prisma.grafo_gsfi.findMany({ select: { id_master: true } })
+     * 
+    **/
+    findMany<T extends grafo_gsfiFindManyArgs>(
+      args?: SelectSubset<T, grafo_gsfiFindManyArgs>
+    ): Prisma.PrismaPromise<Array<grafo_gsfiGetPayload<T>>>
+
+    /**
+     * Create a Grafo_gsfi.
+     * @param {grafo_gsfiCreateArgs} args - Arguments to create a Grafo_gsfi.
+     * @example
+     * // Create one Grafo_gsfi
+     * const Grafo_gsfi = await prisma.grafo_gsfi.create({
+     *   data: {
+     *     // ... data to create a Grafo_gsfi
+     *   }
+     * })
+     * 
+    **/
+    create<T extends grafo_gsfiCreateArgs>(
+      args: SelectSubset<T, grafo_gsfiCreateArgs>
+    ): Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T>>
+
+    /**
+     * Create many Grafo_gsfis.
+     *     @param {grafo_gsfiCreateManyArgs} args - Arguments to create many Grafo_gsfis.
+     *     @example
+     *     // Create many Grafo_gsfis
+     *     const grafo_gsfi = await prisma.grafo_gsfi.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends grafo_gsfiCreateManyArgs>(
+      args?: SelectSubset<T, grafo_gsfiCreateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Grafo_gsfi.
+     * @param {grafo_gsfiDeleteArgs} args - Arguments to delete one Grafo_gsfi.
+     * @example
+     * // Delete one Grafo_gsfi
+     * const Grafo_gsfi = await prisma.grafo_gsfi.delete({
+     *   where: {
+     *     // ... filter to delete one Grafo_gsfi
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends grafo_gsfiDeleteArgs>(
+      args: SelectSubset<T, grafo_gsfiDeleteArgs>
+    ): Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T>>
+
+    /**
+     * Update one Grafo_gsfi.
+     * @param {grafo_gsfiUpdateArgs} args - Arguments to update one Grafo_gsfi.
+     * @example
+     * // Update one Grafo_gsfi
+     * const grafo_gsfi = await prisma.grafo_gsfi.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends grafo_gsfiUpdateArgs>(
+      args: SelectSubset<T, grafo_gsfiUpdateArgs>
+    ): Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T>>
+
+    /**
+     * Delete zero or more Grafo_gsfis.
+     * @param {grafo_gsfiDeleteManyArgs} args - Arguments to filter Grafo_gsfis to delete.
+     * @example
+     * // Delete a few Grafo_gsfis
+     * const { count } = await prisma.grafo_gsfi.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends grafo_gsfiDeleteManyArgs>(
+      args?: SelectSubset<T, grafo_gsfiDeleteManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Grafo_gsfis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {grafo_gsfiUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Grafo_gsfis
+     * const grafo_gsfi = await prisma.grafo_gsfi.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends grafo_gsfiUpdateManyArgs>(
+      args: SelectSubset<T, grafo_gsfiUpdateManyArgs>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Grafo_gsfi.
+     * @param {grafo_gsfiUpsertArgs} args - Arguments to update or create a Grafo_gsfi.
+     * @example
+     * // Update or create a Grafo_gsfi
+     * const grafo_gsfi = await prisma.grafo_gsfi.upsert({
+     *   create: {
+     *     // ... data to create a Grafo_gsfi
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Grafo_gsfi we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends grafo_gsfiUpsertArgs>(
+      args: SelectSubset<T, grafo_gsfiUpsertArgs>
+    ): Prisma__grafo_gsfiClient<grafo_gsfiGetPayload<T>>
+
+    /**
+     * Count the number of Grafo_gsfis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {grafo_gsfiCountArgs} args - Arguments to filter Grafo_gsfis to count.
+     * @example
+     * // Count the number of Grafo_gsfis
+     * const count = await prisma.grafo_gsfi.count({
+     *   where: {
+     *     // ... the filter for the Grafo_gsfis we want to count
+     *   }
+     * })
+    **/
+    count<T extends grafo_gsfiCountArgs>(
+      args?: Subset<T, grafo_gsfiCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends _Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Grafo_gsfiCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Grafo_gsfi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Grafo_gsfiAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Grafo_gsfiAggregateArgs>(args: Subset<T, Grafo_gsfiAggregateArgs>): Prisma.PrismaPromise<GetGrafo_gsfiAggregateType<T>>
+
+    /**
+     * Group by Grafo_gsfi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Grafo_gsfiGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends Grafo_gsfiGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: Grafo_gsfiGroupByArgs['orderBy'] }
+        : { orderBy?: Grafo_gsfiGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends TupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, Grafo_gsfiGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGrafo_gsfiGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for grafo_gsfi.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export class Prisma__grafo_gsfiClient<T, Null = never> implements Prisma.PrismaPromise<T> {
+    private readonly _dmmf;
+    private readonly _queryType;
+    private readonly _rootField;
+    private readonly _clientMethod;
+    private readonly _args;
+    private readonly _dataPath;
+    private readonly _errorFormat;
+    private readonly _measurePerformance?;
+    private _isList;
+    private _callsite;
+    private _requestPromise?;
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+    constructor(_dmmf: runtime.DMMFClass, _queryType: 'query' | 'mutation', _rootField: string, _clientMethod: string, _args: any, _dataPath: string[], _errorFormat: ErrorFormat, _measurePerformance?: boolean | undefined, _isList?: boolean);
+
+
+    private get _document();
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): Promise<T>;
+  }
+
+
+
+  // Custom InputTypes
+
+  /**
+   * grafo_gsfi base type for findUnique actions
+   */
+  export type grafo_gsfiFindUniqueArgsBase = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+    /**
+     * Filter, which grafo_gsfi to fetch.
+     */
+    where: grafo_gsfiWhereUniqueInput
+  }
+
+  /**
+   * grafo_gsfi findUnique
+   */
+  export interface grafo_gsfiFindUniqueArgs extends grafo_gsfiFindUniqueArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findUniqueOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * grafo_gsfi findUniqueOrThrow
+   */
+  export type grafo_gsfiFindUniqueOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+    /**
+     * Filter, which grafo_gsfi to fetch.
+     */
+    where: grafo_gsfiWhereUniqueInput
+  }
+
+
+  /**
+   * grafo_gsfi base type for findFirst actions
+   */
+  export type grafo_gsfiFindFirstArgsBase = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+    /**
+     * Filter, which grafo_gsfi to fetch.
+     */
+    where?: grafo_gsfiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of grafo_gsfis to fetch.
+     */
+    orderBy?: Enumerable<grafo_gsfiOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for grafo_gsfis.
+     */
+    cursor?: grafo_gsfiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` grafo_gsfis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` grafo_gsfis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of grafo_gsfis.
+     */
+    distinct?: Enumerable<Grafo_gsfiScalarFieldEnum>
+  }
+
+  /**
+   * grafo_gsfi findFirst
+   */
+  export interface grafo_gsfiFindFirstArgs extends grafo_gsfiFindFirstArgsBase {
+   /**
+    * Throw an Error if query returns no results
+    * @deprecated since 4.0.0: use `findFirstOrThrow` method instead
+    */
+    rejectOnNotFound?: RejectOnNotFound
+  }
+      
+
+  /**
+   * grafo_gsfi findFirstOrThrow
+   */
+  export type grafo_gsfiFindFirstOrThrowArgs = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+    /**
+     * Filter, which grafo_gsfi to fetch.
+     */
+    where?: grafo_gsfiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of grafo_gsfis to fetch.
+     */
+    orderBy?: Enumerable<grafo_gsfiOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for grafo_gsfis.
+     */
+    cursor?: grafo_gsfiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` grafo_gsfis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` grafo_gsfis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of grafo_gsfis.
+     */
+    distinct?: Enumerable<Grafo_gsfiScalarFieldEnum>
+  }
+
+
+  /**
+   * grafo_gsfi findMany
+   */
+  export type grafo_gsfiFindManyArgs = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+    /**
+     * Filter, which grafo_gsfis to fetch.
+     */
+    where?: grafo_gsfiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of grafo_gsfis to fetch.
+     */
+    orderBy?: Enumerable<grafo_gsfiOrderByWithRelationInput>
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing grafo_gsfis.
+     */
+    cursor?: grafo_gsfiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` grafo_gsfis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` grafo_gsfis.
+     */
+    skip?: number
+    distinct?: Enumerable<Grafo_gsfiScalarFieldEnum>
+  }
+
+
+  /**
+   * grafo_gsfi create
+   */
+  export type grafo_gsfiCreateArgs = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+    /**
+     * The data needed to create a grafo_gsfi.
+     */
+    data: XOR<grafo_gsfiCreateInput, grafo_gsfiUncheckedCreateInput>
+  }
+
+
+  /**
+   * grafo_gsfi createMany
+   */
+  export type grafo_gsfiCreateManyArgs = {
+    /**
+     * The data used to create many grafo_gsfis.
+     */
+    data: Enumerable<grafo_gsfiCreateManyInput>
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * grafo_gsfi update
+   */
+  export type grafo_gsfiUpdateArgs = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+    /**
+     * The data needed to update a grafo_gsfi.
+     */
+    data: XOR<grafo_gsfiUpdateInput, grafo_gsfiUncheckedUpdateInput>
+    /**
+     * Choose, which grafo_gsfi to update.
+     */
+    where: grafo_gsfiWhereUniqueInput
+  }
+
+
+  /**
+   * grafo_gsfi updateMany
+   */
+  export type grafo_gsfiUpdateManyArgs = {
+    /**
+     * The data used to update grafo_gsfis.
+     */
+    data: XOR<grafo_gsfiUpdateManyMutationInput, grafo_gsfiUncheckedUpdateManyInput>
+    /**
+     * Filter which grafo_gsfis to update
+     */
+    where?: grafo_gsfiWhereInput
+  }
+
+
+  /**
+   * grafo_gsfi upsert
+   */
+  export type grafo_gsfiUpsertArgs = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+    /**
+     * The filter to search for the grafo_gsfi to update in case it exists.
+     */
+    where: grafo_gsfiWhereUniqueInput
+    /**
+     * In case the grafo_gsfi found by the `where` argument doesn't exist, create a new grafo_gsfi with this data.
+     */
+    create: XOR<grafo_gsfiCreateInput, grafo_gsfiUncheckedCreateInput>
+    /**
+     * In case the grafo_gsfi was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<grafo_gsfiUpdateInput, grafo_gsfiUncheckedUpdateInput>
+  }
+
+
+  /**
+   * grafo_gsfi delete
+   */
+  export type grafo_gsfiDeleteArgs = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+    /**
+     * Filter which grafo_gsfi to delete.
+     */
+    where: grafo_gsfiWhereUniqueInput
+  }
+
+
+  /**
+   * grafo_gsfi deleteMany
+   */
+  export type grafo_gsfiDeleteManyArgs = {
+    /**
+     * Filter which grafo_gsfis to delete
+     */
+    where?: grafo_gsfiWhereInput
+  }
+
+
+  /**
+   * grafo_gsfi without action
+   */
+  export type grafo_gsfiArgs = {
+    /**
+     * Select specific fields to fetch from the grafo_gsfi
+     */
+    select?: grafo_gsfiSelect | null
+  }
+
+
+
+  /**
    * Enums
    */
 
   // Based on
   // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
+
+  export const Grafo_gsfiScalarFieldEnum: {
+    id_master: 'id_master',
+    cod_ele: 'cod_ele',
+    nod_ini: 'nod_ini',
+    nod_fin: 'nod_fin',
+    tip_ele: 'tip_ele',
+    tip_pav: 'tip_pav',
+    cls_tcn: 'cls_tcn',
+    tip_gst: 'tip_gst',
+    cod_gst: 'cod_gst',
+    sot_pas: 'sot_pas',
+    cod_sed: 'cod_sed',
+    cls_lrg: 'cls_lrg',
+    cod_top: 'cod_top',
+    cod_top2: 'cod_top2',
+    cod_reg: 'cod_reg',
+    oneway: 'oneway',
+    cod_dug: 'cod_dug',
+    den_uff: 'den_uff',
+    cod_com: 'cod_com',
+    cod_via: 'cod_via',
+    class_pgtu: 'class_pgtu',
+    rete: 'rete',
+    quartiere: 'quartiere',
+    toponimo: 'toponimo',
+    data_attivazione: 'data_attivazione',
+    data_dismissione: 'data_dismissione',
+    ztl_diurna: 'ztl_diurna',
+    ztl_notturna: 'ztl_notturna',
+    unesco: 'unesco',
+    rione: 'rione',
+    proprieta_capitolato: 'proprieta_capitolato',
+    lungh_carreggiata: 'lungh_carreggiata'
+  };
+
+  export type Grafo_gsfiScalarFieldEnum = (typeof Grafo_gsfiScalarFieldEnum)[keyof typeof Grafo_gsfiScalarFieldEnum]
+
 
   export const QueryMode: {
     default: 'default',
@@ -76725,6 +77953,161 @@ export namespace Prisma {
     img_monit_inquadr_1_url?: StringNullableWithAggregatesFilter | string | null
     img_monit_dettaglio_1?: StringNullableWithAggregatesFilter | string | null
     img_monit_dettaglio_1_url?: StringNullableWithAggregatesFilter | string | null
+  }
+
+  export type grafo_gsfiWhereInput = {
+    AND?: Enumerable<grafo_gsfiWhereInput>
+    OR?: Enumerable<grafo_gsfiWhereInput>
+    NOT?: Enumerable<grafo_gsfiWhereInput>
+    id_master?: BigIntFilter | bigint | number
+    cod_ele?: StringNullableFilter | string | null
+    nod_ini?: StringNullableFilter | string | null
+    nod_fin?: StringNullableFilter | string | null
+    tip_ele?: StringNullableFilter | string | null
+    tip_pav?: StringNullableFilter | string | null
+    cls_tcn?: StringNullableFilter | string | null
+    tip_gst?: StringNullableFilter | string | null
+    cod_gst?: StringNullableFilter | string | null
+    sot_pas?: StringNullableFilter | string | null
+    cod_sed?: StringNullableFilter | string | null
+    cls_lrg?: StringNullableFilter | string | null
+    cod_top?: StringNullableFilter | string | null
+    cod_top2?: StringNullableFilter | string | null
+    cod_reg?: StringNullableFilter | string | null
+    oneway?: StringNullableFilter | string | null
+    cod_dug?: StringNullableFilter | string | null
+    den_uff?: StringNullableFilter | string | null
+    cod_com?: StringNullableFilter | string | null
+    cod_via?: StringNullableFilter | string | null
+    class_pgtu?: StringNullableFilter | string | null
+    rete?: DecimalNullableFilter | Decimal | DecimalJsLike | number | string | null
+    quartiere?: StringNullableFilter | string | null
+    toponimo?: StringNullableFilter | string | null
+    data_attivazione?: StringNullableFilter | string | null
+    data_dismissione?: StringNullableFilter | string | null
+    ztl_diurna?: StringNullableFilter | string | null
+    ztl_notturna?: StringNullableFilter | string | null
+    unesco?: StringNullableFilter | string | null
+    rione?: StringNullableFilter | string | null
+    proprieta_capitolato?: StringNullableFilter | string | null
+    lungh_carreggiata?: BigIntNullableFilter | bigint | number | null
+  }
+
+  export type grafo_gsfiOrderByWithRelationInput = {
+    id_master?: SortOrder
+    cod_ele?: SortOrder
+    nod_ini?: SortOrder
+    nod_fin?: SortOrder
+    tip_ele?: SortOrder
+    tip_pav?: SortOrder
+    cls_tcn?: SortOrder
+    tip_gst?: SortOrder
+    cod_gst?: SortOrder
+    sot_pas?: SortOrder
+    cod_sed?: SortOrder
+    cls_lrg?: SortOrder
+    cod_top?: SortOrder
+    cod_top2?: SortOrder
+    cod_reg?: SortOrder
+    oneway?: SortOrder
+    cod_dug?: SortOrder
+    den_uff?: SortOrder
+    cod_com?: SortOrder
+    cod_via?: SortOrder
+    class_pgtu?: SortOrder
+    rete?: SortOrder
+    quartiere?: SortOrder
+    toponimo?: SortOrder
+    data_attivazione?: SortOrder
+    data_dismissione?: SortOrder
+    ztl_diurna?: SortOrder
+    ztl_notturna?: SortOrder
+    unesco?: SortOrder
+    rione?: SortOrder
+    proprieta_capitolato?: SortOrder
+    lungh_carreggiata?: SortOrder
+  }
+
+  export type grafo_gsfiWhereUniqueInput = {
+    id_master?: bigint | number
+  }
+
+  export type grafo_gsfiOrderByWithAggregationInput = {
+    id_master?: SortOrder
+    cod_ele?: SortOrder
+    nod_ini?: SortOrder
+    nod_fin?: SortOrder
+    tip_ele?: SortOrder
+    tip_pav?: SortOrder
+    cls_tcn?: SortOrder
+    tip_gst?: SortOrder
+    cod_gst?: SortOrder
+    sot_pas?: SortOrder
+    cod_sed?: SortOrder
+    cls_lrg?: SortOrder
+    cod_top?: SortOrder
+    cod_top2?: SortOrder
+    cod_reg?: SortOrder
+    oneway?: SortOrder
+    cod_dug?: SortOrder
+    den_uff?: SortOrder
+    cod_com?: SortOrder
+    cod_via?: SortOrder
+    class_pgtu?: SortOrder
+    rete?: SortOrder
+    quartiere?: SortOrder
+    toponimo?: SortOrder
+    data_attivazione?: SortOrder
+    data_dismissione?: SortOrder
+    ztl_diurna?: SortOrder
+    ztl_notturna?: SortOrder
+    unesco?: SortOrder
+    rione?: SortOrder
+    proprieta_capitolato?: SortOrder
+    lungh_carreggiata?: SortOrder
+    _count?: grafo_gsfiCountOrderByAggregateInput
+    _avg?: grafo_gsfiAvgOrderByAggregateInput
+    _max?: grafo_gsfiMaxOrderByAggregateInput
+    _min?: grafo_gsfiMinOrderByAggregateInput
+    _sum?: grafo_gsfiSumOrderByAggregateInput
+  }
+
+  export type grafo_gsfiScalarWhereWithAggregatesInput = {
+    AND?: Enumerable<grafo_gsfiScalarWhereWithAggregatesInput>
+    OR?: Enumerable<grafo_gsfiScalarWhereWithAggregatesInput>
+    NOT?: Enumerable<grafo_gsfiScalarWhereWithAggregatesInput>
+    id_master?: BigIntWithAggregatesFilter | bigint | number
+    cod_ele?: StringNullableWithAggregatesFilter | string | null
+    nod_ini?: StringNullableWithAggregatesFilter | string | null
+    nod_fin?: StringNullableWithAggregatesFilter | string | null
+    tip_ele?: StringNullableWithAggregatesFilter | string | null
+    tip_pav?: StringNullableWithAggregatesFilter | string | null
+    cls_tcn?: StringNullableWithAggregatesFilter | string | null
+    tip_gst?: StringNullableWithAggregatesFilter | string | null
+    cod_gst?: StringNullableWithAggregatesFilter | string | null
+    sot_pas?: StringNullableWithAggregatesFilter | string | null
+    cod_sed?: StringNullableWithAggregatesFilter | string | null
+    cls_lrg?: StringNullableWithAggregatesFilter | string | null
+    cod_top?: StringNullableWithAggregatesFilter | string | null
+    cod_top2?: StringNullableWithAggregatesFilter | string | null
+    cod_reg?: StringNullableWithAggregatesFilter | string | null
+    oneway?: StringNullableWithAggregatesFilter | string | null
+    cod_dug?: StringNullableWithAggregatesFilter | string | null
+    den_uff?: StringNullableWithAggregatesFilter | string | null
+    cod_com?: StringNullableWithAggregatesFilter | string | null
+    cod_via?: StringNullableWithAggregatesFilter | string | null
+    class_pgtu?: StringNullableWithAggregatesFilter | string | null
+    rete?: DecimalNullableWithAggregatesFilter | Decimal | DecimalJsLike | number | string | null
+    quartiere?: StringNullableWithAggregatesFilter | string | null
+    toponimo?: StringNullableWithAggregatesFilter | string | null
+    data_attivazione?: StringNullableWithAggregatesFilter | string | null
+    data_dismissione?: StringNullableWithAggregatesFilter | string | null
+    ztl_diurna?: StringNullableWithAggregatesFilter | string | null
+    ztl_notturna?: StringNullableWithAggregatesFilter | string | null
+    unesco?: StringNullableWithAggregatesFilter | string | null
+    rione?: StringNullableWithAggregatesFilter | string | null
+    proprieta_capitolato?: StringNullableWithAggregatesFilter | string | null
+    lungh_carreggiata?: BigIntNullableWithAggregatesFilter | bigint | number | null
   }
 
   export type tab00B1_grafo_rilievi_2019_punti_altimetriaCreateInput = {
@@ -88582,6 +89965,251 @@ export namespace Prisma {
     img_monit_dettaglio_1_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type grafo_gsfiCreateInput = {
+    id_master: bigint | number
+    cod_ele?: string | null
+    nod_ini?: string | null
+    nod_fin?: string | null
+    tip_ele?: string | null
+    tip_pav?: string | null
+    cls_tcn?: string | null
+    tip_gst?: string | null
+    cod_gst?: string | null
+    sot_pas?: string | null
+    cod_sed?: string | null
+    cls_lrg?: string | null
+    cod_top?: string | null
+    cod_top2?: string | null
+    cod_reg?: string | null
+    oneway?: string | null
+    cod_dug?: string | null
+    den_uff?: string | null
+    cod_com?: string | null
+    cod_via?: string | null
+    class_pgtu?: string | null
+    rete?: Decimal | DecimalJsLike | number | string | null
+    quartiere?: string | null
+    toponimo?: string | null
+    data_attivazione?: string | null
+    data_dismissione?: string | null
+    ztl_diurna?: string | null
+    ztl_notturna?: string | null
+    unesco?: string | null
+    rione?: string | null
+    proprieta_capitolato?: string | null
+    lungh_carreggiata?: bigint | number | null
+  }
+
+  export type grafo_gsfiUncheckedCreateInput = {
+    id_master: bigint | number
+    cod_ele?: string | null
+    nod_ini?: string | null
+    nod_fin?: string | null
+    tip_ele?: string | null
+    tip_pav?: string | null
+    cls_tcn?: string | null
+    tip_gst?: string | null
+    cod_gst?: string | null
+    sot_pas?: string | null
+    cod_sed?: string | null
+    cls_lrg?: string | null
+    cod_top?: string | null
+    cod_top2?: string | null
+    cod_reg?: string | null
+    oneway?: string | null
+    cod_dug?: string | null
+    den_uff?: string | null
+    cod_com?: string | null
+    cod_via?: string | null
+    class_pgtu?: string | null
+    rete?: Decimal | DecimalJsLike | number | string | null
+    quartiere?: string | null
+    toponimo?: string | null
+    data_attivazione?: string | null
+    data_dismissione?: string | null
+    ztl_diurna?: string | null
+    ztl_notturna?: string | null
+    unesco?: string | null
+    rione?: string | null
+    proprieta_capitolato?: string | null
+    lungh_carreggiata?: bigint | number | null
+  }
+
+  export type grafo_gsfiUpdateInput = {
+    id_master?: BigIntFieldUpdateOperationsInput | bigint | number
+    cod_ele?: NullableStringFieldUpdateOperationsInput | string | null
+    nod_ini?: NullableStringFieldUpdateOperationsInput | string | null
+    nod_fin?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_ele?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_pav?: NullableStringFieldUpdateOperationsInput | string | null
+    cls_tcn?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_gst?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_gst?: NullableStringFieldUpdateOperationsInput | string | null
+    sot_pas?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_sed?: NullableStringFieldUpdateOperationsInput | string | null
+    cls_lrg?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_top?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_top2?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_reg?: NullableStringFieldUpdateOperationsInput | string | null
+    oneway?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_dug?: NullableStringFieldUpdateOperationsInput | string | null
+    den_uff?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_com?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_via?: NullableStringFieldUpdateOperationsInput | string | null
+    class_pgtu?: NullableStringFieldUpdateOperationsInput | string | null
+    rete?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    quartiere?: NullableStringFieldUpdateOperationsInput | string | null
+    toponimo?: NullableStringFieldUpdateOperationsInput | string | null
+    data_attivazione?: NullableStringFieldUpdateOperationsInput | string | null
+    data_dismissione?: NullableStringFieldUpdateOperationsInput | string | null
+    ztl_diurna?: NullableStringFieldUpdateOperationsInput | string | null
+    ztl_notturna?: NullableStringFieldUpdateOperationsInput | string | null
+    unesco?: NullableStringFieldUpdateOperationsInput | string | null
+    rione?: NullableStringFieldUpdateOperationsInput | string | null
+    proprieta_capitolato?: NullableStringFieldUpdateOperationsInput | string | null
+    lungh_carreggiata?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type grafo_gsfiUncheckedUpdateInput = {
+    id_master?: BigIntFieldUpdateOperationsInput | bigint | number
+    cod_ele?: NullableStringFieldUpdateOperationsInput | string | null
+    nod_ini?: NullableStringFieldUpdateOperationsInput | string | null
+    nod_fin?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_ele?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_pav?: NullableStringFieldUpdateOperationsInput | string | null
+    cls_tcn?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_gst?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_gst?: NullableStringFieldUpdateOperationsInput | string | null
+    sot_pas?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_sed?: NullableStringFieldUpdateOperationsInput | string | null
+    cls_lrg?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_top?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_top2?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_reg?: NullableStringFieldUpdateOperationsInput | string | null
+    oneway?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_dug?: NullableStringFieldUpdateOperationsInput | string | null
+    den_uff?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_com?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_via?: NullableStringFieldUpdateOperationsInput | string | null
+    class_pgtu?: NullableStringFieldUpdateOperationsInput | string | null
+    rete?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    quartiere?: NullableStringFieldUpdateOperationsInput | string | null
+    toponimo?: NullableStringFieldUpdateOperationsInput | string | null
+    data_attivazione?: NullableStringFieldUpdateOperationsInput | string | null
+    data_dismissione?: NullableStringFieldUpdateOperationsInput | string | null
+    ztl_diurna?: NullableStringFieldUpdateOperationsInput | string | null
+    ztl_notturna?: NullableStringFieldUpdateOperationsInput | string | null
+    unesco?: NullableStringFieldUpdateOperationsInput | string | null
+    rione?: NullableStringFieldUpdateOperationsInput | string | null
+    proprieta_capitolato?: NullableStringFieldUpdateOperationsInput | string | null
+    lungh_carreggiata?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type grafo_gsfiCreateManyInput = {
+    id_master: bigint | number
+    cod_ele?: string | null
+    nod_ini?: string | null
+    nod_fin?: string | null
+    tip_ele?: string | null
+    tip_pav?: string | null
+    cls_tcn?: string | null
+    tip_gst?: string | null
+    cod_gst?: string | null
+    sot_pas?: string | null
+    cod_sed?: string | null
+    cls_lrg?: string | null
+    cod_top?: string | null
+    cod_top2?: string | null
+    cod_reg?: string | null
+    oneway?: string | null
+    cod_dug?: string | null
+    den_uff?: string | null
+    cod_com?: string | null
+    cod_via?: string | null
+    class_pgtu?: string | null
+    rete?: Decimal | DecimalJsLike | number | string | null
+    quartiere?: string | null
+    toponimo?: string | null
+    data_attivazione?: string | null
+    data_dismissione?: string | null
+    ztl_diurna?: string | null
+    ztl_notturna?: string | null
+    unesco?: string | null
+    rione?: string | null
+    proprieta_capitolato?: string | null
+    lungh_carreggiata?: bigint | number | null
+  }
+
+  export type grafo_gsfiUpdateManyMutationInput = {
+    id_master?: BigIntFieldUpdateOperationsInput | bigint | number
+    cod_ele?: NullableStringFieldUpdateOperationsInput | string | null
+    nod_ini?: NullableStringFieldUpdateOperationsInput | string | null
+    nod_fin?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_ele?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_pav?: NullableStringFieldUpdateOperationsInput | string | null
+    cls_tcn?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_gst?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_gst?: NullableStringFieldUpdateOperationsInput | string | null
+    sot_pas?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_sed?: NullableStringFieldUpdateOperationsInput | string | null
+    cls_lrg?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_top?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_top2?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_reg?: NullableStringFieldUpdateOperationsInput | string | null
+    oneway?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_dug?: NullableStringFieldUpdateOperationsInput | string | null
+    den_uff?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_com?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_via?: NullableStringFieldUpdateOperationsInput | string | null
+    class_pgtu?: NullableStringFieldUpdateOperationsInput | string | null
+    rete?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    quartiere?: NullableStringFieldUpdateOperationsInput | string | null
+    toponimo?: NullableStringFieldUpdateOperationsInput | string | null
+    data_attivazione?: NullableStringFieldUpdateOperationsInput | string | null
+    data_dismissione?: NullableStringFieldUpdateOperationsInput | string | null
+    ztl_diurna?: NullableStringFieldUpdateOperationsInput | string | null
+    ztl_notturna?: NullableStringFieldUpdateOperationsInput | string | null
+    unesco?: NullableStringFieldUpdateOperationsInput | string | null
+    rione?: NullableStringFieldUpdateOperationsInput | string | null
+    proprieta_capitolato?: NullableStringFieldUpdateOperationsInput | string | null
+    lungh_carreggiata?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
+  export type grafo_gsfiUncheckedUpdateManyInput = {
+    id_master?: BigIntFieldUpdateOperationsInput | bigint | number
+    cod_ele?: NullableStringFieldUpdateOperationsInput | string | null
+    nod_ini?: NullableStringFieldUpdateOperationsInput | string | null
+    nod_fin?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_ele?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_pav?: NullableStringFieldUpdateOperationsInput | string | null
+    cls_tcn?: NullableStringFieldUpdateOperationsInput | string | null
+    tip_gst?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_gst?: NullableStringFieldUpdateOperationsInput | string | null
+    sot_pas?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_sed?: NullableStringFieldUpdateOperationsInput | string | null
+    cls_lrg?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_top?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_top2?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_reg?: NullableStringFieldUpdateOperationsInput | string | null
+    oneway?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_dug?: NullableStringFieldUpdateOperationsInput | string | null
+    den_uff?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_com?: NullableStringFieldUpdateOperationsInput | string | null
+    cod_via?: NullableStringFieldUpdateOperationsInput | string | null
+    class_pgtu?: NullableStringFieldUpdateOperationsInput | string | null
+    rete?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    quartiere?: NullableStringFieldUpdateOperationsInput | string | null
+    toponimo?: NullableStringFieldUpdateOperationsInput | string | null
+    data_attivazione?: NullableStringFieldUpdateOperationsInput | string | null
+    data_dismissione?: NullableStringFieldUpdateOperationsInput | string | null
+    ztl_diurna?: NullableStringFieldUpdateOperationsInput | string | null
+    ztl_notturna?: NullableStringFieldUpdateOperationsInput | string | null
+    unesco?: NullableStringFieldUpdateOperationsInput | string | null
+    rione?: NullableStringFieldUpdateOperationsInput | string | null
+    proprieta_capitolato?: NullableStringFieldUpdateOperationsInput | string | null
+    lungh_carreggiata?: NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  }
+
   export type IntFilter = {
     equals?: number
     in?: Enumerable<number>
@@ -96647,6 +98275,123 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter
     _min?: NestedEnumtab43b_tNullableFilter
     _max?: NestedEnumtab43b_tNullableFilter
+  }
+
+  export type grafo_gsfiCountOrderByAggregateInput = {
+    id_master?: SortOrder
+    cod_ele?: SortOrder
+    nod_ini?: SortOrder
+    nod_fin?: SortOrder
+    tip_ele?: SortOrder
+    tip_pav?: SortOrder
+    cls_tcn?: SortOrder
+    tip_gst?: SortOrder
+    cod_gst?: SortOrder
+    sot_pas?: SortOrder
+    cod_sed?: SortOrder
+    cls_lrg?: SortOrder
+    cod_top?: SortOrder
+    cod_top2?: SortOrder
+    cod_reg?: SortOrder
+    oneway?: SortOrder
+    cod_dug?: SortOrder
+    den_uff?: SortOrder
+    cod_com?: SortOrder
+    cod_via?: SortOrder
+    class_pgtu?: SortOrder
+    rete?: SortOrder
+    quartiere?: SortOrder
+    toponimo?: SortOrder
+    data_attivazione?: SortOrder
+    data_dismissione?: SortOrder
+    ztl_diurna?: SortOrder
+    ztl_notturna?: SortOrder
+    unesco?: SortOrder
+    rione?: SortOrder
+    proprieta_capitolato?: SortOrder
+    lungh_carreggiata?: SortOrder
+  }
+
+  export type grafo_gsfiAvgOrderByAggregateInput = {
+    id_master?: SortOrder
+    rete?: SortOrder
+    lungh_carreggiata?: SortOrder
+  }
+
+  export type grafo_gsfiMaxOrderByAggregateInput = {
+    id_master?: SortOrder
+    cod_ele?: SortOrder
+    nod_ini?: SortOrder
+    nod_fin?: SortOrder
+    tip_ele?: SortOrder
+    tip_pav?: SortOrder
+    cls_tcn?: SortOrder
+    tip_gst?: SortOrder
+    cod_gst?: SortOrder
+    sot_pas?: SortOrder
+    cod_sed?: SortOrder
+    cls_lrg?: SortOrder
+    cod_top?: SortOrder
+    cod_top2?: SortOrder
+    cod_reg?: SortOrder
+    oneway?: SortOrder
+    cod_dug?: SortOrder
+    den_uff?: SortOrder
+    cod_com?: SortOrder
+    cod_via?: SortOrder
+    class_pgtu?: SortOrder
+    rete?: SortOrder
+    quartiere?: SortOrder
+    toponimo?: SortOrder
+    data_attivazione?: SortOrder
+    data_dismissione?: SortOrder
+    ztl_diurna?: SortOrder
+    ztl_notturna?: SortOrder
+    unesco?: SortOrder
+    rione?: SortOrder
+    proprieta_capitolato?: SortOrder
+    lungh_carreggiata?: SortOrder
+  }
+
+  export type grafo_gsfiMinOrderByAggregateInput = {
+    id_master?: SortOrder
+    cod_ele?: SortOrder
+    nod_ini?: SortOrder
+    nod_fin?: SortOrder
+    tip_ele?: SortOrder
+    tip_pav?: SortOrder
+    cls_tcn?: SortOrder
+    tip_gst?: SortOrder
+    cod_gst?: SortOrder
+    sot_pas?: SortOrder
+    cod_sed?: SortOrder
+    cls_lrg?: SortOrder
+    cod_top?: SortOrder
+    cod_top2?: SortOrder
+    cod_reg?: SortOrder
+    oneway?: SortOrder
+    cod_dug?: SortOrder
+    den_uff?: SortOrder
+    cod_com?: SortOrder
+    cod_via?: SortOrder
+    class_pgtu?: SortOrder
+    rete?: SortOrder
+    quartiere?: SortOrder
+    toponimo?: SortOrder
+    data_attivazione?: SortOrder
+    data_dismissione?: SortOrder
+    ztl_diurna?: SortOrder
+    ztl_notturna?: SortOrder
+    unesco?: SortOrder
+    rione?: SortOrder
+    proprieta_capitolato?: SortOrder
+    lungh_carreggiata?: SortOrder
+  }
+
+  export type grafo_gsfiSumOrderByAggregateInput = {
+    id_master?: SortOrder
+    rete?: SortOrder
+    lungh_carreggiata?: SortOrder
   }
 
   export type NullableDecimalFieldUpdateOperationsInput = {

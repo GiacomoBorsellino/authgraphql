@@ -1,7 +1,7 @@
 generator client {
   provider        = "prisma-client-js"
   output          = "./generated/client2"
-  previewFeatures = ["multiSchema"]
+  previewFeatures = ["multiSchema", "views"]
 }
 
 datasource db {
@@ -9,8 +9,6 @@ datasource db {
   url      = env("DATABASE_URL_2")
   schemas  = ["catasto", "monitoraggio"]
 }
-
-// Database Catasto
 
 model tab00B1_grafo_rilievi_2019_punti_altimetria {
   gid              Int                      @id(map: "tab00b1_grafo_rilievi_2019_punti_altimetria_pkey") @default(autoincrement())
@@ -1178,8 +1176,6 @@ model tab_famiglia_segn_temp {
   @@schema("catasto")
 }
 
-// Database Monitoraggio
-
 model tab01B_M01_sosta {
   id_master                 Int?
   id_monit_sosta            BigInt             @id(map: "tab01A_M01_sosta_pk")
@@ -1951,6 +1947,1233 @@ model tab43B_M01_monit_rastrelliere {
   tab43B_rastrelliere       tab43B_rastrelliere? @relation(fields: [id_master], references: [id_master], onDelete: NoAction, onUpdate: NoAction, map: "tab43b_m01_fk")
 
   @@index([id_monit_rastrelliera], map: "tab_43bm_id_monit_n")
+  @@schema("monitoraggio")
+}
+
+view tab05A_muri_sostegno_storicoSC3 {
+  id_master     Int        @unique
+  storico_sc    Decimal[]  @db.Decimal
+  date_modifica DateTime[] @db.Timestamp
+
+  @@schema("catasto")
+}
+
+view tab05A_muri_sostegno_storicoSC {
+  id_history Int?
+  id_master  Int      @unique
+  modified   String?
+  sc         Decimal? @db.Decimal(3, 1)
+
+  @@schema("catasto")
+}
+
+view vst01B_M01_sosta {
+  id_master                 Int                        @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_sosta                  Int?
+  id_originale              String?                    @db.VarChar
+  quartiere                 quartieri_t?
+  rione                     String?                    @db.VarChar
+  unesco                    Int?
+  toponimo                  String?                    @db.VarChar
+  civico_ini                String?                    @db.VarChar
+  categoria                 sosta_t?
+  subtipo                   String?                    @db.VarChar
+  disposizione              disposiz_sosta_t?
+  materiale                 materiale_segnale_orizz_t?
+  colore                    colore_segnale_orizz_t?
+  cod_via                   Int?
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                    @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                  @db.Date
+  data_dismissione          DateTime?                  @db.Date
+  note                      String?                    @db.VarChar
+  img                       String?                    @db.VarChar
+  img_url                   String?                    @db.VarChar
+  simbolo                   String?                    @db.VarChar
+  simbolo_url               String?                    @db.VarChar
+  sc                        Decimal?                   @db.Decimal(3, 1)
+  sf                        Decimal?                   @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_sosta            BigInt?
+  dataora_monit             DateTime?                  @db.Timestamp(6)
+  sottocategoria_anomalia   tab01b_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                    @db.VarChar
+  img_monit_dettaglio_1_url String?                    @db.VarChar
+  img_monit_inquadr_1_url   String?                    @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+view grafo_gsfi {
+  geom                 Unsupported("geometry")?
+  id_master            BigInt                   @unique
+  cod_ele              String?                  @db.VarChar(15)
+  nod_ini              String?                  @db.VarChar(15)
+  nod_fin              String?                  @db.VarChar(15)
+  tip_ele              String?                  @db.VarChar(6)
+  tip_pav              String?                  @db.VarChar(6)
+  cls_tcn              String?                  @db.VarChar(6)
+  tip_gst              String?                  @db.VarChar(6)
+  cod_gst              String?                  @db.VarChar(6)
+  sot_pas              String?                  @db.VarChar(6)
+  cod_sed              String?                  @db.VarChar(6)
+  cls_lrg              String?                  @db.VarChar(6)
+  cod_top              String?                  @db.VarChar(15)
+  cod_top2             String?                  @db.VarChar(15)
+  cod_reg              String?                  @db.VarChar(15)
+  oneway               String?                  @db.VarChar(2)
+  cod_dug              String?                  @db.VarChar(25)
+  den_uff              String?                  @db.VarChar(100)
+  cod_com              String?                  @db.VarChar(4)
+  cod_via              String?                  @db.VarChar(10)
+  class_pgtu           String?                  @db.VarChar(40)
+  rete                 Decimal?                 @db.Decimal
+  quartiere            String?
+  toponimo             String?                  @db.VarChar(100)
+  data_attivazione     String?
+  data_dismissione     String?
+  ztl_diurna           String?                  @db.VarChar(100)
+  ztl_notturna         String?                  @db.VarChar(100)
+  unesco               String?                  @db.VarChar
+  rione                String?                  @db.VarChar
+  proprieta_capitolato String?                  @db.VarChar
+  lungh_carreggiata    BigInt?
+
+  @@schema("catasto")
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+view vst30A_segn_orizzP {
+  id_master           BigInt                   @unique
+  geom                Unsupported("geometry")?
+  tipologia           segnale_orizz_pun_t?
+  id_master_correlati String?
+
+  @@schema("catasto")
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+view vst02A_M01_monit_area_circ_ped {
+  id_master                 Int                      @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_acped                  BigInt?
+  id_originale              String?                  @db.VarChar
+  quartiere                 quartieri_t?
+  rione                     String?                  @db.VarChar
+  unesco                    String?                  @db.VarChar
+  toponimo                  String?                  @db.VarChar
+  livello                   livello_t?
+  zona                      zona_acped_t?
+  sede                      sede_acped_t?
+  uso                       uso_t?
+  posizione                 posiz_cicloped_t?
+  area                      Decimal?                 @db.Decimal(9, 2)
+  coesione_pavim            coesione_pavim_t?
+  struttura_pavim           struttura_pavim_t?
+  trattam_superf            trattsup_pavim_t?
+  strato1                   strato_pavim_t?
+  tessitura_lastrico        tessitura_lastrico_t?
+  lav_sup_lastrico          lavsup_lastrico_t?
+  cordonato                 cordonato_t?
+  cod_via                   String?                  @db.VarChar
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                  @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                @db.Timestamp(6)
+  data_dismissione          DateTime?                @db.Timestamp(6)
+  note                      String?                  @db.VarChar
+  img                       String?                  @db.VarChar
+  img_url                   String?                  @db.VarChar
+  sc                        Decimal?                 @db.Decimal(3, 1)
+  sf                        Decimal?                 @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_acped            BigInt?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  sottocategoria_anomalia   tab02a_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                  @db.VarChar
+  sottoservizi              Boolean?
+  estensione                Int?
+  gravita                   Boolean?
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  img_monit_dettaglio_2_url String?                  @db.VarChar
+  img_monit_dettaglio_3_url String?                  @db.VarChar
+  img_monit_dettaglio_4_url String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+  img_monit_inquadr_2_url   String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+view vst03A_M01_monit_area_circ_cic {
+  id_master                 Int                      @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_accic                  BigInt?
+  id_originale              String?                  @db.VarChar
+  quartiere                 quartieri_t?
+  rione                     String?                  @db.VarChar
+  unesco                    String?                  @db.VarChar
+  toponimo                  String?                  @db.VarChar
+  livello                   livello_t?
+  sede                      sede_accic_t?
+  uso                       uso_t?
+  posizione                 posiz_cicloped_t?
+  area                      Decimal?                 @db.Decimal(9, 2)
+  coesione_pavim            coesione_pavim_t?
+  struttura_pavim           struttura_pavim_t?
+  trattam_superf            trattsup_pavim_t?
+  strato1                   strato_pavim_t?
+  tessitura_lastrico        tessitura_lastrico_t?
+  lav_sup_lastrico          lavsup_lastrico_t?
+  cordonato                 cordonato_t?
+  cod_via                   String?                  @db.VarChar
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                  @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                @db.Timestamp(6)
+  data_dismissione          DateTime?                @db.Timestamp(6)
+  note                      String?                  @db.VarChar
+  img                       String?                  @db.VarChar
+  img_url                   String?                  @db.VarChar
+  sc                        Decimal?                 @db.Decimal(3, 1)
+  sf                        Decimal?                 @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_accic            BigInt?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  sottocategoria_anomalia   tab03a_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                  @db.VarChar
+  sottoservizi              Boolean?
+  estensione                Int?
+  gravita                   Boolean?
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  img_monit_dettaglio_2_url String?                  @db.VarChar
+  img_monit_dettaglio_3_url String?                  @db.VarChar
+  img_monit_dettaglio_4_url String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+  img_monit_inquadr_2_url   String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+view vst05a_muri_monitoraggio {
+  id_master        Int                      @unique
+  tipo_oggetto     tipo_oggetto_t?
+  id_musos         Int?
+  id_originale     BigInt?
+  quartiere        quartieri_t?
+  rione            String?                  @db.VarChar
+  unesco           String?                  @db.VarChar
+  toponimo         String?                  @db.VarChar
+  gestore          gestore_t?
+  tipo             muro_t?
+  materiale        materiale_muro_t?
+  altezza_max      Int?
+  lunghezza        Int?
+  dist_margine     Int?
+  cod_via          String?                  @db.VarChar
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                  @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                @db.Timestamp(6)
+  data_dismissione DateTime?                @db.Timestamp(6)
+  note_catasto     String?                  @db.VarChar
+  img              String?                  @db.VarChar
+  img_url          String?                  @db.VarChar
+  sc               Decimal?                 @db.Decimal(3, 1)
+  sf               Decimal?                 @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+  monitorato       Boolean?
+  note             String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+view vst19A_M01_monit_griglie_caditoie {
+  id_master                 Int                      @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_caditoia               BigInt?
+  id_originale              Int?
+  quartiere                 quartieri_t?
+  rione                     String?                  @db.VarChar
+  unesco                    Int?
+  toponimo                  String?                  @db.VarChar
+  civico_ini                String?                  @db.VarChar
+  tipologia                 caditoie_t?
+  materiale                 mat_caditoie_t?
+  cod_via                   Int?
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                  @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                @db.Date
+  data_dismissione          DateTime?                @db.Date
+  note                      String?                  @db.VarChar
+  img                       String?                  @db.VarChar
+  img_url                   String?                  @db.VarChar
+  simbolo                   String?                  @db.VarChar
+  simbolo_url               String?                  @db.VarChar
+  sc                        Decimal?                 @db.Decimal(3, 1)
+  sf                        Decimal?                 @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_caditoia         BigInt?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  sottocategoria_anomalia   tab19a_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                  @db.VarChar
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+view vst24A_M01_monit_dossi {
+  id_master                 Int                      @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_dosso                  BigInt?
+  quartiere                 quartieri_t?
+  rione                     String?                  @db.VarChar
+  unesco                    Int?
+  toponimo                  String?                  @db.VarChar
+  civico_ini                String?                  @db.VarChar
+  tipologia                 dosso_t?
+  materiale                 mat_dosso_t?
+  segnalamento              segnalamento_t?
+  cod_via                   Int?
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                  @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                @db.Date
+  data_dismissione          DateTime?                @db.Date
+  note                      String?                  @db.VarChar
+  img                       String?                  @db.VarChar
+  img_url                   String?                  @db.VarChar
+  simbolo                   String?                  @db.VarChar
+  simbolo_url               String?                  @db.VarChar
+  sc                        Decimal?                 @db.Decimal(3, 1)
+  sf                        Decimal?                 @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_dosso            BigInt?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  sottocategoria_anomalia   tab24a_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                  @db.VarChar
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+view vst27A_M01_monit_segn_vert_supporti {
+  id_master                 Int                      @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_supporto               Int?
+  quartiere                 quartieri_t?
+  rione                     String?                  @db.VarChar
+  unesco                    String?                  @db.VarChar
+  toponimo                  String?                  @db.VarChar
+  civico_ini                String?                  @db.VarChar
+  supporto                  tipo_supporto_t?
+  strada_secondaria         Boolean?
+  presenza_segn_vert        Boolean?
+  presenza_imp_pub          Boolean?
+  cod_via                   String?                  @db.VarChar
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                  @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                @db.Timestamp(6)
+  data_dismissione          DateTime?                @db.Timestamp(6)
+  note                      String?                  @db.VarChar
+  img                       String?                  @db.VarChar
+  img_url                   String?                  @db.VarChar
+  simbolo                   String?                  @db.VarChar
+  simbolo_url               String?                  @db.VarChar
+  sc                        Decimal?                 @db.Decimal(3, 1)
+  sf                        Decimal?                 @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_supporto         BigInt?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  sottocategoria_anomalia   tab27a_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                  @db.VarChar
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+  conformita_normativa      conformita_normativa_t?
+  note_conformita           String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+view vst27B_M01_monit_segn_vert_cartelli {
+  id_master                 Int                      @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_supporto               Int?
+  id_pannello               BigInt?
+  id_segnale                String?                  @db.VarChar
+  quartiere                 quartieri_t?
+  rione                     String?                  @db.VarChar
+  unesco                    String?                  @db.VarChar
+  toponimo                  String?                  @db.VarChar
+  civico_ini                String?                  @db.VarChar
+  famiglia                  String?                  @db.VarChar
+  codice                    String?                  @db.VarChar
+  descrizione               String?                  @db.VarChar
+  testo_segnale             String?                  @db.VarChar
+  testo_integrativo         String?                  @db.VarChar
+  illuminazione             Boolean?
+  composito                 Boolean?
+  cod_via                   String?                  @db.VarChar
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                  @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                @db.Timestamp(6)
+  data_dismissione          DateTime?                @db.Timestamp(6)
+  note                      String?                  @db.VarChar
+  img                       String?                  @db.VarChar
+  img_url                   String?                  @db.VarChar
+  simbolo                   String?                  @db.VarChar
+  simbolo_url               String?                  @db.VarChar
+  sc                        Decimal?                 @db.Decimal(3, 1)
+  sf                        Decimal?                 @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_pannello         BigInt?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  sottocategoria_anomalia   tab27b_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                  @db.VarChar
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+  conformita_normativa      conformita_normativa_t?
+  note_conformita           String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+view vst30A_M01_monit_segn_oriz_P {
+  id_master                 BigInt                     @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_sop                    BigInt?
+  quartiere                 quartieri_t?
+  rione                     String?                    @db.VarChar
+  unesco                    String?                    @db.VarChar
+  toponimo                  String?                    @db.VarChar
+  civico_ini                String?                    @db.VarChar
+  tipologia                 segnale_orizz_pun_t?
+  materiale                 materiale_segnale_orizz_t?
+  colore                    colore_segnale_orizz_t?
+  strada_secondaria         Boolean?
+  area                      Int?
+  cod_via                   String?                    @db.VarChar
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                    @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                  @db.Timestamp(6)
+  data_dismissione          DateTime?                  @db.Timestamp(6)
+  note                      String?                    @db.VarChar
+  img                       String?                    @db.VarChar
+  img_url                   String?                    @db.VarChar
+  simbolo                   String?                    @db.VarChar
+  simbolo_url               String?                    @db.VarChar
+  sc                        Decimal?                   @db.Decimal(3, 1)
+  sf                        Decimal?                   @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_sop              BigInt?
+  dataora_monit             DateTime?                  @db.Timestamp(6)
+  sottocategoria_anomalia   tab30a_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                    @db.VarChar
+  img_monit_dettaglio_1_url String?                    @db.VarChar
+  img_monit_inquadr_1_url   String?                    @db.VarChar
+  conformita_normativa      conformita_normativa_t?
+  note_conformita           String?                    @db.VarChar
+  id_master_correlati       String?
+
+  @@schema("monitoraggio")
+}
+
+view vst30B_M01_monit_segn_oriz_L {
+  id_master                 Int                          @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_sol                    BigInt?
+  quartiere                 quartieri_t?
+  rione                     String?                      @db.VarChar
+  unesco                    String?                      @db.VarChar
+  toponimo                  String?                      @db.VarChar
+  posizione                 posizione_segnale_orizz_t?
+  tipologia                 catasto_segnale_orizz_lin_t?
+  materiale                 materiale_segnale_orizz_t?
+  colore                    colore_segnale_orizz_t?
+  cod_via                   String?                      @db.VarChar
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                      @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                    @db.Timestamp(6)
+  data_dismissione          DateTime?                    @db.Timestamp(6)
+  note                      String?                      @db.VarChar
+  img                       String?                      @db.VarChar
+  img_url                   String?                      @db.VarChar
+  sc                        Decimal?                     @db.Decimal(3, 1)
+  sf                        Decimal?                     @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  lunghezza                 Float?
+  id_monit_sol              BigInt?
+  dataora_monit             DateTime?                    @db.Timestamp(6)
+  sottocategoria_anomalia   tab30b_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                      @db.VarChar
+  img_monit_dettaglio_1_url String?                      @db.VarChar
+  img_monit_inquadr_1_url   String?                      @db.VarChar
+  conformita_normativa      conformita_normativa_t?
+  note_conformita           String?                      @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+view vst43A_M01_monit_paraped_dissuas {
+  id_master                 Int                      @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_parapedonale           BigInt?
+  id_originale              String?                  @db.VarChar
+  quartiere                 quartieri_t?
+  rione                     String?                  @db.VarChar
+  unesco                    Int?
+  toponimo                  String?                  @db.VarChar
+  civico_ini                String?                  @db.VarChar
+  tipologia                 parapedonale_t?
+  modello                   paraped_modello_t?
+  materiale                 mat_parapedonale_t?
+  cod_via                   Int?
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                  @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                @db.Date
+  data_dismissione          DateTime?                @db.Date
+  note                      String?                  @db.VarChar
+  img                       String?                  @db.VarChar
+  img_url                   String?                  @db.VarChar
+  simbolo                   String?                  @db.VarChar
+  simbolo_url               String?                  @db.VarChar
+  sc                        Decimal?                 @db.Decimal(3, 1)
+  sf                        Decimal?                 @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_parap            BigInt?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  sottocategoria_anomalia   tab43a_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                  @db.VarChar
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+view vst43B_M01_monit_rastrelliere {
+  id_master                 Int                      @unique
+  tipo_oggetto              tipo_oggetto_t?
+  id_rastrelliera           BigInt?
+  id_originale              String?                  @db.VarChar
+  quartiere                 quartieri_t?
+  rione                     String?                  @db.VarChar
+  unesco                    Int?
+  toponimo                  String?                  @db.VarChar
+  civico_ini                String?                  @db.VarChar
+  modello                   rastrelliera_t?
+  materiale                 mat_rastrelliera_t?
+  num_posti                 Int?
+  cod_via                   Int?
+  rete                      Int?
+  id_elem_var               Int?
+  strada_var                String?                  @db.VarChar
+  origine                   tipo_origine_t?
+  data_attivazione          DateTime?                @db.Date
+  data_dismissione          DateTime?                @db.Date
+  note                      String?                  @db.VarChar
+  img                       String?                  @db.VarChar
+  img_url                   String?                  @db.VarChar
+  simbolo                   String?                  @db.VarChar
+  simbolo_url               String?                  @db.VarChar
+  sc                        Decimal?                 @db.Decimal(3, 1)
+  sf                        Decimal?                 @db.Decimal(3, 1)
+  geom                      Unsupported("geometry")?
+  gestore                   gestore_t?
+  id_monit_rastrelliera     BigInt?
+  dataora_monit             DateTime?                @db.Timestamp(6)
+  sottocategoria_anomalia   tab43b_t?
+  fonte_monit               fonte_monit_t?
+  note_monit                String?                  @db.VarChar
+  img_monit_dettaglio_1_url String?                  @db.VarChar
+  img_monit_inquadr_1_url   String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+view vst_05a_m01_monit_muri_cls_layout {
+  id_monit_musos_cls                  BigInt?
+  id_master                           Int                      @unique
+  tipo_oggetto                        tipo_oggetto_t?
+  id_originale                        BigInt?
+  quartiere                           quartieri_t?
+  rione                               String?                  @db.VarChar
+  unesco                              String?                  @db.VarChar
+  toponimo                            String?                  @db.VarChar
+  gestore                             gestore_t?
+  tipo                                muro_t?
+  materiale                           materiale_muro_t?
+  altezza_max                         Int?
+  lunghezza                           Int?
+  cod_via                             String?                  @db.VarChar
+  note                                String?                  @db.VarChar
+  img                                 String?                  @db.VarChar
+  img_url                             String?                  @db.VarChar
+  utente                              String?                  @db.VarChar
+  dataora_monit                       DateTime?                @db.Timestamp(6)
+  dataora_modifica                    DateTime?                @db.Timestamp(6)
+  campagna                            String?                  @db.VarChar
+  DR                                  Float?
+  NG                                  Int?
+  note_gen                            String?                  @db.VarChar
+  img_inquadramento                   String?                  @db.VarChar
+  img_dettaglio_1                     String?                  @db.VarChar
+  img_dettaglio_2                     String?                  @db.VarChar
+  img_dettaglio_3                     String?                  @db.VarChar
+  img_dettaglio_4                     String?                  @db.VarChar
+  img_inquadramento_url               String?                  @db.VarChar
+  img_dettaglio_1_url                 String?                  @db.VarChar
+  img_dettaglio_2_url                 String?                  @db.VarChar
+  img_dettaglio_3_url                 String?                  @db.VarChar
+  img_dettaglio_4_url                 String?                  @db.VarChar
+  macchie_umidita_vst                 Boolean?
+  macchie_umidita_est                 estensione_t?
+  macchie_umidita_int                 intensita_small_t?
+  macchie_umidita_note                String?                  @db.VarChar
+  cls_dilavato_vst                    Boolean?
+  cls_dilavato_est                    estensione_t?
+  cls_dilavato_int                    intensita_small_t?
+  cls_dilavato_note                   String?                  @db.VarChar
+  vespai_vst                          Boolean?
+  vespai_est                          estensione_t?
+  vespai_int                          intensita_t?
+  vespai_note                         String?                  @db.VarChar
+  copriferro_vst                      Boolean?
+  copriferro_est                      estensione_t?
+  copriferro_int                      intensita_small_t?
+  copriferro_note                     String?                  @db.VarChar
+  armatura_vst                        Boolean?
+  armatura_est                        estensione_t?
+  armatura_int                        intensita_t?
+  armatura_note                       String?                  @db.VarChar
+  lesioni_ragnatela_vst               Boolean?
+  lesioni_ragnatela_est               estensione_t?
+  lesioni_ragnatela_int               intensita_small_t?
+  lesioni_ragnatela_note              String?                  @db.VarChar
+  fessure_vert_vst                    Boolean?
+  fessure_vert_est                    estensione_t?
+  fessure_vert_int                    intensita_t?
+  fessure_vert_note                   String?                  @db.VarChar
+  fessure_oriz_vst                    Boolean?
+  fessure_oriz_est                    estensione_t?
+  fessure_oriz_int                    intensita_t?
+  fessure_oriz_note                   String?                  @db.VarChar
+  fessure_diagonali_vst               Boolean?
+  fessure_diagonali_est               estensione_t?
+  fessure_diagonali_int               intensita_t?
+  fessure_diagonali_note              String?                  @db.VarChar
+  riprese_successive_deteriorate_vst  Boolean?
+  riprese_successive_deteriorate_est  estensione_small_t?
+  riprese_successive_deteriorate_int  intensita_small_t?
+  riprese_successive_deteriorate_note String?                  @db.VarChar
+  danni_da_urto_vst                   Boolean?
+  danni_da_urto_est                   estensione_small_t?
+  danni_da_urto_int                   intensita_t?
+  danni_da_urto_note                  String?                  @db.VarChar
+  fuori_piombo_vst                    Boolean?
+  fuori_piombo_est                    estensione_small_t?
+  fuori_piombo_int                    intensita_t?
+  fuori_piombo_note                   String?                  @db.VarChar
+  spanciamento_vst                    Boolean?
+  spanciamento_est                    estensione_t?
+  spanciamento_int                    intensita_t?
+  spanciamento_note                   String?                  @db.VarChar
+  scalzamento_vst                     Boolean?
+  scalzamento_est                     estensione_small_t?
+  scalzamento_int                     intensita_small_t?
+  scalzamento_note                    String?                  @db.VarChar
+  convogliamento_acque_assente_vst    Boolean?
+  convogliamento_acque_assente_est    estensione_small_t?
+  convogliamento_acque_assente_int    intensita_small_t?
+  convogliamento_acque_assente_note   String?                  @db.VarChar
+  pozzetti_intasati_vst               Boolean?
+  pozzetti_intasati_est               estensione_small_t?
+  pozzetti_intasati_int               intensita_small_t?
+  pozzetti_intasati_note              String?                  @db.VarChar
+  scarichi_corti_vst                  Boolean?
+  scarichi_corti_est                  estensione_small_t?
+  scarichi_corti_int                  intensita_small_t?
+  scarichi_corti_note                 String?                  @db.VarChar
+  scarichi_ostruiti_vst               Boolean?
+  scarichi_ostruiti_est               estensione_small_t?
+  scarichi_ostruiti_int               intensita_small_t?
+  scarichi_ostruiti_note              String?                  @db.VarChar
+  scarichi_danneggiati_vst            Boolean?
+  scarichi_danneggiati_est            estensione_small_t?
+  scarichi_danneggiati_int            intensita_small_t?
+  scarichi_danneggiati_note           String?                  @db.VarChar
+  dilavamento_del_rilevato_vst        Boolean?
+  dilavamento_del_rilevato_est        estensione_t?
+  dilavamento_del_rilevato_int        intensita_t?
+  dilavamento_del_rilevato_note       String?                  @db.VarChar
+  dissesto_del_rilevato_vst           Boolean?
+  dissesto_del_rilevato_est           estensione_t?
+  dissesto_del_rilevato_int           intensita_t?
+  dissesto_del_rilevato_note          String?                  @db.VarChar
+  geom                                Unsupported("geometry")?
+  non_conformita                      String?                  @db.VarChar
+  azioni_preventive                   String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+view vst_05a_m01_monit_muri_muratura_layout {
+  id_monit_musos_murature             BigInt?
+  id_master                           Int                      @unique
+  tipo_oggetto                        tipo_oggetto_t?
+  id_originale                        BigInt?
+  quartiere                           quartieri_t?
+  rione                               String?                  @db.VarChar
+  unesco                              String?                  @db.VarChar
+  toponimo                            String?                  @db.VarChar
+  gestore                             gestore_t?
+  tipo                                muro_t?
+  materiale                           materiale_muro_t?
+  altezza_max                         Int?
+  lunghezza                           Int?
+  cod_via                             String?                  @db.VarChar
+  note                                String?                  @db.VarChar
+  img                                 String?                  @db.VarChar
+  img_url                             String?                  @db.VarChar
+  utente                              String?                  @db.VarChar
+  dataora_monit                       DateTime?                @db.Timestamp(6)
+  dataora_modifica                    DateTime?                @db.Timestamp(6)
+  campagna                            String?                  @db.VarChar
+  DR                                  Float?
+  NG                                  Int?
+  note_gen                            String?                  @db.VarChar
+  img_inquadramento                   String?                  @db.VarChar
+  img_dettaglio_1                     String?                  @db.VarChar
+  img_dettaglio_2                     String?                  @db.VarChar
+  img_dettaglio_3                     String?                  @db.VarChar
+  img_dettaglio_4                     String?                  @db.VarChar
+  img_inquadramento_url               String?                  @db.VarChar
+  img_dettaglio_1_url                 String?                  @db.VarChar
+  img_dettaglio_2_url                 String?                  @db.VarChar
+  img_dettaglio_3_url                 String?                  @db.VarChar
+  img_dettaglio_4_url                 String?                  @db.VarChar
+  fessure_orizzontali_vst             Boolean?
+  fessure_orizzontali_est             estensione_t?
+  fessure_orizzontali_int             intensita_t?
+  fessure_orizzontali_note            String?                  @db.VarChar
+  fessure_verticali_vst               Boolean?
+  fessure_verticali_est               estensione_t?
+  fessure_verticali_int               intensita_t?
+  fessure_verticali_note              String?                  @db.VarChar
+  fessure_diagonali_vst               Boolean?
+  fessure_diagonali_est               estensione_small_t?
+  fessure_diagonali_int               intensita_t?
+  fessure_diagonali_note              String?                  @db.VarChar
+  macchie_di_umidit__vst              Boolean?                 @map("macchie_di_umidità_vst")
+  macchie_di_umidit__di_risalita_est  estensione_t?            @map("macchie_di_umidità_di_risalita_est")
+  macchie_di_umidit__di_risalita_int  intensita_small_t?       @map("macchie_di_umidità_di_risalita_int")
+  macchie_di_umidit__di_risalita_note String?                  @map("macchie_di_umidità_di_risalita_note") @db.VarChar
+  dilavamento_vst                     Boolean?
+  dilavamento_est                     estensione_t?
+  dilavamento_int                     intensita_small_t?
+  dilavamento_note                    String?                  @db.VarChar
+  porzione_di_muratura_mancante_vst   Boolean?
+  porzione_di_muratura_mancante_est   estensione_t?
+  porzione_di_muratura_mancante_int   intensita_small_t?
+  porzione_di_muratura_mancante_note  String?                  @db.VarChar
+  riprese_successive_deteriorate_vst  Boolean?
+  riprese_successive_deteriorate_est  estensione_small_t?
+  riprese_successive_deteriorate_int  intensita_small_t?
+  riprese_successive_deteriorate_note String?                  @db.VarChar
+  macchie_di_colore_scuro_vst         Boolean?
+  macchie_di_colore_scuro_est         estensione_t?
+  macchie_di_colore_scuro_int         intensita_t?
+  macchie_di_colore_scuro_note        String?                  @db.VarChar
+  efflorescenze_vst                   Boolean?
+  efflorescenze_est                   estensione_t?
+  efflorescenze_int                   intensita_small_t?
+  efflorescenze_note                  String?                  @db.VarChar
+  patina_biologica_vegetazione_vst    Boolean?
+  patina_biologica_vegetazione_est    estensione_t?
+  patina_biologica_vegetazione_int    intensita_small_t?
+  patina_biologica_vegetazione_note   String?                  @db.VarChar
+  polverizzazione_vst                 Boolean?
+  polverizzazione_est                 estensione_t?
+  polverizzazione_int                 intensita_t?
+  polverizzazione_note                String?                  @db.VarChar
+  esfoliazione_vst                    Boolean?
+  esfoliazione_est                    estensione_t?
+  esfoliazione_int                    intensita_small_t?
+  esfoliazione_note                   String?                  @db.VarChar
+  fuori_piombo_vst                    Boolean?
+  fuori_piombo_est                    estensione_small_t?
+  fuori_piombo_int                    intensita_t?
+  fuori_piombo_note                   String?                  @db.VarChar
+  spanciamento_vst                    Boolean?
+  spanciamento_est                    estensione_t?
+  spanciamento_int                    intensita_t?
+  spanciamento_note                   String?                  @db.VarChar
+  scalzamento_vst                     Boolean?
+  scalzamento_est                     estensione_small_t?
+  scalzamento_int                     intensita_small_t?
+  scalzamento_note                    String?                  @db.VarChar
+  convogliamento_acque_assente_vst    Boolean?
+  convogliamento_acque_assente_est    estensione_small_t?
+  convogliamento_acque_assente_int    intensita_small_t?
+  convogliamento_acque_assente_note   String?                  @db.VarChar
+  pozzetti_intasati_vst               Boolean?
+  pozzetti_intasati_est               estensione_small_t?
+  pozzetti_intasati_int               intensita_small_t?
+  pozzetti_intasati_note              String?                  @db.VarChar
+  scarichi_corti_vst                  Boolean?
+  scarichi_corti_est                  estensione_small_t?
+  scarichi_corti_int                  intensita_small_t?
+  scarichi_corti_note                 String?                  @db.VarChar
+  scarichi_ostruiti_vst               Boolean?
+  scarichi_ostruiti_est               estensione_small_t?
+  scarichi_ostruiti_int               intensita_small_t?
+  scarichi_ostruiti_note              String?                  @db.VarChar
+  scarichi_danneggiati_vst            Boolean?
+  scarichi_danneggiati_est            estensione_small_t?
+  scarichi_danneggiati_int            intensita_small_t?
+  scarichi_danneggiati_note           String?                  @db.VarChar
+  dilavamento_del_rilevato_vst        Boolean?
+  dilavamento_del_rilevato_est        estensione_t?
+  dilavamento_del_rilevato_int        intensita_t?
+  dilavamento_del_rilevato_note       String?                  @db.VarChar
+  dissesto_del_rilevato_vst           Boolean?
+  dissesto_del_rilevato_est           estensione_t?
+  dissesto_del_rilevato_int           intensita_t?
+  dissesto_del_rilevato_note          String?                  @db.VarChar
+  geom                                Unsupported("geometry")?
+  non_conformita                      String?                  @db.VarChar
+  azioni_preventive                   String?                  @db.VarChar
+
+  @@schema("monitoraggio")
+}
+
+view vst_13A_M01_barriere_fonoassorbenti_layout {
+  id_monit_barr_fono           BigInt?
+  id_master                    Int                      @unique
+  tipo_oggetto                 tipo_oggetto_t?
+  id_protez_amb                BigInt?
+  quartiere                    quartieri_t?
+  rione                        String?                  @db.VarChar
+  unesco                       Int?
+  toponimo                     String?                  @db.VarChar
+  tipologia                    protez_ambientale_t?
+  dist_margine                 Int?
+  altezza                      Int?
+  cod_via                      Int?
+  note                         String?                  @db.VarChar
+  img                          String?                  @db.VarChar
+  img_url                      String?                  @db.VarChar
+  utente                       String?                  @db.VarChar
+  dataora_monit                DateTime?                @db.Timestamp(6)
+  dataora_modifica             DateTime?                @db.Timestamp(6)
+  class_bar                    class_bar_t?
+  note_gen                     String?                  @db.VarChar
+  img_inquadramento            String?                  @db.VarChar
+  img_dettaglio_1              String?                  @db.VarChar
+  img_dettaglio_2              String?                  @db.VarChar
+  img_dettaglio_3              String?                  @db.VarChar
+  img_dettaglio_4              String?                  @db.VarChar
+  img_inquadramento_url        String?                  @db.VarChar
+  img_dettaglio_1_url          String?                  @db.VarChar
+  img_dettaglio_2_url          String?                  @db.VarChar
+  img_dettaglio_3_url          String?                  @db.VarChar
+  img_dettaglio_4_url          String?                  @db.VarChar
+  nastro_qnt                   Float?
+  nastro_note                  String?                  @db.VarChar
+  paletto_qnt                  Float?
+  paletto_note                 String?                  @db.VarChar
+  corrente_sup_qnt             Float?
+  corrente_sup_note            String?                  @db.VarChar
+  corrente_inf_qnt             Float?
+  corrente_inf_note            String?                  @db.VarChar
+  distanziatore_qnt            Float?
+  distanziatore_note           String?                  @db.VarChar
+  DSM_qnt                      Float?
+  DSM_note                     String?                  @db.VarChar
+  catadiottri_qnt              Float?
+  catadiottri_note             String?                  @db.VarChar
+  terminali_qnt                Float?
+  terminali_note               String?                  @db.VarChar
+  attenuatori_qnt              Float?
+  attenuatori_note             String?                  @db.VarChar
+  cordolo_piastra_qnt          Float?
+  cordolo_piastra_note         String?                  @db.VarChar
+  cordolo_tirafondi_qnt        Float?
+  cordolo_tirafondi_note       String?                  @db.VarChar
+  ammaloramento_arginello_qnt  Float?
+  ammaloramento_arginello_note String?                  @db.VarChar
+  danni_da_urto_qnt            Float?
+  danni_da_urto_note           String?                  @db.VarChar
+  elem_new_jersey_qnt          Float?
+  elem_new_jersey_note         String?                  @db.VarChar
+  manicotto_qnt                Float?
+  manicotto_note               String?                  @db.VarChar
+  collegamento_base_qnt        Float?
+  collegamento_base_note       String?                  @db.VarChar
+  transizioni_qnt              Float?
+  transizioni_note             String?                  @db.VarChar
+  ammaloramento_arg_qnt        Float?
+  ammaloramento_arg_note       String?                  @db.VarChar
+  pannello_qnt                 Float?
+  pannello_note                String?                  @db.VarChar
+  coes_pannello_qnt            Float?
+  coes_pannello_note           String?                  @db.VarChar
+  geom                         Unsupported("geometry")?
+
+  @@schema("monitoraggio")
+}
+
+view vst_17A_M01_guard_rail_layout {
+  id_monit_guard_rail          BigInt?
+  id_master                    Int                        @unique
+  tipo_oggetto                 tipo_oggetto_t?
+  id_originale                 String?                    @db.VarChar
+  quartiere                    quartieri_t?
+  rione                        String?                    @db.VarChar
+  unesco                       String?                    @db.VarChar
+  toponimo                     String?                    @db.VarChar
+  tipo_barriera                barriera_t?
+  tipo_dispositivo             String?                    @db.VarChar
+  materiale                    materiale_disp_ritenuta_t?
+  cod_via                      String?                    @db.VarChar
+  gestore                      gestore_t?
+  gruppo_barriera              gruppo_barriera_t?
+  supporto                     supancor_disp_ritenuta_t?
+  fonoassorbente               Boolean?
+  rete_protezione              Boolean?
+  dsm                          Boolean?
+  data_attivazione             DateTime?                  @db.Timestamp(6)
+  data_dismissione             DateTime?                  @db.Timestamp(6)
+  note                         String?                    @db.VarChar
+  img                          String?                    @db.VarChar
+  img_url                      String?                    @db.VarChar
+  class_bar                    class_bar_t?
+  utente                       String?                    @db.VarChar
+  dataora_monit                DateTime?                  @db.Timestamp(6)
+  dataora_modifica             DateTime?                  @db.Timestamp(6)
+  campagna                     String?                    @db.VarChar
+  note_gen                     String?                    @db.VarChar
+  img_inquadramento            String?                    @db.VarChar
+  img_dettaglio_1              String?                    @db.VarChar
+  img_dettaglio_2              String?                    @db.VarChar
+  img_dettaglio_3              String?                    @db.VarChar
+  img_dettaglio_4              String?                    @db.VarChar
+  img_inquadramento_url        String?                    @db.VarChar
+  img_dettaglio_1_url          String?                    @db.VarChar
+  img_dettaglio_2_url          String?                    @db.VarChar
+  img_dettaglio_3_url          String?                    @db.VarChar
+  img_dettaglio_4_url          String?                    @db.VarChar
+  nastro_qnt                   Float?
+  nastro_note                  String?                    @db.VarChar
+  paletto_qnt                  Float?
+  paletto_note                 String?                    @db.VarChar
+  corrente_sup_qnt             Float?
+  corrente_sup_note            String?                    @db.VarChar
+  corrente_inf_qnt             Float?
+  corrente_inf_note            String?                    @db.VarChar
+  distanziatore_qnt            Float?
+  distanziatore_note           String?                    @db.VarChar
+  DSM_qnt                      Float?
+  DSM_note                     String?                    @db.VarChar
+  catadiottri_qnt              Float?
+  catadiottri_note             String?                    @db.VarChar
+  terminali_qnt                Float?
+  terminali_note               String?                    @db.VarChar
+  transizioni_qnt              Float?
+  transizioni_note             String?                    @db.VarChar
+  attenuatori_qnt              Float?
+  attenuatori_note             String?                    @db.VarChar
+  cordolo_piastra_qnt          Float?
+  cordolo_piastra_note         String?                    @db.VarChar
+  cordolo_tirafondi_qnt        Float?
+  cordolo_tirafondi_note       String?                    @db.VarChar
+  ammaloramento_arginello_qnt  Float?
+  ammaloramento_arginello_note String?                    @db.VarChar
+  danni_da_urto_qnt            Float?
+  danni_da_urto_note           String?                    @db.VarChar
+  geom                         Unsupported("geometry")?
+
+  @@schema("monitoraggio")
+}
+
+view vst_17A_M02_new_jersey_layout {
+  id_monit_new_jersey    BigInt?
+  id_master              Int                        @unique
+  tipo_oggetto           tipo_oggetto_t?
+  id_originale           String?                    @db.VarChar
+  quartiere              quartieri_t?
+  rione                  String?                    @db.VarChar
+  unesco                 String?                    @db.VarChar
+  toponimo               String?                    @db.VarChar
+  tipo_barriera          barriera_t?
+  tipo_dispositivo       String?                    @db.VarChar
+  materiale              materiale_disp_ritenuta_t?
+  cod_via                String?                    @db.VarChar
+  gestore                gestore_t?
+  gruppo_barriera        gruppo_barriera_t?
+  supporto               supancor_disp_ritenuta_t?
+  fonoassorbente         Boolean?
+  rete_protezione        Boolean?
+  dsm                    Boolean?
+  data_attivazione       DateTime?                  @db.Timestamp(6)
+  data_dismissione       DateTime?                  @db.Timestamp(6)
+  note                   String?                    @db.VarChar
+  img                    String?                    @db.VarChar
+  img_url                String?                    @db.VarChar
+  class_bar              class_bar_t?
+  utente                 String?                    @db.VarChar
+  dataora_monit          DateTime?                  @db.Timestamp(6)
+  dataora_modifica       DateTime?                  @db.Timestamp(6)
+  campagna               String?                    @db.VarChar
+  note_gen               String?                    @db.VarChar
+  img_inquadramento      String?                    @db.VarChar
+  img_dettaglio_1        String?                    @db.VarChar
+  img_dettaglio_2        String?                    @db.VarChar
+  img_dettaglio_3        String?                    @db.VarChar
+  img_dettaglio_4        String?                    @db.VarChar
+  img_inquadramento_url  String?                    @db.VarChar
+  img_dettaglio_1_url    String?                    @db.VarChar
+  img_dettaglio_2_url    String?                    @db.VarChar
+  img_dettaglio_3_url    String?                    @db.VarChar
+  img_dettaglio_4_url    String?                    @db.VarChar
+  elem_new_jersey_qnt    Float?
+  elem_new_jersey_note   String?                    @db.VarChar
+  corrente_sup_qnt       Float?
+  corrente_sup_note      String?                    @db.VarChar
+  manicotto_qnt          Float?
+  manicotto_note         String?                    @db.VarChar
+  catadiottri_qnt        Float?
+  catadiottri_note       String?                    @db.VarChar
+  collegamento_base_qnt  Float?
+  collegamento_base_note String?                    @db.VarChar
+  cordolo_piastra_qnt    Float?
+  cordolo_piastra_note   String?                    @db.VarChar
+  cordolo_tirafondi_qnt  Float?
+  cordolo_tirafondi_note String?                    @db.VarChar
+  ammaloramento_arg_qnt  Float?
+  ammaloramento_arg_note String?                    @db.VarChar
+  danni_da_urto_qnt      Float?
+  danni_da_urto_note     String?                    @db.VarChar
+  transizioni_qnt        Float?
+  transizioni_note       String?                    @db.VarChar
+  geom                   Unsupported("geometry")?
+
+  @@schema("monitoraggio")
+}
+
+view vst_17A_M03_muretti_ringhiere_layout {
+  id_monit_muretti_ringhiere             BigInt?
+  id_master                              Int                        @unique
+  tipo_oggetto                           tipo_oggetto_t?
+  id_originale                           String?                    @db.VarChar
+  quartiere                              quartieri_t?
+  rione                                  String?                    @db.VarChar
+  unesco                                 String?                    @db.VarChar
+  toponimo                               String?                    @db.VarChar
+  tipo_barriera                          barriera_t?
+  tipo_dispositivo                       String?                    @db.VarChar
+  materiale                              materiale_disp_ritenuta_t?
+  cod_via                                String?                    @db.VarChar
+  gestore                                gestore_t?
+  gruppo_barriera                        gruppo_barriera_t?
+  supporto                               supancor_disp_ritenuta_t?
+  fonoassorbente                         Boolean?
+  rete_protezione                        Boolean?
+  dsm                                    Boolean?
+  data_attivazione                       DateTime?                  @db.Timestamp(6)
+  data_dismissione                       DateTime?                  @db.Timestamp(6)
+  note                                   String?                    @db.VarChar
+  img                                    String?                    @db.VarChar
+  img_url                                String?                    @db.VarChar
+  utente                                 String?                    @db.VarChar
+  dataora_monit                          DateTime?                  @db.Timestamp(6)
+  dataora_modifica                       DateTime?                  @db.Timestamp(6)
+  campagna                               String?                    @db.VarChar
+  DR                                     Float?
+  NG                                     Int?
+  note_gen                               String?                    @db.VarChar
+  img_inquadramento                      String?                    @db.VarChar
+  img_dettaglio_1                        String?                    @db.VarChar
+  img_dettaglio_2                        String?                    @db.VarChar
+  img_dettaglio_3                        String?                    @db.VarChar
+  img_dettaglio_4                        String?                    @db.VarChar
+  img_inquadramento_url                  String?                    @db.VarChar
+  img_dettaglio_1_url                    String?                    @db.VarChar
+  img_dettaglio_2_url                    String?                    @db.VarChar
+  img_dettaglio_3_url                    String?                    @db.VarChar
+  img_dettaglio_4_url                    String?                    @db.VarChar
+  fessure_vst                            Boolean?
+  fessure_est                            estensione_t?
+  fessure_int                            intensita_t?
+  fessure_note                           String?                    @db.VarChar
+  macchie_umidita_vst                    Boolean?
+  macchie_umidita_est                    estensione_t?
+  macchie_umidita_int                    intensita_small_t?
+  macchie_umidita_note                   String?                    @db.VarChar
+  porzione_di_muratura_cls_mancante_vst  Boolean?                   @map("porzione_di_muratura/cls_mancante_vst")
+  porzione_di_muratura_cls_mancante_est  estensione_t?              @map("porzione_di_muratura/cls_mancante_est")
+  porzione_di_muratura_cls_mancante_int  intensita_small_t?         @map("porzione_di_muratura/cls_mancante_int")
+  porzione_di_muratura_cls_mancante_note String?                    @map("porzione_di_muratura/cls_mancante_note") @db.VarChar
+  riprese_successive_deteriorate_vst     Boolean?
+  riprese_successive_deteriorate_est     estensione_small_t?
+  riprese_successive_deteriorate_int     intensita_small_t?
+  riprese_successive_deteriorate_note    String?                    @db.VarChar
+  patina_biologica_vegetazione_vst       Boolean?
+  patina_biologica_vegetazione_est       estensione_t?
+  patina_biologica_vegetazione_int       intensita_small_t?
+  patina_biologica_vegetazione_note      String?                    @db.VarChar
+  polverizzazione_vst                    Boolean?
+  polverizzazione_est                    estensione_t?
+  polverizzazione_int                    intensita_t?
+  polverizzazione_note                   String?                    @db.VarChar
+  fuori_piombo_vst                       Boolean?
+  fuori_piombo_est                       estensione_small_t?
+  fuori_piombo_int                       intensita_t?
+  fuori_piombo_note                      String?                    @db.VarChar
+  danni_da_urto_vst                      Boolean?
+  danni_da_urto_est                      estensione_small_t?
+  danni_da_urto_int                      intensita_small_t?
+  danni_da_urto_note                     String?                    @db.VarChar
+  degrado_ancoraggio_vst                 Boolean?
+  degrado_ancoraggio_est                 estensione_small_t?
+  degrado_ancoraggio_int                 intensita_small_t?
+  degrado_ancoraggio_note                String?                    @db.VarChar
+  difetti_connessione_vst                Boolean?
+  difetti_connessione_est                estensione_small_t?
+  difetti_connessione_int                intensita_small_t?
+  difetti_connessione_note               String?                    @db.VarChar
+  geom                                   Unsupported("geometry")?
+
+  @@schema("monitoraggio")
+}
+
+view vst_17A_M05_attenuatori_urto_layout {
+  id_monit_att_urto     BigInt?
+  id_master             Int                        @unique
+  tipo_oggetto          tipo_oggetto_t?
+  id_originale          String?                    @db.VarChar
+  quartiere             quartieri_t?
+  rione                 String?                    @db.VarChar
+  unesco                String?                    @db.VarChar
+  toponimo              String?                    @db.VarChar
+  tipo_barriera         barriera_t?
+  tipo_dispositivo      String?                    @db.VarChar
+  materiale             materiale_disp_ritenuta_t?
+  cod_via               String?                    @db.VarChar
+  gestore               gestore_t?
+  gruppo_barriera       gruppo_barriera_t?
+  supporto              supancor_disp_ritenuta_t?
+  fonoassorbente        Boolean?
+  rete_protezione       Boolean?
+  dsm                   Boolean?
+  data_attivazione      DateTime?                  @db.Timestamp(6)
+  data_dismissione      DateTime?                  @db.Timestamp(6)
+  note                  String?                    @db.VarChar
+  img                   String?                    @db.VarChar
+  img_url               String?                    @db.VarChar
+  classe                String?                    @db.VarChar
+  tipologia             String?                    @db.VarChar
+  utente                String?                    @db.VarChar
+  dataora_monit         DateTime?                  @db.Timestamp(6)
+  dataora_modifica      DateTime?                  @db.Timestamp(6)
+  campagna              String?                    @db.VarChar
+  note_gen              String?                    @db.VarChar
+  img_inquadramento     String?                    @db.VarChar
+  img_dettaglio_1       String?                    @db.VarChar
+  img_dettaglio_2       String?                    @db.VarChar
+  img_dettaglio_3       String?                    @db.VarChar
+  img_dettaglio_4       String?                    @db.VarChar
+  img_inquadramento_url String?                    @db.VarChar
+  img_dettaglio_1_url   String?                    @db.VarChar
+  img_dettaglio_2_url   String?                    @db.VarChar
+  img_dettaglio_3_url   String?                    @db.VarChar
+  img_dettaglio_4_url   String?                    @db.VarChar
+  elemento_qnt          Float?
+  elemento_note         String?                    @db.VarChar
+  geom                  Unsupported("geometry")?
+
+  @@schema("monitoraggio")
+}
+
+view vst_17A_disprit_monitoraggio {
+  id_master        Int                        @unique
+  tipo_oggetto     tipo_oggetto_t?
+  id_disprit       BigInt?
+  id_originale     String?                    @db.VarChar
+  quartiere        quartieri_t?
+  rione            String?                    @db.VarChar
+  unesco           String?                    @db.VarChar
+  toponimo         String?                    @db.VarChar
+  gestore          gestore_t?
+  dist_margine     Int?
+  lunghezza        Int?
+  tipo_barriera    barriera_t?
+  gruppo_barriera  gruppo_barriera_t?
+  tipo_dispositivo String?                    @db.VarChar
+  materiale        materiale_disp_ritenuta_t?
+  supporto         supancor_disp_ritenuta_t?
+  fonoassorbente   Boolean?
+  rete_protezione  Boolean?
+  dsm              Boolean?
+  cod_via          String?                    @db.VarChar
+  rete             Int?
+  id_elem_var      Int?
+  strada_var       String?                    @db.VarChar
+  origine          tipo_origine_t?
+  data_attivazione DateTime?                  @db.Timestamp(6)
+  data_dismissione DateTime?                  @db.Timestamp(6)
+  note             String?                    @db.VarChar
+  img              String?                    @db.VarChar
+  img_url          String?                    @db.VarChar
+  sc               Decimal?                   @db.Decimal(3, 1)
+  sf               Decimal?                   @db.Decimal(3, 1)
+  geom             Unsupported("geometry")?
+  monitorato       Boolean?
+  note_monit       String?                    @db.VarChar
+
   @@schema("monitoraggio")
 }
 

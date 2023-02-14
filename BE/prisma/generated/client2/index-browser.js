@@ -89,6 +89,41 @@ Prisma.NullTypes = {
 // https://github.com/microsoft/TypeScript/issues/3192#issuecomment-261720275
 function makeEnum(x) { return x; }
 
+exports.Prisma.Grafo_gsfiScalarFieldEnum = makeEnum({
+  id_master: 'id_master',
+  cod_ele: 'cod_ele',
+  nod_ini: 'nod_ini',
+  nod_fin: 'nod_fin',
+  tip_ele: 'tip_ele',
+  tip_pav: 'tip_pav',
+  cls_tcn: 'cls_tcn',
+  tip_gst: 'tip_gst',
+  cod_gst: 'cod_gst',
+  sot_pas: 'sot_pas',
+  cod_sed: 'cod_sed',
+  cls_lrg: 'cls_lrg',
+  cod_top: 'cod_top',
+  cod_top2: 'cod_top2',
+  cod_reg: 'cod_reg',
+  oneway: 'oneway',
+  cod_dug: 'cod_dug',
+  den_uff: 'den_uff',
+  cod_com: 'cod_com',
+  cod_via: 'cod_via',
+  class_pgtu: 'class_pgtu',
+  rete: 'rete',
+  quartiere: 'quartiere',
+  toponimo: 'toponimo',
+  data_attivazione: 'data_attivazione',
+  data_dismissione: 'data_dismissione',
+  ztl_diurna: 'ztl_diurna',
+  ztl_notturna: 'ztl_notturna',
+  unesco: 'unesco',
+  rione: 'rione',
+  proprieta_capitolato: 'proprieta_capitolato',
+  lungh_carreggiata: 'lungh_carreggiata'
+});
+
 exports.Prisma.QueryMode = makeEnum({
   default: 'default',
   insensitive: 'insensitive'
@@ -2683,7 +2718,8 @@ exports.Prisma.ModelName = makeEnum({
   tab30A_M01_monit_segn_oriz_P: 'tab30A_M01_monit_segn_oriz_P',
   tab30B_M01_monit_segn_oriz_L: 'tab30B_M01_monit_segn_oriz_L',
   tab43A_M01_monit_paraped_dissuas: 'tab43A_M01_monit_paraped_dissuas',
-  tab43B_M01_monit_rastrelliere: 'tab43B_M01_monit_rastrelliere'
+  tab43B_M01_monit_rastrelliere: 'tab43B_M01_monit_rastrelliere',
+  grafo_gsfi: 'grafo_gsfi'
 });
 
 /**

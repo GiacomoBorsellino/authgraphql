@@ -20,10 +20,10 @@ export const apiTestDb1 = async (req: Request, res: Response) => {
 
 export const apiTestDb2 = async (req: Request, res: Response) => {
   console.log("Sono nel Controller apiTest 1 ma da altro db");
-  await client2.tab_famiglia_segn_temp
-    .findMany({
+  await client2.grafo_gsfi
+    .findUnique({
       where: {
-        id: 1,
+        id_master: 10704,
       },
     })
     .then((data) => {

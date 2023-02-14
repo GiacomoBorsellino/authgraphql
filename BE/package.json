@@ -4,8 +4,7 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && nodemon dist/app.js",
-
+    "start": "nodemon ./src/app.ts",
     "lint": "eslint . --ext .ts"
   },
   "keywords": [],
@@ -27,6 +26,7 @@
     "graphql": "^16.6.0",
     "graphql-middleware": "^6.1.33",
     "jsonwebtoken": "^9.0.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1"
   }
 }
