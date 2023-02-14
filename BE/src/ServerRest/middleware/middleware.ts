@@ -35,6 +35,7 @@ const checkToken = async (req: any, res: any, next: () => void) => {
     let permesso = false;
     let roles = [];
     if (+user.id === +userData.id) {
+      // Controllo tra le routes
       for (let i = 0; i < permessi.length; i++) {
         console.log(":::::::::: CICLO:  ", i, permessi.length, route);
         if (permessi[i].route === route) {
@@ -46,6 +47,7 @@ const checkToken = async (req: any, res: any, next: () => void) => {
         }
       }
 
+      // Controllo tra i ruoli
       let permessoRoles = false;
       if (permesso === true) {
         for (let j = 0; j < roles.length; j++) {
