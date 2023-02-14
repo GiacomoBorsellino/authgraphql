@@ -2,13 +2,8 @@
 const jwt = require("jsonwebtoken"); // Ricorda di importare così, sennò non funzionerà !
 import { permessi } from "../permessi/permessi";
 import { secret } from "../../config/jwt.conf";
-// import { PrismaClient } from '@prisma/client'
 
-// Instanziamento Prisma Client
-// const prisma = new PrismaClient()
-
-import { PrismaClient as PrismaClient1 } from "../../../prisma/generated/client1";
-const client1 = new PrismaClient1();
+import { db } from "../../config/dbConfig";
 
 // Middleware controllo Token
 const checkToken = async (req: any, res: any, next: () => void) => {
@@ -25,13 +20,13 @@ const checkToken = async (req: any, res: any, next: () => void) => {
     // Decrypt Token
     let decoded = await jwt.verify(token, secret.secret);
 
-    const user = await client1.utenti.findUnique({
+    const user = await db.avr_main.utenti.findUnique({
       where: {
         id: +decoded.id,
       },
     });
 
-    const gruppo = await client1.gruppo.findUnique({
+    const gruppo = await db.avr_main.gruppo.findUnique({
       where: {
         id: +user.idGruppo,
       },

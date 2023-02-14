@@ -1,13 +1,9 @@
 import { Request, Response } from "express";
-import { PrismaClient as PrismaClient1 } from "../../../../prisma/generated/client1";
-const client1 = new PrismaClient1();
-
-import { PrismaClient as PrismaClient2 } from "../../../../prisma/generated/client2";
-const client2 = new PrismaClient2();
+import { db } from "../../../config/dbConfig";
 
 export const apiTestDb1 = async (req: Request, res: Response) => {
   console.log("Sono nel Controller apiTest 1");
-  await client1.utenti
+  await db.avr_main.utenti
     .findMany({
       where: {
         id: 90,
@@ -20,7 +16,7 @@ export const apiTestDb1 = async (req: Request, res: Response) => {
 
 export const apiTestDb2 = async (req: Request, res: Response) => {
   console.log("Sono nel Controller apiTest 1 ma da altro db");
-  await client2.grafo_gsfi
+  await db.gsfi_catasto.grafo_gsfi
     .findUnique({
       where: {
         id_master: 10704,

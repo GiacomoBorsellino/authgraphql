@@ -1,23 +1,17 @@
-// import { PrismaClient } from '@prisma/client'
-
-import { PrismaClient as PrismaClient1 } from "../../../prisma/generated/client1";
-const client1 = new PrismaClient1();
-
+import { db } from "../../config/dbConfig";
 import { secret } from "../../config/jwt.conf";
 const jwt = require("jsonwebtoken"); // Ricorda di importare così, sennò non funzionerà !
-
-// const prisma = new PrismaClient()
 
 const resolvers = {
   Query: {
     async getUsers(args, parent, context, info) {
       console.log("================= IN UTENTI");
-      const utentiList = await client1.utenti.findMany({});
+      const utentiList = await db.avr_main.utenti.findMany({});
       console.log("LISTA");
       return utentiList;
     },
     user() {
-      const utentiList = client1.utenti.findMany({});
+      const utentiList = db.avr_main.utenti.findMany({});
       return utentiList;
     },
 
@@ -32,25 +26,12 @@ const resolvers = {
       return `Bye ${args.name ? args.name : "world"}!`;
     },
   },
-  // Product: {
-  //     category(parent: any) {
-  //         // console.log(parent);
-
-  //         let categoryId = parent.categoryid
-  //         const categoryName = prisma.category.findUnique({
-  //             where: {
-  //                 id: categoryId
-  //             }
-  //         })
-  //         return categoryName
-  //     },
-  // },
   Mutation: {
     async login(args, parent) {
       console.log("================= LOGIN");
       console.log(args, parent);
 
-      const user = await client1.utenti.findFirst({
+      const user = await db.avr_main.utenti.findFirst({
         where: {
           email: parent.input.email,
         },
@@ -91,14 +72,14 @@ const resolvers = {
 
       console.log(args, parent);
 
-      const addUser = await client1.utenti.create({
+      const addUser = await db.avr_main.utenti.create({
         data: {
           email: parent.input.email,
           password: parent.input.password,
         },
       });
 
-      const user = await client1.utenti.findUnique({
+      const user = await db.avr_main.utenti.findUnique({
         where: {
           id: +addUser.id,
         },
@@ -111,7 +92,7 @@ const resolvers = {
       console.log("================= UPDATEUSER");
       console.log(args, parent);
 
-      await client1.utenti.update({
+      await db.avr_main.utenti.update({
         where: {
           id: +parent.input.id,
         },
@@ -122,7 +103,7 @@ const resolvers = {
         },
       });
 
-      const user = await client1.utenti.findUnique({
+      const user = await db.avr_main.utenti.findUnique({
         where: {
           id: +parent.input.id,
         },
@@ -135,7 +116,7 @@ const resolvers = {
       console.log("================= DELETEUSER");
       console.log(args, parent);
 
-      const deleteUser = await client1.utenti.delete({
+      const deleteUser = await db.avr_main.utenti.delete({
         where: {
           id: +parent.input.id,
         },
