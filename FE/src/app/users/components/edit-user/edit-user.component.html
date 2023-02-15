@@ -1,20 +1,22 @@
 <main class="h-[100vh]">
 
-    <div class="h-[30vh] bg-blue-300 p-10 m-6 rounded-m">
+    <div class="h-[30vh] bg-blue-300 p-10 m-6 rounded-md">
         <input class="p-2 rounded-md mx-1" type="email" [(ngModel)]="email" placeholder="email">
         <input class="p-2 rounded-md mx-1" type="password" [(ngModel)]="password" placeholder="password">
         <br>
         <button class="my-2 p-2 bg-blue-500 rounded-md text-white" (click)="addUser()">Aggiungi Utente</button>
     </div>
 
-    <div class="h-[30vh] bg-blue-300 p-10 m-6 rounded-m">
+    <div class="h-[30vh] bg-blue-300 p-10 m-6 rounded-md">
+        <input class="rounded-md mx-1 w-10 h-10 text-center" type="number" [(ngModel)]="id" placeholder="id">
         <input class="p-2 rounded-md mx-1" type="email" [(ngModel)]="email" placeholder="email">
         <input class="p-2 rounded-md mx-1" type="password" [(ngModel)]="password" placeholder="password">
         <br>
         <button class="my-2 p-2 bg-blue-500 rounded-md text-white" (click)="updateUser()">Modifica Utente</button>
     </div>
 
-    <div class="h-[30vh] bg-blue-300 p-10 m-6 rounded-m">
+    <div class="h-[30vh] bg-blue-300 p-10 m-6 rounded-md">
+        <input class="rounded-md mx-1 w-10 h-10 text-center" type="number" [(ngModel)]="id" placeholder="id">
         <input class="p-2 rounded-md mx-1" type="email" [(ngModel)]="email" placeholder="email">
         <input class="p-2 rounded-md mx-1" type="password" [(ngModel)]="password" placeholder="password">
         <br>
