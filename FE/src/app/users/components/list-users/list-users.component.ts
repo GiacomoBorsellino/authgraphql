@@ -44,8 +44,8 @@ export class ListUsersComponent {
 
   ngOnInit() {}
 
-  columnsUsers: any = [];
-  rowsUsers: any = [];
+  columnsData: any = [];
+  rowsData: any = [];
 
   loadUsers(oj: any) {
     let data = oj;
@@ -55,15 +55,15 @@ export class ListUsersComponent {
       console.log('Lista: ', res);
       this.users = res.data.getUsers;
 
-      this.columnsUsers = Object.keys(this.users[0]);
-      this.columnsUsers.shift();
-      console.log('Colonne: ', this.columnsUsers, this.columnsUsers.length);
+      this.columnsData = Object.keys(this.users[0]);
+      this.columnsData.shift();
+      console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
       for (let i = 0; i < this.users.length; i++) {
-        this.rowsUsers.push(Object.values(this.users[i]));
-        this.rowsUsers[i].shift();
+        this.rowsData.push(Object.values(this.users[i]));
+        this.rowsData[i].shift();
       }
-      console.log('Righe: ', this.rowsUsers);
+      console.log('Righe: ', this.rowsData);
     });
   }
 }

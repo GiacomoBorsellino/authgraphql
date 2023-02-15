@@ -30,16 +30,16 @@
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th *ngFor="let column of columnsUsers" scope="col" class="px-6 py-3">
+                <th *ngFor="let column of columnsData" scope="col" class="px-6 py-3">
                     {{column}}
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(31 41 55)' } : {'background-color': 'rgb(55 65 81)'}"
-                *ngFor="let row of rowsUsers; let i = index"
+                *ngFor="let row of rowsData; let i = index"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th *ngFor="let row of rowsUsers[i]; let i = index" class="px-6 py-4">
+                <th *ngFor="let row of rowsData[i]; let i = index" class="px-6 py-4">
                     {{row}}
                 </th>
             </tr>
