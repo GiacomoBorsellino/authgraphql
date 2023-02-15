@@ -4,12 +4,10 @@ import { UsersService } from '../../services/users.service';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.css']
+  styleUrls: ['./edit-user.component.css'],
 })
-
 export class EditUserComponent implements OnInit {
-
-  constructor(private UsersService: UsersService) { }
+  constructor(private UsersService: UsersService) {}
 
   // Variabili
   id: number;
@@ -22,25 +20,24 @@ export class EditUserComponent implements OnInit {
   ngOnInit() {
     // Chiamata API REST normale
     this.UsersService.letApiRestData().subscribe((res) => {
-      console.log('Response: ', res)
-    })
+      console.log('Response: ', res);
+    });
 
     // Controllo Permessi di Visualizzazione
     let user: any = JSON.parse(localStorage.getItem('user') || '{}');
   }
-
 
   addUser() {
     console.log(this.email, this.password);
 
     let data = {
       email: this.email,
-      password: this.password
-    }
+      password: this.password,
+    };
 
     this.UsersService.addUser(data).subscribe((res) => {
-      console.log('added data: ', res)
-    })
+      console.log('added data: ', res);
+    });
   }
 
   updateUser() {
@@ -49,23 +46,23 @@ export class EditUserComponent implements OnInit {
     let data = {
       id: this.id,
       email: this.email,
-      password: this.password
-    }
+      password: this.password,
+    };
 
     this.UsersService.updateUser(data).subscribe((res) => {
-      console.log('updated data: ', res)
-    })
+      console.log('updated data: ', res);
+    });
   }
 
   deleteUser() {
     console.log(this.email, this.password);
 
     let data = {
-      id: this.id
-    }
+      id: this.id,
+    };
 
     this.UsersService.deleteUser(data).subscribe((res) => {
-      console.log('deleted data: ', res)
-    })
+      console.log('deleted data: ', res);
+    });
   }
 }

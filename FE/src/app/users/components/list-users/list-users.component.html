@@ -1,5 +1,5 @@
 <h1>Utenti</h1>
-<span>
+<!-- <span>
     <input type="checkbox" id="first_name" name="first_name" value="first_name" (mouseup)="call('nome')"
         (mousedown)="uncall('nome')">
     <label for="first_name">nome</label><br>
@@ -11,12 +11,40 @@
     <input type="checkbox" id="email" name="email" value="email" (mouseup)="call('email')"
         (mousedown)="uncall('email')">
     <label for="email">email</label><br>
-</span>
+</span> -->
 
-<ul>
+<!-- <ul>
     <li *ngFor="let user of users">
         Name: {{user.nome}} - Surname: {{user.cognome}} - Email: {{user.email}}
     </li>
-</ul>
+</ul> -->
+
+<!-- <ul>
+    <li class="flex-row" *ngFor="let column of columnsUsers">{{column}}</li>
+    <li class="flex-row" *ngFor="let row of rowsUsers">{{row}}</li>
+</ul> -->
+
+<button class="my-2 p-2 bg-blue-500 rounded-md text-white hover:bg-blue-200" (mouseup)="call()">Chiama Utenti</button>
+
+<div class="relative overflow-x-auto m-10 rounded-md">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th *ngFor="let column of columnsUsers" scope="col" class="px-6 py-3">
+                    {{column}}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(31 41 55)' } : {'background-color': 'rgb(55 65 81)'}"
+                *ngFor="let row of rowsUsers; let i = index"
+                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th *ngFor="let row of rowsUsers[i]; let i = index" class="px-6 py-4">
+                    {{row}}
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <h3 *ngIf="error">Errore: {{errorMessage}}</h3>

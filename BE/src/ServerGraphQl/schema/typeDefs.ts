@@ -1,60 +1,71 @@
-import { gql } from 'apollo-server'
+import { gql } from "apollo-server";
 
 const typeDefs = gql`
+  type Utente {
+    id: ID
+    idAppalto: Int
+    nome: String
+    cognome: String
+    username: String
+    password: String
+    email: String
+    status: String
+    permessi: String
+    dataCreazione: String
+    dataModifica: String
+    dataSospensione: String
+    idGruppo: Int
+    del: String
+    scadenzaPassword: String
+    roles: String
+  }
 
-    type Utente {
-        id: ID                        
-        idAppalto: Int
-        nome: String                   
-        cognome: String                    
-        username: String                    
-        password: String                    
-        email: String                    
-        status: String                    
-        permessi: String                   
-        dataCreazione: String                    
-        dataModifica: String                    
-        dataSospensione: String                    
-        idGruppo: Int
-        del: String                    
-        scadenzaPassword: String                    
-        roles: String                                    
-    }
+  type Allegato {
+    id: Int
+    tabella_appartenenza: String
+    id_tabella_appartenenza: Int
+    descrizione: String
+    path: String
+    filename_disk: String
+    filename_originale: String
+    id_operatore_salvataggio: Int
+    dt_salvataggio: String
+    del: Int
+  }
 
-    input UserInput {
-        id: ID
-        email: String
-        password: String
-        roles: String
-    }
+  input UserInput {
+    id: ID
+    email: String
+    password: String
+    roles: String
+  }
 
-    type UserLogin {
-        id: ID
-        nome: String
-        cognome: String
-        username: String
-        email: String
-        idGruppo: Int
-        token: String             
-    }
+  type UserLogin {
+    id: ID
+    nome: String
+    cognome: String
+    username: String
+    email: String
+    idGruppo: Int
+    token: String
+  }
 
-    type Query {
-        getUsers: [Utente]
-        user(id: ID!): Utente
+  type Query {
+    getUsers: [Allegato]
+    user(id: ID!): Utente
 
-        hello(name: String): String
-        bye(name: String): String
-    }
+    hello(name: String): String
+    bye(name: String): String
+  }
 
-    type Mutation {
-        login(input: UserInput): UserLogin
+  type Mutation {
+    login(input: UserInput): UserLogin
 
-        addUser(input: UserInput): Utente
-        updateUser(input: UserInput): Utente    
-        deleteUser(input: UserInput): Utente
-    }
-
-`
+    addUser(input: UserInput): Utente
+    updateUser(input: UserInput): Utente
+    deleteUser(input: UserInput): Utente
+  }
+`;
 
 export { typeDefs };
 
@@ -75,4 +86,4 @@ export { typeDefs };
 // segnalazionestatostorico: [segnalazionestatostorico]
 // segnalazionestorico_segnalazionestorico_idUtenteStatoToutenti: [segnalazionestorico]
 // segnalazionestorico_segnalazionestorico_idUtenteToutenti: [segnalazionestorico]
-// gruppo: gruppo    
+// gruppo: gruppo

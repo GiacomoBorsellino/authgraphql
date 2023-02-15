@@ -6,7 +6,9 @@ const resolvers = {
   Query: {
     async getUsers(args, parent, context, info) {
       console.log("================= IN UTENTI");
-      const utentiList = await db.avr_main.utenti.findMany({});
+      const utentiList = await db.avr_main.allegato.findMany({
+        take: 100,
+      });
       console.log("LISTA");
       return utentiList;
     },
