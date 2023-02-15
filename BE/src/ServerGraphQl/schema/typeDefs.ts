@@ -51,7 +51,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    getUsers: [Allegato]
+    getUsers: [Utente]
     user(id: ID!): Utente
 
     hello(name: String): String

@@ -16,7 +16,7 @@ export class ListUsersComponent {
   data: any = [];
 
   call() {
-    this.data = ['id', 'tabella_appartenenza', 'filename_originale'];
+    this.data = ['nome', 'cognome', 'email'];
     this.loadUsers(this.data);
   }
 
@@ -49,17 +49,19 @@ export class ListUsersComponent {
 
   loadUsers(oj: any) {
     let data = oj;
-    console.log(oj);
+    // console.log(oj);
 
     this.UsersService.getUsers(data).subscribe((res) => {
-      console.log('lista data: ', res);
+      console.log('Lista: ', res);
       this.users = res.data.getUsers;
 
       this.columnsUsers = Object.keys(this.users[0]);
+      this.columnsUsers.shift();
       console.log('Colonne: ', this.columnsUsers, this.columnsUsers.length);
 
       for (let i = 0; i < this.users.length; i++) {
         this.rowsUsers.push(Object.values(this.users[i]));
+        this.rowsUsers[i].shift();
       }
       console.log('Righe: ', this.rowsUsers);
     });

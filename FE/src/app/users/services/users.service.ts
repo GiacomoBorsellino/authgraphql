@@ -40,7 +40,6 @@ export class UsersService {
         }
       }
     `;
-    console.log('data: ', data);
 
     return this.apollo
       .query({
