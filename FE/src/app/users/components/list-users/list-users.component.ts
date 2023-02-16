@@ -55,15 +55,18 @@ export class ListUsersComponent {
   loadUsers(start: number, end: number) {
     console.log('range: ', this.start, this.end);
 
-    this.UsersService.getUsers(this.start, this.end).subscribe((res) => {
+    this.UsersService.getUsers(start, end).subscribe((res) => {
+      // Dati
       console.log('Lista: ', res);
       this.users = res.data.getUsers;
 
+      // Colonne
       this.columnsData = Object.keys(this.users[0]);
       this.columnsData.shift();
       console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
-      for (let i = 0; i < this.users.length; i++) {
+      // Righe
+      for (let i = this.start; i < this.users.length; i++) {
         this.rowsData.push(Object.values(this.users[i]));
         this.rowsData[i].shift();
       }

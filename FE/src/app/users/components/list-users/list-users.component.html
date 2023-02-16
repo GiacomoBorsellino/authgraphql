@@ -24,7 +24,7 @@
 
     </div>
 
-    <div class="relative overflow-x-auto sm:rounded-lg">
+    <!-- <div class="relative overflow-x-auto sm:rounded-lg">
         <nav class="flex items-center justify-between pt-4" aria-label="Table navigation">
             <ul class="inline-flex items-center -space-x-px">
                 <li class="cursor-pointer">
@@ -49,7 +49,9 @@
                 </li>
             </ul>
         </nav>
-    </div>
+    </div> -->
+
+    <button (click)="upPage()">up</button>
 
     <h3 *ngIf="error">Errore: {{errorMessage}}</h3>
 </main>

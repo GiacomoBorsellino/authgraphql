@@ -34,9 +34,11 @@ export class UsersService {
 
   // Richiama tutti gli utenti
   public getUsers(start: number, end: number): Observable<any> {
+    console.log('Service range: ', start, end);
+
     let GET_USER = gql`
-      query getUsers {
-        getUsers {
+      query getUsers($input: Pagination) {
+        getUsers(input: $input) {
           nome
           cognome
           email
@@ -47,6 +49,12 @@ export class UsersService {
     return this.apollo
       .query({
         query: GET_USER,
+        variables: {
+          input: {
+            start: start,
+            offset: end,
+          },
+        },
         context: {
           headers: this.headers.set('pagination', [
             start.toString(),

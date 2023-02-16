@@ -50,8 +50,13 @@ const typeDefs = gql`
     token: String
   }
 
+  input Pagination {
+    start: Int
+    offset: Int
+  }
+
   type Query {
-    getUsers: [Utente]
+    getUsers(input: Pagination): [Utente]
     user(id: ID!): Utente
 
     hello(name: String): String
