@@ -16,7 +16,7 @@ export class ApiRestService {
   private readonly token: any = localStorage.getItem('token');
   private readonly userData: any = localStorage.getItem('user');
   private readonly headers: any = new HttpHeaders()
-    .set('Authorization', this.token)
+    .set('authorization', this.token)
     .set('userData', this.userData);
   private readonly letApiRestUrl: string = `${this.urlRoot}`;
 

@@ -6,8 +6,15 @@ const resolvers = {
   Query: {
     async getUsers(args, parent, context, info) {
       console.log("================= IN UTENTI");
+
+      let range = context[0].pagination.split(",");
+      let start: number = +range[0];
+      let end: number = +range[1];
+      console.log("=================================", start, end);
+
       const utentiList = await db.avr_main.utenti.findMany({
-        take: 10,
+        skip: start,
+        take: end,
       });
       console.log("LISTA");
       return utentiList;

@@ -13,45 +13,49 @@ export class ListUsersComponent {
   users: any;
   error: boolean = false;
   errorMessage: string = '';
-  data: any = [];
-
-  call() {
-    this.data = ['nome', 'cognome', 'email'];
-    this.loadUsers(this.data);
-  }
-
-  uncall(objData: any) {
-    this.products = [];
-    this.UsersService.getUsers(objData)
-      .subscribe(
-        (res) => {
-          if (res.errors) {
-            console.log(res.errors[0].extensions.code);
-            this.errorMessage = res.errors[0].extensions.code;
-            this.error = true;
-          } else {
-            console.log(res.data.products);
-
-            this.products = res.data.products;
-          }
-        }
-        // , (err) => {
-        //   console.log('Catch', err);
-        // }
-      )
-      .unsubscribe();
-  }
-
-  ngOnInit() {}
+  // data: any = ['nome', 'cognome', 'email'];
 
   columnsData: any = [];
   rowsData: any = [];
 
-  loadUsers(oj: any) {
-    let data = oj;
-    // console.log(oj);
+  start: number = 0;
+  end: number = 10;
 
-    this.UsersService.getUsers(data).subscribe((res) => {
+  call() {
+    // this.data = ['nome', 'cognome', 'email'];
+    this.loadUsers(this.start, this.end);
+  }
+
+  // uncall(objData: any) {
+  //   this.products = [];
+  //   this.UsersService.getUsers(objData, this.start, this.end)
+  //     .subscribe(
+  //       (res) => {
+  //         if (res.errors) {
+  //           console.log(res.errors[0].extensions.code);
+  //           this.errorMessage = res.errors[0].extensions.code;
+  //           this.error = true;
+  //         } else {
+  //           console.log(res.data.products);
+
+  //           this.products = res.data.products;
+  //         }
+  //       }
+  //       // , (err) => {
+  //       //   console.log('Catch', err);
+  //       // }
+  //     )
+  //     .unsubscribe();
+  // }
+
+  ngOnInit() {
+    this.loadUsers(this.start, this.end);
+  }
+
+  loadUsers(start: number, end: number) {
+    console.log('range: ', this.start, this.end);
+
+    this.UsersService.getUsers(this.start, this.end).subscribe((res) => {
       console.log('Lista: ', res);
       this.users = res.data.getUsers;
 
@@ -66,4 +70,15 @@ export class ListUsersComponent {
       console.log('Righe: ', this.rowsData);
     });
   }
+
+  upPage() {
+    this.start = this.start + 10;
+    this.end = this.start + 10;
+
+    console.log(this.start, this.end);
+
+    this.loadUsers(this.start, this.end);
+  }
+
+  downPage() {}
 }

@@ -1,4 +1,58 @@
-<h1>Utenti</h1>
+<main class="p-10 m-6">
+    <h1>Utenti</h1>
+    <button class="my-2 p-2 bg-blue-500 rounded-md text-white hover:bg-blue-200" (mouseup)="call()">Chiama
+        Utenti</button>
+
+    <div class="relative overflow-x-auto m-10 rounded-md">
+        <table class="w-full text-sm text-left text-gray-500 ">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                <tr>
+                    <th *ngFor="let column of columnsData" scope="col" class="px-6 py-3">
+                        {{column}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(226 232 240)' } : {'background-color': 'rgb(203 213 225)'}"
+                    *ngFor="let row of rowsData; let i = index" class="bg-white border-b">
+                    <th *ngFor="let row of rowsData[i]; let i = index" class="px-6 py-4">
+                        {{row}}
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="relative overflow-x-auto sm:rounded-lg">
+        <nav class="flex items-center justify-between pt-4" aria-label="Table navigation">
+            <ul class="inline-flex items-center -space-x-px">
+                <li class="cursor-pointer">
+                    <a>
+                        <span
+                            class="material-symbols-outlined block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 ">
+                            chevron_left
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a aria-current="page"
+                        class="z-10 px-3 py-3  leading-tight text-blue-600 border border-blue-300 bg-blue-50 ">1/2</a>
+                </li>
+                <li class="cursor-pointer" (click)="upPage()">
+                    <a>
+                        <span
+                            class="material-symbols-outlined block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 ">
+                            chevron_right
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <h3 *ngIf="error">Errore: {{errorMessage}}</h3>
+</main>
 <!-- <span>
     <input type="checkbox" id="first_name" name="first_name" value="first_name" (mouseup)="call('nome')"
         (mousedown)="uncall('nome')">
@@ -23,28 +77,3 @@
     <li class="flex-row" *ngFor="let column of columnsUsers">{{column}}</li>
     <li class="flex-row" *ngFor="let row of rowsUsers">{{row}}</li>
 </ul> -->
-
-<button class="my-2 p-2 bg-blue-500 rounded-md text-white hover:bg-blue-200" (mouseup)="call()">Chiama Utenti</button>
-
-<div class="relative overflow-x-auto m-10 rounded-md">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th *ngFor="let column of columnsData" scope="col" class="px-6 py-3">
-                    {{column}}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(31 41 55)' } : {'background-color': 'rgb(55 65 81)'}"
-                *ngFor="let row of rowsData; let i = index"
-                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th *ngFor="let row of rowsData[i]; let i = index" class="px-6 py-4">
-                    {{row}}
-                </th>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<h3 *ngIf="error">Errore: {{errorMessage}}</h3>

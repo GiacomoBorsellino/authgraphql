@@ -14,12 +14,13 @@ import { Apollo, gql } from 'apollo-angular';
 export class UsersService {
   constructor(private apollo: Apollo, private http: HttpClient) {}
 
-  private readonly urlRoot = `${environment.apiUrl}/${environment.apiVersion}`;
+  private readonly urlRoot: string = `${environment.apiUrl}/${environment.apiVersion}`;
   private readonly token: any = localStorage.getItem('token');
   private readonly userData: any = localStorage.getItem('user');
   private readonly headers = new HttpHeaders()
-    .set('Authorization', this.token)
-    .set('userData', this.userData);
+    .set('authorization', this.token)
+    .set('userData', this.userData)
+    .set('pagination', ['', '']);
   private readonly letApiRestUrl: string = `${this.urlRoot}/apiTestDb1`;
 
   // Richiama tutti gli utenti
@@ -32,11 +33,13 @@ export class UsersService {
   }
 
   // Richiama tutti gli utenti
-  public getUsers(data: any): Observable<any> {
-    let GET_USER = gql` 
+  public getUsers(start: number, end: number): Observable<any> {
+    let GET_USER = gql`
       query getUsers {
         getUsers {
-          ${data}
+          nome
+          cognome
+          email
         }
       }
     `;
@@ -45,7 +48,10 @@ export class UsersService {
       .query({
         query: GET_USER,
         context: {
-          headers: this.headers,
+          headers: this.headers.set('pagination', [
+            start.toString(),
+            end.toString(),
+          ]),
         },
       })
       .pipe(retry(1), catchError(this.handleError));
