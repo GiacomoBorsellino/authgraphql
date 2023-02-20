@@ -26,6 +26,7 @@ export class ListUsersComponent {
     this.loadUsers(this.start, this.end);
   }
 
+  // UNSUBSCRIBE
   // uncall(objData: any) {
   //   this.products = [];
   //   this.UsersService.getUsers(objData, this.start, this.end)
@@ -66,10 +67,10 @@ export class ListUsersComponent {
       console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
       // Righe
-      for (let i = this.start; i < this.users.length; i++) {
-        this.rowsData.push(Object.values(this.users[i]));
-        this.rowsData[i].shift();
-      }
+      this.users.map((row: any) => {
+        this.rowsData.push(Object.values(row));
+        console.log(row);
+      });
       console.log('Righe: ', this.rowsData);
     });
   }
@@ -77,11 +78,22 @@ export class ListUsersComponent {
   upPage() {
     this.start = this.start + 10;
     this.end = this.start + 10;
+    // console.log(this.start, this.end);
 
-    console.log(this.start, this.end);
-
+    for (let i = 0; i < 10; i++) {
+      this.rowsData.shift();
+    }
     this.loadUsers(this.start, this.end);
   }
 
-  downPage() {}
+  downPage() {
+    this.start = this.start - 10;
+    this.end = this.start - 10;
+    // console.log(this.start, this.end);
+
+    for (let i = 0; i < 10; i++) {
+      this.rowsData.shift();
+    }
+    this.loadUsers(this.start, this.end);
+  }
 }

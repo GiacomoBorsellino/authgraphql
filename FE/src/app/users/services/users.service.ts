@@ -19,8 +19,8 @@ export class UsersService {
   private readonly userData: any = localStorage.getItem('user');
   private readonly headers = new HttpHeaders()
     .set('authorization', this.token)
-    .set('userData', this.userData)
-    .set('pagination', ['', '']);
+    .set('userData', this.userData);
+  // .set('pagination', ['', '']);
   private readonly letApiRestUrl: string = `${this.urlRoot}/apiTestDb1`;
 
   // Richiama tutti gli utenti
@@ -56,10 +56,11 @@ export class UsersService {
           },
         },
         context: {
-          headers: this.headers.set('pagination', [
-            start.toString(),
-            end.toString(),
-          ]),
+          headers: this.headers,
+          // .set('pagination', [
+          //   start.toString(),
+          //   end.toString(),
+          // ]),
         },
       })
       .pipe(retry(1), catchError(this.handleError));
