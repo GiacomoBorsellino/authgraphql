@@ -11,6 +11,8 @@ export class ListUsersComponent {
 
   products: any;
   users: any;
+  usersCount: number;
+  limitPagination: number;
   error: boolean = false;
   errorMessage: string = '';
   // data: any = ['nome', 'cognome', 'email'];
@@ -54,46 +56,50 @@ export class ListUsersComponent {
   }
 
   loadUsers(start: number, end: number) {
-    console.log('range: ', this.start, this.end);
-
     this.UsersService.getUsers(start, end).subscribe((res) => {
       // Dati
       console.log('Lista: ', res);
-      this.users = res.data.getUsers;
+      this.users = res.data.getUsers.utentiList;
+      this.usersCount = res.data.getUsers.utentiCount;
+
+      this.limitPagination = Math.ceil(this.usersCount / 10);
+      console.log('this.limitPagination', this.limitPagination);
 
       // Colonne
       this.columnsData = Object.keys(this.users[0]);
-      this.columnsData.shift();
       console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
       // Righe
       this.users.map((row: any) => {
         this.rowsData.push(Object.values(row));
-        console.log(row);
       });
       console.log('Righe: ', this.rowsData);
     });
   }
 
   upPage() {
-    this.start = this.start + 10;
-    this.end = this.start + 10;
-    // console.log(this.start, this.end);
+    if (this.start + 10 < this.limitPagination * 10) {
+      this.start = this.start + 10;
+      this.end = this.start + 10;
 
-    for (let i = 0; i < 10; i++) {
-      this.rowsData.shift();
+      for (let i = 0; i < 10; i++) {
+        this.rowsData.shift();
+      }
+
+      this.loadUsers(this.start, this.end);
     }
-    this.loadUsers(this.start, this.end);
   }
 
   downPage() {
-    this.start = this.start - 10;
-    this.end = this.start - 10;
-    // console.log(this.start, this.end);
+    if (this.start - 10 > -1) {
+      this.start = this.start - 10;
+      this.end = this.start - 10;
 
-    for (let i = 0; i < 10; i++) {
-      this.rowsData.shift();
+      for (let i = 0; i < 10; i++) {
+        this.rowsData.shift();
+      }
+
+      this.loadUsers(this.start, this.end);
     }
-    this.loadUsers(this.start, this.end);
   }
 }

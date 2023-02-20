@@ -55,8 +55,13 @@ const typeDefs = gql`
     offset: Int
   }
 
+  type UtenteConnection {
+    utentiList: [Utente]
+    utentiCount: Int
+  }
+
   type Query {
-    getUsers(input: Pagination): [Utente]
+    getUsers(input: Pagination): UtenteConnection
     user(id: ID!): Utente
 
     hello(name: String): String

@@ -11,13 +11,18 @@ const resolvers = {
       // let start: number = +range[0];
       // let end: number = +range[1];
       console.log("================================= INPUT", parent.input);
-
+      const utentiCount = await db.avr_main.utenti.count({});
       const utentiList = await db.avr_main.utenti.findMany({
         skip: +parent.input.start,
         take: 10,
       });
-      console.log("LISTA");
-      return utentiList;
+
+      console.log("============================== UTENTI COUNT: ", {
+        utentiList,
+        utentiCount,
+      });
+
+      return { utentiList, utentiCount };
     },
     user() {
       const utentiList = db.avr_main.utenti.findMany({});

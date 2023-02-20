@@ -20,7 +20,6 @@ export class UsersService {
   private readonly headers = new HttpHeaders()
     .set('authorization', this.token)
     .set('userData', this.userData);
-  // .set('pagination', ['', '']);
   private readonly letApiRestUrl: string = `${this.urlRoot}/apiTestDb1`;
 
   // Richiama tutti gli utenti
@@ -39,9 +38,12 @@ export class UsersService {
     let GET_USER = gql`
       query getUsers($input: Pagination) {
         getUsers(input: $input) {
-          nome
-          cognome
-          email
+          utentiList {
+            nome
+            cognome
+            email
+          }
+          utentiCount
         }
       }
     `;
@@ -57,10 +59,6 @@ export class UsersService {
         },
         context: {
           headers: this.headers,
-          // .set('pagination', [
-          //   start.toString(),
-          //   end.toString(),
-          // ]),
         },
       })
       .pipe(retry(1), catchError(this.handleError));
