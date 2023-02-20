@@ -46,7 +46,7 @@ const checkToken = async (resolve, root, args, context, info) => {
     // Dati Utente da FE
     let userData: any = context[0].userdata;
 
-    console.log("DATATI QL: ", token, userData);
+    // console.log("DATATI QL: ", token, userData);
 
     if (token && userData) {
       userData = JSON.parse(context[0].userdata);

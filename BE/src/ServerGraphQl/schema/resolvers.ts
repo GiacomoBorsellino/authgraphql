@@ -17,10 +17,10 @@ const resolvers = {
         take: 10,
       });
 
-      console.log("============================== UTENTI COUNT: ", {
-        utentiList,
-        utentiCount,
-      });
+      // console.log("============================== UTENTI COUNT: ", {
+      //   utentiList,
+      //   utentiCount,
+      // });
 
       return { utentiList, utentiCount };
     },

@@ -12,7 +12,7 @@ const checkToken = async (req: any, res: any, next: () => void) => {
   let route: string = req.route.path;
   let userData: any = req.headers.userdata;
 
-  console.log("DATATI: ", token, route, userData);
+  // console.log("DATATI: ", token, route, userData);
 
   if (token && route && userData) {
     userData = JSON.parse(req.headers.userdata);

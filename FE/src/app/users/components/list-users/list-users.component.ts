@@ -9,15 +9,16 @@ import { UsersService } from '../../services/users.service';
 export class ListUsersComponent implements OnInit {
   constructor(private UsersService: UsersService) {}
 
-  private users: any;
-  private usersCount: number;
+  users: any;
+  usersCount: number;
   limitPagination: number;
   error: boolean = false;
   errorMessage: string = '';
   columnsData: any = [];
   rowsData: any = [];
   start: number = 0;
-  private end: number = 10;
+  end: number = 10;
+  loading: boolean = true;
 
   // UNSUBSCRIBE?
 
@@ -26,6 +27,7 @@ export class ListUsersComponent implements OnInit {
   }
 
   loadUsers(start: number, end: number) {
+    this.loading = true;
     this.UsersService.getUsers(start, end).subscribe((res) => {
       // Dati
       console.log('Lista: ', res);
@@ -43,6 +45,7 @@ export class ListUsersComponent implements OnInit {
         this.rowsData.push(Object.values(row));
       });
       console.log('Righe: ', this.rowsData);
+      this.loading = false;
     });
   }
 
