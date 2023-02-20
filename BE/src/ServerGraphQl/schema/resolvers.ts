@@ -7,22 +7,13 @@ const resolvers = {
     async getUsers(args, parent, context, info) {
       console.log("================= IN UTENTI");
 
-      // let range = context[0].pagination.split(",");
-      // let start: number = +range[0];
-      // let end: number = +range[1];
-      console.log("================================= INPUT", parent.input);
-      const utentiCount = await db.avr_main.utenti.count({});
-      const utentiList = await db.avr_main.utenti.findMany({
-        skip: +parent.input.start,
+      const count = await db.avr_main.utenti.count({});
+      const data = await db.avr_main.utenti.findMany({
+        skip: +parent.input.indexPoint,
         take: 10,
       });
 
-      // console.log("============================== UTENTI COUNT: ", {
-      //   utentiList,
-      //   utentiCount,
-      // });
-
-      return { utentiList, utentiCount };
+      return { data, count };
     },
     user() {
       const utentiList = db.avr_main.utenti.findMany({});

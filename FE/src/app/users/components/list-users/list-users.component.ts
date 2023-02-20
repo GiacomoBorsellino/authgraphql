@@ -16,23 +16,23 @@ export class ListUsersComponent implements OnInit {
   errorMessage: string = '';
   columnsData: any = [];
   rowsData: any = [];
-  start: number = 0;
+  indexPoint: number = 0;
   end: number = 10;
   loading: boolean = true;
 
   // UNSUBSCRIBE?
 
   ngOnInit() {
-    this.loadUsers(this.start, this.end);
+    this.loadUsers(this.indexPoint);
   }
 
-  loadUsers(start: number, end: number) {
+  loadUsers(indexPoint: number) {
     this.loading = true;
-    this.UsersService.getUsers(start, end).subscribe((res) => {
+    this.UsersService.getUsers(indexPoint).subscribe((res) => {
       // Dati
       console.log('Lista: ', res);
-      this.users = res.data.getUsers.utentiList;
-      this.usersCount = res.data.getUsers.utentiCount;
+      this.users = res.data.getUsers.data;
+      this.usersCount = res.data.getUsers.count;
 
       this.limitPagination = Math.ceil(this.usersCount / 10);
 
@@ -50,28 +50,26 @@ export class ListUsersComponent implements OnInit {
   }
 
   upPage() {
-    if (this.start + 10 < this.limitPagination * 10) {
-      this.start = this.start + 10;
-      this.end = this.start + 10;
+    if (this.indexPoint + 10 < this.limitPagination * 10) {
+      this.indexPoint = this.indexPoint + 10;
 
       for (let i = 0; i < 10; i++) {
         this.rowsData.shift();
       }
 
-      this.loadUsers(this.start, this.end);
+      this.loadUsers(this.indexPoint);
     }
   }
 
   downPage() {
-    if (this.start - 10 > -1) {
-      this.start = this.start - 10;
-      this.end = this.start - 10;
+    if (this.indexPoint - 10 > -1) {
+      this.indexPoint = this.indexPoint - 10;
 
       for (let i = 0; i < 10; i++) {
         this.rowsData.shift();
       }
 
-      this.loadUsers(this.start, this.end);
+      this.loadUsers(this.indexPoint);
     }
   }
 }

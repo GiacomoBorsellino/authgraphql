@@ -51,13 +51,12 @@ const typeDefs = gql`
   }
 
   input Pagination {
-    start: Int
-    offset: Int
+    indexPoint: Int
   }
 
   type UtenteConnection {
-    utentiList: [Utente]
-    utentiCount: Int
+    data: [Utente]
+    count: Int
   }
 
   type Query {

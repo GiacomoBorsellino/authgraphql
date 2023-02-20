@@ -15,12 +15,12 @@ export class UsersService {
   constructor(private apollo: Apollo, private http: HttpClient) {}
 
   private readonly urlRoot: string = `${environment.apiUrl}/${environment.apiVersion}`;
+  private readonly letApiRestUrl: string = `${this.urlRoot}/apiTestDb1`;
   private readonly token: any = localStorage.getItem('token');
   private readonly userData: any = localStorage.getItem('user');
   private readonly headers = new HttpHeaders()
     .set('authorization', this.token)
     .set('userData', this.userData);
-  private readonly letApiRestUrl: string = `${this.urlRoot}/apiTestDb1`;
 
   // Richiama tutti gli utenti
   public letApiRestData(): Observable<any> {
@@ -32,18 +32,17 @@ export class UsersService {
   }
 
   // Richiama tutti gli utenti
-  public getUsers(start: number, end: number): Observable<any> {
-    // console.log('Service range: ', start, end);
-
+  public getUsers(indexPoint: number): Observable<any> {
     let GET_USER = gql`
       query getUsers($input: Pagination) {
         getUsers(input: $input) {
-          utentiList {
+          data {
             nome
             cognome
             email
+            idGruppo
           }
-          utentiCount
+          count
         }
       }
     `;
@@ -53,8 +52,7 @@ export class UsersService {
         query: GET_USER,
         variables: {
           input: {
-            start: start,
-            offset: end,
+            indexPoint: indexPoint,
           },
         },
         context: {
@@ -63,14 +61,6 @@ export class UsersService {
       })
       .pipe(retry(1), catchError(this.handleError));
   }
-
-  /*
-    getUsers(objData: any): Observable<any> {
-      let body = { tag: "users", query: `{ users { ${objData} } }` }
-      return this.http.post<any>(this.urlRoot, body, this.headers)
-        .pipe(retry(1), catchError(this.handleError));
-    }
-  */
 
   // Aggiungi utente
   public addUser(objData: any): Observable<any> {
@@ -158,14 +148,6 @@ export class UsersService {
       })
       .pipe(retry(1), catchError(this.handleError));
   }
-
-  /*  
-  callProducts(): Observable<any> {
-    let body = { query: `{ products { id name category { id name } } }` }
-    return this.http.post<any>(this.urlRoot, body, this.headers)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-  */
 
   // Manipolazione errore
   handleError(error: any) {
