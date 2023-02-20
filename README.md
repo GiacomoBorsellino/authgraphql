@@ -24,19 +24,26 @@
 ## Tecnologie
 
 BE:
-* Typescript
-* GraphQL
-* Apollo Server
-* Prisma
+
+- Typescript
+- GraphQL
+- Apollo Server
+- Prisma
 
 FE:
-* Angular
-* Typescript
-* Apollo Client
+
+- Angular
+- Typescript
+- Apollo Client
 
 Uso librerie:
 graphql-middleware
 dotenv
+
+Versione Node:
+18.12.1
+Versione Angulal Cli:
+15.0.4
 
 ## Installazione
 
@@ -62,12 +69,12 @@ dotenv
 
    ```sh
    npm install npm@latest -g
-   npm install 
+   npm install
    ```
 
 5. Cambia file .env.example in .env (BE/.env.example) e inserisci i parametri del DATABASE_URL e del SECRET
    (vedi struttura su documentazione Prisma).
-[Prisma ORM](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/connect-your-database-typescript-postgres).
+   [Prisma ORM](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/connect-your-database-typescript-postgres).
 
 6. Instanziamo il DB con Prisma
 
@@ -76,7 +83,7 @@ dotenv
    configuriamo file env
    npx prisma db pull
    npm install @prisma/client
-   npx prisma generate --schema prisma/schema.prisma 
+   npx prisma generate --schema prisma/schema.prisma
    ```
 
 7. Avviamo FE e BE usando gli script con
@@ -92,6 +99,7 @@ dotenv
 Distribuito con licenza MIT
 
 ## Contatti
+
 Profilo Linkedin, per collaborazioni o proposte di lavoro: [Linkedin](https://www.linkedin.com/in/giacomo-borsellino-4039071b7/)
 
 </p>
