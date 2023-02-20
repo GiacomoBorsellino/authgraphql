@@ -1,8 +1,6 @@
 <main class="p-10 m-6">
     <h1>Utenti</h1>
-    <button class="my-2 p-2 bg-blue-500 rounded-md text-white hover:bg-blue-200" (mouseup)="call()">Chiama
-        Utenti</button>
-
+    <!-- TABELLA -->
     <div class="relative overflow-x-auto m-10 rounded-md">
         <table class="w-full text-sm text-left text-gray-500 ">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -24,6 +22,7 @@
 
     </div>
 
+    <!-- TASTI PAGINATION -->
     <div class="relative overflow-x-auto sm:rounded-lg">
         <nav class="flex items-center justify-between pt-4" aria-label="Table navigation">
             <ul class="inline-flex items-center -space-x-px">
@@ -51,8 +50,10 @@
         </nav>
     </div>
 
+    <!-- ERRORE -->
     <h3 *ngIf="error">Errore: {{errorMessage}}</h3>
 </main>
+
 <!-- <span>
     <input type="checkbox" id="first_name" name="first_name" value="first_name" (mouseup)="call('nome')"
         (mousedown)="uncall('nome')">
@@ -66,14 +67,3 @@
         (mousedown)="uncall('email')">
     <label for="email">email</label><br>
 </span> -->
-
-<!-- <ul>
-    <li *ngFor="let user of users">
-        Name: {{user.nome}} - Surname: {{user.cognome}} - Email: {{user.email}}
-    </li>
-</ul> -->
-
-<!-- <ul>
-    <li class="flex-row" *ngFor="let column of columnsUsers">{{column}}</li>
-    <li class="flex-row" *ngFor="let row of rowsUsers">{{row}}</li>
-</ul> -->

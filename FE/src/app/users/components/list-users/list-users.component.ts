@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -6,50 +6,20 @@ import { UsersService } from '../../services/users.service';
   templateUrl: './list-users.component.html',
   styleUrls: ['./list-users.component.css'],
 })
-export class ListUsersComponent {
+export class ListUsersComponent implements OnInit {
   constructor(private UsersService: UsersService) {}
 
-  products: any;
-  users: any;
-  usersCount: number;
+  private users: any;
+  private usersCount: number;
   limitPagination: number;
   error: boolean = false;
   errorMessage: string = '';
-  // data: any = ['nome', 'cognome', 'email'];
-
   columnsData: any = [];
   rowsData: any = [];
-
   start: number = 0;
-  end: number = 10;
+  private end: number = 10;
 
-  call() {
-    // this.data = ['nome', 'cognome', 'email'];
-    this.loadUsers(this.start, this.end);
-  }
-
-  // UNSUBSCRIBE
-  // uncall(objData: any) {
-  //   this.products = [];
-  //   this.UsersService.getUsers(objData, this.start, this.end)
-  //     .subscribe(
-  //       (res) => {
-  //         if (res.errors) {
-  //           console.log(res.errors[0].extensions.code);
-  //           this.errorMessage = res.errors[0].extensions.code;
-  //           this.error = true;
-  //         } else {
-  //           console.log(res.data.products);
-
-  //           this.products = res.data.products;
-  //         }
-  //       }
-  //       // , (err) => {
-  //       //   console.log('Catch', err);
-  //       // }
-  //     )
-  //     .unsubscribe();
-  // }
+  // UNSUBSCRIBE?
 
   ngOnInit() {
     this.loadUsers(this.start, this.end);
@@ -63,7 +33,6 @@ export class ListUsersComponent {
       this.usersCount = res.data.getUsers.utentiCount;
 
       this.limitPagination = Math.ceil(this.usersCount / 10);
-      console.log('this.limitPagination', this.limitPagination);
 
       // Colonne
       this.columnsData = Object.keys(this.users[0]);

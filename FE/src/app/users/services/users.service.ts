@@ -33,7 +33,7 @@ export class UsersService {
 
   // Richiama tutti gli utenti
   public getUsers(start: number, end: number): Observable<any> {
-    console.log('Service range: ', start, end);
+    // console.log('Service range: ', start, end);
 
     let GET_USER = gql`
       query getUsers($input: Pagination) {
