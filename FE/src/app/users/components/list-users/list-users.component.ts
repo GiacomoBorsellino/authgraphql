@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -9,6 +9,7 @@ import { UsersService } from '../../services/users.service';
 export class ListUsersComponent implements OnInit {
   constructor(private UsersService: UsersService) {}
 
+  @Output() errorEvent = new EventEmitter<boolean>();
   users: any;
   usersCount: number;
   limitPagination: number;
@@ -28,25 +29,30 @@ export class ListUsersComponent implements OnInit {
 
   loadUsers(indexPoint: number) {
     this.loading = true;
-    this.UsersService.getUsers(indexPoint).subscribe((res) => {
-      // Dati
-      console.log('Lista: ', res);
-      this.users = res.data.getUsers.data;
-      this.usersCount = res.data.getUsers.count;
+    this.UsersService.getUsers(indexPoint).subscribe(
+      (res) => {
+        // Dati
+        console.log('Lista: ', res);
+        this.users = res.data.getUsers.data;
+        this.usersCount = res.data.getUsers.count;
 
-      this.limitPagination = Math.ceil(this.usersCount / 10);
+        this.limitPagination = Math.ceil(this.usersCount / 10);
 
-      // Colonne
-      this.columnsData = Object.keys(this.users[0]);
-      console.log('Colonne: ', this.columnsData, this.columnsData.length);
+        // Colonne
+        this.columnsData = Object.keys(this.users[0]);
+        console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
-      // Righe
-      this.users.map((row: any) => {
-        this.rowsData.push(Object.values(row));
-      });
-      console.log('Righe: ', this.rowsData);
-      this.loading = false;
-    });
+        // Righe
+        this.users.map((row: any) => {
+          this.rowsData.push(Object.values(row));
+        });
+        console.log('Righe: ', this.rowsData);
+        this.loading = false;
+      },
+      (error) => {
+        this.errorEvent.emit(true);
+      }
+    );
   }
 
   upPage() {
