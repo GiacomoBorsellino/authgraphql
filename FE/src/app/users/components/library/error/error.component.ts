@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-error',
@@ -7,8 +8,12 @@ import { Component, Input, OnChanges } from '@angular/core';
 })
 export class ErrorComponent implements OnChanges {
   @Input() childError: boolean = false;
+  constructor(private toastr: ToastrService) {}
 
   ngOnChanges() {
     console.log(this.childError + 'In errore');
+    if (this.childError) {
+      this.toastr.error('Hello world!', 'Toastr fun!');
+    }
   }
 }

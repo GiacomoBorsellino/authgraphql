@@ -15,6 +15,12 @@ import { HeaderComponent } from './header/header.component';
 
 import { GraphQLModule } from './graphql.module';
 
+import {
+  ToastrModule,
+  ToastNoAnimation,
+  ToastNoAnimationModule,
+} from 'ngx-toastr';
+
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
   imports: [
@@ -26,6 +32,7 @@ import { GraphQLModule } from './graphql.module';
     UsersModule,
     ApiRestModule,
     GraphQLModule,
+    ToastNoAnimationModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
