@@ -7,8 +7,6 @@ const resolvers = {
     async getUsers(args, parent, context, info) {
       console.log("================= IN UTENTI");
 
-      console.log("=================", "ARGS: ", args, "PARENT: ", parent);
-
       const count = await db.avr_main.utenti.count({});
       const data = await db.avr_main.utenti.findMany({
         skip: +parent.input.indexPoint,

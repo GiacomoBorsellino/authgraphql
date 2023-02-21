@@ -14,12 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 
 import { GraphQLModule } from './graphql.module';
-
-import {
-  ToastrModule,
-  ToastNoAnimation,
-  ToastNoAnimationModule,
-} from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -32,7 +28,8 @@ import {
     UsersModule,
     ApiRestModule,
     GraphQLModule,
-    ToastNoAnimationModule.forRoot(),
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -13,7 +13,7 @@ export class ErrorComponent implements OnChanges {
   ngOnChanges() {
     console.log(this.childError + 'In errore');
     if (this.childError) {
-      this.toastr.error('Hello world!', 'Toastr fun!');
+      this.toastr.error('Si è verificato un errore', 'Errore');
     }
   }
 }

@@ -37,7 +37,7 @@ export class UsersService {
       query getUsers($input: Pagination) {
         getUsers(input: $input) {
           data {
-            nome
+            nom
             cognome
             email
             idGruppo
