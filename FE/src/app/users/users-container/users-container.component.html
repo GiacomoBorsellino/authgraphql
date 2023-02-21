@@ -1,4 +1,4 @@
 <app-edit-user></app-edit-user>
-<app-list-users (errorEvent)="receiveError($event)"></app-list-users>
+<app-list-users (responseEvent)="receiveResponse($event)"></app-list-users>
 
-<app-error [childError]="parentError"></app-error>
+<app-response [childResponse]="parentResponse"></app-response>

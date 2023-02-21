@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./users-container.component.css'],
 })
 export class UsersContainerComponent {
-  parentError: boolean = false;
-  receiveError($event: boolean) {
-    this.parentError = $event;
+  parentResponse: string = '';
+  receiveResponse($event: string) {
+    this.parentResponse = $event;
   }
 }

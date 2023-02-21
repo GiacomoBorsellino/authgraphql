@@ -9,7 +9,9 @@ import { UsersService } from '../../services/users.service';
 export class ListUsersComponent implements OnInit {
   constructor(private UsersService: UsersService) {}
 
-  @Output() errorEvent = new EventEmitter<boolean>();
+  // Response Handler: Success, Error, Info, Warning
+  @Output() responseEvent = new EventEmitter<string>();
+
   users: any;
   usersCount: number;
   limitPagination: number;
@@ -48,9 +50,13 @@ export class ListUsersComponent implements OnInit {
         });
         console.log('Righe: ', this.rowsData);
         this.loading = false;
+
+        // Response Handler
+        this.responseEvent.emit('success');
       },
       (error) => {
-        this.errorEvent.emit(true);
+        // Response Handler
+        this.responseEvent.emit('error');
       }
     );
   }
