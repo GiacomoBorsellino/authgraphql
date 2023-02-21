@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken"); // Ricorda di importare così, sennò non f
 
 const resolvers = {
   Query: {
-    async getUsers(args, parent, context, info) {
+    async getUsers(args: any, parent: any, context: any, info: any) {
       console.log("================= IN UTENTI");
 
       const count = await db.avr_main.utenti.count({});
@@ -13,26 +13,43 @@ const resolvers = {
         take: 10,
       });
 
-      return { data, count };
+      const typeColumns = await db.avr_main.utenti.findMany({
+        skip: +parent.input.indexPoint,
+        take: 10,
+      });
+
+      console.log("typeColumns: ", typeColumns);
+      let arrayAppoggio = [];
+      typeColumns.map((oggetto) => {
+        oggetto;
+      });
+
+      if (data !== undefined || count !== undefined) {
+        return { data, count };
+      } else {
+        console.log("Utente non aggiunto");
+        // Return error
+        throw new Error("Nessuna lista utenti");
+      }
     },
-    user() {
+    user(args: any, parent: any, context: any, info: any) {
       const utentiList = db.avr_main.utenti.findMany({});
       return utentiList;
     },
 
-    hello: (root, args, context, info) => {
+    hello: (args: any, parent: any, context: any, info: any) => {
       console.log(`3. resolver: hello`);
       console.log("contesto", context);
 
       return `Hello ${args.name ? args.name : "world"}!`;
     },
-    bye: (root, args, context, info) => {
+    bye: (args: any, parent: any, context: any, info: any) => {
       console.log(`3. resolver: bye`);
       return `Bye ${args.name ? args.name : "world"}!`;
     },
   },
   Mutation: {
-    async login(args, parent) {
+    async login(args: any, parent: any, context: any, info: any) {
       console.log("================= LOGIN");
       console.log(args, parent);
 
@@ -72,61 +89,72 @@ const resolvers = {
         throw new Error("Login non corretto");
       }
     },
-    async addUser(args, parent) {
+    async addUser(args: any, parent: any, context: any, info: any) {
       console.log("================= IN ADDUSER");
+      console.log(parent);
+      if (parent !== undefined) {
+        const addUser = await db.avr_main.utenti.create({
+          data: {
+            email: parent.input.email,
+            password: parent.input.password,
+          },
+        });
 
-      console.log(args, parent);
+        const user = await db.avr_main.utenti.findUnique({
+          where: {
+            id: +addUser.id,
+          },
+        });
 
-      const addUser = await db.avr_main.utenti.create({
-        data: {
-          email: parent.input.email,
-          password: parent.input.password,
-        },
-      });
-
-      const user = await db.avr_main.utenti.findUnique({
-        where: {
-          id: +addUser.id,
-        },
-      });
-      console.log("LISTA-UTENTE: ", user);
-
-      return user;
+        return user;
+      } else {
+        console.log("Utente non aggiunto");
+        // return error
+        throw new Error("Utente non aggiunto");
+      }
     },
-    async updateUser(args, parent) {
+    async updateUser(args: any, parent: any, context: any, info: any) {
       console.log("================= UPDATEUSER");
-      console.log(args, parent);
+      console.log(parent);
+      if (parent !== undefined) {
+        await db.avr_main.utenti.update({
+          where: {
+            id: +parent.input.id,
+          },
+          data: {
+            email: parent.input.email,
+            password: parent.input.password,
+            roles: parent.input.roles,
+          },
+        });
 
-      await db.avr_main.utenti.update({
-        where: {
-          id: +parent.input.id,
-        },
-        data: {
-          email: parent.input.email,
-          password: parent.input.password,
-          roles: parent.input.roles,
-        },
-      });
-
-      const user = await db.avr_main.utenti.findUnique({
-        where: {
-          id: +parent.input.id,
-        },
-      });
-      console.log(user);
-
-      return user;
+        const user = await db.avr_main.utenti.findUnique({
+          where: {
+            id: +parent.input.id,
+          },
+        });
+        return user;
+      } else {
+        console.log("Utente non modificato");
+        // return error
+        throw new Error("Utente non modificato");
+      }
     },
-    async deleteUser(args, parent) {
+    async deleteUser(args: any, parent: any, context: any, info: any) {
       console.log("================= DELETEUSER");
-      console.log(args, parent);
-
-      const deleteUser = await db.avr_main.utenti.delete({
-        where: {
-          id: +parent.input.id,
-        },
-      });
-      return deleteUser;
+      console.log(parent);
+      if (parent !== undefined) {
+        const deleteUser = await db.avr_main.utenti.delete({
+          where: {
+            id: +parent.input.id,
+          },
+        });
+        return deleteUser;
+      } else {
+        console.log("Utente non cancellato");
+        // return error
+        throw new Error("Utente non cancellato");
+      }
     },
   },
 };

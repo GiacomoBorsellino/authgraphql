@@ -1,4 +1,5 @@
-<app-edit-user></app-edit-user>
+<app-edit-user (responseEvent)="receiveResponse($event)"></app-edit-user>
 <app-list-users (responseEvent)="receiveResponse($event)"></app-list-users>
 
+<!-- Response Handler -->
 <app-response [childResponse]="parentResponse"></app-response>

@@ -11,7 +11,7 @@ export class ResponseComponent implements OnChanges {
   constructor(private toastr: ToastrService) {}
 
   ngOnChanges() {
-    console.log(this.childResponse + 'In errore');
+    console.log(this.childResponse + ' - In response');
     if (this.childResponse === 'error') {
       this.toastr.error('Si è verificato un errore', 'Errore');
     } else if (this.childResponse === 'success') {
@@ -20,6 +20,8 @@ export class ResponseComponent implements OnChanges {
       this.toastr.warning('Attenzione a questa operazione', 'Attenzione');
     } else if (this.childResponse === 'info') {
       this.toastr.info('Descrizione operazione effettuata', 'Nota');
+    } else {
+      this.childResponse = '';
     }
   }
 }

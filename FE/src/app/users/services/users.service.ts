@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -22,13 +21,17 @@ export class UsersService {
     .set('authorization', this.token)
     .set('userData', this.userData);
 
-  // Richiama tutti gli utenti
+  // Fa una chiamata ad un Api Rest
   public letApiRestData(): Observable<any> {
     return this.http
       .get<any>(`${this.letApiRestUrl}`, {
         headers: this.headers,
       })
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(
+        catchError((error: any) => {
+          return of(error);
+        })
+      );
   }
 
   // Richiama tutti gli utenti
@@ -39,6 +42,7 @@ export class UsersService {
           data {
             nome
             cognome
+            username
             email
             idGruppo
           }
@@ -59,11 +63,17 @@ export class UsersService {
           headers: this.headers,
         },
       })
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(
+        catchError((error: any) => {
+          return of(error);
+        })
+      );
   }
 
   // Aggiungi utente
-  public addUser(objData: any): Observable<any> {
+  public addUser(data: any): Observable<any> {
+    console.log('data', data);
+
     let ADD_USER = gql`
       mutation addUser($input: UserInput) {
         addUser(input: $input) {
@@ -80,15 +90,19 @@ export class UsersService {
         mutation: ADD_USER,
         variables: {
           input: {
-            email: objData.email,
-            password: objData.password,
+            email: data.email,
+            password: data.password,
           },
         },
         context: {
           headers: this.headers,
         },
       })
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
   }
 
   // Aggiorna utente
@@ -118,7 +132,11 @@ export class UsersService {
           headers: this.headers,
         },
       })
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(
+        catchError((error: any) => {
+          return of(error);
+        })
+      );
   }
 
   // Cancella utente
@@ -146,22 +164,28 @@ export class UsersService {
           headers: this.headers,
         },
       })
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(
+        catchError((error: any) => {
+          return of(error);
+        })
+      );
   }
 
   // Manipolazione errore
+  /*
   handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // Errore Client
-      errorMessage = `Codice errore: ${error.error.message}`;
+      errorMessage = `Codice errore C: ${error.error.message}`;
     } else {
       // Errore Server
-      errorMessage = `Codice errore: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = `Codice errore S: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return throwError(() => {
       return errorMessage;
     });
   }
+  */
 }

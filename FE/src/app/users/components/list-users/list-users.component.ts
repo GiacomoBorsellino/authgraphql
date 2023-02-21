@@ -20,7 +20,6 @@ export class ListUsersComponent implements OnInit {
   columnsData: any = [];
   rowsData: any = [];
   indexPoint: number = 0;
-  end: number = 10;
   loading: boolean = true;
 
   // UNSUBSCRIBE?
@@ -52,10 +51,12 @@ export class ListUsersComponent implements OnInit {
         this.loading = false;
 
         // Response Handler
-        this.responseEvent.emit('success');
+        // this.responseEvent.emit('success');
       },
       (error) => {
         // Response Handler
+        console.log('dda', error);
+
         this.responseEvent.emit('error');
       }
     );
@@ -83,5 +84,9 @@ export class ListUsersComponent implements OnInit {
 
       this.loadUsers(this.indexPoint);
     }
+  }
+
+  openFilter(column: any) {
+    console.log('Colonna: ', column);
   }
 }

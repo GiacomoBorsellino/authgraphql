@@ -16,6 +16,7 @@ const checkToken = async (req: any, res: any, next: () => void) => {
 
   if (token && route && userData) {
     userData = JSON.parse(req.headers.userdata);
+    console.log("");
 
     // Decrypt Token
     let decoded = await jwt.verify(token, secret.secret);
@@ -25,61 +26,71 @@ const checkToken = async (req: any, res: any, next: () => void) => {
         id: +decoded.id,
       },
     });
+    console.log("==================== U ", user);
 
-    const gruppo = await db.avr_main.gruppo.findUnique({
-      where: {
-        id: +user.idGruppo,
-      },
-    });
+    // Controllo esistente utenza
+    if (user !== null) {
+      const gruppo = await db.avr_main.gruppo.findUnique({
+        where: {
+          id: +user.idGruppo,
+        },
+      });
 
-    let permesso = false;
-    let roles = [];
-    if (+user.id === +userData.id) {
-      // Controllo tra le routes
-      for (let i = 0; i < permessi.length; i++) {
-        console.log(":::::::::: CICLO:  ", i, permessi.length, route);
-        if (permessi[i].route === route) {
-          permesso = true;
-          roles = permessi[i].roles;
-          break;
-        } else {
-          permesso = false;
-        }
-      }
+      let permesso = false;
+      let roles = [];
 
-      // Controllo tra i ruoli
-      let permessoRoles = false;
-      if (permesso === true) {
-        for (let j = 0; j < roles.length; j++) {
-          console.log(":::::::::: CICLO INTERNO:  ", j, roles.length);
-          if (roles[j] === gruppo.descrizione) {
-            permessoRoles = true;
+      if (+user.id === +userData.id) {
+        // Controllo tra le routes
+        for (let i = 0; i < permessi.length; i++) {
+          console.log(":::::::::: CICLO:  ", i, permessi.length, route);
+          if (permessi[i].route === route) {
+            permesso = true;
+            roles = permessi[i].roles;
             break;
           } else {
-            permessoRoles = false;
+            permesso = false;
           }
         }
 
-        if (permessoRoles) {
-          next();
+        // Controllo tra i ruoli
+        let permessoRoles = false;
+        if (permesso === true) {
+          for (let j = 0; j < roles.length; j++) {
+            console.log(":::::::::: CICLO INTERNO:  ", j, roles.length);
+            if (roles[j] === gruppo.descrizione) {
+              permessoRoles = true;
+              break;
+            } else {
+              permessoRoles = false;
+            }
+          }
+
+          if (permessoRoles) {
+            next();
+          } else {
+            return res.json({
+              success: false,
+              message: "L'utente non ha il permesso di accedere",
+            });
+          }
         } else {
+          console.log("Non hai l'accesso");
           return res.json({
             success: false,
             message: "L'utente non ha il permesso di accedere",
           });
         }
       } else {
-        console.log("Non hai l'accesso");
+        console.log("Bad 1");
         return res.json({
           success: false,
           message: "L'utente non ha il permesso di accedere",
         });
       }
     } else {
-      console.log("Bad 1");
       return res.json({
         success: false,
-        message: "L'utente non ha il permesso di accedere",
+        message: "L'utente non esiste",
       });
     }
   } else {
