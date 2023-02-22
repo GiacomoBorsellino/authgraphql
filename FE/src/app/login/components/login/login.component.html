@@ -3,7 +3,8 @@
         <!-- <input type="number" [(ngModel)]="id" placeholder="id"> -->
         <input type="email" [(ngModel)]="email" placeholder="Email">
         <input type="password" [(ngModel)]="password" placeholder="Password">
-        <button (click)="login()">Login</button>
+        <button [disabled]="email === undefined || password === undefined ? true: false"
+            (click)="login()">Login</button>
     </div>
 </main>
 

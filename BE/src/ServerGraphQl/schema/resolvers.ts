@@ -58,33 +58,41 @@ const resolvers = {
           email: parent.input.email,
         },
       });
+
       console.log("USER: ", user);
 
-      if (
-        user.email === parent.input.email &&
-        user.password === parent.input.password
-      ) {
-        let userAccepted = {};
-        userAccepted = user;
+      if (user) {
+        if (
+          user.email === parent.input.email &&
+          user.password === parent.input.password
+        ) {
+          let userAccepted = {};
+          userAccepted = user;
 
-        let token = jwt.sign(
-          {
-            id: user.id,
-            nome: user.nome,
-            cognome: user.cognome,
-            email: user.email,
-            idGruppo: user.idGruppo,
-          },
-          secret.secret,
-          {
-            expiresIn: "24h", // expires in 24 hours
-          }
-        );
+          let token = jwt.sign(
+            {
+              id: user.id,
+              nome: user.nome,
+              cognome: user.cognome,
+              email: user.email,
+              idGruppo: user.idGruppo,
+            },
+            secret.secret,
+            {
+              expiresIn: "24h", // expires in 24 hours
+            }
+          );
 
-        userAccepted["token"] = token;
-        console.log("userAccepted: ", userAccepted);
-        return userAccepted;
+          userAccepted["token"] = token;
+          console.log("userAccepted: ", userAccepted);
+          return userAccepted;
+        } else {
+          // return null
+          throw new Error("Login non corretto");
+        }
       } else {
+        console.log("Login non corretto");
+
         // return null
         throw new Error("Login non corretto");
       }

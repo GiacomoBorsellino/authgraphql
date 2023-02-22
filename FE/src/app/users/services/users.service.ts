@@ -65,7 +65,7 @@ export class UsersService {
       })
       .pipe(
         catchError((error: any) => {
-          return of(error);
+          return of({ success: false, description: error });
         })
       );
   }
@@ -134,7 +134,7 @@ export class UsersService {
       })
       .pipe(
         catchError((error: any) => {
-          return of(error);
+          return of({ success: false, description: error });
         })
       );
   }
@@ -166,7 +166,7 @@ export class UsersService {
       })
       .pipe(
         catchError((error: any) => {
-          return of(error);
+          return of({ success: false, description: error });
         })
       );
   }

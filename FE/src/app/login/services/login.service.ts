@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
-import { Apollo, gql } from 'apollo-angular'
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Apollo, gql } from 'apollo-angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class LoginService {
-
-  constructor(private apollo: Apollo) { }
+  constructor(private apollo: Apollo) {}
 
   // Login utente
   login(data: any): Observable<any> {
+    console.log(data);
 
     let LOGIN = gql`
       mutation login($input: UserInput) {
@@ -27,16 +25,20 @@ export class LoginService {
           token
         }
       }
-    `
+    `;
 
     return this.apollo
       .mutate({
         mutation: LOGIN,
         variables: {
-          input: data
-        }
+          input: data,
+        },
       })
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
   }
 
   /*
@@ -48,6 +50,7 @@ export class LoginService {
   */
 
   // Manipolazione errore
+  /*
   handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
@@ -62,4 +65,5 @@ export class LoginService {
       return errorMessage;
     });
   }
+  */
 }
