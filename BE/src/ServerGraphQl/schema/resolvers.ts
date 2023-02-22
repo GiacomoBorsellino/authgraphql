@@ -7,25 +7,27 @@ const resolvers = {
     async getUsers(args: any, parent: any, context: any, info: any) {
       console.log("================= IN UTENTI");
 
+      // Definisce il tipo di dato per colonna, così da usare filtri dinamici nel FE
+      const colonneUtenti: any = await db.avr_main
+        .$queryRaw`SELECT * FROM information_schema.columns WHERE table_name = \'utenti\'`;
+
+      let typeDataColumns: any = [];
+      colonneUtenti.map((colonna: any) => {
+        typeDataColumns.push({
+          nameColumn: colonna.column_name,
+          typeData: colonna.data_type,
+        });
+      });
+      typeDataColumns = JSON.stringify(typeDataColumns);
+
       const count = await db.avr_main.utenti.count({});
       const data = await db.avr_main.utenti.findMany({
         skip: +parent.input.indexPoint,
         take: 10,
       });
 
-      const typeColumns = await db.avr_main.utenti.findMany({
-        skip: +parent.input.indexPoint,
-        take: 10,
-      });
-
-      console.log("typeColumns: ", typeColumns);
-      let arrayAppoggio = [];
-      typeColumns.map((oggetto) => {
-        oggetto;
-      });
-
       if (data !== undefined || count !== undefined) {
-        return { data, count };
+        return { data, count, typeDataColumns };
       } else {
         console.log("Utente non aggiunto");
         // Return error

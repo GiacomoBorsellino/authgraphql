@@ -14,6 +14,7 @@ export class ListUsersComponent implements OnInit {
 
   users: any;
   usersCount: number;
+  typeDataColumns: any;
   limitPagination: number;
   error: boolean = false;
   errorMessage: string = '';
@@ -21,11 +22,20 @@ export class ListUsersComponent implements OnInit {
   rowsData: any = [];
   indexPoint: number = 0;
   loading: boolean = true;
+  selectedColumns: any = [];
 
   // UNSUBSCRIBE?
 
   ngOnInit() {
     this.loadUsers(this.indexPoint);
+  }
+
+  choiceColumns(colonnaSelezionata: any) {
+    if (!this.selectedColumns.includes(colonnaSelezionata)) {
+      this.selectedColumns.push(colonnaSelezionata);
+    } else {
+    }
+    console.log(this.selectedColumns);
   }
 
   loadUsers(indexPoint: number) {
@@ -36,6 +46,8 @@ export class ListUsersComponent implements OnInit {
         console.log('Lista: ', res);
         this.users = res.data.getUsers.data;
         this.usersCount = res.data.getUsers.count;
+        this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
+        console.log('typeDataColumns: ', this.typeDataColumns);
 
         this.limitPagination = Math.ceil(this.usersCount / 10);
 
@@ -49,9 +61,6 @@ export class ListUsersComponent implements OnInit {
         });
         console.log('Righe: ', this.rowsData);
         this.loading = false;
-
-        // Response Handler
-        // this.responseEvent.emit('success');
       },
       (error) => {
         // Response Handler
@@ -86,7 +95,47 @@ export class ListUsersComponent implements OnInit {
     }
   }
 
-  openFilter(column: any) {
-    console.log('Colonna: ', column);
+  switchFilter(column: any) {
+    let typeOfColumn: string;
+
+    this.typeDataColumns.map((colonna: any) => {
+      if (colonna.nameColumn === column) {
+        typeOfColumn = colonna.typeData;
+        if (typeOfColumn === 'integer') {
+          this.openFilterNumeric();
+        } else if (
+          (typeOfColumn === 'character varying' && !column.includes('data')) ||
+          (typeOfColumn === 'text' && !column.includes('data'))
+        ) {
+          this.openFilterString();
+        } else if (column.includes('data')) {
+          this.openFilterDate();
+        } else if (typeOfColumn === 'boolean') {
+          this.openFilterBoolean();
+        } else if (column === 'vedi lista collegamento') {
+          this.openFilterList();
+        }
+      }
+    });
+  }
+
+  openFilterNumeric() {
+    console.log('Filtro Numerico');
+  }
+
+  openFilterString() {
+    console.log('Filtro a Stringa');
+  }
+
+  openFilterDate() {
+    console.log('Filtro a Data');
+  }
+
+  openFilterList() {
+    console.log('Filtro a Lista');
+  }
+
+  openFilterBoolean() {
+    console.log('Filtro a Booleano');
   }
 }

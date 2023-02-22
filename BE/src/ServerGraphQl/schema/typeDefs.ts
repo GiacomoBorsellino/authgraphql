@@ -57,6 +57,7 @@ const typeDefs = gql`
   type UtenteConnection {
     data: [Utente]
     count: Int
+    typeDataColumns: String
   }
 
   type Query {

@@ -45,8 +45,10 @@ export class UsersService {
             username
             email
             idGruppo
+            dataCreazione
           }
           count
+          typeDataColumns
         }
       }
     `;
