@@ -61,7 +61,9 @@ const typeDefs = gql`
   }
 
   type Query {
+    getColumns(input: String): String
     getUsers(input: Pagination): UtenteConnection
+
     user(id: ID!): Utente
 
     hello(name: String): String

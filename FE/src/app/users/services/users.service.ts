@@ -35,17 +35,38 @@ export class UsersService {
   }
 
   // Richiama tutti gli utenti
-  public getUsers(indexPoint: number): Observable<any> {
+  public getColumns(table: string): Observable<any> {
+    let GET_COLUMNS = gql`
+      query getColumns($input: String) {
+        getColumns(input: $input)
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_COLUMNS,
+        variables: {
+          input: table,
+        },
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
+
+  // Richiama tutti gli utenti
+  public getUsers(data: any, indexPoint: number): Observable<any> {
+    console.log('dat: ', data);
     let GET_USER = gql`
       query getUsers($input: Pagination) {
         getUsers(input: $input) {
           data {
-            nome
-            cognome
-            username
-            email
-            idGruppo
-            dataCreazione
+            ${data}
           }
           count
           typeDataColumns

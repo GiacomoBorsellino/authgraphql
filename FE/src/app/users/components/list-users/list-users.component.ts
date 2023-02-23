@@ -22,76 +22,75 @@ export class ListUsersComponent implements OnInit {
   rowsData: any = [];
   indexPoint: number = 0;
   loading: boolean = true;
+
   selectedColumns: any = [];
+
   switchColumned: boolean = false;
+
+  table: string = 'utenti';
+
+  checking: boolean = true;
 
   // UNSUBSCRIBE?
 
   ngOnInit() {
-    this.loadUsers(this.indexPoint);
+    this.getColumns(this.table);
+    setTimeout(() => {
+      this.loadUsers(this.selectedColumns, this.indexPoint);
+    }, 500);
+  }
+
+  getColumns(table: string) {
+    this.loading = true;
+    this.UsersService.getColumns(table).subscribe(
+      (res) => {
+        // Dati
+        this.selectedColumns = JSON.parse(res.data.getColumns);
+        console.log('Colonne - ok: ', this.selectedColumns);
+      },
+      (error) => {
+        // Response Handler
+        console.log('dda', error);
+        this.responseEvent.emit('error');
+      }
+    );
   }
 
   choiceColumns(check: any, colonnaSelezionata: any) {
     let checked = check.srcElement.checked;
     console.log(checked, colonnaSelezionata);
+    this.checking = false;
     if (checked) {
       this.selectedColumns.push(colonnaSelezionata);
+      for (let i = 0; i < this.rowsData.length; i++) {
+        this.rowsData.shift();
+      }
     } else {
       for (let i = 0; i < this.selectedColumns.length; i++) {
         if (this.selectedColumns[i] === colonnaSelezionata) {
           this.selectedColumns.splice(i, 1);
         }
       }
+      for (let i = 0; i < 10; i++) {
+        this.rowsData.shift();
+      }
     }
+    this.loadUsers(this.selectedColumns, this.indexPoint);
+
     console.log(this.selectedColumns);
   }
 
-  postLoadUsers(indexPoint: number) {
-    if (this.switchColumned) {
-      this.loading = true;
-      this.UsersService.getUsers(indexPoint).subscribe(
-        (res) => {
-          // Dati
-          console.log('Lista: ', res);
-          this.users = res.data.getUsers.data;
-          this.usersCount = res.data.getUsers.count;
-          this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
-          console.log('typeDataColumns: ', this.typeDataColumns);
-
-          this.limitPagination = Math.ceil(this.usersCount / 10);
-
-          // Colonne
-          this.columnsData = Object.keys(this.users[0]);
-          console.log('Colonne: ', this.columnsData, this.columnsData.length);
-
-          // Righe
-          this.users.map((row: any) => {
-            this.rowsData.push(Object.values(row));
-          });
-          console.log('Righe: ', this.rowsData);
-          this.loading = false;
-        },
-        (error) => {
-          // Response Handler
-          console.log('dda', error);
-
-          this.responseEvent.emit('error');
-        }
-      );
-    }
-  }
-
-  loadUsers(indexPoint: number) {
+  loadUsers(data: any, indexPoint: number) {
     this.loading = true;
-    this.UsersService.getUsers(indexPoint).subscribe(
+    console.log('OOO ', data);
+
+    this.UsersService.getUsers(data, indexPoint).subscribe(
       (res) => {
         // Dati
         console.log('Lista: ', res);
         this.users = res.data.getUsers.data;
         this.usersCount = res.data.getUsers.count;
         this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
-        console.log('typeDataColumns: ', this.typeDataColumns);
-
         this.limitPagination = Math.ceil(this.usersCount / 10);
 
         // Colonne
@@ -102,7 +101,9 @@ export class ListUsersComponent implements OnInit {
         this.users.map((row: any) => {
           this.rowsData.push(Object.values(row));
         });
+
         console.log('Righe: ', this.rowsData);
+
         this.loading = false;
       },
       (error) => {
@@ -122,7 +123,7 @@ export class ListUsersComponent implements OnInit {
         this.rowsData.shift();
       }
 
-      this.loadUsers(this.indexPoint);
+      this.loadUsers(this.selectedColumns, this.indexPoint);
     }
   }
 
@@ -134,7 +135,7 @@ export class ListUsersComponent implements OnInit {
         this.rowsData.shift();
       }
 
-      this.loadUsers(this.indexPoint);
+      this.loadUsers(this.selectedColumns, this.indexPoint);
     }
   }
 
