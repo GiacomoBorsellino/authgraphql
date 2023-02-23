@@ -23,6 +23,7 @@ export class ListUsersComponent implements OnInit {
   indexPoint: number = 0;
   loading: boolean = true;
   selectedColumns: any = [];
+  switchColumned: boolean = false;
 
   // UNSUBSCRIBE?
 
@@ -30,12 +31,54 @@ export class ListUsersComponent implements OnInit {
     this.loadUsers(this.indexPoint);
   }
 
-  choiceColumns(colonnaSelezionata: any) {
-    if (!this.selectedColumns.includes(colonnaSelezionata)) {
+  choiceColumns(check: any, colonnaSelezionata: any) {
+    let checked = check.srcElement.checked;
+    console.log(checked, colonnaSelezionata);
+    if (checked) {
       this.selectedColumns.push(colonnaSelezionata);
     } else {
+      for (let i = 0; i < this.selectedColumns.length; i++) {
+        if (this.selectedColumns[i] === colonnaSelezionata) {
+          this.selectedColumns.splice(i, 1);
+        }
+      }
     }
     console.log(this.selectedColumns);
+  }
+
+  postLoadUsers(indexPoint: number) {
+    if (this.switchColumned) {
+      this.loading = true;
+      this.UsersService.getUsers(indexPoint).subscribe(
+        (res) => {
+          // Dati
+          console.log('Lista: ', res);
+          this.users = res.data.getUsers.data;
+          this.usersCount = res.data.getUsers.count;
+          this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
+          console.log('typeDataColumns: ', this.typeDataColumns);
+
+          this.limitPagination = Math.ceil(this.usersCount / 10);
+
+          // Colonne
+          this.columnsData = Object.keys(this.users[0]);
+          console.log('Colonne: ', this.columnsData, this.columnsData.length);
+
+          // Righe
+          this.users.map((row: any) => {
+            this.rowsData.push(Object.values(row));
+          });
+          console.log('Righe: ', this.rowsData);
+          this.loading = false;
+        },
+        (error) => {
+          // Response Handler
+          console.log('dda', error);
+
+          this.responseEvent.emit('error');
+        }
+      );
+    }
   }
 
   loadUsers(indexPoint: number) {
