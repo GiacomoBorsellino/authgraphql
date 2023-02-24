@@ -5,7 +5,7 @@
         <!-- SELETTORE COLONNE -->
         <button type="button" data-modal-target="crypto-modal" data-modal-toggle="crypto-modal"
             (click)="openModalSelectorColumns()"
-            class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+            class=" m-6 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
             Selettore Colonne
         </button>
 
@@ -41,7 +41,7 @@
         </div>
 
         <!-- TABELLA -->
-        <div class="relative overflow-x-auto m-10 rounded-md">
+        <div class="relative overflow-x-auto rounded-md m-6">
             <table class="w-full text-sm text-left text-gray-500 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
                     <tr>
@@ -67,7 +67,7 @@
         </div>
 
         <!-- TASTI PAGINATION -->
-        <div class="relative overflow-x-auto sm:rounded-lg">
+        <div class=" m-6 relative float-right overflow-x-auto sm:rounded-lg">
             <nav class="flex items-center justify-between pt-4" aria-label="Table navigation">
                 <ul class="inline-flex items-center -space-x-px">
                     <li class="cursor-pointer" (click)="downPage()">
@@ -96,7 +96,7 @@
     </div>
 
     <!-- LOADER -->
-    <div *ngIf="loading" role="status">
+    <div *ngIf="loading" role="status" class="m-6">
         <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin fill-slate-600" viewBox="0 0 100 101"
             fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
