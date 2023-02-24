@@ -27,11 +27,14 @@
             Selettore Colonne
         </button>
 
-        <div *ngIf="columnsModal" (blur)="openModalSelectorColumns()"
-            class="fixed top-1/4 left-1/3 w-1/2 h-1/2 z-10 bg-slate-200 p-8 rounded-md overflow-y-auto">
-            <button class="absolute top-2 right-4">X</button>
-            <div class="p-4">
-                <h3 class="mb-4 font-semibold text-gray-900">Colonne</h3>
+        <div *ngIf="columnsModal" class="fixed top-1/4 left-1/3 w-1/2 h-1/2 z-10 bg-slate-200 p-8 rounded-md pb-10">
+            <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700">
+                <div class="flex justify-between items-center m-6 text-slate-100">
+                    <h1>Colonne</h1>
+                    <button (click)="openModalSelectorColumns()">X</button>
+                </div>
+            </span>
+            <div class="fixed top-1/4 left-1/3 w-1/2 h-1/3 z-11 p-4 overflow-y-scroll mt-20">
                 <ul class=" text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
                     <li *ngFor="let checkColonne of typeDataColumns; let i = index"
                         class="w-full border-b border-gray-200 rounded-t-lg">
