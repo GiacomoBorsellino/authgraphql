@@ -85,7 +85,6 @@ export class ListUsersComponent implements OnInit {
   }
 
   openModalSelectorColumns() {
-    console.log(this.columnsModal);
     this.columnsModal = !this.columnsModal;
   }
 
