@@ -31,9 +31,6 @@ export class ListUsersComponent implements OnInit {
 
   ngOnInit() {
     this.getColumns(this.table);
-    setTimeout(() => {
-      this.loadUsers(this.selectedColumns, this.indexPoint);
-    }, 500);
   }
 
   // Return all Columns of Table
@@ -44,9 +41,10 @@ export class ListUsersComponent implements OnInit {
         // Dati
         // Posizione colonne originale
         this.originalPositionedColumns = JSON.parse(res.data.getColumns);
+
         // Colonne selezionate
         this.selectedColumns = JSON.parse(res.data.getColumns);
-        // console.log('Colonne da chiamata singola: ', this.selectedColumns);
+        this.loadUsers(this.selectedColumns, this.indexPoint);
       },
       (error) => {
         // Response Handler
@@ -77,19 +75,16 @@ export class ListUsersComponent implements OnInit {
       }
     }
     this.loadUsers(this.selectedColumns, this.indexPoint);
-
-    // console.log(this.selectedColumns);
   }
 
   // Main Call
   loadUsers(data: any, indexPoint: number) {
     this.loading = true;
-    // console.log('Body ottenuto: ', data);
 
-    data.sort(
-      (a: any, b: any) =>
-        this.originalPositionedColumns.indexOf(a) - data.indexOf(b) - 1
-    );
+    // Riordino Colonne a struttura originale
+    data = this.originalPositionedColumns
+      .filter((item: any) => data.includes(item))
+      .map((item: any) => item);
 
     console.log('Body riordinato: ', this.originalPositionedColumns, data);
 
@@ -110,10 +105,7 @@ export class ListUsersComponent implements OnInit {
         this.users.map((row: any) => {
           this.rowsData.push(Object.values(row));
         });
-
         // console.log('Righe: ', this.rowsData);
-
-        // Riordino colonne
 
         this.loading = false;
       },
