@@ -61,7 +61,7 @@ export class UsersService {
 
   // Richiama tutti gli utenti
   public getUsers(data: any, indexPoint: number): Observable<any> {
-    console.log('dat: ', data);
+    console.log('Service body: ', data);
     let GET_USER = gql`
       query getUsers($input: Pagination) {
         getUsers(input: $input) {

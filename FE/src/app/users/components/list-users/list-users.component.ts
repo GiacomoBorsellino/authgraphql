@@ -22,14 +22,10 @@ export class ListUsersComponent implements OnInit {
   rowsData: any = [];
   indexPoint: number = 0;
   loading: boolean = true;
-
-  selectedColumns: any = [];
-
-  switchColumned: boolean = false;
-
   table: string = 'utenti';
 
-  checking: boolean = true;
+  originalPositionedColumns: any = [];
+  selectedColumns: any = [];
 
   // UNSUBSCRIBE?
 
@@ -40,13 +36,17 @@ export class ListUsersComponent implements OnInit {
     }, 500);
   }
 
+  // Return all Columns of Table
   getColumns(table: string) {
     this.loading = true;
     this.UsersService.getColumns(table).subscribe(
       (res) => {
         // Dati
+        // Posizione colonne originale
+        this.originalPositionedColumns = JSON.parse(res.data.getColumns);
+        // Colonne selezionate
         this.selectedColumns = JSON.parse(res.data.getColumns);
-        console.log('Colonne - ok: ', this.selectedColumns);
+        // console.log('Colonne da chiamata singola: ', this.selectedColumns);
       },
       (error) => {
         // Response Handler
@@ -56,14 +56,15 @@ export class ListUsersComponent implements OnInit {
     );
   }
 
+  // Choice Columns
   choiceColumns(check: any, colonnaSelezionata: any) {
-    let checked = check.srcElement.checked;
-    console.log(checked, colonnaSelezionata);
-    this.checking = false;
+    let checked = check.target.checked;
+    // console.log(checked, colonnaSelezionata);
+
     if (checked) {
       this.selectedColumns.push(colonnaSelezionata);
-      for (let i = 0; i < this.rowsData.length; i++) {
-        this.rowsData.shift();
+      for (let i = 0; i < 10; i++) {
+        this.rowsData.pop();
       }
     } else {
       for (let i = 0; i < this.selectedColumns.length; i++) {
@@ -77,17 +78,25 @@ export class ListUsersComponent implements OnInit {
     }
     this.loadUsers(this.selectedColumns, this.indexPoint);
 
-    console.log(this.selectedColumns);
+    // console.log(this.selectedColumns);
   }
 
+  // Main Call
   loadUsers(data: any, indexPoint: number) {
     this.loading = true;
-    console.log('OOO ', data);
+    // console.log('Body ottenuto: ', data);
+
+    data.sort(
+      (a: any, b: any) =>
+        this.originalPositionedColumns.indexOf(a) - data.indexOf(b) - 1
+    );
+
+    console.log('Body riordinato: ', this.originalPositionedColumns, data);
 
     this.UsersService.getUsers(data, indexPoint).subscribe(
       (res) => {
         // Dati
-        console.log('Lista: ', res);
+        // console.log('Lista: ', res);
         this.users = res.data.getUsers.data;
         this.usersCount = res.data.getUsers.count;
         this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
@@ -95,14 +104,16 @@ export class ListUsersComponent implements OnInit {
 
         // Colonne
         this.columnsData = Object.keys(this.users[0]);
-        console.log('Colonne: ', this.columnsData, this.columnsData.length);
+        // console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
         // Righe
         this.users.map((row: any) => {
           this.rowsData.push(Object.values(row));
         });
 
-        console.log('Righe: ', this.rowsData);
+        // console.log('Righe: ', this.rowsData);
+
+        // Riordino colonne
 
         this.loading = false;
       },
@@ -115,6 +126,7 @@ export class ListUsersComponent implements OnInit {
     );
   }
 
+  // Pagination
   upPage() {
     if (this.indexPoint + 10 < this.limitPagination * 10) {
       this.indexPoint = this.indexPoint + 10;
@@ -139,6 +151,7 @@ export class ListUsersComponent implements OnInit {
     }
   }
 
+  // Filtering
   switchFilter(column: any) {
     let typeOfColumn: string;
 

@@ -13,7 +13,8 @@
                     <div class="flex items-center pl-3">
                         <input id="checkColonne.nameColumn" type="checkbox" value=""
                             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                            (change)="choiceColumns($event, checkColonne.nameColumn)" [checked]="checking">
+                            (change)="choiceColumns($event, checkColonne.nameColumn)"
+                            [checked]="selectedColumns.includes(checkColonne.nameColumn)">
                         <label for="vue-checkbox-list"
                             class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{checkColonne.nameColumn}}</label>
                     </div>
@@ -29,8 +30,7 @@
                     <tr>
                         <th *ngFor="let column of columnsData; let i = index" scope="col" class="px-6 py-3"
                             [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(226 232 240)' } : {'background-color': 'rgb(203 213 225)'}">
-                            <div *ngIf="selectedColumns.includes(column)"
-                                class="flex flex-row justify-around items-center"><b>{{column}}</b><button
+                            <div class="flex flex-row justify-around items-center"><b>{{column}}</b><button
                                     (click)="switchFilter(column)"><span
                                         class="material-symbols-outlined ">search</span></button></div>
                         </th>
@@ -92,17 +92,3 @@
         <span class="sr-only">Loading...</span>
     </div>
 </main>
-
-<!-- <span>
-    <input type="checkbox" id="first_name" name="first_name" value="first_name" (mouseup)="call('nome')"
-        (mousedown)="uncall('nome')">
-    <label for="first_name">nome</label><br>
-
-    <input type="checkbox" id="last_name" name="last_name" value="last_name" (mouseup)="call('cognome')"
-        (mousedown)="uncall('cognome')">
-    <label for="last_name">cognome</label><br>
-
-    <input type="checkbox" id="email" name="email" value="email" (mouseup)="call('email')"
-        (mousedown)="uncall('email')">
-    <label for="email">email</label><br>
-</span> -->
