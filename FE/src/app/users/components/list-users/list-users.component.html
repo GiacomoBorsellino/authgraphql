@@ -3,8 +3,7 @@
     <div *ngIf="!loading">
 
         <!-- SELETTORE COLONNE -->
-
-        <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Selettore Colonne</h3>
+        <!-- <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Selettore Colonne</h3>
         <div>
             <ul
                 class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
@@ -20,6 +19,33 @@
                     </div>
                 </li>
             </ul>
+        </div> -->
+
+        <button type="button" data-modal-target="crypto-modal" data-modal-toggle="crypto-modal"
+            (click)="openModalSelectorColumns()"
+            class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+            Selettore Colonne
+        </button>
+
+        <div *ngIf="columnsModal" (blur)="openModalSelectorColumns()"
+            class="fixed top-1/4 left-1/3 w-1/2 h-1/2 z-10 bg-slate-200 p-8 rounded-md overflow-y-auto">
+            <button class="absolute top-2 right-4">X</button>
+            <div class="p-4">
+                <h3 class="mb-4 font-semibold text-gray-900">Colonne</h3>
+                <ul class=" text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
+                    <li *ngFor="let checkColonne of typeDataColumns; let i = index"
+                        class="w-full border-b border-gray-200 rounded-t-lg">
+                        <div class="flex items-center pl-3">
+                            <input id="checkColonne.nameColumn" type="checkbox" value=""
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                                (change)="choiceColumns($event, checkColonne.nameColumn)"
+                                [checked]="selectedColumns.includes(checkColonne.nameColumn)">
+                            <label for="vue-checkbox-list"
+                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{checkColonne.nameColumn}}</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
 

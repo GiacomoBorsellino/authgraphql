@@ -26,6 +26,7 @@ export class ListUsersComponent implements OnInit {
 
   originalPositionedColumns: any = [];
   selectedColumns: any = [];
+  columnsModal: boolean = false;
 
   // UNSUBSCRIBE?
 
@@ -75,6 +76,10 @@ export class ListUsersComponent implements OnInit {
       }
     }
     this.loadUsers(this.selectedColumns, this.indexPoint);
+  }
+
+  openModalSelectorColumns() {
+    this.columnsModal = !this.columnsModal;
   }
 
   // Main Call
