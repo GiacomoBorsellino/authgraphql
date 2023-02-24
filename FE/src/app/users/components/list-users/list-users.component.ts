@@ -28,6 +28,12 @@ export class ListUsersComponent implements OnInit {
   selectedColumns: any = [];
   columnsModal: boolean = false;
 
+  modalFilterNumeric: boolean = false;
+  modalFilterString: boolean = false;
+  modalFilterDate: boolean = false;
+  modalFilterBoolean: boolean = false;
+  modalFilterCategory: boolean = false;
+
   // UNSUBSCRIBE?
 
   ngOnInit() {
@@ -151,7 +157,6 @@ export class ListUsersComponent implements OnInit {
   // Filtering
   switchFilter(column: any) {
     let typeOfColumn: string;
-
     this.typeDataColumns.map((colonna: any) => {
       if (colonna.nameColumn === column) {
         typeOfColumn = colonna.typeData;
@@ -167,7 +172,7 @@ export class ListUsersComponent implements OnInit {
         } else if (typeOfColumn === 'boolean') {
           this.openFilterBoolean();
         } else if (column === 'vedi lista collegamento') {
-          this.openFilterList();
+          this.openFilterCategory();
         }
       }
     });
@@ -175,21 +180,26 @@ export class ListUsersComponent implements OnInit {
 
   openFilterNumeric() {
     console.log('Filtro Numerico');
+    this.modalFilterNumeric = !this.modalFilterNumeric;
   }
 
   openFilterString() {
     console.log('Filtro a Stringa');
+    this.modalFilterString = !this.modalFilterString;
   }
 
   openFilterDate() {
     console.log('Filtro a Data');
+    this.modalFilterDate = !this.modalFilterDate;
   }
 
-  openFilterList() {
+  openFilterCategory() {
     console.log('Filtro a Lista');
+    this.modalFilterCategory = !this.modalFilterCategory;
   }
 
   openFilterBoolean() {
     console.log('Filtro a Booleano');
+    this.modalFilterBoolean = !this.modalFilterBoolean;
   }
 }

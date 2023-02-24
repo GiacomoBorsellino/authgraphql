@@ -40,6 +40,91 @@
             </div>
         </div>
 
+        <!-- FILTRO NUMERICO -->
+        <div *ngIf="modalFilterNumeric"
+            class="fixed top-1 left-1 w-1/2 h-1/3 translate-x-1/2 translate-y-1/2 z-10 bg-slate-200 p-6 rounded-md pb-10">
+            <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
+                <div class="flex justify-between items-center text-slate-100 font-semibold">
+                    <div>
+                        <h1>Filtro Numerico</h1>
+                    </div>
+                    <button (click)="openFilterNumeric()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                            class="material-symbols-outlined pt-1">close</span></button>
+                </div>
+            </span>
+            <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
+                <h1 class="text-center font-bold">Filtro Numerico</h1>
+            </div>
+        </div>
+
+        <!-- FILTRO STRINGA -->
+        <div *ngIf="modalFilterString"
+            class="fixed top-1 left-1 w-1/2 h-1/3 translate-x-1/2 translate-y-1/2 z-10 bg-slate-200 p-6 rounded-md pb-10">
+            <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
+                <div class="flex justify-between items-center text-slate-100 font-semibold">
+                    <div>
+                        <h1>Filtro Stringa</h1>
+                    </div>
+                    <button (click)="openFilterString()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                            class="material-symbols-outlined pt-1">close</span></button>
+                </div>
+            </span>
+            <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
+                <h1 class="text-center font-bold">Filtro Stringa</h1>
+            </div>
+        </div>
+
+        <!-- FILTRO DATE -->
+        <div *ngIf="modalFilterDate"
+            class="fixed top-1 left-1 w-1/2 h-1/3 translate-x-1/2 translate-y-1/2 z-10 bg-slate-200 p-6 rounded-md pb-10">
+            <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
+                <div class="flex justify-between items-center text-slate-100 font-semibold">
+                    <div>
+                        <h1>Filtro Data</h1>
+                    </div>
+                    <button (click)="openFilterDate()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                            class="material-symbols-outlined pt-1">close</span></button>
+                </div>
+            </span>
+            <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
+                <h1 class="text-center font-bold">Filtro Data</h1>
+            </div>
+        </div>
+
+        <!-- FILTRO CATEGORY -->
+        <div *ngIf="modalFilterCategory"
+            class="fixed top-1 left-1 w-1/2 h-1/3 translate-x-1/2 translate-y-1/2 z-10 bg-slate-200 p-6 rounded-md pb-10">
+            <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
+                <div class="flex justify-between items-center text-slate-100 font-semibold">
+                    <div>
+                        <h1>Filtro Categoria</h1>
+                    </div>
+                    <button (click)="openFilterCategory()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                            class="material-symbols-outlined pt-1">close</span></button>
+                </div>
+            </span>
+            <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
+                <h1 class="text-center font-bold">Filtro Categoria</h1>
+            </div>
+        </div>
+
+        <!-- FILTRO BOOLEAN -->
+        <div *ngIf="modalFilterBoolean"
+            class="fixed top-1 left-1 w-1/2 h-1/3 translate-x-1/2 translate-y-1/2 z-10 bg-slate-200 p-6 rounded-md pb-10">
+            <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
+                <div class="flex justify-between items-center text-slate-100 font-semibold">
+                    <div>
+                        <h1>Filtro Booleano</h1>
+                    </div>
+                    <button (click)="openFilterBoolean()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                            class="material-symbols-outlined pt-1">close</span></button>
+                </div>
+            </span>
+            <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
+                <h1 class="text-center font-bold">Filtro Booleano</h1>
+            </div>
+        </div>
+
         <!-- TABELLA -->
         <div class="relative overflow-x-auto rounded-md m-6">
             <table class="w-full text-sm text-left text-gray-500 ">
