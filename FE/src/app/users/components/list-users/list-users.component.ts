@@ -118,7 +118,7 @@ export class ListUsersComponent implements OnInit {
         console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
         // Righe
-        this.rowsData = []; // Pulizia righe per filtro
+        this.rowsData = []; // Pulizia righe post filtro
         this.users.map((row: any) => {
           this.rowsData.push(Object.values(row));
         });
