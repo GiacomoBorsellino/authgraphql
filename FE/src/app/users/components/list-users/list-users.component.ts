@@ -1,5 +1,4 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { startWith } from 'rxjs';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -108,23 +107,23 @@ export class ListUsersComponent implements OnInit {
       (res) => {
         // Dati
         this.users = res.data.getUsers.data;
-        console.log('bobo ', res.data.getUsers.data);
+        // console.log('bobo ', res.data.getUsers.data);
         if (this.users.length !== 0) {
           this.usersCount = res.data.getUsers.count;
           this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
           this.limitPagination = Math.ceil(this.usersCount / 10);
-          console.log('Lista: ', this.users);
+          // console.log('Lista: ', this.users);
 
           // Colonne
           this.columnsData = Object.keys(this.users[0]);
-          console.log('Colonne: ', this.columnsData, this.columnsData.length);
+          // console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
           // Righe
           this.rowsData = []; // Pulizia righe post filtro
           this.users.map((row: any) => {
             this.rowsData.push(Object.values(row));
           });
-          console.log('Righe: ', this.users);
+          // console.log('Righe: ', this.users);
 
           this.loading = false;
           // this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
@@ -249,7 +248,7 @@ export class ListUsersComponent implements OnInit {
   filterNumeric(value: number) {}
 
   filterString(valoreInput: string) {
-    console.log('valoreInput: ', valoreInput);
+    // console.log('valoreInput: ', valoreInput);
 
     let nomeColonna: any = {};
     nomeColonna.contains = valoreInput;
