@@ -167,7 +167,6 @@ export class ListUsersComponent implements OnInit {
     }
   }
 
-  // Filtering
   // Clean Filters
   cleanAllFilters() {
     this.filter = {};
