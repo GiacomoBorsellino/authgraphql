@@ -180,6 +180,7 @@
             </table>
             <h1 *ngIf="users.length === 0" class="py-6 font-bold">Nessun dato trovato</h1>
         </div>
+        <h1 class="mx-6">Totale: {{usersCount}}</h1>
 
         <!-- TASTI PAGINATION -->
         <div *ngIf="users.length !== 0" class=" m-6 relative float-right overflow-x-auto sm:rounded-lg">
