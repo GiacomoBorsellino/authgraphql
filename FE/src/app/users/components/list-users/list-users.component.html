@@ -161,6 +161,8 @@
                             <div class="flex flex-row justify-around items-center"><b>{{column}}</b><button
                                     (click)="switchFilter(column)"><span
                                         class="material-symbols-outlined ">search</span></button></div>
+                            <h6 *ngIf="filter.hasOwnProperty(column)">{{filter[column].contains}}</h6>
+                            <h6 *ngIf="!filter.hasOwnProperty(column)">&nbsp;</h6>
                         </th>
                     </tr>
                 </thead>

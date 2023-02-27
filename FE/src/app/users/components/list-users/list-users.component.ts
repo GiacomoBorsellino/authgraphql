@@ -248,15 +248,15 @@ export class ListUsersComponent implements OnInit {
   // FILTERS
   filterNumeric(value: number) {}
 
-  filterString(value: string) {
-    console.log(value);
+  filterString(valoreInput: string) {
+    console.log('valoreInput: ', valoreInput);
 
     let nomeColonna: any = {};
-    nomeColonna.contains = value;
+    nomeColonna.contains = valoreInput;
     nomeColonna.mode = 'insensitive';
     this.filter[this.colonnaInFilter] = nomeColonna;
 
-    console.log(this.filter);
+    console.log('Filtro: ', this.filter);
     this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
   }
 }
