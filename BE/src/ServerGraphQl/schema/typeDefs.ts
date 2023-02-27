@@ -52,6 +52,7 @@ const typeDefs = gql`
 
   input Pagination {
     indexPoint: Int
+    filter: String
   }
 
   type UtenteConnection {

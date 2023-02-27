@@ -3,8 +3,8 @@
     <div *ngIf="!loading">
 
         <!-- SELETTORE COLONNE -->
-        <button type="button" data-modal-target="crypto-modal" data-modal-toggle="crypto-modal"
-            (click)="openModalSelectorColumns()"
+        <button type="button" data-modal-target="crypto-modal" data-modal-toggleModal="crypto-modal"
+            (click)="toggleModalModalSelectorColumns()"
             class=" m-6 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
             Selettore Colonne
         </button>
@@ -17,7 +17,7 @@
                     <div>
                         <h1>Colonne</h1>
                     </div>
-                    <button (click)="openModalSelectorColumns()"
+                    <button (click)="toggleModalModalSelectorColumns()"
                         class="bg-white rounded-md text-slate-800 w-8 h-8"><span
                             class="material-symbols-outlined pt-1">close</span></button>
                 </div>
@@ -48,12 +48,16 @@
                     <div>
                         <h1>Filtro Numerico</h1>
                     </div>
-                    <button (click)="openFilterNumeric()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                    <button (click)="toggleModalFilterNumeric()"
+                        class="bg-white rounded-md text-slate-800 w-8 h-8"><span
                             class="material-symbols-outlined pt-1">close</span></button>
                 </div>
             </span>
             <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
                 <h1 class="text-center font-bold">Filtro Numerico</h1>
+                <!-- SPAZIO PER FILTRO -->
+                <input type="number">
+                <button>Chiama</button>
             </div>
         </div>
 
@@ -65,12 +69,16 @@
                     <div>
                         <h1>Filtro Stringa</h1>
                     </div>
-                    <button (click)="openFilterString()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                    <button (click)="toggleModalFilterString()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
                             class="material-symbols-outlined pt-1">close</span></button>
                 </div>
             </span>
             <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
-                <h1 class="text-center font-bold">Filtro Stringa</h1>
+                <h1 class="text-center font-bold m-6">Filtro Stringa</h1>
+                <!-- SPAZIO PER FILTRO -->
+                <input type="text" #valore class=" text-slate-700 font-semibold py-2 px-4 rounded">
+                <button (click)="filterString(valore.value)"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">Chiama</button>
             </div>
         </div>
 
@@ -82,12 +90,14 @@
                     <div>
                         <h1>Filtro Data</h1>
                     </div>
-                    <button (click)="openFilterDate()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                    <button (click)="toggleModalFilterDate()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
                             class="material-symbols-outlined pt-1">close</span></button>
                 </div>
             </span>
             <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
                 <h1 class="text-center font-bold">Filtro Data</h1>
+                <!-- SPAZIO PER FILTRO -->
+
             </div>
         </div>
 
@@ -99,12 +109,15 @@
                     <div>
                         <h1>Filtro Categoria</h1>
                     </div>
-                    <button (click)="openFilterCategory()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                    <button (click)="toggleModalFilterCategory()"
+                        class="bg-white rounded-md text-slate-800 w-8 h-8"><span
                             class="material-symbols-outlined pt-1">close</span></button>
                 </div>
             </span>
             <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
                 <h1 class="text-center font-bold">Filtro Categoria</h1>
+                <!-- SPAZIO PER FILTRO -->
+
             </div>
         </div>
 
@@ -116,12 +129,15 @@
                     <div>
                         <h1>Filtro Booleano</h1>
                     </div>
-                    <button (click)="openFilterBoolean()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                    <button (click)="toggleModalFilterBoolean()"
+                        class="bg-white rounded-md text-slate-800 w-8 h-8"><span
                             class="material-symbols-outlined pt-1">close</span></button>
                 </div>
             </span>
             <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
                 <h1 class="text-center font-bold">Filtro Booleano</h1>
+                <!-- SPAZIO PER FILTRO -->
+
             </div>
         </div>
 

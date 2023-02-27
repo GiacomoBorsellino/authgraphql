@@ -60,12 +60,10 @@ export class UsersService {
   }
 
   // Richiama tutti gli utenti
-  public getUsers(
-    data: any,
-    indexPoint: number,
-    filter: string
-  ): Observable<any> {
-    // console.log('Service body: ', data);
+  public getUsers(data: any, indexPoint: number, filter: any): Observable<any> {
+    // Converti Filtro oggetto in stringa, così da evitare specificazione in Backend
+    filter = JSON.stringify(filter);
+
     let GET_USER = gql`
       query getUsers($input: Pagination) {
         getUsers(input: $input) {

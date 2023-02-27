@@ -26,7 +26,10 @@ const resolvers = {
       }
     },
     async getUsers(args: any, parent: any, context: any, info: any) {
-      console.log("================= IN UTENTI");
+      console.log("================= IN UTENTI: ", parent.input);
+
+      let filter = JSON.parse(parent.input.filter) || undefined;
+      console.log("========== FILTER: ", filter);
 
       // Definisce il tipo di dato per colonna, così da usare filtri dinamici nel FE
       const colonneUtenti: any = await db.avr_main
@@ -41,11 +44,17 @@ const resolvers = {
       });
       typeDataColumns = JSON.stringify(typeDataColumns);
 
-      const count = await db.avr_main.utenti.count({});
+      const count = await db.avr_main.utenti.count({
+        where: filter,
+      });
+
       const data = await db.avr_main.utenti.findMany({
         skip: +parent.input.indexPoint,
         take: 10,
+        where: filter,
       });
+
+      console.log("===================== DATA: ", data);
 
       if (data !== undefined || count !== undefined) {
         return { data, count, typeDataColumns };
@@ -145,7 +154,7 @@ const resolvers = {
       }
     },
     async updateUser(args: any, parent: any, context: any, info: any) {
-      console.log("================= UPDATEUSER");
+      // console.log("================= UPDATEUSER");
       console.log(parent);
       if (parent !== undefined) {
         await db.avr_main.utenti.update({

@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { startWith } from 'rxjs';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class ListUsersComponent implements OnInit {
   // Response Handler: Success, Error, Info, Warning
   @Output() responseEvent = new EventEmitter<string>();
 
-  users: any;
+  users: any = [];
   usersCount: number;
   typeDataColumns: any;
   limitPagination: number;
@@ -34,9 +35,9 @@ export class ListUsersComponent implements OnInit {
   modalFilterBoolean: boolean = false;
   modalFilterCategory: boolean = false;
 
-  filter: string;
+  filter: any = {};
 
-  colonnaInFilter: string = '';
+  colonnaInFilter: any = {};
 
   // UNSUBSCRIBE?
 
@@ -88,12 +89,12 @@ export class ListUsersComponent implements OnInit {
     this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
   }
 
-  openModalSelectorColumns() {
+  toggleModalModalSelectorColumns() {
     this.columnsModal = !this.columnsModal;
   }
 
   // Main Call
-  loadUsers(data: any, indexPoint: number, filter: string) {
+  loadUsers(data: any, indexPoint: number, filter: object) {
     this.loading = true;
 
     // Riordino Colonne a struttura originale
@@ -106,30 +107,31 @@ export class ListUsersComponent implements OnInit {
     this.UsersService.getUsers(data, indexPoint, filter).subscribe(
       (res) => {
         // Dati
-        // console.log('Lista: ', res);
         this.users = res.data.getUsers.data;
         this.usersCount = res.data.getUsers.count;
         this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
         this.limitPagination = Math.ceil(this.usersCount / 10);
+        console.log('Lista: ', this.users);
 
         // Colonne
         this.columnsData = Object.keys(this.users[0]);
-        // console.log('Colonne: ', this.columnsData, this.columnsData.length);
+        console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
         // Righe
+        this.rowsData = []; // Pulizia righe per filtro
         this.users.map((row: any) => {
           this.rowsData.push(Object.values(row));
         });
-        // console.log('Righe: ', this.rowsData);
+        console.log('Righe: ', this.users);
 
         this.loading = false;
-        this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
+        // this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
       },
       (error) => {
         // Response Handler
-        console.log('Errore: ', error);
+        console.log('Errorone: ', error);
         this.responseEvent.emit('error');
-        this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
+        // this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
       }
     );
   }
@@ -160,6 +162,7 @@ export class ListUsersComponent implements OnInit {
   }
 
   // Filtering
+  // SWITCH FILTERS
   switchFilter(column: any) {
     this.colonnaInFilter = column;
     console.log(this.colonnaInFilter);
@@ -169,45 +172,75 @@ export class ListUsersComponent implements OnInit {
       if (colonna.nameColumn === column) {
         typeOfColumn = colonna.typeData;
         if (typeOfColumn === 'integer') {
-          this.openFilterNumeric();
+          this.toggleModalFilterNumeric();
         } else if (
           (typeOfColumn === 'character varying' && !column.includes('data')) ||
           (typeOfColumn === 'text' && !column.includes('data'))
         ) {
-          this.openFilterString();
+          this.toggleModalFilterString();
         } else if (column.includes('data')) {
-          this.openFilterDate();
+          this.toggleModalFilterDate();
         } else if (typeOfColumn === 'boolean') {
-          this.openFilterBoolean();
+          this.toggleModalFilterBoolean();
         } else if (column === 'vedi lista collegamento') {
-          this.openFilterCategory();
+          this.toggleModalFilterCategory();
         }
       }
     });
+    console.log(this.filter);
   }
 
-  openFilterNumeric() {
+  // OPEN/CLOSE FILTERS
+  toggleModalFilterNumeric() {
     console.log('Filtro Numerico');
     this.modalFilterNumeric = !this.modalFilterNumeric;
+    if (this.modalFilterNumeric === true) {
+      console.log(this.filter);
+    }
   }
 
-  openFilterString() {
+  toggleModalFilterString() {
     console.log('Filtro a Stringa');
     this.modalFilterString = !this.modalFilterString;
+    if (this.modalFilterString === true) {
+      console.log(this.filter);
+    }
   }
 
-  openFilterDate() {
+  toggleModalFilterDate() {
     console.log('Filtro a Data');
     this.modalFilterDate = !this.modalFilterDate;
+    if (this.modalFilterDate === true) {
+      console.log(this.filter);
+    }
   }
 
-  openFilterCategory() {
+  toggleModalFilterCategory() {
     console.log('Filtro a Lista');
     this.modalFilterCategory = !this.modalFilterCategory;
+    if (this.modalFilterCategory === true) {
+      console.log(this.filter);
+    }
   }
 
-  openFilterBoolean() {
+  toggleModalFilterBoolean() {
     console.log('Filtro a Booleano');
     this.modalFilterBoolean = !this.modalFilterBoolean;
+    if (this.modalFilterBoolean === true) {
+      console.log(this.filter);
+    }
+  }
+
+  filterNumeric(value: number) {}
+
+  filterString(value: string) {
+    let nomeColonna: any = {};
+    nomeColonna.contains = value;
+    nomeColonna.mode = 'insensitive';
+    this.filter;
+    this.filter[this.colonnaInFilter] = nomeColonna;
+
+    console.log(this.filter);
+    this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
   }
 }
