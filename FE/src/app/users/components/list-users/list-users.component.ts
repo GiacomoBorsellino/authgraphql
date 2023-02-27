@@ -36,8 +36,8 @@ export class ListUsersComponent implements OnInit {
   modalFilterCategory: boolean = false;
 
   filter: any = {};
-
   colonnaInFilter: any = {};
+  selectedColumn: string;
 
   // UNSUBSCRIBE?
 
@@ -162,10 +162,17 @@ export class ListUsersComponent implements OnInit {
   }
 
   // Filtering
+  // CLEAN FILTERS
+  cleanAllFilters() {
+    this.filter = {};
+    this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+  }
+
   // SWITCH FILTERS
   switchFilter(column: any) {
     this.colonnaInFilter = column;
     console.log(this.colonnaInFilter);
+    this.selectedColumn = column;
 
     let typeOfColumn: string;
     this.typeDataColumns.map((colonna: any) => {
@@ -231,6 +238,7 @@ export class ListUsersComponent implements OnInit {
     }
   }
 
+  // FILTERS
   filterNumeric(value: number) {}
 
   filterString(value: string) {

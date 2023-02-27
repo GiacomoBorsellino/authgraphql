@@ -2,41 +2,50 @@
     <h1>Utenti</h1>
     <div *ngIf="!loading">
 
-        <!-- SELETTORE COLONNE -->
+        <!-- RESET FILTRI -->
         <button type="button" data-modal-target="crypto-modal" data-modal-toggleModal="crypto-modal"
-            (click)="toggleModalModalSelectorColumns()"
-            class=" m-6 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
-            Selettore Colonne
+            (click)="cleanAllFilters()"
+            class="m-6 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+            Reset Filtri
         </button>
 
-        <div *ngIf="columnsModal"
-            class="fixed top-1 left-1 w-1/2 h-1/2 translate-x-1/2 translate-y-1/2 z-10 bg-slate-200 p-6 rounded-md pb-10 drop-shadow-md">
+        <!-- SELETTORE COLONNE -->
+        <div>
+            <button type="button" data-modal-target="crypto-modal" data-modal-toggleModal="crypto-modal"
+                (click)="toggleModalModalSelectorColumns()"
+                class=" mx-6 text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+                Selettore Colonne
+            </button>
 
-            <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
-                <div class="flex justify-between items-center text-slate-100 font-semibold">
-                    <div>
-                        <h1>Colonne</h1>
-                    </div>
-                    <button (click)="toggleModalModalSelectorColumns()"
-                        class="bg-white rounded-md text-slate-800 w-8 h-8"><span
-                            class="material-symbols-outlined pt-1">close</span></button>
-                </div>
-            </span>
+            <div *ngIf="columnsModal"
+                class="fixed top-1 left-1 w-1/2 h-1/2 translate-x-1/2 translate-y-1/2 z-10 bg-slate-200 p-6 rounded-md pb-10 drop-shadow-md">
 
-            <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 overflow-y-scroll mt-24 rounded-md">
-                <ul class=" text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
-                    <li *ngFor="let checkColonne of typeDataColumns; let i = index"
-                        class="w-full border-b border-gray-200 rounded-t-lg">
-                        <div class="flex items-center pl-3">
-                            <input id="checkColonne.nameColumn" type="checkbox" value=""
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
-                                (change)="choiceColumns($event, checkColonne.nameColumn)"
-                                [checked]="selectedColumns.includes(checkColonne.nameColumn)">
-                            <label for="vue-checkbox-list"
-                                class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{checkColonne.nameColumn}}</label>
+                <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
+                    <div class="flex justify-between items-center text-slate-100 font-semibold">
+                        <div>
+                            <h1>Colonne</h1>
                         </div>
-                    </li>
-                </ul>
+                        <button (click)="toggleModalModalSelectorColumns()"
+                            class="bg-white rounded-md text-slate-800 w-8 h-8"><span
+                                class="material-symbols-outlined pt-1">close</span></button>
+                    </div>
+                </span>
+
+                <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 overflow-y-scroll mt-24 rounded-md">
+                    <ul class=" text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
+                        <li *ngFor="let checkColonne of typeDataColumns; let i = index"
+                            class="w-full border-b border-gray-200 rounded-t-lg">
+                            <div class="flex items-center pl-3">
+                                <input id="checkColonne.nameColumn" type="checkbox" value=""
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                                    (change)="choiceColumns($event, checkColonne.nameColumn)"
+                                    [checked]="selectedColumns.includes(checkColonne.nameColumn)">
+                                <label for="vue-checkbox-list"
+                                    class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{checkColonne.nameColumn}}</label>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -46,7 +55,7 @@
             <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
                 <div class="flex justify-between items-center text-slate-100 font-semibold">
                     <div>
-                        <h1>Filtro Numerico</h1>
+                        <h1>Filtro Numerico - <b class="capitalize">{{selectedColumn}}</b></h1>
                     </div>
                     <button (click)="toggleModalFilterNumeric()"
                         class="bg-white rounded-md text-slate-800 w-8 h-8"><span
@@ -67,7 +76,7 @@
             <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
                 <div class="flex justify-between items-center text-slate-100 font-semibold">
                     <div>
-                        <h1>Filtro Stringa</h1>
+                        <h1>Filtro Stringa - <b class="capitalize">{{selectedColumn}}</b></h1>
                     </div>
                     <button (click)="toggleModalFilterString()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
                             class="material-symbols-outlined pt-1">close</span></button>
@@ -88,7 +97,7 @@
             <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
                 <div class="flex justify-between items-center text-slate-100 font-semibold">
                     <div>
-                        <h1>Filtro Data</h1>
+                        <h1>Filtro Data - <b class="capitalize">{{selectedColumn}}</b></h1>
                     </div>
                     <button (click)="toggleModalFilterDate()" class="bg-white rounded-md text-slate-800 w-8 h-8"><span
                             class="material-symbols-outlined pt-1">close</span></button>
@@ -107,7 +116,7 @@
             <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
                 <div class="flex justify-between items-center text-slate-100 font-semibold">
                     <div>
-                        <h1>Filtro Categoria</h1>
+                        <h1>Filtro Categoria - <b class="capitalize">{{selectedColumn}}</b></h1>
                     </div>
                     <button (click)="toggleModalFilterCategory()"
                         class="bg-white rounded-md text-slate-800 w-8 h-8"><span
@@ -127,7 +136,7 @@
             <span class="absolute top-0 left-0 rounded-t-md z-20 w-full bg-slate-700 p-8">
                 <div class="flex justify-between items-center text-slate-100 font-semibold">
                     <div>
-                        <h1>Filtro Booleano</h1>
+                        <h1>Filtro Booleano - <b class="capitalize">{{selectedColumn}}</b></h1>
                     </div>
                     <button (click)="toggleModalFilterBoolean()"
                         class="bg-white rounded-md text-slate-800 w-8 h-8"><span
