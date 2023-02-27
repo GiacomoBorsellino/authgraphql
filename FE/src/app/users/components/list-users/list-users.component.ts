@@ -130,6 +130,7 @@ export class ListUsersComponent implements OnInit {
         } else {
           this.columnsData = this.originalPositionedColumns;
           this.rowsData = [];
+          this.usersCount = 0;
           this.loading = false;
         }
       },
