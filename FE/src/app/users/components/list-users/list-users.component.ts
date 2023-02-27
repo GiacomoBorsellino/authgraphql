@@ -37,7 +37,7 @@ export class ListUsersComponent implements OnInit {
   filter: any = {};
   colonnaInFilter: any = {};
   selectedColumn: string;
-
+  optionNumericFilter: string = '';
   // UNSUBSCRIBE?
 
   ngOnInit() {
@@ -245,7 +245,13 @@ export class ListUsersComponent implements OnInit {
   }
 
   // Filters
-  filterNumeric(value: number) {}
+  filterNumeric(valoreInput: number) {
+    console.log(valoreInput);
+
+    this.filter[this.colonnaInFilter] = valoreInput;
+    console.log('Filtro: ', this.filter);
+    this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+  }
 
   filterString(valoreInput: string) {
     // console.log('valoreInput: ', valoreInput);
@@ -257,5 +263,12 @@ export class ListUsersComponent implements OnInit {
 
     console.log('Filtro: ', this.filter);
     this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+  }
+
+  changeOptionNumeric(option: any) {
+    console.log(option);
+    if (option === 'Uguale a') {
+      this.optionNumericFilter === option;
+    }
   }
 }

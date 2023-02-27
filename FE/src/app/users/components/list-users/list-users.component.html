@@ -65,8 +65,20 @@
             <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
                 <h1 class="text-center font-bold">Filtro Numerico</h1>
                 <!-- SPAZIO PER FILTRO -->
-                <input type="number">
-                <button>Chiama</button>
+                <select #valore value="" class="text-slate-700 font-semibold py-2 px-4 rounded"
+                    (change)="changeOptionNumeric(valore.value)">
+                    <option>Azzera filtro</option>
+                    <option>Uguale a</option>
+                    <option>Maggiore di</option>
+                    <option>Minore di</option>
+                    <option>Compreso tra</option>
+                </select>
+                <div *ngIf="valore.value === 'Uguale a'">
+                    <input type="number" #valoreNumerico value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded w-10 m-2">
+                    <button (click)="filterNumeric(+valoreNumerico.value)"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 mx-2 rounded">Filtra</button>
+                </div>
             </div>
         </div>
 
@@ -87,7 +99,7 @@
                 <!-- SPAZIO PER FILTRO -->
                 <input type="text" #valore value="" class="text-slate-700 font-semibold py-2 px-4 rounded">
                 <button (click)="filterString(valore.value)"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded">Chiama</button>
+                    class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 mx-2 rounded">Filtra</button>
             </div>
         </div>
 
@@ -162,6 +174,7 @@
                                     (click)="switchFilter(column)"><span
                                         class="material-symbols-outlined ">search</span></button></div>
                             <h6 *ngIf="filter.hasOwnProperty(column)">{{filter[column].contains}}</h6>
+                            <h6 *ngIf="filter.hasOwnProperty(column)">{{filter[column]}}</h6>
                             <h6 *ngIf="!filter.hasOwnProperty(column)">&nbsp;</h6>
                         </th>
                     </tr>
