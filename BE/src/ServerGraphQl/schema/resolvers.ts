@@ -26,15 +26,16 @@ const resolvers = {
       }
     },
     async getUsers(args: any, parent: any, context: any, info: any) {
-      console.log("================= IN UTENTI: ", parent.input);
+      console.log("================= IN UTENTI: ");
 
-      let filter = JSON.parse(parent.input.filter) || undefined;
-      console.log("========== FILTER: ", filter);
+      let filter = JSON.parse(parent.input.filter);
+      console.log("========== INPUT E FILTER: ", parent.input, filter);
 
       // Definisce il tipo di dato per colonna, così da usare filtri dinamici nel FE
       const colonneUtenti: any = await db.avr_main
         .$queryRaw`SELECT * FROM information_schema.columns WHERE table_name = \'utenti\'`;
 
+      // Creazione lista totale colonne
       let typeDataColumns: any = [];
       colonneUtenti.map((colonna: any) => {
         typeDataColumns.push({
@@ -44,19 +45,19 @@ const resolvers = {
       });
       typeDataColumns = JSON.stringify(typeDataColumns);
 
+      // Numero utenti
       const count = await db.avr_main.utenti.count({
         where: filter,
       });
 
+      // Dati utenti
       const data = await db.avr_main.utenti.findMany({
         skip: +parent.input.indexPoint,
         take: 10,
         where: filter,
       });
 
-      console.log("===================== DATA: ", data);
-      console.log("===================== DATA: ", data.length === 0);
-
+      // Controllo e return dati
       if (data !== undefined || count !== undefined) {
         return { data, count, typeDataColumns };
       } else {

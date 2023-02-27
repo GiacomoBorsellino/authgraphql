@@ -168,13 +168,13 @@ export class ListUsersComponent implements OnInit {
   }
 
   // Filtering
-  // CLEAN FILTERS
+  // Clean Filters
   cleanAllFilters() {
     this.filter = {};
     this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
   }
 
-  // SWITCH FILTERS
+  // Switch/Detect Filters
   switchFilter(column: any) {
     this.colonnaInFilter = column;
     console.log(this.colonnaInFilter);
@@ -203,7 +203,7 @@ export class ListUsersComponent implements OnInit {
     console.log(this.filter);
   }
 
-  // OPEN/CLOSE FILTERS
+  // Open/Close Filters
   toggleModalFilterNumeric() {
     console.log('Filtro Numerico');
     this.modalFilterNumeric = !this.modalFilterNumeric;
@@ -244,7 +244,7 @@ export class ListUsersComponent implements OnInit {
     }
   }
 
-  // FILTERS
+  // Filters
   filterNumeric(value: number) {}
 
   filterString(valoreInput: string) {
