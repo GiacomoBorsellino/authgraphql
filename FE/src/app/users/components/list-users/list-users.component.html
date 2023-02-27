@@ -153,20 +153,23 @@
         <!-- TABELLA -->
         <div class="relative overflow-x-auto rounded-md m-6">
             <table class="w-full text-sm text-left text-gray-500 ">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                <!-- COLONNE -->
+                <thead class="text-xs text-gray-700 uppercase bg-gray-200 border border-b-slate-700">
                     <tr>
-                        <th *ngFor="let column of columnsData; let i = index" scope="col" class="px-6 py-3"
-                            [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(226 232 240)' } : {'background-color': 'rgb(203 213 225)'}">
+                        <th *ngFor="let column of columnsData; let i = index" scope="col"
+                            class="px-6 py-3 border border-r-slate-700 border-b-slate-700">
                             <div class="flex flex-row justify-around items-center"><b>{{column}}</b><button
                                     (click)="switchFilter(column)"><span
                                         class="material-symbols-outlined ">search</span></button></div>
                         </th>
                     </tr>
                 </thead>
+                <!-- RIGHE -->
                 <tbody>
                     <tr [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(226 232 240)' } : {'background-color': 'rgb(203 213 225)'}"
-                        *ngFor="let row of rowsData; let i = index" class="bg-white border-b">
-                        <th *ngFor="let row of rowsData[i]; let i = index" class="px-6 py-4"
+                        *ngFor="let row of rowsData; let i = index" class="bg-white border-b-slate-700">
+                        <th *ngFor="let row of rowsData[i]; let i = index"
+                            class="px-6 py-4 border border-r-slate-500 border-b-slate-700"
                             [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(226 232 240)' } : {'background-color': 'rgb(203 213 225)'}">
                             {{row}}
                         </th>

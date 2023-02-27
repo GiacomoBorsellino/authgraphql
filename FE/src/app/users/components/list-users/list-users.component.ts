@@ -245,7 +245,7 @@ export class ListUsersComponent implements OnInit {
     let nomeColonna: any = {};
     nomeColonna.contains = value;
     nomeColonna.mode = 'insensitive';
-    this.filter;
+    // this.filter;
     this.filter[this.colonnaInFilter] = nomeColonna;
 
     console.log(this.filter);
