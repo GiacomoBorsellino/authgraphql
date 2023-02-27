@@ -108,24 +108,31 @@ export class ListUsersComponent implements OnInit {
       (res) => {
         // Dati
         this.users = res.data.getUsers.data;
-        this.usersCount = res.data.getUsers.count;
-        this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
-        this.limitPagination = Math.ceil(this.usersCount / 10);
-        console.log('Lista: ', this.users);
+        console.log('bobo ', res.data.getUsers.data);
+        if (this.users.length !== 0) {
+          this.usersCount = res.data.getUsers.count;
+          this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
+          this.limitPagination = Math.ceil(this.usersCount / 10);
+          console.log('Lista: ', this.users);
 
-        // Colonne
-        this.columnsData = Object.keys(this.users[0]);
-        console.log('Colonne: ', this.columnsData, this.columnsData.length);
+          // Colonne
+          this.columnsData = Object.keys(this.users[0]);
+          console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
-        // Righe
-        this.rowsData = []; // Pulizia righe post filtro
-        this.users.map((row: any) => {
-          this.rowsData.push(Object.values(row));
-        });
-        console.log('Righe: ', this.users);
+          // Righe
+          this.rowsData = []; // Pulizia righe post filtro
+          this.users.map((row: any) => {
+            this.rowsData.push(Object.values(row));
+          });
+          console.log('Righe: ', this.users);
 
-        this.loading = false;
-        // this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
+          this.loading = false;
+          // this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
+        } else {
+          this.columnsData = this.originalPositionedColumns;
+          this.rowsData = [];
+          this.loading = false;
+        }
       },
       (error) => {
         // Response Handler
@@ -242,10 +249,11 @@ export class ListUsersComponent implements OnInit {
   filterNumeric(value: number) {}
 
   filterString(value: string) {
+    console.log(value);
+
     let nomeColonna: any = {};
     nomeColonna.contains = value;
     nomeColonna.mode = 'insensitive';
-    // this.filter;
     this.filter[this.colonnaInFilter] = nomeColonna;
 
     console.log(this.filter);

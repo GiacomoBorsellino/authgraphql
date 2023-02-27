@@ -55,6 +55,7 @@ const resolvers = {
       });
 
       console.log("===================== DATA: ", data);
+      console.log("===================== DATA: ", data.length === 0);
 
       if (data !== undefined || count !== undefined) {
         return { data, count, typeDataColumns };
