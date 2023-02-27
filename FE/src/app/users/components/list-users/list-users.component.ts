@@ -34,6 +34,10 @@ export class ListUsersComponent implements OnInit {
   modalFilterBoolean: boolean = false;
   modalFilterCategory: boolean = false;
 
+  filter: string;
+
+  colonnaInFilter: string = '';
+
   // UNSUBSCRIBE?
 
   ngOnInit() {
@@ -51,7 +55,7 @@ export class ListUsersComponent implements OnInit {
 
         // Colonne selezionate
         this.selectedColumns = JSON.parse(res.data.getColumns);
-        this.loadUsers(this.selectedColumns, this.indexPoint);
+        this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
       },
       (error) => {
         // Response Handler
@@ -81,7 +85,7 @@ export class ListUsersComponent implements OnInit {
         this.rowsData.shift();
       }
     }
-    this.loadUsers(this.selectedColumns, this.indexPoint);
+    this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
   }
 
   openModalSelectorColumns() {
@@ -89,7 +93,7 @@ export class ListUsersComponent implements OnInit {
   }
 
   // Main Call
-  loadUsers(data: any, indexPoint: number) {
+  loadUsers(data: any, indexPoint: number, filter: string) {
     this.loading = true;
 
     // Riordino Colonne a struttura originale
@@ -97,9 +101,9 @@ export class ListUsersComponent implements OnInit {
       .filter((item: any) => data.includes(item))
       .map((item: any) => item);
 
-    console.log('Body riordinato: ', this.originalPositionedColumns, data);
+    // console.log('Body riordinato: ', this.originalPositionedColumns, data);
 
-    this.UsersService.getUsers(data, indexPoint).subscribe(
+    this.UsersService.getUsers(data, indexPoint, filter).subscribe(
       (res) => {
         // Dati
         // console.log('Lista: ', res);
@@ -119,12 +123,13 @@ export class ListUsersComponent implements OnInit {
         // console.log('Righe: ', this.rowsData);
 
         this.loading = false;
+        this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
       },
       (error) => {
         // Response Handler
-        console.log('dda', error);
-
+        console.log('Errore: ', error);
         this.responseEvent.emit('error');
+        this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
       }
     );
   }
@@ -138,7 +143,7 @@ export class ListUsersComponent implements OnInit {
         this.rowsData.shift();
       }
 
-      this.loadUsers(this.selectedColumns, this.indexPoint);
+      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
     }
   }
 
@@ -150,12 +155,15 @@ export class ListUsersComponent implements OnInit {
         this.rowsData.shift();
       }
 
-      this.loadUsers(this.selectedColumns, this.indexPoint);
+      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
     }
   }
 
   // Filtering
   switchFilter(column: any) {
+    this.colonnaInFilter = column;
+    console.log(this.colonnaInFilter);
+
     let typeOfColumn: string;
     this.typeDataColumns.map((colonna: any) => {
       if (colonna.nameColumn === column) {

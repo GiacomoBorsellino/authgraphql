@@ -60,7 +60,11 @@ export class UsersService {
   }
 
   // Richiama tutti gli utenti
-  public getUsers(data: any, indexPoint: number): Observable<any> {
+  public getUsers(
+    data: any,
+    indexPoint: number,
+    filter: string
+  ): Observable<any> {
     // console.log('Service body: ', data);
     let GET_USER = gql`
       query getUsers($input: Pagination) {
@@ -80,6 +84,7 @@ export class UsersService {
         variables: {
           input: {
             indexPoint: indexPoint,
+            filter: filter,
           },
         },
         context: {
