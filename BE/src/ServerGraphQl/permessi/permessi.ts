@@ -58,6 +58,13 @@ const permessi = [
     checkToken: true,
     roles: [Roles.amministratori],
   },
+  {
+    operationName: "getSegnalazioni",
+    type: "query",
+    description: "route per visualizzare lista segnalazioni",
+    checkToken: true,
+    roles: [Roles.amministratori],
+  },
 ];
 
 export { permessi };

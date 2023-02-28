@@ -1,15 +1,15 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { UsersService } from '../../services/users.service';
+import { SegnalazioniService } from '../../services/segnalazioni.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-list-users',
-  templateUrl: './list-users.component.html',
-  styleUrls: ['./list-users.component.css'],
+  selector: 'app-list-segnalazioni',
+  templateUrl: './list-segnalazioni.component.html',
+  styleUrls: ['./list-segnalazioni.component.css'],
 })
-export class ListUsersComponent implements OnInit {
+export class ListSegnalazioniComponent {
   constructor(
-    private UsersService: UsersService,
+    private SegnalazioniService: SegnalazioniService,
     private toastr: ToastrService
   ) {}
 
@@ -26,7 +26,7 @@ export class ListUsersComponent implements OnInit {
   rowsData: any = [];
   indexPoint: number = 0;
   loading: boolean = true;
-  table: string = 'utenti';
+  table: string = 'segnalazione';
 
   originalPositionedColumns: any = [];
   selectedColumns: any = [];
@@ -52,7 +52,7 @@ export class ListUsersComponent implements OnInit {
   // Return all Columns of Table
   getColumns(table: string) {
     this.loading = true;
-    this.UsersService.getColumns(table).subscribe(
+    this.SegnalazioniService.getColumns(table).subscribe(
       (res) => {
         // Dati
         // Posizione colonne originale
@@ -60,7 +60,11 @@ export class ListUsersComponent implements OnInit {
 
         // Colonne selezionate
         this.selectedColumns = JSON.parse(res.data.getColumns);
-        this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+        this.loadSegnalazioni(
+          this.selectedColumns,
+          this.indexPoint,
+          this.filter
+        );
       },
       (error) => {
         // Response Handler
@@ -90,7 +94,7 @@ export class ListUsersComponent implements OnInit {
         this.rowsData.shift();
       }
     }
-    this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+    this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
   }
 
   toggleModalModalSelectorColumns() {
@@ -98,7 +102,7 @@ export class ListUsersComponent implements OnInit {
   }
 
   // Main Call
-  loadUsers(data: any, indexPoint: number, filter: object) {
+  loadSegnalazioni(data: any, indexPoint: number, filter: object) {
     this.loading = true;
 
     // Riordino Colonne a struttura originale
@@ -108,14 +112,22 @@ export class ListUsersComponent implements OnInit {
 
     // console.log('Body riordinato: ', this.originalPositionedColumns, data);
 
-    this.UsersService.getUsers(data, indexPoint, filter).subscribe(
+    this.SegnalazioniService.getSegnalazioni(
+      data,
+      indexPoint,
+      filter
+    ).subscribe(
       (res) => {
+        console.log(res);
+
         // Dati
-        this.users = res.data.getUsers.data;
-        // console.log('bobo ', res.data.getUsers.data);
+        this.users = res.data.getSegnalazioni.data;
+        // console.log('bobo ', res.data.getSegnalazioni.data);
         if (this.users.length !== 0) {
-          this.usersCount = res.data.getUsers.count;
-          this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
+          this.usersCount = res.data.getSegnalazioni.count;
+          this.typeDataColumns = JSON.parse(
+            res.data.getSegnalazioni.typeDataColumns
+          );
           this.limitPagination = Math.ceil(this.usersCount / 10);
           console.log('Lista: ', this.users);
 
@@ -157,7 +169,7 @@ export class ListUsersComponent implements OnInit {
         this.rowsData.shift();
       }
 
-      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
     }
   }
 
@@ -169,14 +181,14 @@ export class ListUsersComponent implements OnInit {
         this.rowsData.shift();
       }
 
-      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
     }
   }
 
   // Clean Filters
   cleanAllFilters() {
     this.filter = {};
-    this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+    this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
   }
 
   // Switch/Detect Filters
@@ -255,17 +267,17 @@ export class ListUsersComponent implements OnInit {
     if (this.optionNumericFilter === 'Uguale a') {
       console.log(this.filter);
       this.filter[this.colonnaInFilter] = valoreInput1;
-      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
     } else if (this.optionNumericFilter === 'Maggiore di') {
       let greaterValue: any = {};
       greaterValue.gt = valoreInput1;
       this.filter[this.colonnaInFilter] = greaterValue;
-      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
     } else if (this.optionNumericFilter === 'Minore di') {
       let lowerValue: any = {};
       lowerValue.lt = valoreInput1;
       this.filter[this.colonnaInFilter] = lowerValue;
-      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
     } else if (this.optionNumericFilter === 'Compreso tra') {
       console.log(valoreInput1, valoreInput2);
       if (valoreInput1 < valoreInput2) {
@@ -278,14 +290,18 @@ export class ListUsersComponent implements OnInit {
           gt: valoreInput1,
           lt: valoreInput2,
         };
-        this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+        this.loadSegnalazioni(
+          this.selectedColumns,
+          this.indexPoint,
+          this.filter
+        );
       } else {
         this.toastr.error('Intervallo non valido, ritentare', 'Errore');
       }
     } else if (this.optionNumericFilter === 'Azzera filtro') {
       delete this.filter[this.colonnaInFilter];
       console.log('filt ', this.filter);
-      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
     }
     this.optionNumericFilter === 'Azzera filtro';
   }
@@ -295,7 +311,7 @@ export class ListUsersComponent implements OnInit {
     nomeColonna.contains = valoreInput;
     nomeColonna.mode = 'insensitive';
     this.filter[this.colonnaInFilter] = nomeColonna;
-    this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+    this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
   }
 
   changeOptionNumeric(option: any) {

@@ -13,6 +13,13 @@ const routes: Routes = [
       import('./users/users.module').then((m) => m.UsersModule),
   },
   {
+    path: 'segnalazioni',
+    loadChildren: () =>
+      import('./segnalazioni/segnalazioni.module').then(
+        (m) => m.SegnalazioniModule
+      ),
+  },
+  {
     path: 'apiRest',
     loadChildren: () =>
       import('./api-rest/api-rest.module').then((m) => m.ApiRestModule),

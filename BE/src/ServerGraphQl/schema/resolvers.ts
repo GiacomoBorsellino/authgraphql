@@ -66,6 +66,47 @@ const resolvers = {
         throw new Error("Nessuna lista utenti");
       }
     },
+    async getSegnalazioni(args: any, parent: any, context: any, info: any) {
+      console.log("================= IN SEGNALAZIONI: ");
+
+      let filter = JSON.parse(parent.input.filter);
+      console.log("========== INPUT E FILTER: ", parent.input, filter);
+
+      // Definisce il tipo di dato per colonna, così da usare filtri dinamici nel FE
+      const colonneUtenti: any = await db.avr_main
+        .$queryRaw`SELECT * FROM information_schema.columns WHERE table_name = \'segnalazione\'`;
+
+      // Creazione lista totale colonne
+      let typeDataColumns: any = [];
+      colonneUtenti.map((colonna: any) => {
+        typeDataColumns.push({
+          nameColumn: colonna.column_name,
+          typeData: colonna.data_type,
+        });
+      });
+      typeDataColumns = JSON.stringify(typeDataColumns);
+
+      // Numero utenti
+      const count = await db.avr_main.segnalazione.count({
+        where: filter,
+      });
+
+      // Dati utenti
+      const data = await db.avr_main.segnalazione.findMany({
+        skip: +parent.input.indexPoint,
+        take: 10,
+        where: filter,
+      });
+
+      // Controllo e return dati
+      if (data !== undefined || count !== undefined) {
+        return { data, count, typeDataColumns };
+      } else {
+        console.log("Nessuna lista segnalazioni");
+        // Return error
+        throw new Error("Nessuna lista segnalazioni");
+      }
+    },
     user(args: any, parent: any, context: any, info: any) {
       const utentiList = db.avr_main.utenti.findMany({});
       return utentiList;

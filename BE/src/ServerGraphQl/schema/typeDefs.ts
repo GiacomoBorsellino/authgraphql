@@ -20,6 +20,47 @@ const typeDefs = gql`
     roles: String
   }
 
+  type Segnalazione {
+    id: Int
+    idAppalto: Int
+    noteSegnalatore: String
+    segnalatori: [Int]
+    dataCreazione: String
+    dataModifica: String
+    dataRichiesta: String
+    localizzazioneDichiarata: String
+    localizzazioneDichiarataCivico: String
+    localizzazioneNote: String
+    descrizioneAnomalia: String
+    commentoAnomalia: String
+    idEvento: Int
+    idPratica: Int
+    dataModificaStato: String
+    stato: String
+    notaStato: String
+    idUtente: Int
+    idUtenteStato: Int
+    idSegnalatore: Int
+    fonteSegnalazione: Int
+    categoriaAnomalia: Int
+    dettaglioAnomalia: Int
+    severitaEvento: Int
+    tipoEvento: Int
+    idTecnico: Int
+    localizzazioneDichiarataQuartiere: String
+    idLavoroAssociato: String
+    dataChiusura: String
+    statoCorrenteSegnalazione: String
+    del: String
+    idSegnalazioneGetico: Int
+    delOggettiCatasto: String
+    sottoservizi: String
+    sinistri: String
+    richiestaSopralluogo: String
+    numeroProvvedimento: String
+    idTipoProvvedimento: Int
+  }
+
   type Allegato {
     id: Int
     tabella_appartenenza: String
@@ -61,9 +102,17 @@ const typeDefs = gql`
     typeDataColumns: String
   }
 
+  type SegnalazioneConnection {
+    data: [Segnalazione]
+    count: Int
+    typeDataColumns: String
+  }
+
   type Query {
     getColumns(input: String): String
     getUsers(input: Pagination): UtenteConnection
+
+    getSegnalazioni(input: Pagination): SegnalazioneConnection
 
     user(id: ID!): Utente
 
