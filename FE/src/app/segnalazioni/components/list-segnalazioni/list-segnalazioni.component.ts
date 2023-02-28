@@ -42,6 +42,7 @@ export class ListSegnalazioniComponent {
   colonnaInFilter: any = {};
   selectedColumn: string;
   optionNumericFilter: string = '';
+  optionDateFilter: string = '';
 
   // UNSUBSCRIBE?
 
@@ -306,6 +307,10 @@ export class ListSegnalazioniComponent {
     this.optionNumericFilter === 'Azzera filtro';
   }
 
+  changeOptionNumeric(option: any) {
+    this.optionNumericFilter = option;
+  }
+
   filterString(valoreInput: string) {
     let nomeColonna: any = {};
     nomeColonna.contains = valoreInput;
@@ -314,7 +319,51 @@ export class ListSegnalazioniComponent {
     this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
   }
 
-  changeOptionNumeric(option: any) {
-    this.optionNumericFilter = option;
+  filterDate(valoreInput1: string, valoreInput2: string) {
+    console.log(this.filter);
+    if (this.optionDateFilter === 'Uguale a') {
+      console.log(this.filter);
+      this.filter[this.colonnaInFilter] = valoreInput1;
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+    } else if (this.optionDateFilter === 'Maggiore di') {
+      let greaterValue: any = {};
+      greaterValue.gt = valoreInput1;
+      this.filter[this.colonnaInFilter] = greaterValue;
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+    } else if (this.optionDateFilter === 'Minore di') {
+      let lowerValue: any = {};
+      lowerValue.lt = valoreInput1;
+      this.filter[this.colonnaInFilter] = lowerValue;
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+    } else if (this.optionDateFilter === 'Compreso tra') {
+      console.log(valoreInput1, valoreInput2);
+      if (valoreInput1 < valoreInput2) {
+        let lowerValue: any = {};
+        let greaterValue: any = {};
+
+        lowerValue.lt = valoreInput1;
+        greaterValue.gt = valoreInput2;
+        this.filter[this.colonnaInFilter] = {
+          gt: valoreInput1,
+          lt: valoreInput2,
+        };
+        this.loadSegnalazioni(
+          this.selectedColumns,
+          this.indexPoint,
+          this.filter
+        );
+      } else {
+        this.toastr.error('Intervallo non valido, ritentare', 'Errore');
+      }
+    } else if (this.optionDateFilter === 'Azzera filtro') {
+      delete this.filter[this.colonnaInFilter];
+      console.log('filt ', this.filter);
+      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+    }
+    this.optionDateFilter === 'Azzera filtro';
+  }
+
+  changeOptionDate(option: any) {
+    this.optionDateFilter = option;
   }
 }
