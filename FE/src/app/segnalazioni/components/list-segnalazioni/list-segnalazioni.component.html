@@ -171,7 +171,7 @@
 
                 <div *ngIf="valore.value === 'Uguale a'"
                     class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
-                    <input type="text" #valoreData value=""
+                    <input type="date" #valoreData value=""
                         class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/2">
                     <button (click)="filterDate(valoreData.value, valoreData.value)"
                         class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
@@ -179,7 +179,7 @@
 
                 <div *ngIf="valore.value === 'Maggiore di'"
                     class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
-                    <input type="text" #valoreData value=""
+                    <input type="date" #valoreData value=""
                         class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/2">
                     <button (click)="filterDate(valoreData.value, valoreData.value)"
                         class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
@@ -187,7 +187,7 @@
 
                 <div *ngIf="valore.value === 'Minore di'"
                     class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
-                    <input type="text" #valoreData value=""
+                    <input type="date" #valoreData value=""
                         class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/2">
                     <button (click)="filterDate(valoreData.value, valoreData.value)"
                         class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
@@ -195,9 +195,9 @@
 
                 <div *ngIf="valore.value === 'Compreso tra'"
                     class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
-                    <input type="text" #valoreDataLt value=""
+                    <input type="date" #valoreDataLt value=""
                         class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/4">
-                    <input type="text" #valoreDataGt value=""
+                    <input type="date" #valoreDataGt value=""
                         class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/4">
                     <button (click)="filterDate(valoreDataLt.value, valoreDataGt.value)"
                         class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>

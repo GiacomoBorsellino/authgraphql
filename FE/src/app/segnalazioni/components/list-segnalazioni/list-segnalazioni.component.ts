@@ -319,8 +319,13 @@ export class ListSegnalazioniComponent {
     this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
   }
 
-  filterDate(valoreInput1: string, valoreInput2: string) {
+  filterDate(valoreInput1: any, valoreInput2: any) {
     console.log(this.filter);
+
+    valoreInput1 = new Date(valoreInput1).toISOString();
+    valoreInput2 = new Date(valoreInput2).toISOString();
+    console.log(valoreInput1, valoreInput2);
+
     if (this.optionDateFilter === 'Uguale a') {
       console.log(this.filter);
       this.filter[this.colonnaInFilter] = valoreInput1;
