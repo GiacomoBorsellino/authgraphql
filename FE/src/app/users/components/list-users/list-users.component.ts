@@ -250,7 +250,9 @@ export class ListUsersComponent implements OnInit {
 
   // Filters
   filterNumeric(valoreInput1: number, valoreInput2: number) {
+    console.log(this.filter);
     if (this.optionNumericFilter === 'Uguale a') {
+      console.log(this.filter);
       this.filter[this.colonnaInFilter] = valoreInput1;
       this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
     } else if (this.optionNumericFilter === 'Maggiore di') {
@@ -279,18 +281,19 @@ export class ListUsersComponent implements OnInit {
       } else {
         this.toastr.error('Intervallo non valido, ritentare', 'Errore');
       }
+    } else if (this.optionNumericFilter === 'Azzera filtro') {
+      delete this.filter[this.colonnaInFilter];
+      console.log('filt ', this.filter);
+      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
     }
+    this.optionNumericFilter === 'Azzera filtro';
   }
 
   filterString(valoreInput: string) {
-    // console.log('valoreInput: ', valoreInput);
-
     let nomeColonna: any = {};
     nomeColonna.contains = valoreInput;
     nomeColonna.mode = 'insensitive';
     this.filter[this.colonnaInFilter] = nomeColonna;
-
-    console.log('Filtro: ', this.filter);
     this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
   }
 
