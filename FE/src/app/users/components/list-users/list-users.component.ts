@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UsersService } from '../../services/users.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-users',
@@ -7,7 +8,10 @@ import { UsersService } from '../../services/users.service';
   styleUrls: ['./list-users.component.css'],
 })
 export class ListUsersComponent implements OnInit {
-  constructor(private UsersService: UsersService) {}
+  constructor(
+    private UsersService: UsersService,
+    private toastr: ToastrService
+  ) {}
 
   // Response Handler: Success, Error, Info, Warning
   @Output() responseEvent = new EventEmitter<string>();
@@ -112,18 +116,18 @@ export class ListUsersComponent implements OnInit {
           this.usersCount = res.data.getUsers.count;
           this.typeDataColumns = JSON.parse(res.data.getUsers.typeDataColumns);
           this.limitPagination = Math.ceil(this.usersCount / 10);
-          // console.log('Lista: ', this.users);
+          console.log('Lista: ', this.users);
 
           // Colonne
           this.columnsData = Object.keys(this.users[0]);
-          // console.log('Colonne: ', this.columnsData, this.columnsData.length);
+          console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
           // Righe
           this.rowsData = []; // Pulizia righe post filtro
           this.users.map((row: any) => {
             this.rowsData.push(Object.values(row));
           });
-          // console.log('Righe: ', this.users);
+          console.log('Righe: ', this.users);
 
           this.loading = false;
           // this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
@@ -245,12 +249,37 @@ export class ListUsersComponent implements OnInit {
   }
 
   // Filters
-  filterNumeric(valoreInput: number) {
-    console.log(valoreInput);
+  filterNumeric(valoreInput1: number, valoreInput2: number) {
+    if (this.optionNumericFilter === 'Uguale a') {
+      this.filter[this.colonnaInFilter] = valoreInput1;
+      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+    } else if (this.optionNumericFilter === 'Maggiore di') {
+      let greaterValue: any = {};
+      greaterValue.gt = valoreInput1;
+      this.filter[this.colonnaInFilter] = greaterValue;
+      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+    } else if (this.optionNumericFilter === 'Minore di') {
+      let lowerValue: any = {};
+      lowerValue.lt = valoreInput1;
+      this.filter[this.colonnaInFilter] = lowerValue;
+      this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+    } else if (this.optionNumericFilter === 'Compreso tra') {
+      console.log(valoreInput1, valoreInput2);
+      if (valoreInput1 < valoreInput2) {
+        let lowerValue: any = {};
+        let greaterValue: any = {};
 
-    this.filter[this.colonnaInFilter] = valoreInput;
-    console.log('Filtro: ', this.filter);
-    this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+        lowerValue.lt = valoreInput1;
+        greaterValue.gt = valoreInput2;
+        this.filter[this.colonnaInFilter] = {
+          gt: valoreInput1,
+          lt: valoreInput2,
+        };
+        this.loadUsers(this.selectedColumns, this.indexPoint, this.filter);
+      } else {
+        this.toastr.error('Intervallo non valido, ritentare', 'Errore');
+      }
+    }
   }
 
   filterString(valoreInput: string) {
@@ -266,9 +295,6 @@ export class ListUsersComponent implements OnInit {
   }
 
   changeOptionNumeric(option: any) {
-    console.log(option);
-    if (option === 'Uguale a') {
-      this.optionNumericFilter === option;
-    }
+    this.optionNumericFilter = option;
   }
 }

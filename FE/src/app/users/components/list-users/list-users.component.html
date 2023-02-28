@@ -65,7 +65,7 @@
             <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
                 <h1 class="text-center font-bold">Filtro Numerico</h1>
                 <!-- SPAZIO PER FILTRO -->
-                <select #valore value="" class="text-slate-700 font-semibold py-2 px-4 rounded"
+                <select #valore value="" class="text-slate-700 font-semibold py-2 px-4 rounded w-1/2"
                     (change)="changeOptionNumeric(valore.value)">
                     <option>Azzera filtro</option>
                     <option>Uguale a</option>
@@ -73,11 +73,40 @@
                     <option>Minore di</option>
                     <option>Compreso tra</option>
                 </select>
-                <div *ngIf="valore.value === 'Uguale a'">
+
+                <!-- SELETTORI -->
+                <div *ngIf="valore.value === 'Uguale a'"
+                    class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
                     <input type="number" #valoreNumerico value=""
-                        class="text-slate-700 font-semibold py-2 px-4 rounded w-10 m-2">
-                    <button (click)="filterNumeric(+valoreNumerico.value)"
-                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 mx-2 rounded">Filtra</button>
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/2">
+                    <button (click)="filterNumeric(+valoreNumerico.value, +valoreNumerico.value)"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
+                </div>
+
+                <div *ngIf="valore.value === 'Maggiore di'"
+                    class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
+                    <input type="number" #valoreNumerico value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/2">
+                    <button (click)="filterNumeric(+valoreNumerico.value, +valoreNumerico.value)"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
+                </div>
+
+                <div *ngIf="valore.value === 'Minore di'"
+                    class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
+                    <input type="number" #valoreNumerico value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/2">
+                    <button (click)="filterNumeric(+valoreNumerico.value, +valoreNumerico.value)"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
+                </div>
+
+                <div *ngIf="valore.value === 'Compreso tra'"
+                    class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
+                    <input type="number" #valoreNumericoLt value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/4">
+                    <input type="number" #valoreNumericoGt value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/4">
+                    <button (click)="filterNumeric(+valoreNumericoLt.value, +valoreNumericoGt.value)"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
                 </div>
             </div>
         </div>
@@ -173,9 +202,18 @@
                             <div class="flex flex-row justify-around items-center"><b>{{column}}</b><button
                                     (click)="switchFilter(column)"><span
                                         class="material-symbols-outlined ">search</span></button></div>
+                            <!-- VISUALIZZATORE FILTRI ATTIVI -->
                             <h6 *ngIf="filter.hasOwnProperty(column) && filter[column].contains">
                                 {{filter[column].contains}}</h6>
-                            <h6 *ngIf="filter.hasOwnProperty(column)  && !filter[column].contains">{{filter[column]}}
+                            <h6
+                                *ngIf="filter.hasOwnProperty(column) && !filter[column].contains && !filter[column].gt && !filter[column].lt">
+                                {{filter[column]}}
+                            </h6>
+                            <h6 *ngIf="filter.hasOwnProperty(column) && !filter[column].contains && filter[column].gt">
+                                Maggiore di {{filter[column].gt}}
+                            </h6>
+                            <h6 *ngIf="filter.hasOwnProperty(column) && !filter[column].contains && filter[column].lt">
+                                Minore di {{filter[column].lt}}
                             </h6>
                             <h6 *ngIf="!filter.hasOwnProperty(column)">&nbsp;</h6>
                         </th>
