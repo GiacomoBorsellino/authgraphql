@@ -39,10 +39,12 @@ export class ListSegnalazioniComponent {
   modalFilterCategory: boolean = false;
 
   filter: any = {};
+  order: any = [];
   colonnaInFilter: any = {};
   selectedColumn: string;
   optionNumericFilter: string = '';
   optionDateFilter: string = '';
+  checkSorting: boolean;
 
   // UNSUBSCRIBE?
 
@@ -64,7 +66,8 @@ export class ListSegnalazioniComponent {
         this.loadSegnalazioni(
           this.selectedColumns,
           this.indexPoint,
-          this.filter
+          this.filter,
+          this.order
         );
       },
       (error) => {
@@ -95,7 +98,12 @@ export class ListSegnalazioniComponent {
         this.rowsData.shift();
       }
     }
-    this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+    this.loadSegnalazioni(
+      this.selectedColumns,
+      this.indexPoint,
+      this.filter,
+      this.order
+    );
   }
 
   toggleModalModalSelectorColumns() {
@@ -103,7 +111,7 @@ export class ListSegnalazioniComponent {
   }
 
   // Main Call
-  loadSegnalazioni(data: any, indexPoint: number, filter: object) {
+  loadSegnalazioni(data: any, indexPoint: number, filter: object, order: any) {
     this.loading = true;
 
     // Riordino Colonne a struttura originale
@@ -116,11 +124,10 @@ export class ListSegnalazioniComponent {
     this.SegnalazioniService.getSegnalazioni(
       data,
       indexPoint,
-      filter
+      filter,
+      order
     ).subscribe(
       (res) => {
-        console.log(res);
-
         // Dati
         this.users = res.data.getSegnalazioni.data;
         // console.log('bobo ', res.data.getSegnalazioni.data);
@@ -130,11 +137,11 @@ export class ListSegnalazioniComponent {
             res.data.getSegnalazioni.typeDataColumns
           );
           this.limitPagination = Math.ceil(this.usersCount / 10);
-          console.log('Lista: ', this.users);
+          // console.log('Lista: ', this.users);
 
           // Colonne
           this.columnsData = Object.keys(this.users[0]);
-          console.log('Colonne: ', this.columnsData, this.columnsData.length);
+          // console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
           // Righe
           this.rowsData = []; // Pulizia righe post filtro
@@ -166,7 +173,7 @@ export class ListSegnalazioniComponent {
 
             this.rowsData.push(singleRow);
           });
-          console.log('Righe: ', this.users);
+          // console.log('Righe: ', this.users);
 
           this.loading = false;
           // this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
@@ -195,7 +202,12 @@ export class ListSegnalazioniComponent {
         this.rowsData.shift();
       }
 
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     }
   }
 
@@ -207,14 +219,25 @@ export class ListSegnalazioniComponent {
         this.rowsData.shift();
       }
 
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     }
   }
 
   // Clean Filters
   cleanAllFilters() {
     this.filter = {};
-    this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+    this.order = [];
+    this.loadSegnalazioni(
+      this.selectedColumns,
+      this.indexPoint,
+      this.filter,
+      this.order
+    );
   }
 
   // Switch/Detect Filters
@@ -222,6 +245,7 @@ export class ListSegnalazioniComponent {
     this.colonnaInFilter = column;
     console.log(this.colonnaInFilter);
     this.selectedColumn = column;
+    console.log('typeDataColumns: ', this.typeDataColumns);
 
     let typeOfColumn: string;
     this.typeDataColumns.map((colonna: any) => {
@@ -244,6 +268,66 @@ export class ListSegnalazioniComponent {
       }
     });
     console.log(this.filter);
+  }
+
+  // Sorting Filter
+  sortFilter(column: any) {
+    this.checkSorting = !this.checkSorting;
+
+    if (this.checkSorting === true) {
+      let obj = { [column]: 'desc' };
+      this.order = obj;
+
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
+      console.log('desc: ', this.order);
+    } else {
+      let obj = { [column]: 'asc' };
+      this.order = obj;
+
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
+      console.log('asc: ', this.order);
+    }
+  }
+
+  // check if input is inside a column with string
+  // Switch/Detect Filters
+  checkIfStringFilter(column: any) {
+    this.colonnaInFilter = column;
+    console.log(this.colonnaInFilter);
+    this.selectedColumn = column;
+    console.log('typeDataColumns: ', this.typeDataColumns);
+    let check: boolean = false;
+    let typeOfColumn: string;
+    this.typeDataColumns.map((colonna: any) => {
+      if (colonna.nameColumn === column) {
+        typeOfColumn = colonna.typeData;
+        if (
+          (typeOfColumn === 'character varying' && !column.includes('data')) ||
+          (typeOfColumn === 'text' && !column.includes('data'))
+        ) {
+          check = true;
+        } else {
+          check = false;
+        }
+      }
+    });
+    console.log(this.filter);
+
+    if (check) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // Open/Close Filters
@@ -295,17 +379,32 @@ export class ListSegnalazioniComponent {
     if (this.optionNumericFilter === 'Uguale a') {
       console.log(this.filter);
       this.filter[this.colonnaInFilter] = valoreInput1;
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     } else if (this.optionNumericFilter === 'Maggiore di') {
       let greaterValue: any = {};
       greaterValue.gt = valoreInput1;
       this.filter[this.colonnaInFilter] = greaterValue;
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     } else if (this.optionNumericFilter === 'Minore di') {
       let lowerValue: any = {};
       lowerValue.lt = valoreInput1;
       this.filter[this.colonnaInFilter] = lowerValue;
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     } else if (this.optionNumericFilter === 'Compreso tra') {
       console.log(valoreInput1, valoreInput2);
       if (valoreInput1 < valoreInput2) {
@@ -321,7 +420,8 @@ export class ListSegnalazioniComponent {
         this.loadSegnalazioni(
           this.selectedColumns,
           this.indexPoint,
-          this.filter
+          this.filter,
+          this.order
         );
       } else {
         this.toastr.error('Intervallo non valido, ritentare', 'Errore');
@@ -329,7 +429,12 @@ export class ListSegnalazioniComponent {
     } else if (this.optionNumericFilter === 'Azzera filtro') {
       delete this.filter[this.colonnaInFilter];
       console.log('filt ', this.filter);
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     }
     this.optionNumericFilter === 'Azzera filtro';
   }
@@ -339,13 +444,22 @@ export class ListSegnalazioniComponent {
   }
 
   filterString(valoreInput: string) {
+    console.log(valoreInput);
+
     // Pulizia filtro
     delete this.filter[this.colonnaInFilter];
     let nomeColonna: any = {};
     nomeColonna.contains = valoreInput;
     nomeColonna.mode = 'insensitive';
     this.filter[this.colonnaInFilter] = nomeColonna;
-    this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+    console.log(this.filter);
+
+    this.loadSegnalazioni(
+      this.selectedColumns,
+      this.indexPoint,
+      this.filter,
+      this.order
+    );
   }
 
   filterDate(valoreInput1: any, valoreInput2: any) {
@@ -360,17 +474,32 @@ export class ListSegnalazioniComponent {
     if (this.optionDateFilter === 'Uguale a') {
       console.log(this.filter);
       this.filter[this.colonnaInFilter] = valoreInput1;
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     } else if (this.optionDateFilter === 'Maggiore di') {
       let greaterValue: any = {};
       greaterValue.gt = valoreInput1;
       this.filter[this.colonnaInFilter] = greaterValue;
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     } else if (this.optionDateFilter === 'Minore di') {
       let lowerValue: any = {};
       lowerValue.lt = valoreInput1;
       this.filter[this.colonnaInFilter] = lowerValue;
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     } else if (this.optionDateFilter === 'Compreso tra') {
       console.log(valoreInput1, valoreInput2);
       if (valoreInput1 < valoreInput2) {
@@ -386,7 +515,8 @@ export class ListSegnalazioniComponent {
         this.loadSegnalazioni(
           this.selectedColumns,
           this.indexPoint,
-          this.filter
+          this.filter,
+          this.order
         );
       } else {
         this.toastr.error('Intervallo non valido, ritentare', 'Errore');
@@ -394,7 +524,12 @@ export class ListSegnalazioniComponent {
     } else if (this.optionDateFilter === 'Azzera filtro') {
       delete this.filter[this.colonnaInFilter];
       console.log('filt ', this.filter);
-      this.loadSegnalazioni(this.selectedColumns, this.indexPoint, this.filter);
+      this.loadSegnalazioni(
+        this.selectedColumns,
+        this.indexPoint,
+        this.filter,
+        this.order
+      );
     }
     this.optionDateFilter === 'Azzera filtro';
   }

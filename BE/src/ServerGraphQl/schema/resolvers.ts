@@ -70,7 +70,9 @@ const resolvers = {
       console.log("================= IN SEGNALAZIONI: ");
 
       let filter = JSON.parse(parent.input.filter);
-      console.log("========== INPUT E FILTER: ", parent.input, filter);
+      let order = JSON.parse(parent.input.order);
+
+      console.log("========== INPUT E FILTER: ", parent.input, filter, order);
 
       // Definisce il tipo di dato per colonna, così da usare filtri dinamici nel FE
       const colonneUtenti: any = await db.avr_main
@@ -89,6 +91,7 @@ const resolvers = {
       // Numero utenti
       const count = await db.avr_main.segnalazione.count({
         where: filter,
+        orderBy: order,
       });
 
       // Dati utenti
@@ -96,6 +99,7 @@ const resolvers = {
         skip: +parent.input.indexPoint,
         take: 10,
         where: filter,
+        orderBy: order,
       });
 
       // Controllo e return dati

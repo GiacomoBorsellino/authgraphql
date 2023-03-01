@@ -63,10 +63,12 @@ export class SegnalazioniService {
   public getSegnalazioni(
     data: any,
     indexPoint: number,
-    filter: any
+    filter: any,
+    order: any
   ): Observable<any> {
     // Converti Filtro oggetto in stringa, così da evitare specificazione in Backend
     filter = JSON.stringify(filter);
+    order = JSON.stringify(order);
 
     let GET_SEGNALAZIONI = gql`
       query getSegnalazioni($input: Pagination) {
@@ -87,6 +89,7 @@ export class SegnalazioniService {
           input: {
             indexPoint: indexPoint,
             filter: filter,
+            order: order,
           },
         },
         context: {
