@@ -139,7 +139,32 @@ export class ListSegnalazioniComponent {
           // Righe
           this.rowsData = []; // Pulizia righe post filtro
           this.users.map((row: any) => {
-            this.rowsData.push(Object.values(row));
+            let singleRow = Object.values(row);
+            // Conversione per tipo di dato, discriminante date | Considera: Non Numeri, Non Null e Stringhe con lunghezza superiore a 10 caratteri*
+            // * Difficile che un numero stringihficato abbia un valore superiore a i 1x10^10, si spera
+            // let rowsFiltered = [];
+            // for (let i = 0; i < singleRow.length; i++) {
+            //   try {
+            //     let rowDate: any = singleRow[i];
+            //     if (
+            //       typeof rowDate !== 'number' &&
+            //       rowDate !== null &&
+            //       rowDate.length > 10
+            //     ) {
+            //       let dateFilter = new Date(rowDate)
+            //         .toISOString()
+            //         .substring(0, 10);
+            //       rowsFiltered.push(dateFilter);
+            //     } else {
+            //       rowsFiltered.push(singleRow[i]);
+            //     }
+            //   } catch (err) {
+            //     rowsFiltered.push(singleRow[i]);
+            //   }
+            // }
+            // this.rowsData.push(rowsFiltered);
+
+            this.rowsData.push(singleRow);
           });
           console.log('Righe: ', this.users);
 
@@ -265,6 +290,8 @@ export class ListSegnalazioniComponent {
   // Filters
   filterNumeric(valoreInput1: number, valoreInput2: number) {
     console.log(this.filter);
+    // Pulizia filtro
+    delete this.filter[this.colonnaInFilter];
     if (this.optionNumericFilter === 'Uguale a') {
       console.log(this.filter);
       this.filter[this.colonnaInFilter] = valoreInput1;
@@ -312,6 +339,8 @@ export class ListSegnalazioniComponent {
   }
 
   filterString(valoreInput: string) {
+    // Pulizia filtro
+    delete this.filter[this.colonnaInFilter];
     let nomeColonna: any = {};
     nomeColonna.contains = valoreInput;
     nomeColonna.mode = 'insensitive';
@@ -320,6 +349,8 @@ export class ListSegnalazioniComponent {
   }
 
   filterDate(valoreInput1: any, valoreInput2: any) {
+    // Pulizia filtro
+    delete this.filter[this.colonnaInFilter];
     console.log(this.filter);
 
     valoreInput1 = new Date(valoreInput1).toISOString();
