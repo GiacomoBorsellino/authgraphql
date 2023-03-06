@@ -294,9 +294,12 @@
                             {{row}}
                         </th>
                         <!-- COLONNA FISSA -->
-                        <th class="px-10 py-4 border bg-gray-600 border-r-slate-500 border-b-slate-700">
-                            <button></button><button (click)="test(row[0])"><span
-                                    class="material-symbols-outlined text-white">info</span></button>
+                        <th
+                            class="px-10 py-6 border bg-gray-600 border-r-slate-500 border-b-slate-700 flex flex-row justify-around items-center gap-2">
+                            <button></button><button (click)="deleteRecord(row[0])"><span
+                                    class="material-symbols-outlined text-white">delete</span></button>
+                            <button></button><button (click)="editRecord(row[0])"><span
+                                    class="material-symbols-outlined text-white">edit</span></button>
                         </th>
                     </tr>
                 </tbody>

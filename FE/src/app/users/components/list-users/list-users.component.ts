@@ -533,7 +533,11 @@ export class ListUsersComponent implements OnInit {
     this.optionDateFilter = option;
   }
 
-  test(id: any) {
-    console.log('ID: ', id);
+  deleteRecord(id: any) {
+    console.log('Delete ID: ', id);
+  }
+
+  editRecord(id: any) {
+    console.log('Edit ID: ', id);
   }
 }
