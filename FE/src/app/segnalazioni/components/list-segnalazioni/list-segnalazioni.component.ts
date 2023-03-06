@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './list-segnalazioni.component.html',
   styleUrls: ['./list-segnalazioni.component.css'],
 })
-export class ListSegnalazioniComponent {
+export class ListSegnalazioniComponent implements OnInit {
   constructor(
     private SegnalazioniService: SegnalazioniService,
     private toastr: ToastrService

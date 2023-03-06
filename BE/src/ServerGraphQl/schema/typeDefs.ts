@@ -1,6 +1,7 @@
 import { gql } from "apollo-server";
 
 const typeDefs = gql`
+  # Model Utente
   type Utente {
     id: ID
     idAppalto: Int
@@ -20,6 +21,7 @@ const typeDefs = gql`
     roles: String
   }
 
+  # Model Segnalazione
   type Segnalazione {
     id: Int
     idAppalto: Int
@@ -61,6 +63,7 @@ const typeDefs = gql`
     idTipoProvvedimento: Int
   }
 
+  # Model Allegato
   type Allegato {
     id: Int
     tabella_appartenenza: String
@@ -74,6 +77,7 @@ const typeDefs = gql`
     del: Int
   }
 
+  # Input per Login
   input UserInput {
     id: ID
     email: String
@@ -81,6 +85,7 @@ const typeDefs = gql`
     roles: String
   }
 
+  # Output Login
   type UserLogin {
     id: ID
     nome: String
@@ -91,18 +96,21 @@ const typeDefs = gql`
     token: String
   }
 
+  # Input Query
   input Pagination {
     indexPoint: Int
     filter: String
     order: String
   }
 
+  # Output Utenti
   type UtenteConnection {
     data: [Utente]
     count: Int
     typeDataColumns: String
   }
 
+  #  Output Segnalazioni
   type SegnalazioneConnection {
     data: [Segnalazione]
     count: Int
