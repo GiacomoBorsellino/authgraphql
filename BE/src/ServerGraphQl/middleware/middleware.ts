@@ -6,7 +6,7 @@ import { db } from "../../config/dbConfig";
 
 // Middleware controllo Token
 const checkToken = async (resolve, root, args, context, info) => {
-  console.log("================= IN MIDDLEWARE CHECKTOKEN");
+  // console.log("================= IN MIDDLEWARE CHECKTOKEN");
 
   // Log di controllo
   /*
@@ -39,7 +39,7 @@ const checkToken = async (resolve, root, args, context, info) => {
     );
     return result;
   } else if (checkField === true) {
-    console.log("================= IN MIDDLEWARE 1 - Controllo del token");
+    // console.log("================= IN MIDDLEWARE 1 - Controllo del token");
 
     // Token da FE
     let token: string = context[0].authorization;
@@ -72,9 +72,9 @@ const checkToken = async (resolve, root, args, context, info) => {
 
       if (compareIds && isInGroup) {
         const result = await resolve(root, args, context, info);
-        console.log(
-          "================= IN MIDDLEWARE 2 - Utente può fare la chiamata"
-        );
+        // console.log(
+        //   "================= IN MIDDLEWARE 2 - Utente può fare la chiamata"
+        // );
         return result;
       } else {
         console.log(

@@ -232,6 +232,8 @@ export class ListSegnalazioniComponent {
   cleanAllFilters() {
     this.filter = {};
     this.order = [];
+    console.log(this.order, this.filter);
+
     this.loadSegnalazioni(
       this.selectedColumns,
       this.indexPoint,
@@ -273,7 +275,7 @@ export class ListSegnalazioniComponent {
   // Sorting Filter
   sortFilter(column: any) {
     this.checkSorting = !this.checkSorting;
-
+    this.order = [];
     if (this.checkSorting === true) {
       let obj = { [column]: 'desc' };
       this.order = obj;
