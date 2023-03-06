@@ -85,16 +85,16 @@ export class ListUsersComponent implements OnInit {
 
     if (checked) {
       this.selectedColumns.push(colonnaSelezionata);
-      for (let i = 0; i < 10; i++) {
+      for (let i = 1; i < 10; i++) {
         this.rowsData.pop();
       }
     } else {
-      for (let i = 0; i < this.selectedColumns.length; i++) {
+      for (let i = 1; i < this.selectedColumns.length; i++) {
         if (this.selectedColumns[i] === colonnaSelezionata) {
           this.selectedColumns.splice(i, 1);
         }
       }
-      for (let i = 0; i < 10; i++) {
+      for (let i = 1; i < 10; i++) {
         this.rowsData.shift();
       }
     }
@@ -531,5 +531,9 @@ export class ListUsersComponent implements OnInit {
 
   changeOptionDate(option: any) {
     this.optionDateFilter = option;
+  }
+
+  test(id: any) {
+    console.log('ID: ', id);
   }
 }

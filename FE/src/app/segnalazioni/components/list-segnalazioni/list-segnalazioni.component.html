@@ -35,14 +35,16 @@
                     <ul class=" text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg">
                         <li *ngFor="let checkColonne of typeDataColumns; let i = index"
                             class="w-full border-b border-gray-200 rounded-t-lg">
-                            <div class="flex items-center pl-3">
-                                <input id="checkColonne.nameColumn" type="checkbox" value=""
-                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
-                                    (change)="choiceColumns($event, checkColonne.nameColumn)"
-                                    [checked]="selectedColumns.includes(checkColonne.nameColumn)">
-                                <label for="vue-checkbox-list"
-                                    class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{checkColonne.nameColumn}}</label>
-                            </div>
+                            <ng-container *ngIf="i !== 0">
+                                <div class="flex items-center pl-3">
+                                    <input id="checkColonne.nameColumn" type="checkbox" value=""
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                                        (change)="choiceColumns($event, checkColonne.nameColumn)"
+                                        [checked]="selectedColumns.includes(checkColonne.nameColumn)">
+                                    <label for="vue-checkbox-list"
+                                        class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{checkColonne.nameColumn}}</label>
+                                </div>
+                            </ng-container>
                         </li>
                     </ul>
                 </div>
@@ -246,13 +248,13 @@
         </div>
 
         <!-- TABELLA -->
-        <div class="relative overflow-x-auto rounded-md m-6">
+        <div class="relative overflow-x-auto rounded-md m-6 flex flex-row">
             <table class="w-full text-sm text-left text-gray-500 ">
                 <!-- COLONNE -->
                 <thead class="text-xs text-gray-700 uppercase bg-gray-200 border border-b-slate-700">
                     <tr>
                         <th *ngFor="let column of columnsData; let i = index" scope="col"
-                            class="px-6 py-3 border border-r-slate-700 border-b-slate-700">
+                            class="px-6 py-3 border bg-gray-200 border-r-slate-700 border-b-slate-700">
                             <div class="flex flex-row justify-around items-center"><b>{{column}}</b><button
                                     (click)="sortFilter(column)"><span
                                         class="material-symbols-outlined ">swap_vert</span></button><button
@@ -276,10 +278,14 @@
                             </h6>
                             <h6 *ngIf="!filter.hasOwnProperty(column)">&nbsp;</h6>
                         </th>
+                        <!-- COLONNA FISSA -->
+                        <th scope="col" class="px-6 py-3 border bg-gray-600 border-r-slate-700 border-b-slate-700">
+                            <div class="flex flex-row justify-around items-center text-white"><b>Edit</b></div>
+                        </th>
                     </tr>
                 </thead>
                 <!-- RIGHE -->
-                <tbody>
+                <tbody class="">
                     <tr [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(226 232 240)' } : {'background-color': 'rgb(203 213 225)'}"
                         *ngFor="let row of rowsData; let i = index" class="bg-white border-b-slate-700">
                         <th *ngFor="let row of rowsData[i]; let i = index"
@@ -287,9 +293,16 @@
                             [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(226 232 240)' } : {'background-color': 'rgb(203 213 225)'}">
                             {{row}}
                         </th>
+                        <!-- COLONNA FISSA -->
+                        <th class="px-10 py-4 border bg-gray-600 border-r-slate-500 border-b-slate-700">
+                            <button></button><button (click)="test(row[0])"><span
+                                    class="material-symbols-outlined text-white">info</span></button>
+                        </th>
                     </tr>
                 </tbody>
+                <tbody>
             </table>
+
             <h1 *ngIf="datas.length === 0" class="py-6 font-bold">Nessun dato trovato</h1>
         </div>
         <h1 class="mx-6">Totale: {{datasCount}}</h1>
