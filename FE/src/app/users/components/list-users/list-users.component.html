@@ -153,7 +153,55 @@
             <div class="absolute top-0 left-0 w-full h-3/4 z-11 p-4 mt-24 rounded-md bg-slate-200">
                 <h1 class="text-center font-bold">Filtro Data</h1>
                 <!-- SPAZIO PER FILTRO -->
+                <select #valore value="Azzera filtro" class="text-slate-700 font-semibold py-2 px-4 rounded w-1/2"
+                    (change)="changeOptionDate(valore.value)">
+                    <option>Azzera filtro</option>
+                    <option>Uguale a</option>
+                    <option>Maggiore di</option>
+                    <option>Minore di</option>
+                    <option>Compreso tra</option>
+                </select>
 
+                <!-- SELETTORI -->
+                <div *ngIf="valore.value === 'Azzera filtro'"
+                    class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
+                    <button (click)="filterDate('','')"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
+                </div>
+
+                <div *ngIf="valore.value === 'Uguale a'"
+                    class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
+                    <input type="date" #valoreData value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/2">
+                    <button (click)="filterDate(valoreData.value, valoreData.value)"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
+                </div>
+
+                <div *ngIf="valore.value === 'Maggiore di'"
+                    class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
+                    <input type="date" #valoreData value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/2">
+                    <button (click)="filterDate(valoreData.value, valoreData.value)"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
+                </div>
+
+                <div *ngIf="valore.value === 'Minore di'"
+                    class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
+                    <input type="date" #valoreData value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/2">
+                    <button (click)="filterDate(valoreData.value, valoreData.value)"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
+                </div>
+
+                <div *ngIf="valore.value === 'Compreso tra'"
+                    class="flex flex-row gap-1 justify-start items-center w-1/2 mt-4">
+                    <input type="date" #valoreDataLt value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/4">
+                    <input type="date" #valoreDataGt value=""
+                        class="text-slate-700 font-semibold py-2 px-4 rounded mr-2 w-1/4">
+                    <button (click)="filterDate(valoreDataLt.value, valoreDataGt.value)"
+                        class="bg-slate-700 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded w-1/2">Filtra</button>
+                </div>
             </div>
         </div>
 
@@ -206,8 +254,13 @@
                         <th *ngFor="let column of columnsData; let i = index" scope="col"
                             class="px-6 py-3 border border-r-slate-700 border-b-slate-700">
                             <div class="flex flex-row justify-around items-center"><b>{{column}}</b><button
+                                    (click)="sortFilter(column)"><span
+                                        class="material-symbols-outlined ">swap_vert</span></button><button
                                     (click)="switchFilter(column)"><span
                                         class="material-symbols-outlined ">search</span></button></div>
+                            <!-- <input *ngIf="checkIfStringFilter(column)" type="text" #valore value=""
+                                (keyup)="filterString(valore.value)"
+                                class="text-slate-700 font-semibold py-1 px-4 rounded"> -->
                             <!-- VISUALIZZATORE FILTRI ATTIVI -->
                             <h6 *ngIf="filter.hasOwnProperty(column) && filter[column].contains">
                                 {{filter[column].contains}}</h6>
@@ -237,12 +290,12 @@
                     </tr>
                 </tbody>
             </table>
-            <h1 *ngIf="users.length === 0" class="py-6 font-bold">Nessun dato trovato</h1>
+            <h1 *ngIf="datas.length === 0" class="py-6 font-bold">Nessun dato trovato</h1>
         </div>
-        <h1 class="mx-6">Totale: {{usersCount}}</h1>
+        <h1 class="mx-6">Totale: {{datasCount}}</h1>
 
         <!-- TASTI PAGINATION -->
-        <div *ngIf="users.length !== 0" class=" m-6 relative float-right overflow-x-auto sm:rounded-lg">
+        <div *ngIf="datas.length !== 0" class=" m-6 relative float-right overflow-x-auto sm:rounded-lg">
             <nav class="flex items-center justify-between pt-4" aria-label="Table navigation">
                 <ul class="inline-flex items-center -space-x-px">
                     <li class="cursor-pointer" (click)="downPage()">
@@ -284,24 +337,3 @@
         <span class="sr-only">Loading...</span>
     </div>
 </main>
-
-<!-- SELETTORE COLONNE VECCHIO NON STILIZZATO -->
-<!-- 
-        <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Selettore Colonne</h3>
-        <div>
-            <ul
-                class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex">
-                <li *ngFor="let checkColonne of typeDataColumns; let i = index"
-                    class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
-                    <div class="flex items-center pl-3">
-                        <input id="checkColonne.nameColumn" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                            (change)="choiceColumns($event, checkColonne.nameColumn)"
-                            [checked]="selectedColumns.includes(checkColonne.nameColumn)">
-                        <label for="vue-checkbox-list"
-                            class="w-full py-3 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{checkColonne.nameColumn}}</label>
-                    </div>
-                </li>
-            </ul>
-        </div> 
-    -->

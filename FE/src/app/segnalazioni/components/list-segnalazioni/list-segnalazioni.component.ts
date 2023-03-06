@@ -16,8 +16,8 @@ export class ListSegnalazioniComponent {
   // Response Handler: Success, Error, Info, Warning
   @Output() responseEvent = new EventEmitter<string>();
 
-  users: any = [];
-  usersCount: number;
+  datas: any = [];
+  datasCount: number;
   typeDataColumns: any;
   limitPagination: number;
   error: boolean = false;
@@ -129,23 +129,23 @@ export class ListSegnalazioniComponent {
     ).subscribe(
       (res) => {
         // Dati
-        this.users = res.data.getSegnalazioni.data;
+        this.datas = res.data.getSegnalazioni.data;
         // console.log('bobo ', res.data.getSegnalazioni.data);
-        if (this.users.length !== 0) {
-          this.usersCount = res.data.getSegnalazioni.count;
+        if (this.datas.length !== 0) {
+          this.datasCount = res.data.getSegnalazioni.count;
           this.typeDataColumns = JSON.parse(
             res.data.getSegnalazioni.typeDataColumns
           );
-          this.limitPagination = Math.ceil(this.usersCount / 10);
-          // console.log('Lista: ', this.users);
+          this.limitPagination = Math.ceil(this.datasCount / 10);
+          // console.log('Lista: ', this.datas);
 
           // Colonne
-          this.columnsData = Object.keys(this.users[0]);
+          this.columnsData = Object.keys(this.datas[0]);
           // console.log('Colonne: ', this.columnsData, this.columnsData.length);
 
           // Righe
           this.rowsData = []; // Pulizia righe post filtro
-          this.users.map((row: any) => {
+          this.datas.map((row: any) => {
             let singleRow = Object.values(row);
             // Conversione per tipo di dato, discriminante date | Considera: Non Numeri, Non Null e Stringhe con lunghezza superiore a 10 caratteri*
             // * Difficile che un numero stringihficato abbia un valore superiore a i 1x10^10, si spera
@@ -173,14 +173,14 @@ export class ListSegnalazioniComponent {
 
             this.rowsData.push(singleRow);
           });
-          // console.log('Righe: ', this.users);
+          // console.log('Righe: ', this.datas);
 
           this.loading = false;
           // this.colonnaInFilter = ''; // Ricorda, il reset va alla fine dell'operazione
         } else {
           this.columnsData = this.originalPositionedColumns;
           this.rowsData = [];
-          this.usersCount = 0;
+          this.datasCount = 0;
           this.loading = false;
         }
       },

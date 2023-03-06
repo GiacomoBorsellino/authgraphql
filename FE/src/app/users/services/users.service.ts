@@ -34,7 +34,7 @@ export class UsersService {
       );
   }
 
-  // Richiama tutti gli utenti
+  // Richiama tutte le colonne degli Utenti
   public getColumns(table: string): Observable<any> {
     let GET_COLUMNS = gql`
       query getColumns($input: String) {
@@ -59,12 +59,18 @@ export class UsersService {
       );
   }
 
-  // Richiama tutti gli utenti
-  public getUsers(data: any, indexPoint: number, filter: any): Observable<any> {
+  // Richiama tutte le Segnalazioni
+  public getUsers(
+    data: any,
+    indexPoint: number,
+    filter: any,
+    order: any
+  ): Observable<any> {
     // Converti Filtro oggetto in stringa, così da evitare specificazione in Backend
     filter = JSON.stringify(filter);
+    order = JSON.stringify(order);
 
-    let GET_USER = gql`
+    let GET_USERS = gql`
       query getUsers($input: Pagination) {
         getUsers(input: $input) {
           data {
@@ -78,11 +84,12 @@ export class UsersService {
 
     return this.apollo
       .query({
-        query: GET_USER,
+        query: GET_USERS,
         variables: {
           input: {
             indexPoint: indexPoint,
             filter: filter,
+            order: order,
           },
         },
         context: {

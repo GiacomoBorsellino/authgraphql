@@ -26,18 +26,20 @@ const resolvers = {
       }
     },
     async getUsers(args: any, parent: any, context: any, info: any) {
-      console.log("================= IN UTENTI: ");
+      console.log("================= IN USERS: ");
 
       let filter = JSON.parse(parent.input.filter);
-      console.log("========== INPUT E FILTER: ", parent.input, filter);
+      let order = JSON.parse(parent.input.order);
+
+      console.log("========== INPUT E FILTER: ", parent.input, filter, order);
 
       // Definisce il tipo di dato per colonna, così da usare filtri dinamici nel FE
-      const colonneUtenti: any = await db.avr_main
+      const colonne: any = await db.avr_main
         .$queryRaw`SELECT * FROM information_schema.columns WHERE table_name = \'utenti\'`;
 
       // Creazione lista totale colonne
       let typeDataColumns: any = [];
-      colonneUtenti.map((colonna: any) => {
+      colonne.map((colonna: any) => {
         typeDataColumns.push({
           nameColumn: colonna.column_name,
           typeData: colonna.data_type,
@@ -48,6 +50,7 @@ const resolvers = {
       // Numero utenti
       const count = await db.avr_main.utenti.count({
         where: filter,
+        orderBy: order,
       });
 
       // Dati utenti
@@ -55,6 +58,7 @@ const resolvers = {
         skip: +parent.input.indexPoint,
         take: 10,
         where: filter,
+        orderBy: order,
       });
 
       // Controllo e return dati
@@ -75,12 +79,12 @@ const resolvers = {
       console.log("========== INPUT E FILTER: ", parent.input, filter, order);
 
       // Definisce il tipo di dato per colonna, così da usare filtri dinamici nel FE
-      const colonneUtenti: any = await db.avr_main
+      const colonne: any = await db.avr_main
         .$queryRaw`SELECT * FROM information_schema.columns WHERE table_name = \'segnalazione\'`;
 
       // Creazione lista totale colonne
       let typeDataColumns: any = [];
-      colonneUtenti.map((colonna: any) => {
+      colonne.map((colonna: any) => {
         typeDataColumns.push({
           nameColumn: colonna.column_name,
           typeData: colonna.data_type,

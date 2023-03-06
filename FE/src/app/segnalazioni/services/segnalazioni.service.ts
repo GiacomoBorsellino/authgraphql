@@ -34,7 +34,7 @@ export class SegnalazioniService {
       );
   }
 
-  // Richiama tutti gli utenti
+  // Richiama tutte le colonne delle Segnalazioni
   public getColumns(table: string): Observable<any> {
     let GET_COLUMNS = gql`
       query getColumns($input: String) {
@@ -59,7 +59,7 @@ export class SegnalazioniService {
       );
   }
 
-  // Richiama tutti gli utenti
+  // Richiama tutte le Segnalazioni
   public getSegnalazioni(
     data: any,
     indexPoint: number,
