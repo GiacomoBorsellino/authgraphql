@@ -120,18 +120,12 @@ const typeDefs = gql`
   type Query {
     getColumns(input: String): String
     getUsers(input: Pagination): UtenteConnection
-
     getSegnalazioni(input: Pagination): SegnalazioneConnection
-
     user(id: ID!): Utente
-
-    hello(name: String): String
-    bye(name: String): String
   }
 
   type Mutation {
     login(input: UserInput): UserLogin
-
     addUser(input: UserInput): Utente
     updateUser(input: UserInput): Utente
     deleteUser(input: UserInput): Utente
