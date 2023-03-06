@@ -1,4 +1,4 @@
-import { db } from "../../config/dbConfig";
+import { db } from "../../../config/dbConfig";
 
 const queryGeneric = {
   async getColumns(args: any, parent: any, context: any, info: any) {
@@ -26,9 +26,9 @@ const queryGeneric = {
 
 const mutationGeneric = {};
 
-const resolversGeneric = {
+const genericResolvers = {
   queryGeneric: queryGeneric,
   mutationGeneric: mutationGeneric,
 };
 
-export { resolversGeneric };
+export { genericResolvers };

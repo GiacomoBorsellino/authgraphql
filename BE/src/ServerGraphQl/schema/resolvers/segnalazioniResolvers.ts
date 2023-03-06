@@ -1,4 +1,4 @@
-import { db } from "../../config/dbConfig";
+import { db } from "../../../config/dbConfig";
 
 const querySegnalazioni = {
   async getSegnalazioni(args: any, parent: any, context: any, info: any) {
@@ -50,9 +50,9 @@ const querySegnalazioni = {
 
 const mutationSegnalazioni = {};
 
-const resolversSegnalazioni = {
+const segnalazioniResolvers = {
   querySegnalazioni: querySegnalazioni,
   mutationSegnalazioni: mutationSegnalazioni,
 };
 
-export { resolversSegnalazioni };
+export { segnalazioniResolvers };

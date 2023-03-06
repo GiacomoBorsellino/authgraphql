@@ -1,5 +1,5 @@
-import { db } from "../../config/dbConfig";
-import { secret } from "../../config/jwt.conf";
+import { db } from "../../../config/dbConfig";
+import { secret } from "../../../config/jwt.conf";
 // VVV Ricorda di importare così, sennò non funzionerà !
 const jwt = require("jsonwebtoken");
 
@@ -169,9 +169,9 @@ const mutationUtenti = {
   },
 };
 
-const resolversUtenti = {
+const utentiResolvers = {
   queryUtenti: queryUtenti,
   mutationUtenti: mutationUtenti,
 };
 
-export { resolversUtenti };
+export { utentiResolvers };

@@ -1,20 +1,18 @@
-import { db } from "../../config/dbConfig";
-import { secret } from "../../config/jwt.conf";
-// VVV Ricorda di importare così, sennò non funzionerà !
-const jwt = require("jsonwebtoken");
-
-import { resolversUtenti } from "./resolversUtenti";
-import { resolversSegnalazioni } from "./resolversSegnalazioni";
-import { resolversGeneric } from "./resolversGeneric";
+// Import Resolvers
+import { genericResolvers } from "./resolvers/genericResolvers";
+import { utentiResolvers } from "./resolvers/utentiResolvers";
+import { segnalazioniResolvers } from "./resolvers/segnalazioniResolvers";
 
 const resolvers = {
   Query: {
-    ...resolversGeneric.queryGeneric,
-    ...resolversUtenti.queryUtenti,
-    ...resolversSegnalazioni.querySegnalazioni,
+    ...genericResolvers.queryGeneric,
+    ...utentiResolvers.queryUtenti,
+    ...segnalazioniResolvers.querySegnalazioni,
   },
   Mutation: {
-    ...resolversUtenti.mutationUtenti,
+    ...genericResolvers.mutationGeneric,
+    ...utentiResolvers.mutationUtenti,
+    ...segnalazioniResolvers.mutationSegnalazioni,
   },
 };
 
