@@ -5,9 +5,10 @@ import { SegnalazioniRoutingModule } from './segnalazioni-routing.module';
 
 import { SegnalazioniContainerComponent } from './segnalazioni-container/segnalazioni-container.component';
 import { ListSegnalazioniComponent } from './components/list-segnalazioni/list-segnalazioni.component';
+import { EditSegnalazioniComponent } from './components/edit-segnalazioni/edit-segnalazioni.component';
 
 @NgModule({
-  declarations: [SegnalazioniContainerComponent, ListSegnalazioniComponent],
+  declarations: [SegnalazioniContainerComponent, ListSegnalazioniComponent, EditSegnalazioniComponent],
   imports: [CommonModule, FormsModule, SegnalazioniRoutingModule],
 })
 export class SegnalazioniModule {}

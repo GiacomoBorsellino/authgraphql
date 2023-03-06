@@ -1950,30 +1950,25 @@ model tab43B_M01_monit_rastrelliere {
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view tab05A_muri_sostegno_storicoSC3 {
-  id_master     Int?
+  id_master     Int        @unique
   storico_sc    Decimal[]  @db.Decimal
   date_modifica DateTime[] @db.Timestamp
 
-  @@ignore
   @@schema("catasto")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view tab05A_muri_sostegno_storicoSC {
   id_history Int?
-  id_master  Int?
+  id_master  Int      @unique
   modified   String?
   sc         Decimal? @db.Decimal(3, 1)
 
-  @@ignore
   @@schema("catasto")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst01B_M01_sosta {
-  id_master                 Int?
+  id_master                 Int                        @unique
   tipo_oggetto              tipo_oggetto_t?
   id_sosta                  Int?
   id_originale              String?                    @db.VarChar
@@ -2011,7 +2006,6 @@ view vst01B_M01_sosta {
   img_monit_dettaglio_1_url String?                    @db.VarChar
   img_monit_inquadr_1_url   String?                    @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
@@ -2055,18 +2049,17 @@ view grafo_gsfi {
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst30A_segn_orizzP {
-  id_master           BigInt?
+  id_master           BigInt                   @unique
   geom                Unsupported("geometry")?
   tipologia           segnale_orizz_pun_t?
   id_master_correlati String?
 
-  @@ignore
   @@schema("catasto")
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst02A_M01_monit_area_circ_ped {
-  id_master                 Int?
+  id_master                 Int                      @unique
   tipo_oggetto              tipo_oggetto_t?
   id_acped                  BigInt?
   id_originale              String?                  @db.VarChar
@@ -2116,13 +2109,12 @@ view vst02A_M01_monit_area_circ_ped {
   img_monit_inquadr_1_url   String?                  @db.VarChar
   img_monit_inquadr_2_url   String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst03A_M01_monit_area_circ_cic {
-  id_master                 Int?
+  id_master                 Int                      @unique
   tipo_oggetto              tipo_oggetto_t?
   id_accic                  BigInt?
   id_originale              String?                  @db.VarChar
@@ -2171,13 +2163,12 @@ view vst03A_M01_monit_area_circ_cic {
   img_monit_inquadr_1_url   String?                  @db.VarChar
   img_monit_inquadr_2_url   String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst05a_muri_monitoraggio {
-  id_master        Int?
+  id_master        Int                      @unique
   tipo_oggetto     tipo_oggetto_t?
   id_musos         Int?
   id_originale     BigInt?
@@ -2207,13 +2198,11 @@ view vst05a_muri_monitoraggio {
   monitorato       Boolean?
   note             String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst19A_M01_monit_griglie_caditoie {
-  id_master                 Int?
+  id_master                 Int                      @unique
   tipo_oggetto              tipo_oggetto_t?
   id_caditoia               BigInt?
   id_originale              Int?
@@ -2248,13 +2237,11 @@ view vst19A_M01_monit_griglie_caditoie {
   img_monit_dettaglio_1_url String?                  @db.VarChar
   img_monit_inquadr_1_url   String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst24A_M01_monit_dossi {
-  id_master                 Int?
+  id_master                 Int                      @unique
   tipo_oggetto              tipo_oggetto_t?
   id_dosso                  BigInt?
   quartiere                 quartieri_t?
@@ -2289,13 +2276,12 @@ view vst24A_M01_monit_dossi {
   img_monit_dettaglio_1_url String?                  @db.VarChar
   img_monit_inquadr_1_url   String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst27A_M01_monit_segn_vert_supporti {
-  id_master                 Int?
+  id_master                 Int                      @unique
   tipo_oggetto              tipo_oggetto_t?
   id_supporto               Int?
   quartiere                 quartieri_t?
@@ -2333,13 +2319,11 @@ view vst27A_M01_monit_segn_vert_supporti {
   conformita_normativa      conformita_normativa_t?
   note_conformita           String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst27B_M01_monit_segn_vert_cartelli {
-  id_master                 Int?
+  id_master                 Int                      @unique
   tipo_oggetto              tipo_oggetto_t?
   id_supporto               Int?
   id_pannello               BigInt?
@@ -2382,13 +2366,12 @@ view vst27B_M01_monit_segn_vert_cartelli {
   conformita_normativa      conformita_normativa_t?
   note_conformita           String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst30A_M01_monit_segn_oriz_P {
-  id_master                 BigInt?
+  id_master                 BigInt                     @unique
   tipo_oggetto              tipo_oggetto_t?
   id_sop                    BigInt?
   quartiere                 quartieri_t?
@@ -2428,13 +2411,11 @@ view vst30A_M01_monit_segn_oriz_P {
   note_conformita           String?                    @db.VarChar
   id_master_correlati       String?
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst30B_M01_monit_segn_oriz_L {
-  id_master                 Int?
+  id_master                 Int                          @unique
   tipo_oggetto              tipo_oggetto_t?
   id_sol                    BigInt?
   quartiere                 quartieri_t?
@@ -2470,13 +2451,11 @@ view vst30B_M01_monit_segn_oriz_L {
   conformita_normativa      conformita_normativa_t?
   note_conformita           String?                      @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst43A_M01_monit_paraped_dissuas {
-  id_master                 Int?
+  id_master                 Int                      @unique
   tipo_oggetto              tipo_oggetto_t?
   id_parapedonale           BigInt?
   id_originale              String?                  @db.VarChar
@@ -2512,13 +2491,11 @@ view vst43A_M01_monit_paraped_dissuas {
   img_monit_dettaglio_1_url String?                  @db.VarChar
   img_monit_inquadr_1_url   String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst43B_M01_monit_rastrelliere {
-  id_master                 Int?
+  id_master                 Int                      @unique
   tipo_oggetto              tipo_oggetto_t?
   id_rastrelliera           BigInt?
   id_originale              String?                  @db.VarChar
@@ -2554,14 +2531,12 @@ view vst43B_M01_monit_rastrelliere {
   img_monit_dettaglio_1_url String?                  @db.VarChar
   img_monit_inquadr_1_url   String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst_05a_m01_monit_muri_cls_layout {
   id_monit_musos_cls                  BigInt?
-  id_master                           Int?
+  id_master                           Int                      @unique
   tipo_oggetto                        tipo_oggetto_t?
   id_originale                        BigInt?
   quartiere                           quartieri_t?
@@ -2682,14 +2657,12 @@ view vst_05a_m01_monit_muri_cls_layout {
   non_conformita                      String?                  @db.VarChar
   azioni_preventive                   String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst_05a_m01_monit_muri_muratura_layout {
   id_monit_musos_murature             BigInt?
-  id_master                           Int?
+  id_master                           Int                      @unique
   tipo_oggetto                        tipo_oggetto_t?
   id_originale                        BigInt?
   quartiere                           quartieri_t?
@@ -2814,14 +2787,12 @@ view vst_05a_m01_monit_muri_muratura_layout {
   non_conformita                      String?                  @db.VarChar
   azioni_preventive                   String?                  @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst_13A_M01_barriere_fonoassorbenti_layout {
   id_monit_barr_fono           BigInt?
-  id_master                    Int?
+  id_master                    Int                      @unique
   tipo_oggetto                 tipo_oggetto_t?
   id_protez_amb                BigInt?
   quartiere                    quartieri_t?
@@ -2892,14 +2863,12 @@ view vst_13A_M01_barriere_fonoassorbenti_layout {
   coes_pannello_note           String?                  @db.VarChar
   geom                         Unsupported("geometry")?
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst_17A_M01_guard_rail_layout {
   id_monit_guard_rail          BigInt?
-  id_master                    Int?
+  id_master                    Int                        @unique
   tipo_oggetto                 tipo_oggetto_t?
   id_originale                 String?                    @db.VarChar
   quartiere                    quartieri_t?
@@ -2967,14 +2936,12 @@ view vst_17A_M01_guard_rail_layout {
   danni_da_urto_note           String?                    @db.VarChar
   geom                         Unsupported("geometry")?
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst_17A_M02_new_jersey_layout {
   id_monit_new_jersey    BigInt?
-  id_master              Int?
+  id_master              Int                        @unique
   tipo_oggetto           tipo_oggetto_t?
   id_originale           String?                    @db.VarChar
   quartiere              quartieri_t?
@@ -3034,14 +3001,12 @@ view vst_17A_M02_new_jersey_layout {
   transizioni_note       String?                    @db.VarChar
   geom                   Unsupported("geometry")?
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst_17A_M03_muretti_ringhiere_layout {
   id_monit_muretti_ringhiere             BigInt?
-  id_master                              Int?
+  id_master                              Int                        @unique
   tipo_oggetto                           tipo_oggetto_t?
   id_originale                           String?                    @db.VarChar
   quartiere                              quartieri_t?
@@ -3122,14 +3087,12 @@ view vst_17A_M03_muretti_ringhiere_layout {
   difetti_connessione_note               String?                    @db.VarChar
   geom                                   Unsupported("geometry")?
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst_17A_M05_attenuatori_urto_layout {
   id_monit_att_urto     BigInt?
-  id_master             Int?
+  id_master             Int                        @unique
   tipo_oggetto          tipo_oggetto_t?
   id_originale          String?                    @db.VarChar
   quartiere             quartieri_t?
@@ -3172,13 +3135,11 @@ view vst_17A_M05_attenuatori_urto_layout {
   elemento_note         String?                    @db.VarChar
   geom                  Unsupported("geometry")?
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 view vst_17A_disprit_monitoraggio {
-  id_master        Int?
+  id_master        Int                        @unique
   tipo_oggetto     tipo_oggetto_t?
   id_disprit       BigInt?
   id_originale     String?                    @db.VarChar
@@ -3213,7 +3174,6 @@ view vst_17A_disprit_monitoraggio {
   monitorato       Boolean?
   note_monit       String?                    @db.VarChar
 
-  @@ignore
   @@schema("monitoraggio")
 }
 
