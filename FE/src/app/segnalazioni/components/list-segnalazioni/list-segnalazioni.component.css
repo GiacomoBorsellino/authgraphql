@@ -3,6 +3,7 @@
 tr>th:last-child,tr>td:last-child {
     position: sticky;
     right: 0;
+    border: 1px solid rgb(51 65 85)
 }
 
 /* Scrollbar */

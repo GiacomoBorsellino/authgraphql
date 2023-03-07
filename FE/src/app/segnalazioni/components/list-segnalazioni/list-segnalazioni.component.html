@@ -249,7 +249,7 @@
 
         <!-- TABELLA -->
         <div class="relative overflow-x-auto rounded-md m-6 flex flex-row">
-            <table class="w-full text-sm text-left text-gray-500 ">
+            <table class="w-full text-sm text-left text-gray-500">
                 <!-- COLONNE -->
                 <thead class="text-xs text-gray-700 uppercase bg-gray-200 border border-b-slate-700">
                     <tr>
@@ -279,7 +279,7 @@
                             <h6 *ngIf="!filter.hasOwnProperty(column)">&nbsp;</h6>
                         </th>
                         <!-- COLONNA FISSA -->
-                        <th scope="col" class="px-6 py-3 border bg-gray-600 border-r-slate-700 border-b-slate-700">
+                        <th scope="col" class="px-12 py-6 bg-gray-600">
                             <div class="flex flex-row justify-around items-center text-white"><b>Edit</b></div>
                         </th>
                     </tr>
@@ -294,11 +294,10 @@
                             {{row}}
                         </th>
                         <!-- COLONNA FISSA -->
-                        <th
-                            class="px-10 py-6 border bg-gray-600 border-r-slate-500 border-b-slate-700 flex flex-row justify-around items-center gap-2">
-                            <button></button><button (click)="deleteRecord(row[0])"><span
+                        <th class="px-12 py-6 bg-gray-600 flex flex-row justify-around items-center gap-2">
+                            <button (click)="deleteRecord(row[0])"><span
                                     class="material-symbols-outlined text-white">delete</span></button>
-                            <button></button><button (click)="editRecord(row[0])"><span
+                            <button (click)="editRecord(row[0])"><span
                                     class="material-symbols-outlined text-white">edit</span></button>
                         </th>
                     </tr>
