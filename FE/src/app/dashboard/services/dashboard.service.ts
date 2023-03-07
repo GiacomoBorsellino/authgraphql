@@ -81,4 +81,46 @@ export class DashboardService {
         })
       );
   }
+
+  public getCountSegnalazioniProntoIntervento(): Observable<any> {
+    let GET_SEGNALAZIONI_PRONTO_INTERVENTO = gql`
+      query getCountSegnalazioniProntoIntervento {
+        getCountSegnalazioniProntoIntervento
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_SEGNALAZIONI_PRONTO_INTERVENTO,
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
+
+  public getCountSegnalazioniGetico(): Observable<any> {
+    let GET_SEGNALAZIONI_GETICO = gql`
+      query getCountSegnalazioniGetico {
+        getCountSegnalazioniGetico
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_SEGNALAZIONI_GETICO,
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
 }

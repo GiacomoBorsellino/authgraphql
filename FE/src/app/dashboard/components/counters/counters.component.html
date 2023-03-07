@@ -44,7 +44,7 @@
                                 Pronto Intervento <br><b>IN CORSO</b>
                             </p>
                             <p class="text-lg font-semibold text-gray-200 ">
-                                4
+                                {{prontoInterventoInCorso}}
                             </p>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                         <span class="material-symbols-outlined text-sm">
                             timer
                         </span>
-                        <h6 class="text-xs">Ultimo aggiornamento xx:xx</h6>
+                        <h6 class="text-xs">Ultimo aggiornamento {{prontoInterventoInCorsoTime | date: 'H:mm'}}</h6>
                     </div>
                 </div>
 
@@ -69,7 +69,7 @@
                                 Segnalazioni <br><b>REGISTRATE</b>
                             </p>
                             <p class="text-lg font-semibold text-gray-200 ">
-                                26250
+                                {{segnalazioniRegistrate}}
                             </p>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                         <span class="material-symbols-outlined text-sm">
                             timer
                         </span>
-                        <h6 class="text-xs">Ultimo aggiornamento xx:xx</h6>
+                        <h6 class="text-xs">Ultimo aggiornamento {{segnalazioniRegistrateTime | date: 'H:mm'}}</h6>
                     </div>
                 </div>
 
@@ -94,7 +94,7 @@
                                 Getico <br><b>GESTITI</b>
                             </p>
                             <p class="text-lg font-semibold text-gray-200 ">
-                                18090
+                                {{geticoGestiti}}
                             </p>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                         <span class="material-symbols-outlined text-sm">
                             timer
                         </span>
-                        <h6 class="text-xs">Ultimo aggiornamento xx:xx</h6>
+                        <h6 class="text-xs">Ultimo aggiornamento {{geticoGestitiTime | date: 'H:mm'}}</h6>
                     </div>
                 </div>
             </div>

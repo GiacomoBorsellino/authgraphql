@@ -57,28 +57,28 @@ export class CountersComponent implements OnInit {
       }
     );
 
-    // this.DashboardService.getCountSegnaleticaTemporaneaAttiva().subscribe(
-    //   (res) => {
-    //     console.log(res);
+    this.DashboardService.getCountSegnalazioniProntoIntervento().subscribe(
+      (res) => {
+        console.log(res);
 
-    //     // Dati
-    //     try {
-    //       this.segnaleticaTemporaneaAttiva =
-    //         res.data.getCountSegnaleticaTemporanea;
-    //       this.segnaleticaTemporaneaAttivaTime = new Date();
+        // Dati
+        try {
+          this.prontoInterventoInCorso =
+            res.data.getCountSegnalazioniProntoIntervento;
+          this.prontoInterventoInCorsoTime = new Date();
 
-    //       this.loading = false;
-    //     } catch {
-    //       this.loading = false;
-    //       this.toastr.error('Si è verificato un errore', 'Errore');
-    //     }
-    //   },
-    //   (error) => {
-    //     console.log('Errore: ', error);
-    //     this.toastr.error('Si è verificato un errore', 'Errore');
-    //     this.loading = false;
-    //   }
-    // );
+          this.loading = false;
+        } catch {
+          this.loading = false;
+          this.toastr.error('Si è verificato un errore', 'Errore');
+        }
+      },
+      (error) => {
+        console.log('Errore: ', error);
+        this.toastr.error('Si è verificato un errore', 'Errore');
+        this.loading = false;
+      }
+    );
 
     this.DashboardService.getCountSegnalazioni().subscribe(
       (res) => {
@@ -86,9 +86,30 @@ export class CountersComponent implements OnInit {
 
         // Dati
         try {
-          this.segnaleticaTemporaneaAttiva =
-            res.data.getCountSegnaleticaTemporanea;
-          this.segnaleticaTemporaneaAttivaTime = new Date();
+          this.segnalazioniRegistrate = res.data.getCountSegnalazioni;
+          this.segnalazioniRegistrateTime = new Date();
+
+          this.loading = false;
+        } catch {
+          this.loading = false;
+          this.toastr.error('Si è verificato un errore', 'Errore');
+        }
+      },
+      (error) => {
+        console.log('Errore: ', error);
+        this.toastr.error('Si è verificato un errore', 'Errore');
+        this.loading = false;
+      }
+    );
+
+    this.DashboardService.getCountSegnalazioniGetico().subscribe(
+      (res) => {
+        console.log(res);
+
+        // Dati
+        try {
+          this.geticoGestiti = res.data.getCountSegnalazioniGetico;
+          this.geticoGestitiTime = new Date();
 
           this.loading = false;
         } catch {

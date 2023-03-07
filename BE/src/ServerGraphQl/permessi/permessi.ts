@@ -94,6 +94,35 @@ const permessi = [
       Roles.tecniciCommittenza,
     ],
   },
+  {
+    operationName: "getCountSegnalazioniProntoIntervento",
+    type: "query",
+    description:
+      "route per visualizzare numero Segnalazioni in pronto intervento",
+    checkToken: true,
+    roles: [
+      Roles.dirigentiMobilita,
+      Roles.ufficiMobilita,
+      Roles.amministratori,
+      Roles.contactCenter,
+      Roles.tecniciImpresaManutenzione,
+      Roles.tecniciCommittenza,
+    ],
+  },
+  {
+    operationName: "getCountSegnalazioniGetico",
+    type: "query",
+    description: "route per visualizzare numero Segnalazioni Getico",
+    checkToken: true,
+    roles: [
+      Roles.dirigentiMobilita,
+      Roles.ufficiMobilita,
+      Roles.amministratori,
+      Roles.contactCenter,
+      Roles.tecniciImpresaManutenzione,
+      Roles.tecniciCommittenza,
+    ],
+  },
 ];
 
 export { permessi };

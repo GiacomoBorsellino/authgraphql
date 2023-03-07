@@ -268,6 +268,8 @@ const typeDefs = gql`
 
     getCountSegnaleticaTemporanea: Int
     getCountSegnalazioni: Int
+    getCountSegnalazioniProntoIntervento: Int
+    getCountSegnalazioniGetico: Int
   }
 
   type Mutation {

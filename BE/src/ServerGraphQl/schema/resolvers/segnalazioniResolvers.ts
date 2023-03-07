@@ -61,6 +61,35 @@ const querySegnalazioni = {
       throw new Error("Nessuna lista");
     }
   },
+  async getCountSegnalazioniProntoIntervento(
+    args: any,
+    parent: any,
+    context: any,
+    info: any
+  ) {
+    console.log("================= IN SEGNALAZIONI: ");
+
+    let filter = {
+      statoCorrenteSegnalazione: "A",
+      tipoEvento: 1,
+      del: "0",
+    };
+    // Numero utenti
+    const count = await db.avr_main.segnalazione.count({
+      where: filter,
+    });
+
+    console.log("COUNT: ", count);
+
+    // Controllo e return dati
+    if (count !== undefined) {
+      return count;
+    } else {
+      console.log("Nessuna lista");
+      // Return error
+      throw new Error("Nessuna lista");
+    }
+  },
 };
 
 const mutationSegnalazioni = {};
