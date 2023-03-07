@@ -50,13 +50,13 @@ Versione Angulal Cli:
 1. Clona il repository
 
    ```sh
-   git clone https://github.com/GiacomoBorsellino/Ororo
+   git clone https://github.com/GiacomoBorsellino/authgraphql
    ```
 
 2. Entra nella cartella
 
    ```sh
-   Cd authgraphql
+   cd authgraphql
    ```
 
 3. Installa NPM
@@ -68,7 +68,6 @@ Versione Angulal Cli:
 4. Installa NPM in BE e FE
 
    ```sh
-   npm install npm@latest -g
    npm install
    ```
 
@@ -84,6 +83,9 @@ Versione Angulal Cli:
    npx prisma db pull
    npm install @prisma/client
    npx prisma generate --schema prisma/schema.prisma
+
+   npx prisma generate --schema prisma/schema1.prisma
+   npx prisma generate --schema prisma/schema2.prisma
    ```
 
 7. Avviamo FE e BE usando gli script con
@@ -93,6 +95,18 @@ Versione Angulal Cli:
    ```
 
 ## Funzionamento&Struttura
+
+- Creare modulo:
+
+  ```sh
+  ng generate module nome_modulo
+  ```
+
+- Creare componenti che si infilano in un modulo preciso:
+
+  ```sh
+  ng g c specific-folder/component-name
+  ```
 
 ## Licenza
 
