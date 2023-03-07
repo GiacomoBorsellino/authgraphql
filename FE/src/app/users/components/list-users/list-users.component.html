@@ -1,5 +1,5 @@
 <main class="p-10 m-6">
-    <h1>Utenti</h1>
+    <h1>Segnalazioni</h1>
     <div *ngIf="!loading">
 
         <!-- RESET FILTRI -->
@@ -248,13 +248,13 @@
         </div>
 
         <!-- TABELLA -->
-        <div class="relative overflow-x-auto rounded-md m-6">
-            <table class="w-full text-sm text-left text-gray-500 ">
+        <div class="relative overflow-x-auto rounded-md m-6 flex flex-row">
+            <table class="w-full text-sm text-left text-gray-500">
                 <!-- COLONNE -->
                 <thead class="text-xs text-gray-700 uppercase bg-gray-200 border border-b-slate-700">
                     <tr>
                         <th *ngFor="let column of columnsData; let i = index" scope="col"
-                            class="px-6 py-3 border border-r-slate-700 border-b-slate-700">
+                            class="px-6 py-3 border bg-gray-200 border-r-slate-700 border-b-slate-700">
                             <div class="flex flex-row justify-around items-center"><b>{{column}}</b><button
                                     (click)="sortFilter(column)"><span
                                         class="material-symbols-outlined ">swap_vert</span></button><button
@@ -279,13 +279,13 @@
                             <h6 *ngIf="!filter.hasOwnProperty(column)">&nbsp;</h6>
                         </th>
                         <!-- COLONNA FISSA -->
-                        <th scope="col" class="px-6 py-3 border bg-gray-600 border-r-slate-700 border-b-slate-700">
+                        <th scope="col" class="px-12 py-6 bg-gray-600">
                             <div class="flex flex-row justify-around items-center text-white"><b>Edit</b></div>
                         </th>
                     </tr>
                 </thead>
                 <!-- RIGHE -->
-                <tbody>
+                <tbody class="">
                     <tr [ngStyle]="i % 2 == 0 ?{'background-color': 'rgb(226 232 240)' } : {'background-color': 'rgb(203 213 225)'}"
                         *ngFor="let row of rowsData; let i = index" class="bg-white border-b-slate-700">
                         <th *ngFor="let row of rowsData[i]; let i = index"
@@ -294,16 +294,17 @@
                             {{row}}
                         </th>
                         <!-- COLONNA FISSA -->
-                        <th
-                            class="px-10 py-6 border bg-gray-600 border-r-slate-500 border-b-slate-700 flex flex-row justify-around items-center gap-2">
-                            <button></button><button (click)="deleteRecord(row[0])"><span
+                        <th class="px-12 py-6 bg-gray-600 flex flex-row justify-around items-center gap-2">
+                            <button (click)="deleteRecord(row[0])"><span
                                     class="material-symbols-outlined text-white">delete</span></button>
-                            <button></button><button (click)="editRecord(row[0])"><span
+                            <button (click)="editRecord(row[0])"><span
                                     class="material-symbols-outlined text-white">edit</span></button>
                         </th>
                     </tr>
                 </tbody>
+                <tbody>
             </table>
+
             <h1 *ngIf="datas.length === 0" class="py-6 font-bold">Nessun dato trovato</h1>
         </div>
         <h1 class="mx-6">Totale: {{datasCount}}</h1>
