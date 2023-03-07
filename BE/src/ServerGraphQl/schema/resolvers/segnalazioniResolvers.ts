@@ -46,6 +46,21 @@ const querySegnalazioni = {
       throw new Error("Nessuna lista segnalazioni");
     }
   },
+  async getCountSegnalazioni(args: any, parent: any, context: any, info: any) {
+    console.log("================= IN SEGNALAZIONI: ");
+
+    // Numero utenti
+    const count = await db.avr_main.segnalazione.count({});
+
+    // Controllo e return dati
+    if (count !== undefined) {
+      return count;
+    } else {
+      console.log("Nessuna lista");
+      // Return error
+      throw new Error("Nessuna lista");
+    }
+  },
 };
 
 const mutationSegnalazioni = {};

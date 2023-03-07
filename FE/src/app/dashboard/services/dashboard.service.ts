@@ -19,39 +19,58 @@ export class DashboardService {
     .set('authorization', this.token)
     .set('userData', this.userData);
 
-  // Richiama tutte le Segnalazioni
-  public getSegnalazioni(
-    data: any,
-    indexPoint: number,
-    filter: any,
-    order: any
-  ): Observable<any> {
-    // Converti Filtro oggetto in stringa, così da evitare specificazione in Backend
-    filter = JSON.stringify(filter);
-    order = JSON.stringify(order);
+  public getCountSegnaleticaTemporaneaAttiva(): Observable<any> {
+    let GET_SEGNALETICATEMPORANEAATTIVA = gql`
+      query getCountSegnaleticaTemporanea {
+        getCountSegnaleticaTemporanea
+      }
+    `;
 
+    return this.apollo
+      .query({
+        query: GET_SEGNALETICATEMPORANEAATTIVA,
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
+
+  public getProntoIntervento(): Observable<any> {
+    let GET_PRONTO_INTEVENTO = gql`
+      query getProntoIntervento {
+        getProntoIntervento
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_PRONTO_INTEVENTO,
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
+
+  public getCountSegnalazioni(): Observable<any> {
     let GET_SEGNALAZIONI = gql`
-        query getSegnalazioni($input: Pagination) {
-          getSegnalazioni(input: $input) {
-            data {
-              ${data}
-            }
-            count
-            typeDataColumns
-          }
-        }
-      `;
+      query getCountSegnalazioni {
+        getCountSegnalazioni
+      }
+    `;
 
     return this.apollo
       .query({
         query: GET_SEGNALAZIONI,
-        variables: {
-          input: {
-            indexPoint: indexPoint,
-            filter: filter,
-            order: order,
-          },
-        },
         context: {
           headers: this.headers,
         },

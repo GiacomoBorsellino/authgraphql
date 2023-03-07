@@ -65,6 +65,35 @@ const permessi = [
     checkToken: true,
     roles: [Roles.amministratori],
   },
+  {
+    operationName: "getCountSegnaleticaTemporanea",
+    type: "query",
+    description:
+      "route per visualizzare numero segnaletica verticale temporanea",
+    checkToken: true,
+    roles: [
+      Roles.dirigentiMobilita,
+      Roles.ufficiMobilita,
+      Roles.amministratori,
+      Roles.contactCenter,
+      Roles.tecniciImpresaManutenzione,
+      Roles.tecniciCommittenza,
+    ],
+  },
+  {
+    operationName: "getCountSegnalazioni",
+    type: "query",
+    description: "route per visualizzare numero Segnalazioni",
+    checkToken: true,
+    roles: [
+      Roles.dirigentiMobilita,
+      Roles.ufficiMobilita,
+      Roles.amministratori,
+      Roles.contactCenter,
+      Roles.tecniciImpresaManutenzione,
+      Roles.tecniciCommittenza,
+    ],
+  },
 ];
 
 export { permessi };
