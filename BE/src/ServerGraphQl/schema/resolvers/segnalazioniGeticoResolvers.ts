@@ -28,7 +28,7 @@ const querySegnalazioniGetico = {
 
     const count = countNC + countDV + countIM;
 
-    console.log("GETICO: ", count);
+    // console.log("GETICO Gestiti: ", count);
 
     // Controllo e return dati
     if (count !== undefined) {

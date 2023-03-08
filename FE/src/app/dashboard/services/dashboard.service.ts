@@ -103,4 +103,30 @@ export class DashboardService {
   }
 
   // SINOTTICO
+  public getCountFonteRichiedenti(): Observable<any> {
+    let GET_FONTE_RICHIEDENTI = gql`
+      query getCountFonteRichiedenti {
+        getCountFonteRichiedenti {
+          diretta
+          telefonica
+          email
+          fax
+          web
+        }
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_FONTE_RICHIEDENTI,
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
 }

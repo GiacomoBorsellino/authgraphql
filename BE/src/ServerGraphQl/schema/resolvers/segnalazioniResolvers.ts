@@ -79,6 +79,70 @@ const querySegnalazioni = {
       where: filter,
     });
 
+    // console.log("COUNT: ", count);
+
+    // Controllo e return dati
+    if (count !== undefined) {
+      return count;
+    } else {
+      console.log("Nessuna lista");
+      // Return error
+      throw new Error("Nessuna lista");
+    }
+  },
+  async getCountFonteRichiedenti(
+    args: any,
+    parent: any,
+    context: any,
+    info: any
+  ) {
+    console.log("================= IN SEGNALAZIONI: ");
+
+    // Numero Fonte Diretta
+    const countDiretta = await db.avr_main.segnalazione.count({
+      where: {
+        fonteSegnalazione: 1,
+      },
+    });
+
+    // Numero Fonte Diretta
+    const countTelefonica = await db.avr_main.segnalazione.count({
+      where: {
+        fonteSegnalazione: 2,
+      },
+    });
+
+    // Numero Fonte Diretta
+    const countEmail = await db.avr_main.segnalazione.count({
+      where: {
+        fonteSegnalazione: 3,
+      },
+    });
+
+    // Numero Fonte Diretta
+    const countFax = await db.avr_main.segnalazione.count({
+      where: {
+        fonteSegnalazione: 4,
+      },
+    });
+
+    // Numero Fonte Diretta
+    const countWeb = await db.avr_main.segnalazione.count({
+      where: {
+        fonteSegnalazione: 5,
+      },
+    });
+
+    console.log("============== ", countDiretta);
+
+    const count = {
+      diretta: countDiretta,
+      telefonica: countTelefonica,
+      email: countEmail,
+      fax: countFax,
+      web: countWeb,
+    };
+
     console.log("COUNT: ", count);
 
     // Controllo e return dati

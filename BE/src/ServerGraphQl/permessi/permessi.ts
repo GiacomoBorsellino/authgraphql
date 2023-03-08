@@ -123,6 +123,20 @@ const permessi = [
       Roles.tecniciCommittenza,
     ],
   },
+  {
+    operationName: "getCountFonteRichiedenti",
+    type: "query",
+    description: "route per visualizzare numero Fonti Segnalazioni",
+    checkToken: true,
+    roles: [
+      Roles.dirigentiMobilita,
+      Roles.ufficiMobilita,
+      Roles.amministratori,
+      Roles.contactCenter,
+      Roles.tecniciImpresaManutenzione,
+      Roles.tecniciCommittenza,
+    ],
+  },
 ];
 
 export { permessi };

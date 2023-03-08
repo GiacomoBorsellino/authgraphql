@@ -260,6 +260,15 @@ const typeDefs = gql`
     typeDataColumns: String
   }
 
+  #  Output Fonte Richiedenti
+  type FonteRichiedentiCounts {
+    diretta: Int
+    telefonica: Int
+    email: Int
+    fax: Int
+    web: Int
+  }
+
   type Query {
     getColumns(input: String): String
     getUsers(input: Pagination): UtenteConnection
@@ -270,6 +279,7 @@ const typeDefs = gql`
     getCountSegnalazioni: Int
     getCountSegnalazioniProntoIntervento: Int
     getCountSegnalazioniGetico: Int
+    getCountFonteRichiedenti: FonteRichiedentiCounts
   }
 
   type Mutation {
