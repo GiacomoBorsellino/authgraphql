@@ -36,8 +36,6 @@ export class CountersComponent implements OnInit {
 
     this.DashboardService.getCountSegnaleticaTemporaneaAttiva().subscribe(
       (res) => {
-        console.log(res);
-
         // Dati
         try {
           this.segnaleticaTemporaneaAttiva =
@@ -59,8 +57,6 @@ export class CountersComponent implements OnInit {
 
     this.DashboardService.getCountSegnalazioniProntoIntervento().subscribe(
       (res) => {
-        console.log(res);
-
         // Dati
         try {
           this.prontoInterventoInCorso =
@@ -82,8 +78,6 @@ export class CountersComponent implements OnInit {
 
     this.DashboardService.getCountSegnalazioni().subscribe(
       (res) => {
-        console.log(res);
-
         // Dati
         try {
           this.segnalazioniRegistrate = res.data.getCountSegnalazioni;
@@ -104,8 +98,6 @@ export class CountersComponent implements OnInit {
 
     this.DashboardService.getCountSegnalazioniGetico().subscribe(
       (res) => {
-        console.log(res);
-
         // Dati
         try {
           this.geticoGestiti = res.data.getCountSegnalazioniGetico;

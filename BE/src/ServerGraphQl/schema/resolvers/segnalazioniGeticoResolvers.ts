@@ -9,8 +9,25 @@ const querySegnalazioniGetico = {
   ) {
     console.log("================= IN COUNT GETICO: ");
 
-    // Numero utenti
-    const count = await db.avr_main.segnalazione_getico.count({});
+    // Numero Getico Gestiti
+    const countNC = await db.avr_main.segnalazione_getico.count({
+      where: {
+        flg_stato: "NC",
+      },
+    });
+    const countDV = await db.avr_main.segnalazione_getico.count({
+      where: {
+        flg_stato: "DV",
+      },
+    });
+    const countIM = await db.avr_main.segnalazione_getico.count({
+      where: {
+        flg_stato: "IM",
+      },
+    });
+
+    const count = countNC + countDV + countIM;
+
     console.log("GETICO: ", count);
 
     // Controllo e return dati
