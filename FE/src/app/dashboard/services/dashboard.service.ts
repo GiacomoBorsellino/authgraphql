@@ -129,4 +129,32 @@ export class DashboardService {
         })
       );
   }
+
+  public getSegnalazioniQuartiere(quartiere: string): Observable<any> {
+    let GET_FONTE_SEGNALAZIONI_QUARTIERE = gql`
+      query getSegnalazioniQuartiere($input: String) {
+        getSegnalazioniQuartiere(input: $input) {
+          totaleQuartiere
+          giornalieroQuartiere
+          prontoInterventoQuartiere
+        }
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_FONTE_SEGNALAZIONI_QUARTIERE,
+        variables: {
+          input: quartiere,
+        },
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
 }

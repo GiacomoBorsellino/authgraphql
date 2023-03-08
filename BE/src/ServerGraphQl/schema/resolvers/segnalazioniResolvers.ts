@@ -154,6 +154,53 @@ const querySegnalazioni = {
       throw new Error("Nessuna lista");
     }
   },
+  async getCountSegnalazioniQuartiere(
+    args: any,
+    parent: any,
+    context: any,
+    info: any
+  ) {
+    console.log("================= IN getCountSegnalazioniQuartiere: ", parent);
+
+    let quartiere = parent.input.quartiere;
+    let quartiereSelezionato = "";
+
+    if (quartiere === "Q1") {
+      quartiereSelezionato = "CENTRO STORICO";
+    } else if (quartiere === "Q2") {
+      quartiereSelezionato = "CAMPO DI MARTE";
+    } else if (quartiere === "Q3") {
+      quartiereSelezionato = "GAVINANA GALLUZZO";
+    } else if (quartiere === "Q4") {
+      quartiereSelezionato = "ISOLOTTO LEGNAIA";
+    } else if (quartiere === "Q5") {
+      quartiereSelezionato = "RIFREDI";
+    }
+
+    // Numero utenti
+    const countTotale = await db.avr_main.segnalazione.count({
+      where: {
+        localizzazioneDichiarataQuartiere: quartiereSelezionato,
+      },
+    });
+
+    const count = {
+      totaleQuartiere: 44,
+      giornalieroQuartiere: 44,
+      prontoInterventoQuartiere: 44,
+    };
+
+    console.log("COUNT: ", count);
+
+    // Controllo e return dati
+    if (count !== undefined) {
+      return count;
+    } else {
+      console.log("Nessuna lista");
+      // Return error
+      throw new Error("Nessuna lista");
+    }
+  },
 };
 
 const mutationSegnalazioni = {};

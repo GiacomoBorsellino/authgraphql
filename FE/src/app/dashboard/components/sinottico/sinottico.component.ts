@@ -24,6 +24,11 @@ export class SinotticoComponent implements OnInit {
   public fonteFax: number = 0;
   public fonteWeb: number = 0;
 
+  public selectedQuartiere: string = 'Q1';
+  public selectedSegnalazioniTotQuartiere: string = '-';
+  public selectedSegnalazioniQuartiere: string = '-';
+  public selectedProntoInterventoQuartiere: string = '-';
+
   // Grafico
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [DataLabelsPlugin];
@@ -139,6 +144,30 @@ export class SinotticoComponent implements OnInit {
               },
             ],
           };
+
+          this.loading = false;
+        } catch {
+          this.loading = false;
+          this.toastr.error('Si è verificato un errore', 'Errore');
+        }
+      },
+      (error) => {
+        console.log('Errore: ', error);
+        this.toastr.error('Si è verificato un errore', 'Errore');
+        this.loading = false;
+      }
+    );
+  }
+
+  selectQuartiere(quartiere: string) {
+    console.log('Quartiere selezionato: ', quartiere);
+    this.selectedQuartiere = quartiere;
+    this.loading = true;
+    this.DashboardService.getSegnalazioniQuartiere(quartiere).subscribe(
+      (res) => {
+        // Dati
+        try {
+          console.log('Risposta: ', res);
 
           this.loading = false;
         } catch {

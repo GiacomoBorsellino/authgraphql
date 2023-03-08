@@ -269,6 +269,13 @@ const typeDefs = gql`
     web: Int
   }
 
+  #  Output Segnalazioni Quartiere
+  type SegnalazioniQuartiere {
+    totaleQuartiere: Int
+    giornalieroQuartiere: Int
+    prontoInterventoQuartiere: Int
+  }
+
   type Query {
     getColumns(input: String): String
     getUsers(input: Pagination): UtenteConnection
@@ -280,6 +287,7 @@ const typeDefs = gql`
     getCountSegnalazioniProntoIntervento: Int
     getCountSegnalazioniGetico: Int
     getCountFonteRichiedenti: FonteRichiedentiCounts
+    getCountSegnalazioniQuartiere(input: String): SegnalazioniQuartiere
   }
 
   type Mutation {
