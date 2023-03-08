@@ -3,8 +3,6 @@ import { DashboardService } from '../../services/dashboard.service';
 import { ToastrService } from 'ngx-toastr';
 
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
-
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
 @Component({
@@ -13,27 +11,46 @@ import DataLabelsPlugin from 'chartjs-plugin-datalabels';
   styleUrls: ['./sinottico.component.css'],
 })
 export class SinotticoComponent implements OnInit {
-  public loading: boolean = false;
+  constructor(
+    private DashboardService: DashboardService,
+    private toastr: ToastrService
+  ) {}
 
+  // Variabili
+  public loading: boolean = false;
   public fonteDiretta: number = 0;
   public fonteTelefonica: number = 0;
   public fonteEmail: number = 0;
   public fonteFax: number = 0;
   public fonteWeb: number = 0;
 
+  // Grafico
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [DataLabelsPlugin];
-
   public data: any = [];
 
   // Opzioni Grafico
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
+
     scales: {
-      x: {},
+      x: {
+        grid: {
+          color: 'white',
+        },
+        ticks: {
+          color: 'white',
+        },
+      },
       y: {
         beginAtZero: true,
+        grid: {
+          color: 'white',
+        },
+        ticks: {
+          color: 'white',
+        },
       },
     },
     plugins: {
@@ -54,6 +71,10 @@ export class SinotticoComponent implements OnInit {
       {
         data: this.data,
         label: 'Fonte Richiedente',
+        backgroundColor: ['rgb(219 234 254)'],
+        borderRadius: 2,
+        barThickness: 20,
+        borderColor: ['rgb(219 234 254)'],
       },
     ],
   };
@@ -78,11 +99,6 @@ export class SinotticoComponent implements OnInit {
   }): void {
     // console.log(event, active);
   }
-
-  constructor(
-    private DashboardService: DashboardService,
-    private toastr: ToastrService
-  ) {}
 
   ngOnInit(): void {
     this.loadFonteRichiedenti();
@@ -117,6 +133,9 @@ export class SinotticoComponent implements OnInit {
                 data: this.data,
                 label: 'Fonte Richiedente',
                 backgroundColor: ['rgb(219 234 254)'],
+                borderRadius: 2,
+                barThickness: 20,
+                borderColor: ['rgb(219 234 254)'],
               },
             ],
           };
