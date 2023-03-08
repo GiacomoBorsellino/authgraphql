@@ -8,6 +8,8 @@ import { SegnalazioniStatoComponent } from './components/segnalazioni-stato/segn
 import { SegnalazioniTorteComponent } from './components/segnalazioni-torte/segnalazioni-torte.component';
 import { SegnalazioniGeticoComponent } from './components/segnalazioni-getico/segnalazioni-getico.component';
 
+import { NgChartsModule } from 'ng2-charts';
+
 @NgModule({
   declarations: [
     DashboardContainerComponent,
@@ -17,6 +19,6 @@ import { SegnalazioniGeticoComponent } from './components/segnalazioni-getico/se
     SegnalazioniTorteComponent,
     SegnalazioniGeticoComponent,
   ],
-  imports: [CommonModule, DashboardRoutingModule],
+  imports: [CommonModule, DashboardRoutingModule, NgChartsModule],
 })
 export class DashboardModule {}
