@@ -287,6 +287,7 @@ const typeDefs = gql`
     getCountSegnalazioniProntoIntervento: Int
     getCountSegnalazioniGetico: Int
     getCountFonteRichiedenti: FonteRichiedentiCounts
+
     getCountSegnalazioniQuartiere(input: String): SegnalazioniQuartiere
   }
 

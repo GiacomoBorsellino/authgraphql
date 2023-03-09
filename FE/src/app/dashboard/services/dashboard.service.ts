@@ -132,8 +132,8 @@ export class DashboardService {
 
   public getSegnalazioniQuartiere(quartiere: string): Observable<any> {
     let GET_FONTE_SEGNALAZIONI_QUARTIERE = gql`
-      query getSegnalazioniQuartiere($input: String) {
-        getSegnalazioniQuartiere(input: $input) {
+      query getCountSegnalazioniQuartiere($input: String) {
+        getCountSegnalazioniQuartiere(input: $input) {
           totaleQuartiere
           giornalieroQuartiere
           prontoInterventoQuartiere

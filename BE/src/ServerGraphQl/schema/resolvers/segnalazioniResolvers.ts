@@ -162,32 +162,61 @@ const querySegnalazioni = {
   ) {
     console.log("================= IN getCountSegnalazioniQuartiere: ", parent);
 
-    let quartiere = parent.input.quartiere;
+    let quartiere = parent.input;
+    console.log("QQQ ", quartiere);
+
     let quartiereSelezionato = "";
 
-    if (quartiere === "Q1") {
+    if (quartiere == "Q1") {
       quartiereSelezionato = "CENTRO STORICO";
-    } else if (quartiere === "Q2") {
+    } else if (quartiere == "Q2") {
       quartiereSelezionato = "CAMPO DI MARTE";
-    } else if (quartiere === "Q3") {
+    } else if (quartiere == "Q3") {
       quartiereSelezionato = "GAVINANA GALLUZZO";
-    } else if (quartiere === "Q4") {
+    } else if (quartiere == "Q4") {
       quartiereSelezionato = "ISOLOTTO LEGNAIA";
-    } else if (quartiere === "Q5") {
+    } else if (quartiere == "Q5") {
       quartiereSelezionato = "RIFREDI";
     }
-
-    // Numero utenti
+    console.log(quartiere, quartiereSelezionato);
+    // Numero Segnalazioni
     const countTotale = await db.avr_main.segnalazione.count({
       where: {
         localizzazioneDichiarataQuartiere: quartiereSelezionato,
       },
     });
 
+    let moment = new Date().toISOString().slice(0, -1);
+    let startDay = moment.slice(0, 11) + "00:00:00.000";
+    let endDay = moment.slice(0, 11) + "23:59:59.000";
+
+    const countGiornaliero = await db.avr_main.segnalazione.count({
+      where: {
+        localizzazioneDichiarataQuartiere: quartiereSelezionato,
+        dataCreazione: {
+          gt: startDay,
+          lt: endDay,
+        },
+      },
+    });
+
+    const countProntoIntervento = await db.avr_main.segnalazione.count({
+      where: {
+        localizzazioneDichiarataQuartiere: quartiereSelezionato,
+        statoCorrenteSegnalazione: "C",
+        tipoEvento: 1,
+        del: "0",
+        dataCreazione: {
+          gt: startDay,
+          lt: endDay,
+        },
+      },
+    });
+
     const count = {
-      totaleQuartiere: 44,
-      giornalieroQuartiere: 44,
-      prontoInterventoQuartiere: 44,
+      totaleQuartiere: countTotale,
+      giornalieroQuartiere: countGiornaliero,
+      prontoInterventoQuartiere: countProntoIntervento,
     };
 
     console.log("COUNT: ", count);

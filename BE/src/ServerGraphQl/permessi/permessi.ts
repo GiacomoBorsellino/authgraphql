@@ -137,6 +137,20 @@ const permessi = [
       Roles.tecniciCommittenza,
     ],
   },
+  {
+    operationName: "getCountSegnalazioniQuartiere",
+    type: "query",
+    description: "route per visualizzare numero Segnalazioni per Quartiere",
+    checkToken: true,
+    roles: [
+      Roles.dirigentiMobilita,
+      Roles.ufficiMobilita,
+      Roles.amministratori,
+      Roles.contactCenter,
+      Roles.tecniciImpresaManutenzione,
+      Roles.tecniciCommittenza,
+    ],
+  },
 ];
 
 export { permessi };

@@ -24,7 +24,7 @@ export class SinotticoComponent implements OnInit {
   public fonteFax: number = 0;
   public fonteWeb: number = 0;
 
-  public selectedQuartiere: string = 'Q1';
+  public selectedQuartiere: string = 'Q';
   public selectedSegnalazioniTotQuartiere: string = '-';
   public selectedSegnalazioniQuartiere: string = '-';
   public selectedProntoInterventoQuartiere: string = '-';
@@ -167,10 +167,21 @@ export class SinotticoComponent implements OnInit {
       (res) => {
         // Dati
         try {
-          console.log('Risposta: ', res);
+          console.log('Risposta: ', res.data.getCountSegnalazioniQuartiere);
+
+          this.selectedSegnalazioniTotQuartiere =
+            res.data.getCountSegnalazioniQuartiere.totaleQuartiere;
+
+          this.selectedSegnalazioniQuartiere =
+            res.data.getCountSegnalazioniQuartiere.giornalieroQuartiere;
+
+          this.selectedProntoInterventoQuartiere =
+            res.data.getCountSegnalazioniQuartiere.prontoInterventoQuartiere;
 
           this.loading = false;
-        } catch {
+        } catch (err) {
+          console.log(err);
+
           this.loading = false;
           this.toastr.error('Si è verificato un errore', 'Errore');
         }
