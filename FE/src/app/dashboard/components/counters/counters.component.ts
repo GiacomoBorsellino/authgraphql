@@ -100,7 +100,12 @@ export class CountersComponent implements OnInit {
       (res) => {
         // Dati
         try {
-          this.geticoGestiti = res.data.getCountSegnalazioniGetico;
+          this.geticoGestiti =
+            res.data.getCountSegnalazioniGetico.NC +
+            res.data.getCountSegnalazioniGetico.DV +
+            res.data.getCountSegnalazioniGetico.IM;
+          console.log('resss: ', res);
+
           this.geticoGestitiTime = new Date();
 
           this.loading = false;

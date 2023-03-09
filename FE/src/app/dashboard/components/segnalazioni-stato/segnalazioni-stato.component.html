@@ -1,1 +1,2 @@
-<p>segnalazioni-stato works!</p>
+<canvas baseChart class="chart w-2/3 mx-auto" [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"
+    (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>

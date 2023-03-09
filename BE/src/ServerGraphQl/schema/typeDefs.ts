@@ -276,6 +276,17 @@ const typeDefs = gql`
     prontoInterventoQuartiere: Int
   }
 
+  #  Output Stato Getico
+  type StatoGetico {
+    NC: Int
+    DV: Int
+    IM: Int
+    IN: Int
+    sopralluogoEffettuato: Int
+    sopralluogoNonEffettuato: Int
+    sopralluogoNonRichiesto: Int
+  }
+
   type Query {
     getColumns(input: String): String
     getUsers(input: Pagination): UtenteConnection
@@ -285,7 +296,7 @@ const typeDefs = gql`
     getCountSegnaleticaTemporanea: Int
     getCountSegnalazioni: Int
     getCountSegnalazioniProntoIntervento: Int
-    getCountSegnalazioniGetico: Int
+    getCountSegnalazioniGetico: StatoGetico
     getCountFonteRichiedenti: FonteRichiedentiCounts
 
     getCountSegnalazioniQuartiere(input: String): SegnalazioniQuartiere

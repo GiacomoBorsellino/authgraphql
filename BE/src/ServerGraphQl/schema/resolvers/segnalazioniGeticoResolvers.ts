@@ -9,26 +9,60 @@ const querySegnalazioniGetico = {
   ) {
     console.log("================= IN COUNT GETICO: ");
 
+    const countTotale = await db.avr_main.segnalazione_getico.count({});
+
     // Numero Getico Gestiti
     const countNC = await db.avr_main.segnalazione_getico.count({
       where: {
         flg_stato: "NC",
       },
     });
+
     const countDV = await db.avr_main.segnalazione_getico.count({
       where: {
         flg_stato: "DV",
       },
     });
+
     const countIM = await db.avr_main.segnalazione_getico.count({
       where: {
         flg_stato: "IM",
       },
     });
 
-    const count = countNC + countDV + countIM;
+    const countIN = await db.avr_main.segnalazione_getico.count({
+      where: {
+        flg_stato: "IN",
+      },
+    });
 
-    // console.log("GETICO Gestiti: ", count);
+    const countSopralluogoEffettuato =
+      await db.avr_main.segnalazione_getico.count({
+        where: {
+          sopralluogo_effettuato: "true",
+        },
+      });
+
+    const countSopralluogoNonEffettuato =
+      await db.avr_main.segnalazione_getico.count({
+        where: {
+          sopralluogo_effettuato: "false",
+        },
+      });
+
+    const count = {
+      NC: countNC,
+      DV: countDV,
+      IM: countIM,
+      IN: countIN,
+      sopralluogoEffettuato: countSopralluogoEffettuato,
+      sopralluogoNonEffettuato: countSopralluogoNonEffettuato,
+      sopralluogoNonRichiesto:
+        countTotale -
+        (countSopralluogoEffettuato + countSopralluogoNonEffettuato),
+    };
+
+    console.log("GETICO Gestiti: ", count);
 
     // Controllo e return dati
     if (count !== undefined) {
