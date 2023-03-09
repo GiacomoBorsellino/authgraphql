@@ -1,4 +1,4 @@
-<main class="w-5/6 flex flex-row justify-around items-center mx-auto my-8 gap-4">
+<main class="w-[90%] flex flex-row justify-around items-center mx-auto gap-4">
     <div class="w-1/3 rounded-md p-8 bg-blue-400">
         <h1 class="m-4 text-white">Segnalazioni Getico - Sopralluogo</h1>
 
@@ -81,12 +81,16 @@
     </div>
 
     <div class="w-1/3 rounded-md p-8 bg-blue-400">
-        <h1 class=" text-white">Segnalazioni Getico</h1>
-        <h2 class="mb-4 text-white">Pervenute il: </h2>
+        <div class="bg-slate-600 rounded-md p-2 mb-6">
+            <h1 class=" text-white">Segnalazioni Getico</h1>
+            <h2 class=" text-white">Pervenute il: {{lastGeticoTime | date: 'dd/MM/YY'}}</h2>
+        </div>
 
-        <h3>TIPLOGIA</h3>
+        <h3 class="mb-4">TIPOLOGIA</h3>
         <ul>
-            <li *ngFor="let getico of lastGetico"></li>
+            <li *ngFor="let getico of lastGetico" class="py-3 text-white border-t-[1px] border-slate-100">
+                {{getico}}
+            </li>
         </ul>
     </div>
 </main>

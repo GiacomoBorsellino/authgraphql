@@ -151,6 +151,20 @@ const permessi = [
       Roles.tecniciCommittenza,
     ],
   },
+  {
+    operationName: "getLastGetico",
+    type: "query",
+    description: "route per visualizzare ultime 5 Segnalazioni Getico",
+    checkToken: true,
+    roles: [
+      Roles.dirigentiMobilita,
+      Roles.ufficiMobilita,
+      Roles.amministratori,
+      Roles.contactCenter,
+      Roles.tecniciImpresaManutenzione,
+      Roles.tecniciCommittenza,
+    ],
+  },
 ];
 
 export { permessi };

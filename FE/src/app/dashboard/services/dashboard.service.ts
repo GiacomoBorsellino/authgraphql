@@ -187,4 +187,25 @@ export class DashboardService {
         })
       );
   }
+
+  public getLastGetico(): Observable<any> {
+    let GET_SEGNALAZIONI_GETICO = gql`
+      query getLastGetico {
+        getLastGetico
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_SEGNALAZIONI_GETICO,
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
 }

@@ -73,6 +73,32 @@ const querySegnalazioniGetico = {
       throw new Error("Nessuna lista");
     }
   },
+  async getLastGetico(args: any, parent: any, context: any, info: any) {
+    console.log("================= IN LAST GETICO: ");
+
+    const lastGetico = await db.avr_main.segnalazione_getico.findMany({
+      orderBy: {
+        id: "desc",
+      },
+      take: 5,
+    });
+
+    const lastGeticoCleaned = [];
+    lastGetico.map((getico) => {
+      lastGeticoCleaned.push(getico.tipologia);
+    });
+
+    console.log("GETICO Gestiti: ", lastGeticoCleaned);
+
+    // Controllo e return dati
+    if (lastGeticoCleaned !== undefined) {
+      return lastGeticoCleaned;
+    } else {
+      console.log("Nessuna lista");
+      // Return error
+      throw new Error("Nessuna lista");
+    }
+  },
 };
 
 const mutationSegnalazioniGetico = {};

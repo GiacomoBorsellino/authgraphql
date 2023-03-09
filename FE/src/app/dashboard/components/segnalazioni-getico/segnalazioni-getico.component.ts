@@ -26,6 +26,7 @@ export class SegnalazioniGeticoComponent implements OnInit {
   public data: any = [0, 0, 0, 0];
   public dataSopralluoghi: any = [0, 0, 0];
   public lastGetico: any = [];
+  public lastGeticoTime: any;
 
   constructor(
     private DashboardService: DashboardService,
@@ -34,6 +35,7 @@ export class SegnalazioniGeticoComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadGeticoPie();
+    this.loadLastGetico();
   }
 
   loadGeticoPie() {
@@ -79,6 +81,29 @@ export class SegnalazioniGeticoComponent implements OnInit {
               },
             ],
           };
+
+          this.loading = false;
+        } catch {
+          this.loading = false;
+          this.toastr.error('Si è verificato un errore', 'Errore');
+        }
+      },
+      (error) => {
+        console.log('Errore: ', error);
+        this.toastr.error('Si è verificato un errore', 'Errore');
+        this.loading = false;
+      }
+    );
+  }
+
+  loadLastGetico() {
+    this.DashboardService.getLastGetico().subscribe(
+      (res) => {
+        // Dati
+        try {
+          console.log('Getico Last Res: ', res);
+          this.lastGetico = res.data.getLastGetico;
+          this.lastGeticoTime = new Date();
 
           this.loading = false;
         } catch {

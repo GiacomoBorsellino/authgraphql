@@ -300,6 +300,7 @@ const typeDefs = gql`
     getCountFonteRichiedenti: FonteRichiedentiCounts
 
     getCountSegnalazioniQuartiere(input: String): SegnalazioniQuartiere
+    getLastGetico: [String]
   }
 
   type Mutation {
