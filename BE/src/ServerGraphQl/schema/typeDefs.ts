@@ -287,6 +287,14 @@ const typeDefs = gql`
     sopralluogoNonRichiesto: Int
   }
 
+  #  Output Segnalazioni Severità
+  type SegnalazioniSeverita {
+    rosso: Int
+    giallo: Int
+    verde: Int
+    bianco: Int
+  }
+
   type Query {
     getColumns(input: String): String
     getUsers(input: Pagination): UtenteConnection
@@ -302,6 +310,7 @@ const typeDefs = gql`
     getCountSegnalazioniQuartiere(input: String): SegnalazioniQuartiere
     getLastGetico: [String]
     getLastSegnalazioni: [String]
+    getSegnalazioniSeverita(input: String): SegnalazioniSeverita
   }
 
   type Mutation {

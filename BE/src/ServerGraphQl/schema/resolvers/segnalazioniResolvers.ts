@@ -233,7 +233,18 @@ const querySegnalazioni = {
   async getLastSegnalazioni(args: any, parent: any, context: any, info: any) {
     console.log("================= IN LAST SEGNALAZIONI: ");
 
+    // Controllo solo giorno odierno
+    let moment = new Date().toISOString().slice(0, -1);
+    let startDay = moment.slice(0, 11) + "00:00:00.000";
+    let endDay = moment.slice(0, 11) + "23:59:59.000";
+
     const lastSegnalazioni = await db.avr_main.segnalazione.findMany({
+      where: {
+        dataCreazione: {
+          gt: startDay,
+          lt: endDay,
+        },
+      },
       orderBy: {
         id: "desc",
       },
@@ -246,15 +257,19 @@ const querySegnalazioni = {
       lastSegnalazioniCleaned.push(segnalazione.categoriaAnomalia);
     });
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < lastSegnalazioni.length; i++) {
       let decodedCategoriaAnomalia =
         await db.avr_main.categoriaanomalia.findUnique({
           where: { id: lastSegnalazioniCleaned[i] },
         });
-      lastSegnalazioniCleanedDecoded.push(decodedCategoriaAnomalia.value);
+      lastSegnalazioniCleanedDecoded.push(
+        decodedCategoriaAnomalia.value +
+          " - " +
+          lastSegnalazioni[i].localizzazioneDichiarata
+      );
     }
 
-    console.log("GETICO Gestiti: ", lastSegnalazioniCleaned);
+    console.log("GETICO Gestiti: ", lastSegnalazioniCleanedDecoded);
 
     // Controllo e return dati
     if (lastSegnalazioniCleanedDecoded !== undefined) {
@@ -263,6 +278,26 @@ const querySegnalazioni = {
       console.log("Nessuna lista");
       // Return error
       throw new Error("Nessuna lista");
+    }
+  },
+  async getSegnalazioniSeverita(
+    args: any,
+    parent: any,
+    context: any,
+    info: any
+  ) {
+    console.log("================= IN SEGNALAZIONI SEVERITA: ");
+
+    console.log("========== INPUT E FILTER: ", parent.input);
+    let counts;
+
+    // Controllo e return dati
+    if (counts !== undefined || counts !== undefined) {
+      return { counts };
+    } else {
+      console.log("Nessuna lista segnalazioni");
+      // Return error
+      throw new Error("Nessuna lista segnalazioni");
     }
   },
 };

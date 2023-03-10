@@ -76,6 +76,19 @@ const querySegnalazioniGetico = {
   async getLastGetico(args: any, parent: any, context: any, info: any) {
     console.log("================= IN LAST GETICO: ");
 
+    // Controllo solo giorno odierno
+    // let year = new Date().getFullYear().toString()
+    // let month
+    // if (new Date().getMonth() < 10) {
+    //     month = '0' + new Date().getMonth().toString()
+    // } else {
+    //     month = new Date().getMonth().toString()
+    // }
+
+    // let day = new Date().getDate().toString();
+
+    // let date = year + month + day
+
     const lastGetico = await db.avr_main.segnalazione_getico.findMany({
       orderBy: {
         id: "desc",

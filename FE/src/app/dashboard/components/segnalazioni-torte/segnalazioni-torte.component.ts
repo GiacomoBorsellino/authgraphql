@@ -35,7 +35,7 @@ export class SegnalazioniTorteComponent {
 
   ngOnInit(): void {
     this.loadSegnalazioniPie();
-    this.loadLastSegnalazioni();
+    this.loadSegnalazioniSeverita('2022-01-01T00:00:00', '2022-12-31T00:00:00');
   }
 
   loadSegnalazioniPie() {
@@ -96,8 +96,14 @@ export class SegnalazioniTorteComponent {
     );
   }
 
-  loadLastSegnalazioni() {
-    this.DashboardService.getLastSegnalazioni().subscribe(
+  loadSegnalazioniSeverita(valoreGt: string, valoreLt: string) {
+    let range = {
+      valoreGt: valoreGt,
+      valoreLt: valoreLt,
+    };
+    console.log(range);
+
+    this.DashboardService.getSegnalazioniSeverita(range).subscribe(
       (res) => {
         // Dati
         try {

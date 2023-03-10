@@ -230,4 +230,36 @@ export class DashboardService {
         })
       );
   }
+
+  public getSegnalazioniSeverita(range: any): Observable<any> {
+    range = JSON.stringify(range);
+
+    let GET_SEGNALAZIONI = gql`
+      query getSegnalazioniSeverita($input: Pagination) {
+        getSegnalazioniSeverita(input: $input) {
+          data {
+            counts
+          }
+        }
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_SEGNALAZIONI,
+        variables: {
+          input: {
+            range: range,
+          },
+        },
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
 }

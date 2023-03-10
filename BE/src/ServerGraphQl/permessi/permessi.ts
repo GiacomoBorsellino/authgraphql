@@ -179,6 +179,20 @@ const permessi = [
       Roles.tecniciCommittenza,
     ],
   },
+  {
+    operationName: "getSegnalazioniSeverita",
+    type: "query",
+    description: "route per visualizzare numero Segnalazioni per severità",
+    checkToken: true,
+    roles: [
+      Roles.dirigentiMobilita,
+      Roles.ufficiMobilita,
+      Roles.amministratori,
+      Roles.contactCenter,
+      Roles.tecniciImpresaManutenzione,
+      Roles.tecniciCommittenza,
+    ],
+  },
 ];
 
 export { permessi };
