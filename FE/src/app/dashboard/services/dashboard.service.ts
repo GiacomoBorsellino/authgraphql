@@ -208,4 +208,26 @@ export class DashboardService {
         })
       );
   }
+
+  // SEGNALAZIONI TORTE
+  public getLastSegnalazioni(): Observable<any> {
+    let GET_LAST_SEGNALAZIONI = gql`
+      query getLastSegnalazioni {
+        getLastSegnalazioni
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_LAST_SEGNALAZIONI,
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
 }

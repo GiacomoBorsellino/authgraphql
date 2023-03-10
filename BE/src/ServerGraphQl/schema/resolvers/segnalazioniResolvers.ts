@@ -230,6 +230,41 @@ const querySegnalazioni = {
       throw new Error("Nessuna lista");
     }
   },
+  async getLastSegnalazioni(args: any, parent: any, context: any, info: any) {
+    console.log("================= IN LAST SEGNALAZIONI: ");
+
+    const lastSegnalazioni = await db.avr_main.segnalazione.findMany({
+      orderBy: {
+        id: "desc",
+      },
+      take: 5,
+    });
+
+    const lastSegnalazioniCleaned = [];
+    const lastSegnalazioniCleanedDecoded = [];
+    lastSegnalazioni.map((segnalazione) => {
+      lastSegnalazioniCleaned.push(segnalazione.categoriaAnomalia);
+    });
+
+    for (let i = 0; i < 5; i++) {
+      let decodedCategoriaAnomalia =
+        await db.avr_main.categoriaanomalia.findUnique({
+          where: { id: lastSegnalazioniCleaned[i] },
+        });
+      lastSegnalazioniCleanedDecoded.push(decodedCategoriaAnomalia.value);
+    }
+
+    console.log("GETICO Gestiti: ", lastSegnalazioniCleaned);
+
+    // Controllo e return dati
+    if (lastSegnalazioniCleanedDecoded !== undefined) {
+      return lastSegnalazioniCleanedDecoded;
+    } else {
+      console.log("Nessuna lista");
+      // Return error
+      throw new Error("Nessuna lista");
+    }
+  },
 };
 
 const mutationSegnalazioni = {};
