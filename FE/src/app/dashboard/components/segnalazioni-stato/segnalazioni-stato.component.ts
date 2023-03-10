@@ -20,8 +20,8 @@ export class SegnalazioniStatoComponent {
         backgroundColor: 'rgba(148,159,177,0.2)',
         borderColor: 'rgba(148,159,177,1)',
         pointBackgroundColor: 'rgba(148,159,177,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
+        pointBorderColor: 'white',
+        pointHoverBackgroundColor: 'grey',
         pointHoverBorderColor: 'rgba(148,159,177,0.8)',
         fill: 'origin',
       },
@@ -31,8 +31,8 @@ export class SegnalazioniStatoComponent {
         backgroundColor: 'rgba(77,83,96,0.2)',
         borderColor: 'rgba(77,83,96,1)',
         pointBackgroundColor: 'rgba(77,83,96,1)',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
+        pointBorderColor: 'white',
+        pointHoverBackgroundColor: 'grey',
         pointHoverBorderColor: 'rgba(77,83,96,1)',
         fill: 'origin',
       },
@@ -50,6 +50,12 @@ export class SegnalazioniStatoComponent {
       // We use this empty structure as a placeholder for dynamic theming.
       y: {
         position: 'left',
+        grid: {
+          color: 'white',
+        },
+        ticks: {
+          color: 'white',
+        },
       },
       y1: {
         position: 'right',
@@ -57,7 +63,7 @@ export class SegnalazioniStatoComponent {
           color: 'white',
         },
         ticks: {
-          color: 'red',
+          color: 'white',
         },
       },
     },
