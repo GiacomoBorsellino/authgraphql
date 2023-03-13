@@ -7,7 +7,7 @@ const querySegnaleticaTemporanea = {
     context: any,
     info: any
   ) {
-    console.log("================= IN SEGNALetica temporanea: ");
+    // console.log("================= IN SEGNALetica temporanea: ");
 
     // Numero Segnaletica temporanea Attiva
     const count = await db.gsfi_catasto.tab27C_segn_vert_temp.count({

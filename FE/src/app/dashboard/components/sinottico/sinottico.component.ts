@@ -115,7 +115,7 @@ export class SinotticoComponent implements OnInit {
       (res) => {
         // Dati
         try {
-          console.log('Risposta: ', res.data.getCountFonteRichiedenti);
+          // console.log('Risposta: ', res.data.getCountFonteRichiedenti);
 
           this.fonteDiretta = res.data.getCountFonteRichiedenti.diretta;
           this.fonteTelefonica = res.data.getCountFonteRichiedenti.telefonica;
@@ -160,14 +160,14 @@ export class SinotticoComponent implements OnInit {
   }
 
   selectQuartiere(quartiere: string) {
-    console.log('Quartiere selezionato: ', quartiere);
+    // console.log('Quartiere selezionato: ', quartiere);
     this.selectedQuartiere = quartiere;
     this.loading = true;
     this.DashboardService.getSegnalazioniQuartiere(quartiere).subscribe(
       (res) => {
         // Dati
         try {
-          console.log('Risposta: ', res.data.getCountSegnalazioniQuartiere);
+          // console.log('Risposta: ', res.data.getCountSegnalazioniQuartiere);
 
           this.selectedSegnalazioniTotQuartiere =
             res.data.getCountSegnalazioniQuartiere.totaleQuartiere;

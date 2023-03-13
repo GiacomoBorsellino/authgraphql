@@ -180,7 +180,7 @@ const permessi = [
     ],
   },
   {
-    operationName: "getSegnalazioniSeverita",
+    operationName: "getCountSegnalazioniSeveritaTotali",
     type: "query",
     description: "route per visualizzare numero Segnalazioni per severità",
     checkToken: true,

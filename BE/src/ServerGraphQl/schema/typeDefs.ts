@@ -295,6 +295,11 @@ const typeDefs = gql`
     bianco: Int
   }
 
+  input Range {
+    start: String
+    end: String
+  }
+
   type Query {
     getColumns(input: String): String
     getUsers(input: Pagination): UtenteConnection
@@ -310,7 +315,8 @@ const typeDefs = gql`
     getCountSegnalazioniQuartiere(input: String): SegnalazioniQuartiere
     getLastGetico: [String]
     getLastSegnalazioni: [String]
-    getSegnalazioniSeverita(input: String): SegnalazioniSeverita
+
+    getCountSegnalazioniSeveritaTotali(input: Range): SegnalazioniSeverita
   }
 
   type Mutation {

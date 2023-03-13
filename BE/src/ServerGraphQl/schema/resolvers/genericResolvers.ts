@@ -15,7 +15,7 @@ const queryGeneric = {
     });
     columns = JSON.stringify(columns);
 
-    console.log(columns);
+    // console.log(columns);
     if (columns) {
       return columns;
     } else {

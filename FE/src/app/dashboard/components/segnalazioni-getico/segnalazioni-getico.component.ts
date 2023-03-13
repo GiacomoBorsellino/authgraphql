@@ -43,7 +43,7 @@ export class SegnalazioniGeticoComponent implements OnInit {
       (res) => {
         // Dati
         try {
-          console.log('Getico Res: ', res);
+          // console.log('Getico Res: ', res);
           this.NC = res.data.getCountSegnalazioniGetico.NC;
           this.DV = res.data.getCountSegnalazioniGetico.DV;
           this.IM = res.data.getCountSegnalazioniGetico.IM;
@@ -101,7 +101,7 @@ export class SegnalazioniGeticoComponent implements OnInit {
       (res) => {
         // Dati
         try {
-          console.log('Getico Last Res: ', res);
+          // console.log('Getico Last Res: ', res);
           this.lastGetico = res.data.getLastGetico;
           this.lastGeticoTime = new Date();
 
@@ -169,7 +169,7 @@ export class SegnalazioniGeticoComponent implements OnInit {
     event: ChartEvent;
     active: {}[];
   }): void {
-    console.log(event, active);
+    // console.log(event, active);
   }
 
   public chartHovered({

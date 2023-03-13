@@ -2,12 +2,12 @@ import { db } from "../../../config/dbConfig";
 
 const querySegnalazioni = {
   async getSegnalazioni(args: any, parent: any, context: any, info: any) {
-    console.log("================= IN SEGNALAZIONI: ");
+    // console.log("================= IN SEGNALAZIONI: ");
 
     let filter = JSON.parse(parent.input.filter);
     let order = JSON.parse(parent.input.order);
 
-    console.log("========== INPUT E FILTER: ", parent.input, filter, order);
+    // console.log("========== INPUT E FILTER: ", parent.input, filter, order);
 
     // Definisce il tipo di dato per colonna, così da usare filtri dinamici nel FE
     const colonne: any = await db.avr_main
@@ -47,7 +47,7 @@ const querySegnalazioni = {
     }
   },
   async getCountSegnalazioni(args: any, parent: any, context: any, info: any) {
-    console.log("================= IN SEGNALAZIONI: ");
+    // console.log("================= IN SEGNALAZIONI: ");
 
     // Numero utenti
     const count = await db.avr_main.segnalazione.count({});
@@ -67,7 +67,7 @@ const querySegnalazioni = {
     context: any,
     info: any
   ) {
-    console.log("================= IN SEGNALAZIONI: ");
+    // console.log("================= IN SEGNALAZIONI: ");
 
     let filter = {
       statoCorrenteSegnalazione: "A",
@@ -96,7 +96,7 @@ const querySegnalazioni = {
     context: any,
     info: any
   ) {
-    console.log("================= IN SEGNALAZIONI: ");
+    // console.log("================= IN SEGNALAZIONI: ");
 
     // Numero Fonte Diretta
     const countDiretta = await db.avr_main.segnalazione.count({
@@ -133,7 +133,7 @@ const querySegnalazioni = {
       },
     });
 
-    console.log("============== ", countDiretta);
+    // console.log("============== ", countDiretta);
 
     const count = {
       diretta: countDiretta,
@@ -143,7 +143,7 @@ const querySegnalazioni = {
       web: countWeb,
     };
 
-    console.log("COUNT: ", count);
+    // console.log("COUNT: ", count);
 
     // Controllo e return dati
     if (count !== undefined) {
@@ -160,10 +160,10 @@ const querySegnalazioni = {
     context: any,
     info: any
   ) {
-    console.log("================= IN getCountSegnalazioniQuartiere: ", parent);
+    // console.log("================= IN getCountSegnalazioniQuartiere: ", parent);
 
     let quartiere = parent.input;
-    console.log("QQQ ", quartiere);
+    // console.log("QQQ ", quartiere);
 
     let quartiereSelezionato = "";
 
@@ -178,7 +178,7 @@ const querySegnalazioni = {
     } else if (quartiere == "Q5") {
       quartiereSelezionato = "RIFREDI";
     }
-    console.log(quartiere, quartiereSelezionato);
+    // console.log(quartiere, quartiereSelezionato);
     // Numero Segnalazioni
     const countTotale = await db.avr_main.segnalazione.count({
       where: {
@@ -219,7 +219,7 @@ const querySegnalazioni = {
       prontoInterventoQuartiere: countProntoIntervento,
     };
 
-    console.log("COUNT: ", count);
+    // console.log("COUNT: ", count);
 
     // Controllo e return dati
     if (count !== undefined) {
@@ -231,7 +231,7 @@ const querySegnalazioni = {
     }
   },
   async getLastSegnalazioni(args: any, parent: any, context: any, info: any) {
-    console.log("================= IN LAST SEGNALAZIONI: ");
+    // console.log("================= IN LAST SEGNALAZIONI: ");
 
     // Controllo solo giorno odierno
     let moment = new Date().toISOString().slice(0, -1);
@@ -269,7 +269,7 @@ const querySegnalazioni = {
       );
     }
 
-    console.log("GETICO Gestiti: ", lastSegnalazioniCleanedDecoded);
+    // console.log("GETICO Gestiti: ", lastSegnalazioniCleanedDecoded);
 
     // Controllo e return dati
     if (lastSegnalazioniCleanedDecoded !== undefined) {
@@ -280,20 +280,48 @@ const querySegnalazioni = {
       throw new Error("Nessuna lista");
     }
   },
-  async getSegnalazioniSeverita(
+  async getCountSegnalazioniSeveritaTotali(
     args: any,
     parent: any,
     context: any,
     info: any
   ) {
-    console.log("================= IN SEGNALAZIONI SEVERITA: ");
+    console.log("================= IN SEGNALAZIONI SEVERITA: ", parent);
 
-    console.log("========== INPUT E FILTER: ", parent.input);
-    let counts;
+    const countRosso = await db.avr_main.segnalazione.count({
+      where: {
+        severitaEvento: 1,
+      },
+    });
+
+    const countGiallo = await db.avr_main.segnalazione.count({
+      where: {
+        severitaEvento: 2,
+      },
+    });
+
+    const countVerde = await db.avr_main.segnalazione.count({
+      where: {
+        severitaEvento: 3,
+      },
+    });
+
+    const countBianco = await db.avr_main.segnalazione.count({
+      where: {
+        severitaEvento: 4,
+      },
+    });
+
+    let counts = {
+      rosso: countRosso,
+      giallo: countGiallo,
+      verde: countVerde,
+      bianco: countBianco,
+    };
 
     // Controllo e return dati
-    if (counts !== undefined || counts !== undefined) {
-      return { counts };
+    if (counts !== undefined) {
+      return counts;
     } else {
       console.log("Nessuna lista segnalazioni");
       // Return error

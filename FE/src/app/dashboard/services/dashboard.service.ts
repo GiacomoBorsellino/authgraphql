@@ -231,15 +231,17 @@ export class DashboardService {
       );
   }
 
-  public getSegnalazioniSeverita(range: any): Observable<any> {
-    range = JSON.stringify(range);
-
+  public getCountSegnalazioniSeveritaTotali(
+    start: any,
+    end: any
+  ): Observable<any> {
     let GET_SEGNALAZIONI = gql`
-      query getSegnalazioniSeverita($input: Pagination) {
-        getSegnalazioniSeverita(input: $input) {
-          data {
-            counts
-          }
+      query getCountSegnalazioniSeveritaTotali($input: Range) {
+        getCountSegnalazioniSeveritaTotali(input: $input) {
+          rosso
+          giallo
+          verde
+          bianco
         }
       }
     `;
@@ -249,7 +251,8 @@ export class DashboardService {
         query: GET_SEGNALAZIONI,
         variables: {
           input: {
-            range: range,
+            start: start,
+            end: end,
           },
         },
         context: {

@@ -104,7 +104,7 @@ export class CountersComponent implements OnInit {
             res.data.getCountSegnalazioniGetico.NC +
             res.data.getCountSegnalazioniGetico.DV +
             res.data.getCountSegnalazioniGetico.IM;
-          console.log('resss: ', res);
+          // console.log('resss: ', res);
 
           this.geticoGestitiTime = new Date();
 

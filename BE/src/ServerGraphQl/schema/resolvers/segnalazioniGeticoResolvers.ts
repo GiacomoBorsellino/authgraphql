@@ -7,7 +7,7 @@ const querySegnalazioniGetico = {
     context: any,
     info: any
   ) {
-    console.log("================= IN COUNT GETICO: ");
+    // console.log("================= IN COUNT GETICO: ");
 
     const countTotale = await db.avr_main.segnalazione_getico.count({});
 
@@ -62,7 +62,7 @@ const querySegnalazioniGetico = {
         (countSopralluogoEffettuato + countSopralluogoNonEffettuato),
     };
 
-    console.log("GETICO Gestiti: ", count);
+    // console.log("GETICO Gestiti: ", count);
 
     // Controllo e return dati
     if (count !== undefined) {
@@ -74,7 +74,7 @@ const querySegnalazioniGetico = {
     }
   },
   async getLastGetico(args: any, parent: any, context: any, info: any) {
-    console.log("================= IN LAST GETICO: ");
+    // console.log("================= IN LAST GETICO: ");
 
     // Controllo solo giorno odierno
     // let year = new Date().getFullYear().toString()
@@ -101,7 +101,7 @@ const querySegnalazioniGetico = {
       lastGeticoCleaned.push(getico.tipologia);
     });
 
-    console.log("GETICO Gestiti: ", lastGeticoCleaned);
+    // console.log("GETICO Gestiti: ", lastGeticoCleaned);
 
     // Controllo e return dati
     if (lastGeticoCleaned !== undefined) {

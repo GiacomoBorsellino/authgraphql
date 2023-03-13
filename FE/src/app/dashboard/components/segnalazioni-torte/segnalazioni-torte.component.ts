@@ -16,10 +16,11 @@ export class SegnalazioniTorteComponent {
   public pieChartType: ChartType = 'pie';
   public pieChartPlugins = [DatalabelsPlugin];
 
-  public NC: number;
-  public DV: number;
-  public IM: number;
-  public IN: number;
+  public severitaTotaleRosso: number = 0;
+  public severitaTotaleGiallo: number = 0;
+  public severitaTotaleVerde: number = 0;
+  public severitaTotaleBianco: number = 0;
+
   public sopralluogoEffettuato: number;
   public sopralluogoNonEffettuato: number;
   public sopralluogoNonRichiesto: number;
@@ -34,29 +35,37 @@ export class SegnalazioniTorteComponent {
   ) {}
 
   ngOnInit(): void {
-    this.loadSegnalazioniPie();
-    this.loadSegnalazioniSeverita('2022-01-01T00:00:00', '2022-12-31T00:00:00');
+    this.loadSegnalazioniPie('2022-01-01T00:00:00', '2022-12-31T00:00:00');
+    this.loadLastSegnalazioni();
   }
 
-  loadSegnalazioniPie() {
-    this.DashboardService.getCountSegnalazioniGetico().subscribe(
+  // Main Call - Grafici Segnalazioni Severità Torte
+  loadSegnalazioniPie(valoreGt: string, valoreLt: string) {
+    console.log('Valori: ', valoreGt, valoreLt);
+
+    this.DashboardService.getCountSegnalazioniSeveritaTotali(
+      valoreGt,
+      valoreLt
+    ).subscribe(
       (res) => {
         // Dati
         try {
-          console.log('Getico Res: ', res);
-          this.NC = res.data.getCountSegnalazioniGetico.NC;
-          this.DV = res.data.getCountSegnalazioniGetico.DV;
-          this.IM = res.data.getCountSegnalazioniGetico.IM;
-          this.IN = res.data.getCountSegnalazioniGetico.IN;
+          console.log('Segnalazioni Severità Res: ', res);
+          this.severitaTotaleRosso =
+            res.data.getCountSegnalazioniSeveritaTotali.rosso;
+          this.severitaTotaleGiallo =
+            res.data.getCountSegnalazioniSeveritaTotali.giallo;
+          this.severitaTotaleVerde =
+            res.data.getCountSegnalazioniSeveritaTotali.verde;
+          this.severitaTotaleBianco =
+            res.data.getCountSegnalazioniSeveritaTotali.bianco;
 
-          this.data = [this.NC, this.DV, this.IM, this.IN];
-
-          this.sopralluogoEffettuato =
-            res.data.getCountSegnalazioniGetico.sopralluogoEffettuato;
-          this.sopralluogoNonEffettuato =
-            res.data.getCountSegnalazioniGetico.sopralluogoNonEffettuato;
-          this.sopralluogoNonRichiesto =
-            res.data.getCountSegnalazioniGetico.sopralluogoNonRichiesto;
+          this.data = [
+            this.severitaTotaleRosso,
+            this.severitaTotaleGiallo,
+            this.severitaTotaleVerde,
+            this.severitaTotaleBianco,
+          ];
 
           this.dataSopralluoghi = [
             this.sopralluogoEffettuato,
@@ -65,19 +74,10 @@ export class SegnalazioniTorteComponent {
           ];
 
           this.pieChartData = {
-            labels: [['NC'], ['DV'], ['IM'], ['IN']],
+            labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
             datasets: [
               {
                 data: this.data,
-              },
-            ],
-          };
-
-          this.pieChartDataSopralluoghi = {
-            labels: [['SE'], ['SN'], ['SNR']],
-            datasets: [
-              {
-                data: this.dataSopralluoghi,
               },
             ],
           };
@@ -96,18 +96,13 @@ export class SegnalazioniTorteComponent {
     );
   }
 
-  loadSegnalazioniSeverita(valoreGt: string, valoreLt: string) {
-    let range = {
-      valoreGt: valoreGt,
-      valoreLt: valoreLt,
-    };
-    console.log(range);
-
-    this.DashboardService.getSegnalazioniSeverita(range).subscribe(
+  // Main Call - Ultime segnalazioni odierne
+  loadLastSegnalazioni() {
+    this.DashboardService.getLastSegnalazioni().subscribe(
       (res) => {
         // Dati
         try {
-          console.log('Segn Last Res: ', res);
+          // console.log('Segn Last Res: ', res);
           this.lastSegnalazioni = res.data.getLastSegnalazioni;
           this.lastSegnalazioniTime = new Date();
 
@@ -145,24 +140,10 @@ export class SegnalazioniTorteComponent {
 
   // Dati Grafico
   public pieChartData: ChartData<'pie', number[], string | string[]> = {
-    labels: [['NC'], ['DV'], ['IM'], ['IN']],
+    labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
     datasets: [
       {
         data: this.data,
-      },
-    ],
-  };
-
-  // Dati Grafico
-  public pieChartDataSopralluoghi: ChartData<
-    'pie',
-    number[],
-    string | string[]
-  > = {
-    labels: [['SE'], ['SN'], ['SNR']],
-    datasets: [
-      {
-        data: this.dataSopralluoghi,
       },
     ],
   };
