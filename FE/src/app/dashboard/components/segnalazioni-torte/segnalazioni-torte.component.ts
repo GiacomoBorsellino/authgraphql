@@ -72,7 +72,7 @@ export class SegnalazioniTorteComponent {
 
   // Main Call - Grafici Segnalazioni Severità Torte
   loadSegnalazioniPieTotali(valoreGt: string, valoreLt: string) {
-    console.log('Valori: ', valoreGt, valoreLt);
+    // console.log('Valori: ', valoreGt, valoreLt);
 
     if (valoreGt !== null && valoreLt !== null && valoreGt < valoreLt) {
       this.DashboardService.getCountSegnalazioniSeveritaTotali(
@@ -82,7 +82,7 @@ export class SegnalazioniTorteComponent {
         (res) => {
           // Dati
           try {
-            console.log('Segnalazioni Severità Res: ', res);
+            // console.log('Segnalazioni Severità Res: ', res);
             this.severitaTotaleRosso =
               res.data.getCountSegnalazioniSeveritaTotali.rosso;
             this.severitaTotaleGiallo =
@@ -128,7 +128,7 @@ export class SegnalazioniTorteComponent {
 
   // Main Call - Grafici Segnalazioni Severità Torte
   loadSegnalazioniPieChiuse(valoreGt: string, valoreLt: string) {
-    console.log('Valori: ', valoreGt, valoreLt);
+    // console.log('Valori: ', valoreGt, valoreLt);
 
     if (valoreGt !== null && valoreLt !== null && valoreGt < valoreLt) {
       this.DashboardService.getCountSegnalazioniSeveritaChiuse(
@@ -138,7 +138,7 @@ export class SegnalazioniTorteComponent {
         (res) => {
           // Dati
           try {
-            console.log('Segnalazioni Severità Res: ', res);
+            // console.log('Segnalazioni Severità Res: ', res);
             this.severitaChiuseRosso =
               res.data.getCountSegnalazioniSeveritaChiuse.rosso;
             this.severitaChiuseGiallo =

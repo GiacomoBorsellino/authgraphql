@@ -286,7 +286,7 @@ const querySegnalazioni = {
     context: any,
     info: any
   ) {
-    console.log("================= IN SEGNALAZIONI SEVERITA TOTALI: ", parent);
+    // console.log("================= IN SEGNALAZIONI SEVERITA TOTALI: ", parent);
 
     let start = parent.input.start;
     let end = parent.input.end;
@@ -337,8 +337,6 @@ const querySegnalazioni = {
       verde: countVerde,
       bianco: countBianco,
     };
-
-    console.log(" ============================ COUNTS: ", counts);
 
     // Controllo e return dati
     if (counts !== undefined) {
@@ -355,7 +353,7 @@ const querySegnalazioni = {
     context: any,
     info: any
   ) {
-    console.log("================= IN SEGNALAZIONI SEVERITA CHIUSE: ", parent);
+    // console.log("================= IN SEGNALAZIONI SEVERITA CHIUSE: ", parent);
 
     let start = parent.input.start;
     let end = parent.input.end;
@@ -410,8 +408,6 @@ const querySegnalazioni = {
       verde: countVerde,
       bianco: countBianco,
     };
-
-    console.log(" ============================ COUNTS: ", counts);
 
     // Controllo e return dati
     if (counts !== undefined) {
