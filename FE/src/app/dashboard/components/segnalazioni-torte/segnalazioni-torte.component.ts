@@ -21,11 +21,14 @@ export class SegnalazioniTorteComponent {
   public severitaTotaleVerde: number = 0;
   public severitaTotaleBianco: number = 0;
 
-  public sopralluogoEffettuato: number;
-  public sopralluogoNonEffettuato: number;
-  public sopralluogoNonRichiesto: number;
+  public severitaChiuseRosso: number = 0;
+  public severitaChiuseGiallo: number = 0;
+  public severitaChiuseVerde: number = 0;
+  public severitaChiuseBianco: number = 0;
+  public startDate: string = new Date().getFullYear() + '-01-01T00:00:00';
+  public endDate: string = new Date().getFullYear() + '-12-31T00:00:00';
+
   public data: any = [0, 0, 0, 0];
-  public dataSopralluoghi: any = [0, 0, 0];
   public lastSegnalazioni: any = [];
   public lastSegnalazioniTime: any;
 
@@ -35,65 +38,9 @@ export class SegnalazioniTorteComponent {
   ) {}
 
   ngOnInit(): void {
-    this.loadSegnalazioniPie('2022-01-01T00:00:00', '2022-12-31T00:00:00');
+    this.loadSegnalazioniPieTotali(this.startDate, this.endDate);
+    this.loadSegnalazioniPieChiuse(this.startDate, this.endDate);
     this.loadLastSegnalazioni();
-  }
-
-  // Main Call - Grafici Segnalazioni Severità Torte
-  loadSegnalazioniPie(valoreGt: string, valoreLt: string) {
-    console.log('Valori: ', valoreGt, valoreLt);
-
-    this.DashboardService.getCountSegnalazioniSeveritaTotali(
-      valoreGt,
-      valoreLt
-    ).subscribe(
-      (res) => {
-        // Dati
-        try {
-          console.log('Segnalazioni Severità Res: ', res);
-          this.severitaTotaleRosso =
-            res.data.getCountSegnalazioniSeveritaTotali.rosso;
-          this.severitaTotaleGiallo =
-            res.data.getCountSegnalazioniSeveritaTotali.giallo;
-          this.severitaTotaleVerde =
-            res.data.getCountSegnalazioniSeveritaTotali.verde;
-          this.severitaTotaleBianco =
-            res.data.getCountSegnalazioniSeveritaTotali.bianco;
-
-          this.data = [
-            this.severitaTotaleRosso,
-            this.severitaTotaleGiallo,
-            this.severitaTotaleVerde,
-            this.severitaTotaleBianco,
-          ];
-
-          this.dataSopralluoghi = [
-            this.sopralluogoEffettuato,
-            this.sopralluogoNonEffettuato,
-            this.sopralluogoNonRichiesto,
-          ];
-
-          this.pieChartData = {
-            labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
-            datasets: [
-              {
-                data: this.data,
-              },
-            ],
-          };
-
-          this.loading = false;
-        } catch {
-          this.loading = false;
-          this.toastr.error('Si è verificato un errore', 'Errore');
-        }
-      },
-      (error) => {
-        console.log('Errore: ', error);
-        this.toastr.error('Si è verificato un errore', 'Errore');
-        this.loading = false;
-      }
-    );
   }
 
   // Main Call - Ultime segnalazioni odierne
@@ -120,8 +67,110 @@ export class SegnalazioniTorteComponent {
     );
   }
 
-  // Opzioni Grafico
-  public pieChartOptions: ChartConfiguration['options'] = {
+  // Main Call - Grafici Segnalazioni Severità Torte
+  loadSegnalazioniPieTotali(valoreGt: string, valoreLt: string) {
+    console.log('Valori: ', valoreGt, valoreLt);
+
+    this.DashboardService.getCountSegnalazioniSeveritaTotali(
+      valoreGt,
+      valoreLt
+    ).subscribe(
+      (res) => {
+        // Dati
+        try {
+          console.log('Segnalazioni Severità Res: ', res);
+          this.severitaTotaleRosso =
+            res.data.getCountSegnalazioniSeveritaTotali.rosso;
+          this.severitaTotaleGiallo =
+            res.data.getCountSegnalazioniSeveritaTotali.giallo;
+          this.severitaTotaleVerde =
+            res.data.getCountSegnalazioniSeveritaTotali.verde;
+          this.severitaTotaleBianco =
+            res.data.getCountSegnalazioniSeveritaTotali.bianco;
+
+          this.data = [
+            this.severitaTotaleRosso,
+            this.severitaTotaleGiallo,
+            this.severitaTotaleVerde,
+            this.severitaTotaleBianco,
+          ];
+
+          this.datiGraficoTotali = {
+            labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
+            datasets: [
+              {
+                data: this.data,
+              },
+            ],
+          };
+
+          this.loading = false;
+        } catch {
+          this.loading = false;
+          this.toastr.error('Si è verificato un errore', 'Errore');
+        }
+      },
+      (error) => {
+        console.log('Errore: ', error);
+        this.toastr.error('Si è verificato un errore', 'Errore');
+        this.loading = false;
+      }
+    );
+  }
+
+  // Main Call - Grafici Segnalazioni Severità Torte
+  loadSegnalazioniPieChiuse(valoreGt: string, valoreLt: string) {
+    console.log('Valori: ', valoreGt, valoreLt);
+
+    this.DashboardService.getCountSegnalazioniSeveritaTotali(
+      valoreGt,
+      valoreLt
+    ).subscribe(
+      (res) => {
+        // Dati
+        try {
+          console.log('Segnalazioni Severità Res: ', res);
+          this.severitaTotaleRosso =
+            res.data.getCountSegnalazioniSeveritaTotali.rosso;
+          this.severitaTotaleGiallo =
+            res.data.getCountSegnalazioniSeveritaTotali.giallo;
+          this.severitaTotaleVerde =
+            res.data.getCountSegnalazioniSeveritaTotali.verde;
+          this.severitaTotaleBianco =
+            res.data.getCountSegnalazioniSeveritaTotali.bianco;
+
+          this.data = [
+            this.severitaTotaleRosso,
+            this.severitaTotaleGiallo,
+            this.severitaTotaleVerde,
+            this.severitaTotaleBianco,
+          ];
+
+          this.datiGraficoChiuse = {
+            labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
+            datasets: [
+              {
+                data: this.data,
+              },
+            ],
+          };
+
+          this.loading = false;
+        } catch {
+          this.loading = false;
+          this.toastr.error('Si è verificato un errore', 'Errore');
+        }
+      },
+      (error) => {
+        console.log('Errore: ', error);
+        this.toastr.error('Si è verificato un errore', 'Errore');
+        this.loading = false;
+      }
+    );
+  }
+
+  // Opzioni Grafico Totali
+  public opzioniGraficoTotali: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
       legend: {
@@ -138,8 +187,36 @@ export class SegnalazioniTorteComponent {
     },
   };
 
-  // Dati Grafico
-  public pieChartData: ChartData<'pie', number[], string | string[]> = {
+  // Dati Grafico Totali
+  public datiGraficoTotali: ChartData<'pie', number[], string | string[]> = {
+    labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
+    datasets: [
+      {
+        data: this.data,
+      },
+    ],
+  };
+
+  // Opzioni Grafico Chiusi
+  public opzioniGraficoChiuse: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+      datalabels: {
+        formatter: (value, ctx) => {
+          if (ctx.chart.data.labels) {
+            return ctx.chart.data.labels[ctx.dataIndex];
+          }
+        },
+      },
+    },
+  };
+
+  // Dati Grafico Chiusi
+  public datiGraficoChiuse: ChartData<'pie', number[], string | string[]> = {
     labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
     datasets: [
       {

@@ -286,28 +286,118 @@ const querySegnalazioni = {
     context: any,
     info: any
   ) {
-    console.log("================= IN SEGNALAZIONI SEVERITA: ", parent);
+    console.log("================= IN SEGNALAZIONI SEVERITA TOTALI: ", parent);
+
+    let start = parent.input.start;
+    let end = parent.input.end;
 
     const countRosso = await db.avr_main.segnalazione.count({
       where: {
+        dataCreazione: {
+          gt: start,
+          lt: end,
+        },
         severitaEvento: 1,
       },
     });
 
     const countGiallo = await db.avr_main.segnalazione.count({
       where: {
+        dataCreazione: {
+          gt: start,
+          lt: end,
+        },
         severitaEvento: 2,
       },
     });
 
     const countVerde = await db.avr_main.segnalazione.count({
       where: {
+        dataCreazione: {
+          gt: start,
+          lt: end,
+        },
         severitaEvento: 3,
       },
     });
 
     const countBianco = await db.avr_main.segnalazione.count({
       where: {
+        dataCreazione: {
+          gt: start,
+          lt: end,
+        },
+        severitaEvento: 4,
+      },
+    });
+
+    let counts = {
+      rosso: countRosso,
+      giallo: countGiallo,
+      verde: countVerde,
+      bianco: countBianco,
+    };
+
+    // Controllo e return dati
+    if (counts !== undefined) {
+      return counts;
+    } else {
+      console.log("Nessuna lista segnalazioni");
+      // Return error
+      throw new Error("Nessuna lista segnalazioni");
+    }
+  },
+  async getCountSegnalazioniSeveritaChiuse(
+    args: any,
+    parent: any,
+    context: any,
+    info: any
+  ) {
+    console.log("================= IN SEGNALAZIONI SEVERITA CHIUSE: ", parent);
+
+    let start = parent.input.start;
+    let end = parent.input.end;
+
+    const countRosso = await db.avr_main.segnalazione.count({
+      where: {
+        dataCreazione: {
+          gt: start,
+          lt: end,
+        },
+        statoCorrenteSegnalazione: "C",
+        severitaEvento: 1,
+      },
+    });
+
+    const countGiallo = await db.avr_main.segnalazione.count({
+      where: {
+        dataCreazione: {
+          gt: start,
+          lt: end,
+        },
+        statoCorrenteSegnalazione: "C",
+        severitaEvento: 2,
+      },
+    });
+
+    const countVerde = await db.avr_main.segnalazione.count({
+      where: {
+        dataCreazione: {
+          gt: start,
+          lt: end,
+        },
+        statoCorrenteSegnalazione: "C",
+        severitaEvento: 3,
+      },
+    });
+
+    const countBianco = await db.avr_main.segnalazione.count({
+      where: {
+        dataCreazione: {
+          gt: start,
+          lt: end,
+        },
+        statoCorrenteSegnalazione: "C",
         severitaEvento: 4,
       },
     });

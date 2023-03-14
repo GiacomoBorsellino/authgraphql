@@ -265,4 +265,39 @@ export class DashboardService {
         })
       );
   }
+
+  public getCountSegnalazioniSeveritaChiuse(
+    start: any,
+    end: any
+  ): Observable<any> {
+    let GET_SEGNALAZIONI = gql`
+      query getCountSegnalazioniSeveritaChiuse($input: Range) {
+        getCountSegnalazioniSeveritaChiuse(input: $input) {
+          rosso
+          giallo
+          verde
+          bianco
+        }
+      }
+    `;
+
+    return this.apollo
+      .query({
+        query: GET_SEGNALAZIONI,
+        variables: {
+          input: {
+            start: start,
+            end: end,
+          },
+        },
+        context: {
+          headers: this.headers,
+        },
+      })
+      .pipe(
+        catchError((error: any) => {
+          return of({ success: false, description: error });
+        })
+      );
+  }
 }

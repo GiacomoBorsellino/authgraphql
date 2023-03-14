@@ -317,6 +317,7 @@ const typeDefs = gql`
     getLastSegnalazioni: [String]
 
     getCountSegnalazioniSeveritaTotali(input: Range): SegnalazioniSeverita
+    getCountSegnalazioniSeveritaChiuse(input: Range): SegnalazioniSeverita
   }
 
   type Mutation {
