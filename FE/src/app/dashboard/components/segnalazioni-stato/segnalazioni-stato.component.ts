@@ -11,12 +11,19 @@ export class SegnalazioniStatoComponent {
 
   public lineChartType: ChartType = 'line';
 
-  public startDate: string = new Date().getFullYear() + '-01-01T00:00:00';
-  public endDate: string = new Date().getFullYear() + '-12-31T00:00:00';
-
-  public yearSelected: boolean = true;
-  public monthSelected: boolean = false;
-
+  public rangeSelected: boolean = false;
+  public year: number = +new Date().getFullYear();
+  public years: number[] = [
+    this.year - 4,
+    this.year - 3,
+    this.year - 2,
+    this.year - 1,
+    this.year,
+    this.year + 1,
+    this.year + 2,
+    this.year + 3,
+    this.year + 4,
+  ];
   public months: string[] = [
     'Gennaio',
     'Febbraio',
@@ -32,14 +39,65 @@ export class SegnalazioniStatoComponent {
     'Dicembre',
   ];
 
-  selectRange(value: any) {
-    console.log('Valore: ', value);
-    this.monthSelected = !this.monthSelected;
+  yearSelected: any;
+  monthSelected: any;
+  daysInMonth: any;
+  rangeData: any[] = [];
+
+  getDays(year: any, month: any) {
+    return new Date(year, month, 0).getDate();
   }
 
-  year() {}
+  selectRange(value: any) {
+    console.log('Valore: ', value);
+    this.rangeSelected = !this.rangeSelected;
+  }
 
-  month() {}
+  yearSelector(year: string) {
+    console.log('Anno: ', year);
+    this.yearSelected = year;
+  }
+
+  monthSelector(month: string) {
+    console.log('Mese: ', month);
+    this.monthSelected = month;
+    let indexMonthSelected = this.months.indexOf(month);
+    this.daysInMonth = this.getDays(+this.yearSelected, indexMonthSelected);
+    this.rangeData = [];
+    for (let i = 1; i < this.daysInMonth; i++) {
+      this.rangeData.push(i);
+    }
+
+    console.log(this.rangeData);
+
+    // this.lineChartData = {
+    //   datasets: [
+    //     {
+    //       data: [65, 59, 80, 81, 56, 55, 40, 28, 48, 40, 19, 86, 27, 90],
+    //       label: 'Series A',
+    //       backgroundColor: 'rgba(148,159,177,0.2)',
+    //       borderColor: 'rgba(148,159,177,1)',
+    //       pointBackgroundColor: 'rgba(148,159,177,1)',
+    //       pointBorderColor: '#fff',
+    //       pointHoverBackgroundColor: '#fff',
+    //       pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+    //       fill: 'origin',
+    //     },
+    //     {
+    //       data: [28, 48, 40, 19, 86, 27, 90, 28, 48, 40, 19, 86, 27, 90],
+    //       label: 'Series B',
+    //       backgroundColor: 'rgba(77,83,96,0.2)',
+    //       borderColor: 'rgba(77,83,96,1)',
+    //       pointBackgroundColor: 'rgba(77,83,96,1)',
+    //       pointBorderColor: '#fff',
+    //       pointHoverBackgroundColor: '#fff',
+    //       pointHoverBorderColor: 'rgba(77,83,96,1)',
+    //       fill: 'origin',
+    //     },
+    //   ],
+    //   labels: this.rangeSelected ? this.years : this.rangeData,
+    // };
+  }
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
