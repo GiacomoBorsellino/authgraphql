@@ -182,7 +182,23 @@ const permessi = [
   {
     operationName: "getCountSegnalazioniSeveritaTotali",
     type: "query",
-    description: "route per visualizzare numero Segnalazioni per severità",
+    description:
+      "route per visualizzare numero Segnalazioni Totali per severità",
+    checkToken: true,
+    roles: [
+      Roles.dirigentiMobilita,
+      Roles.ufficiMobilita,
+      Roles.amministratori,
+      Roles.contactCenter,
+      Roles.tecniciImpresaManutenzione,
+      Roles.tecniciCommittenza,
+    ],
+  },
+  {
+    operationName: "getCountSegnalazioniSeveritaChiuse",
+    type: "query",
+    description:
+      "route per visualizzare numero Segnalazioni Chiuse per severità",
     checkToken: true,
     roles: [
       Roles.dirigentiMobilita,

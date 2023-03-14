@@ -25,10 +25,13 @@ export class SegnalazioniTorteComponent {
   public severitaChiuseGiallo: number = 0;
   public severitaChiuseVerde: number = 0;
   public severitaChiuseBianco: number = 0;
+
   public startDate: string = new Date().getFullYear() + '-01-01T00:00:00';
   public endDate: string = new Date().getFullYear() + '-12-31T00:00:00';
 
-  public data: any = [0, 0, 0, 0];
+  public dataTotali: any = [0, 0, 0, 0];
+  public dataChiusi: any = [0, 0, 0, 0];
+
   public lastSegnalazioni: any = [];
   public lastSegnalazioniTime: any;
 
@@ -71,102 +74,114 @@ export class SegnalazioniTorteComponent {
   loadSegnalazioniPieTotali(valoreGt: string, valoreLt: string) {
     console.log('Valori: ', valoreGt, valoreLt);
 
-    this.DashboardService.getCountSegnalazioniSeveritaTotali(
-      valoreGt,
-      valoreLt
-    ).subscribe(
-      (res) => {
-        // Dati
-        try {
-          console.log('Segnalazioni Severità Res: ', res);
-          this.severitaTotaleRosso =
-            res.data.getCountSegnalazioniSeveritaTotali.rosso;
-          this.severitaTotaleGiallo =
-            res.data.getCountSegnalazioniSeveritaTotali.giallo;
-          this.severitaTotaleVerde =
-            res.data.getCountSegnalazioniSeveritaTotali.verde;
-          this.severitaTotaleBianco =
-            res.data.getCountSegnalazioniSeveritaTotali.bianco;
+    if (valoreGt !== null && valoreLt !== null && valoreGt < valoreLt) {
+      this.DashboardService.getCountSegnalazioniSeveritaTotali(
+        valoreGt,
+        valoreLt
+      ).subscribe(
+        (res) => {
+          // Dati
+          try {
+            console.log('Segnalazioni Severità Res: ', res);
+            this.severitaTotaleRosso =
+              res.data.getCountSegnalazioniSeveritaTotali.rosso;
+            this.severitaTotaleGiallo =
+              res.data.getCountSegnalazioniSeveritaTotali.giallo;
+            this.severitaTotaleVerde =
+              res.data.getCountSegnalazioniSeveritaTotali.verde;
+            this.severitaTotaleBianco =
+              res.data.getCountSegnalazioniSeveritaTotali.bianco;
 
-          this.data = [
-            this.severitaTotaleRosso,
-            this.severitaTotaleGiallo,
-            this.severitaTotaleVerde,
-            this.severitaTotaleBianco,
-          ];
+            this.dataTotali = [
+              this.severitaTotaleRosso,
+              this.severitaTotaleGiallo,
+              this.severitaTotaleVerde,
+              this.severitaTotaleBianco,
+            ];
 
-          this.datiGraficoTotali = {
-            labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
-            datasets: [
-              {
-                data: this.data,
-              },
-            ],
-          };
+            this.datiGraficoTotali = {
+              labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
+              datasets: [
+                {
+                  data: this.dataTotali,
+                  backgroundColor: ['#fa6060', '#faf560', '#60fa65', '#fcfcfc'],
+                },
+              ],
+            };
 
-          this.loading = false;
-        } catch {
-          this.loading = false;
+            this.loading = false;
+          } catch {
+            this.loading = false;
+            this.toastr.error('Si è verificato un errore', 'Errore');
+          }
+        },
+        (error) => {
+          console.log('Errore: ', error);
           this.toastr.error('Si è verificato un errore', 'Errore');
+          this.loading = false;
         }
-      },
-      (error) => {
-        console.log('Errore: ', error);
-        this.toastr.error('Si è verificato un errore', 'Errore');
-        this.loading = false;
-      }
-    );
+      );
+    } else if (valoreGt > valoreLt) {
+      this.toastr.error('Intervallo non valido', 'Errore');
+    }
   }
 
   // Main Call - Grafici Segnalazioni Severità Torte
   loadSegnalazioniPieChiuse(valoreGt: string, valoreLt: string) {
     console.log('Valori: ', valoreGt, valoreLt);
 
-    this.DashboardService.getCountSegnalazioniSeveritaTotali(
-      valoreGt,
-      valoreLt
-    ).subscribe(
-      (res) => {
-        // Dati
-        try {
-          console.log('Segnalazioni Severità Res: ', res);
-          this.severitaTotaleRosso =
-            res.data.getCountSegnalazioniSeveritaTotali.rosso;
-          this.severitaTotaleGiallo =
-            res.data.getCountSegnalazioniSeveritaTotali.giallo;
-          this.severitaTotaleVerde =
-            res.data.getCountSegnalazioniSeveritaTotali.verde;
-          this.severitaTotaleBianco =
-            res.data.getCountSegnalazioniSeveritaTotali.bianco;
+    if (valoreGt !== null && valoreLt !== null && valoreGt < valoreLt) {
+      this.DashboardService.getCountSegnalazioniSeveritaChiuse(
+        valoreGt,
+        valoreLt
+      ).subscribe(
+        (res) => {
+          // Dati
+          try {
+            console.log('Segnalazioni Severità Res: ', res);
+            this.severitaChiuseRosso =
+              res.data.getCountSegnalazioniSeveritaChiuse.rosso;
+            this.severitaChiuseGiallo =
+              res.data.getCountSegnalazioniSeveritaChiuse.giallo;
+            this.severitaChiuseVerde =
+              res.data.getCountSegnalazioniSeveritaChiuse.verde;
+            this.severitaChiuseBianco =
+              res.data.getCountSegnalazioniSeveritaChiuse.bianco;
 
-          this.data = [
-            this.severitaTotaleRosso,
-            this.severitaTotaleGiallo,
-            this.severitaTotaleVerde,
-            this.severitaTotaleBianco,
-          ];
+            this.dataChiusi = [
+              this.severitaChiuseRosso,
+              this.severitaChiuseGiallo,
+              this.severitaChiuseVerde,
+              this.severitaChiuseBianco,
+            ];
 
-          this.datiGraficoChiuse = {
-            labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
-            datasets: [
-              {
-                data: this.data,
-              },
-            ],
-          };
+            this.datiGraficoChiuse = {
+              labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
+              datasets: [
+                {
+                  data: this.dataChiusi,
+                  backgroundColor: ['#fa6060', '#faf560', '#60fa65', '#fcfcfc'],
+                },
+              ],
+            };
 
-          this.loading = false;
-        } catch {
-          this.loading = false;
+            this.loading = false;
+          } catch (err) {
+            this.loading = false;
+            console.log(err);
+
+            this.toastr.error('Si è verificato un errore AA', 'Errore');
+          }
+        },
+        (error) => {
+          console.log('Errore: ', error);
           this.toastr.error('Si è verificato un errore', 'Errore');
+          this.loading = false;
         }
-      },
-      (error) => {
-        console.log('Errore: ', error);
-        this.toastr.error('Si è verificato un errore', 'Errore');
-        this.loading = false;
-      }
-    );
+      );
+    } else if (valoreGt > valoreLt) {
+      this.toastr.error('Intervallo non valido', 'Errore');
+    }
   }
 
   // Opzioni Grafico Totali
@@ -192,7 +207,8 @@ export class SegnalazioniTorteComponent {
     labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
     datasets: [
       {
-        data: this.data,
+        data: this.dataTotali,
+        backgroundColor: ['#fa6060', '#faf560', '#60fa65', '#fcfcfc'],
       },
     ],
   };
@@ -220,7 +236,8 @@ export class SegnalazioniTorteComponent {
     labels: [['Rosso'], ['Giallo'], ['Verde'], ['Bianco']],
     datasets: [
       {
-        data: this.data,
+        data: this.dataChiusi,
+        backgroundColor: ['#fa6060', '#faf560', '#60fa65', '#fcfcfc'],
       },
     ],
   };

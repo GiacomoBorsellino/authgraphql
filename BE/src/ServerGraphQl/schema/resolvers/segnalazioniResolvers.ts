@@ -338,6 +338,8 @@ const querySegnalazioni = {
       bianco: countBianco,
     };
 
+    console.log(" ============================ COUNTS: ", counts);
+
     // Controllo e return dati
     if (counts !== undefined) {
       return counts;
@@ -408,6 +410,8 @@ const querySegnalazioni = {
       verde: countVerde,
       bianco: countBianco,
     };
+
+    console.log(" ============================ COUNTS: ", counts);
 
     // Controllo e return dati
     if (counts !== undefined) {

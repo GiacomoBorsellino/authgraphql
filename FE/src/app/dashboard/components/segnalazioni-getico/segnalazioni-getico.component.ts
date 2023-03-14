@@ -69,6 +69,7 @@ export class SegnalazioniGeticoComponent implements OnInit {
             datasets: [
               {
                 data: this.data,
+                backgroundColor: ['#fa6060', '#faf560', '#60fa65', '#fcfcfc'],
               },
             ],
           };
@@ -78,6 +79,7 @@ export class SegnalazioniGeticoComponent implements OnInit {
             datasets: [
               {
                 data: this.dataSopralluoghi,
+                backgroundColor: ['#faf560', '#60fa65', '#fcfcfc'],
               },
             ],
           };
@@ -143,6 +145,7 @@ export class SegnalazioniGeticoComponent implements OnInit {
     datasets: [
       {
         data: this.data,
+        backgroundColor: ['#fa6060', '#faf560', '#60fa65', '#fcfcfc'],
       },
     ],
   };
@@ -157,6 +160,7 @@ export class SegnalazioniGeticoComponent implements OnInit {
     datasets: [
       {
         data: this.dataSopralluoghi,
+        backgroundColor: ['#faf560', '#60fa65', '#fcfcfc'],
       },
     ],
   };
